@@ -18,7 +18,7 @@ ActiveAdmin.register Certification do
 
     paginated_table_panel(
       resource.certification_instructors.includes(:user).order('users.name'),
-      title: link_to('Instructors - click to filter', admin_certification_instructors_path({ q: { certification_id_eq: resource.id } })),
+      title: link_to('Instructors - click to filter or add', admin_certification_instructors_path({ q: { certification_id_eq: resource.id } })),
       param_name: :instructors_page
     ) do
       column(:name) { |certification_instructor| auto_link(certification_instructor, certification_instructor.user.name) }
@@ -26,7 +26,7 @@ ActiveAdmin.register Certification do
 
     paginated_table_panel(
       resource.certification_issuances.active.includes(:user).order('users.name'),
-      title: link_to('Active recipients - click to filter', admin_certification_issuances_path({ q: { certification_id_eq: resource.id } })),
+      title: link_to('Active recipients - click to filter or add', admin_certification_issuances_path({ q: { certification_id_eq: resource.id } })),
       param_name: :issuances_page
     ) do
       column(:name) { |certification_issuance| auto_link(certification_issuance, certification_issuance.user.name) }
