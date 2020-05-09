@@ -18,7 +18,7 @@ module PopulateDemoData
   end
 
   def self.populate_certification_instructors
-    CertificateInstructor.destroy_all
+    CertificationInstructor.destroy_all
 
     user_ids = load_user_ids
     user_ids.shuffle!

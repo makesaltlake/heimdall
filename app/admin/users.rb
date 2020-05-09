@@ -1,6 +1,7 @@
 ActiveAdmin.register User do
   permit_params :name, :email, :super_user, :password, :password_confirmation
 
+  filter :name
   filter :email
   filter :current_sign_in_at
   filter :sign_in_count
