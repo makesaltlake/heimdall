@@ -22,7 +22,7 @@ module FixedTextFormHelpers
   def fixed_text(label, text)
     li do
       label(label)
-      div(text)
+      div(text, style: 'display: inline-block')
     end
   end
 end

@@ -25,6 +25,8 @@ class CertificationInstructor < ApplicationRecord
   belongs_to :certification
   belongs_to :user
 
+  validates :user, uniqueness: { scope: :certification, message: 'is already an instructor for this certification' }
+
   def display_name
     "#{user.name} as instructor for #{certification.name}"
   end

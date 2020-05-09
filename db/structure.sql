@@ -115,8 +115,8 @@ CREATE TABLE public.certification_issuances (
     id bigint NOT NULL,
     certification_id bigint NOT NULL,
     user_id bigint NOT NULL,
-    issued_at timestamp without time zone,
-    active boolean,
+    issued_at date,
+    active boolean DEFAULT true,
     certifier_id bigint,
     notes text,
     revocation_reason text,
@@ -429,7 +429,7 @@ CREATE INDEX index_certification_issuances_on_certification_id ON public.certifi
 -- Name: index_certification_issuances_on_certification_id_and_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_certification_issuances_on_certification_id_and_user_id ON public.certification_issuances USING btree (certification_id, user_id);
+CREATE UNIQUE INDEX index_certification_issuances_on_certification_id_and_user_id ON public.certification_issuances USING btree (certification_id, user_id) WHERE (active = true);
 
 
 --
@@ -548,6 +548,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200509021800'),
 ('20200509030021'),
 ('20200509051257'),
-('20200509072715');
+('20200509072715'),
+('20200509082715'),
+('20200509090049'),
+('20200509090404');
 
 

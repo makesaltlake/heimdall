@@ -32,10 +32,7 @@ end
 #       admin_certification_instructors GET        /admin/certification_instructors(.:format)                                               admin/certification_instructors#index
 #                                       POST       /admin/certification_instructors(.:format)                                               admin/certification_instructors#create
 #    new_admin_certification_instructor GET        /admin/certification_instructors/new(.:format)                                           admin/certification_instructors#new
-#   edit_admin_certification_instructor GET        /admin/certification_instructors/:id/edit(.:format)                                      admin/certification_instructors#edit
 #        admin_certification_instructor GET        /admin/certification_instructors/:id(.:format)                                           admin/certification_instructors#show
-#                                       PATCH      /admin/certification_instructors/:id(.:format)                                           admin/certification_instructors#update
-#                                       PUT        /admin/certification_instructors/:id(.:format)                                           admin/certification_instructors#update
 #                                       DELETE     /admin/certification_instructors/:id(.:format)                                           admin/certification_instructors#destroy
 #   revoke_admin_certification_issuance GET        /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
 #                                       POST       /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
