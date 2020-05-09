@@ -24,7 +24,13 @@ ActiveAdmin.register User do
     f.inputs do
       f.input(:name)
       f.input(:email)
-      f.input(:super_user)
+      if user == current_user
+        # Users can't change their own super user status (so a super user doesn't
+        # accidentally demote themselves)
+        f.input(:super_user, input_html: { disabled: true }, hint: "You can't change your own super user status.")
+      else
+        f.input(:super_user)
+      end
       f.input(:password, hint: 'Type a new password for this user here, or leave blank to leave their password unchanged')
       f.input(:password_confirmation, hint: 'Retype the new password here')
     end
@@ -40,6 +46,10 @@ ActiveAdmin.register User do
       if password_fields.all? { |f| params[:user][f].blank? }
         password_fields.each { |f| params[:user].delete(f) }
       end
+
+      # Users can't change their own super user status (so a super user doesn't
+      # accidentally demote themselves)
+      params[:user].delete(:super_user) if params[:id] == current_user.id
 
       super
     end
