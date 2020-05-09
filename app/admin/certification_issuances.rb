@@ -7,8 +7,9 @@ ActiveAdmin.register CertificationIssuance do
 
   filter :certification
   filter :user_id, as: :search_select_filter
-  filter :active
+  filter :issued_at
   filter :certifier_id, as: :search_select_filter, url: ->(_) { admin_users_path }
+  filter :active
 
   scope :active, default: true
   scope :revoked
