@@ -38,4 +38,16 @@ class User < ApplicationRecord
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :trackable, :lockable
 
   has_paper_trail skip: [:password, :password_confirmation, :encrypted_password]
+
+  has_many :certification_issuances
+  has_many :certification_instructors
+
+  has_many :received_certifications, through: :certification_issuances, source: :certification
+  has_many :instructing_certifications, through: :certification_issuances, source: :certification
+
+  has_many :certified_certification_issuances, class_name: 'CertificationIssuance', foreign_key: 'certifier_id', inverse_of: :certifier
+
+  def display_name
+    name
+  end
 end

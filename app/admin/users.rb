@@ -20,6 +20,8 @@ ActiveAdmin.register User do
       row('Last Signed In', &:current_sign_in_at)
       row('Failed Sign In Attempts', &:failed_attempts)
     end
+
+    # paginated_table_panel()
   end
 
   form do |f|

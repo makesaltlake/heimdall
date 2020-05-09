@@ -76,6 +76,107 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: certification_instructors; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.certification_instructors (
+    id bigint NOT NULL,
+    certification_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: certification_instructors_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.certification_instructors_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: certification_instructors_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.certification_instructors_id_seq OWNED BY public.certification_instructors.id;
+
+
+--
+-- Name: certification_issuances; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.certification_issuances (
+    id bigint NOT NULL,
+    certification_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    issued_at timestamp without time zone,
+    active boolean,
+    certifier_id bigint,
+    notes text,
+    revocation_reason text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: certification_issuances_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.certification_issuances_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: certification_issuances_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.certification_issuances_id_seq OWNED BY public.certification_issuances.id;
+
+
+--
+-- Name: certifications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.certifications (
+    id bigint NOT NULL,
+    name character varying,
+    description text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: certifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.certifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: certifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.certifications_id_seq OWNED BY public.certifications.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -176,6 +277,27 @@ ALTER TABLE ONLY public.active_admin_comments ALTER COLUMN id SET DEFAULT nextva
 
 
 --
+-- Name: certification_instructors id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_instructors ALTER COLUMN id SET DEFAULT nextval('public.certification_instructors_id_seq'::regclass);
+
+
+--
+-- Name: certification_issuances id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_issuances ALTER COLUMN id SET DEFAULT nextval('public.certification_issuances_id_seq'::regclass);
+
+
+--
+-- Name: certifications id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certifications ALTER COLUMN id SET DEFAULT nextval('public.certifications_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -203,6 +325,30 @@ ALTER TABLE ONLY public.active_admin_comments
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: certification_instructors certification_instructors_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_instructors
+    ADD CONSTRAINT certification_instructors_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: certification_issuances certification_issuances_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_issuances
+    ADD CONSTRAINT certification_issuances_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: certifications certifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certifications
+    ADD CONSTRAINT certifications_pkey PRIMARY KEY (id);
 
 
 --
@@ -251,6 +397,55 @@ CREATE INDEX index_active_admin_comments_on_resource_type_and_resource_id ON pub
 
 
 --
+-- Name: index_certification_instructors_on_certification_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_certification_instructors_on_certification_id ON public.certification_instructors USING btree (certification_id);
+
+
+--
+-- Name: index_certification_instructors_on_certification_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_certification_instructors_on_certification_id_and_user_id ON public.certification_instructors USING btree (certification_id, user_id);
+
+
+--
+-- Name: index_certification_instructors_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_certification_instructors_on_user_id ON public.certification_instructors USING btree (user_id);
+
+
+--
+-- Name: index_certification_issuances_on_certification_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_certification_issuances_on_certification_id ON public.certification_issuances USING btree (certification_id);
+
+
+--
+-- Name: index_certification_issuances_on_certification_id_and_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_certification_issuances_on_certification_id_and_user_id ON public.certification_issuances USING btree (certification_id, user_id);
+
+
+--
+-- Name: index_certification_issuances_on_certifier_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_certification_issuances_on_certifier_id ON public.certification_issuances USING btree (certifier_id);
+
+
+--
+-- Name: index_certification_issuances_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_certification_issuances_on_user_id ON public.certification_issuances USING btree (user_id);
+
+
+--
 -- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -286,6 +481,46 @@ CREATE INDEX index_versions_on_item_type_and_item_id ON public.versions USING bt
 
 
 --
+-- Name: certification_instructors fk_rails_36d6e25e4c; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_instructors
+    ADD CONSTRAINT fk_rails_36d6e25e4c FOREIGN KEY (certification_id) REFERENCES public.certifications(id);
+
+
+--
+-- Name: certification_issuances fk_rails_4e734beac3; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_issuances
+    ADD CONSTRAINT fk_rails_4e734beac3 FOREIGN KEY (certifier_id) REFERENCES public.users(id);
+
+
+--
+-- Name: certification_issuances fk_rails_68f52511ca; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_issuances
+    ADD CONSTRAINT fk_rails_68f52511ca FOREIGN KEY (certification_id) REFERENCES public.certifications(id);
+
+
+--
+-- Name: certification_instructors fk_rails_81b503280a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_instructors
+    ADD CONSTRAINT fk_rails_81b503280a FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: certification_issuances fk_rails_f94e62222f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_issuances
+    ADD CONSTRAINT fk_rails_f94e62222f FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- PostgreSQL database dump complete
 --
 
@@ -295,6 +530,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200509012404'),
 ('20200509015628'),
 ('20200509021800'),
-('20200509030021');
+('20200509030021'),
+('20200509051257');
 
 
