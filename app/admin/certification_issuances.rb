@@ -1,5 +1,5 @@
 ActiveAdmin.register CertificationIssuance do
-  menu parent: 'Certifications', priority: 2
+  menu parent: 'Certifications', priority: 3
 
   permit_params [:certification_id, :user_id, :issued_at, :certifier_id, :notes]
 
@@ -8,6 +8,7 @@ ActiveAdmin.register CertificationIssuance do
   filter :certification
   filter :user_id, as: :search_select_filter
   filter :active
+  filter :certifier_id, as: :search_select_filter, url: ->(_) { admin_users_path }
 
   scope :active, default: true
   scope :revoked

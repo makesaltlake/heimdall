@@ -36,7 +36,7 @@ en:
         new_model: Add An Instructor To A Certification
         delete_model: Remove Instructor From This Certification
       certification_issuance:
-        new_model: Issue A Certification
+        new_model: Issue a Certification
   date:
     formats:
       long: '%B %e, %Y'

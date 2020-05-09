@@ -16,9 +16,21 @@ ActiveAdmin.register Certification do
       row(:description) { |certification| format_multi_line_text(certification.description) }
     end
 
-    puts "first instance: #{self.class}"
-    paginated_table_panel(resource.certification_instructors.includes(:user).order('users.name'), title: 'Instructors', param_name: :instructor_page) do
+    paginated_table_panel(
+      resource.certification_instructors.includes(:user).order('users.name'),
+      title: link_to('Instructors - click to filter', admin_certification_instructors_path({ q: { certification_id_eq: resource.id } })),
+      param_name: :instructors_page
+    ) do
       column(:name) { |certification_instructor| auto_link(certification_instructor, certification_instructor.user.name) }
+    end
+
+    paginated_table_panel(
+      resource.certification_issuances.active.includes(:user).order('users.name'),
+      title: link_to('Active recipients - click to filter', admin_certification_issuances_path({ q: { certification_id_eq: resource.id } })),
+      param_name: :issuances_page
+    ) do
+      column(:name) { |certification_issuance| auto_link(certification_issuance, certification_issuance.user.name) }
+      column(:issued_at)
     end
   end
 

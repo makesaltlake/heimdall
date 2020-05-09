@@ -8,9 +8,10 @@ module PaginatedTableHelpers
     end
   end
 
-  def paginated_table_panel(collection_to_paginate, title:, param_name:, per_page: 25, &block)
+  def paginated_table_panel(collection_to_paginate, title:, param_name:, per_page: 25, header: nil, &block)
     puts "second instance: #{self.class}"
-    panel "#{title} (#{collection_to_paginate.count})" do
+    panel title do
+      div header if header
       paginated_table(collection_to_paginate, param_name: param_name, per_page: per_page, &block)
     end
   end
