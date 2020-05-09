@@ -17,6 +17,8 @@ ActiveAdmin.register User do
       row(:name)
       row(:email)
       row(:super_user)
+      row('Last Signed In', &:current_sign_in_at)
+      row('Failed Sign In Attempts', &:failed_attempts)
     end
   end
 
