@@ -34,7 +34,6 @@ module PopulateDemoData
   end
 
   def self.populate_certification_issuances
-    puts "STARTING THING"
     CertificationIssuance.destroy_all
 
     user_ids = load_user_ids
@@ -51,10 +50,7 @@ module PopulateDemoData
           certifier_id: instructors.sample
         ) unless cert.certification_issuances.where(user_id: id).exists?
       end
-      puts "DONE THING #{cert}"
     end
-
-    puts "NOW REVOKING"
 
     cert_iss = CertificationIssuance.all.to_a
     cert_iss.shuffle!
