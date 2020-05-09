@@ -42,3 +42,10 @@ gem 'devise'
 gem 'paper_trail'
 gem 'activeadmin'
 gem 'cancancan'
+
+group :development do
+  # Work around https://github.com/ctran/annotate_models/issues/761. The git
+  # stuff can go away once https://github.com/ctran/annotate_models/pull/803
+  # merges and is released.
+  gem 'annotate', git: 'https://github.com/javawizard/annotate_models.git', branch: 'fix-annotate-routes-rake-task-position'
+end

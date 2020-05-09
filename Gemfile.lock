@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/javawizard/annotate_models.git
+  revision: b7c0224fa3836a5521429344a80161349c2cb79d
+  branch: fix-annotate-routes-rake-task-position
+  specs:
+    annotate (3.1.1)
+      activerecord (>= 3.2, < 7.0)
+      rake (>= 10.4, < 14.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -229,6 +238,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeadmin
+  annotate!
   bootsnap (>= 1.4.2)
   byebug
   cancancan
