@@ -48,6 +48,9 @@ class User < ApplicationRecord
 
   has_many :certified_certification_issuances, class_name: 'CertificationIssuance', foreign_key: 'certifier_id', inverse_of: :certifier
 
+  has_many :badge_reader_manual_users
+  has_many :badge_reader_scans
+
   def display_name
     name
   end

@@ -20,4 +20,6 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class BadgeReaderManualUser < ApplicationRecord
+  belongs_to :badge_reader
+  belongs_to :user
 end

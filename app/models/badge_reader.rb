@@ -10,4 +10,7 @@
 #  updated_at  :datetime         not null
 #
 class BadgeReader < ApplicationRecord
+  has_many :badge_reader_certifications
+  has_many :badge_reader_manual_users
+  has_many :badge_reader_scans
 end

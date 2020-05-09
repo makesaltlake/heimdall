@@ -21,4 +21,6 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class BadgeReaderScan < ApplicationRecord
+  belongs_to :badge_reader
+  belongs_to :user
 end
