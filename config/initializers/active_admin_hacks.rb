@@ -17,3 +17,14 @@ module PaginatedTableHelpers
 end
 
 ActiveAdmin::Views::Pages::Show.include(PaginatedTableHelpers)
+
+module FixedTextFormHelpers
+  def fixed_text(label, text)
+    li do
+      label(label)
+      div(text)
+    end
+  end
+end
+
+ActiveAdmin::Views::ActiveAdminForm.include(FixedTextFormHelpers)

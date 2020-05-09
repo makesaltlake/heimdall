@@ -20,7 +20,33 @@ end
 #                           user_unlock GET        /admin/unlock(.:format)                                                                  active_admin/devise/unlocks#show
 #                                       POST       /admin/unlock(.:format)                                                                  active_admin/devise/unlocks#create
 #                            admin_root GET        /admin(.:format)                                                                         admin/dashboard#index
+#                  admin_certifications GET        /admin/certifications(.:format)                                                          admin/certifications#index
+#                                       POST       /admin/certifications(.:format)                                                          admin/certifications#create
+#               new_admin_certification GET        /admin/certifications/new(.:format)                                                      admin/certifications#new
+#              edit_admin_certification GET        /admin/certifications/:id/edit(.:format)                                                 admin/certifications#edit
+#                   admin_certification GET        /admin/certifications/:id(.:format)                                                      admin/certifications#show
+#                                       PATCH      /admin/certifications/:id(.:format)                                                      admin/certifications#update
+#                                       PUT        /admin/certifications/:id(.:format)                                                      admin/certifications#update
+#                                       DELETE     /admin/certifications/:id(.:format)                                                      admin/certifications#destroy
 #                       admin_dashboard GET        /admin/dashboard(.:format)                                                               admin/dashboard#index
+#       admin_certification_instructors GET        /admin/certification_instructors(.:format)                                               admin/certification_instructors#index
+#                                       POST       /admin/certification_instructors(.:format)                                               admin/certification_instructors#create
+#    new_admin_certification_instructor GET        /admin/certification_instructors/new(.:format)                                           admin/certification_instructors#new
+#   edit_admin_certification_instructor GET        /admin/certification_instructors/:id/edit(.:format)                                      admin/certification_instructors#edit
+#        admin_certification_instructor GET        /admin/certification_instructors/:id(.:format)                                           admin/certification_instructors#show
+#                                       PATCH      /admin/certification_instructors/:id(.:format)                                           admin/certification_instructors#update
+#                                       PUT        /admin/certification_instructors/:id(.:format)                                           admin/certification_instructors#update
+#                                       DELETE     /admin/certification_instructors/:id(.:format)                                           admin/certification_instructors#destroy
+#   revoke_admin_certification_issuance GET        /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
+#                                       POST       /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
+#         admin_certification_issuances GET        /admin/certification_issuances(.:format)                                                 admin/certification_issuances#index
+#                                       POST       /admin/certification_issuances(.:format)                                                 admin/certification_issuances#create
+#      new_admin_certification_issuance GET        /admin/certification_issuances/new(.:format)                                             admin/certification_issuances#new
+#     edit_admin_certification_issuance GET        /admin/certification_issuances/:id/edit(.:format)                                        admin/certification_issuances#edit
+#          admin_certification_issuance GET        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#show
+#                                       PATCH      /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
+#                                       PUT        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
+#                                       DELETE     /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#destroy
 #                           admin_users GET        /admin/users(.:format)                                                                   admin/users#index
 #                                       POST       /admin/users(.:format)                                                                   admin/users#create
 #                        new_admin_user GET        /admin/users/new(.:format)                                                               admin/users#new

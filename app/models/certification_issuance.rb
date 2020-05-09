@@ -11,6 +11,7 @@
 #  updated_at        :datetime         not null
 #  certification_id  :bigint           not null
 #  certifier_id      :bigint
+#  revoked_by_id     :bigint
 #  user_id           :bigint           not null
 #
 # Indexes
@@ -18,12 +19,14 @@
 #  index_certification_issuances_on_certification_id              (certification_id)
 #  index_certification_issuances_on_certification_id_and_user_id  (certification_id,user_id) UNIQUE
 #  index_certification_issuances_on_certifier_id                  (certifier_id)
+#  index_certification_issuances_on_revoked_by_id                 (revoked_by_id)
 #  index_certification_issuances_on_user_id                       (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (certification_id => certifications.id)
 #  fk_rails_...  (certifier_id => users.id)
+#  fk_rails_...  (revoked_by_id => users.id)
 #  fk_rails_...  (user_id => users.id)
 #
 class CertificationIssuance < ApplicationRecord
@@ -33,8 +36,13 @@ class CertificationIssuance < ApplicationRecord
   belongs_to :user
 
   belongs_to :certifier, class_name: 'User', inverse_of: :certified_certification_issuances
+  belongs_to :revoked_by, class_name: 'User'
 
   def display_name
     "#{user.name} #{!active? && 'previously '}certified on #{certification.name}"
+  end
+
+  def revoke!(revoked_by, reason)
+    update!(revocation_reason: reason, revoked_by: revoked_by)
   end
 end

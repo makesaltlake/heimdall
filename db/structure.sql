@@ -121,7 +121,8 @@ CREATE TABLE public.certification_issuances (
     notes text,
     revocation_reason text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    revoked_by_id bigint
 );
 
 
@@ -439,6 +440,13 @@ CREATE INDEX index_certification_issuances_on_certifier_id ON public.certificati
 
 
 --
+-- Name: index_certification_issuances_on_revoked_by_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_certification_issuances_on_revoked_by_id ON public.certification_issuances USING btree (revoked_by_id);
+
+
+--
 -- Name: index_certification_issuances_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -478,6 +486,14 @@ CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unl
 --
 
 CREATE INDEX index_versions_on_item_type_and_item_id ON public.versions USING btree (item_type, item_id);
+
+
+--
+-- Name: certification_issuances fk_rails_21953e8e38; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.certification_issuances
+    ADD CONSTRAINT fk_rails_21953e8e38 FOREIGN KEY (revoked_by_id) REFERENCES public.users(id);
 
 
 --
@@ -531,6 +547,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200509015628'),
 ('20200509021800'),
 ('20200509030021'),
-('20200509051257');
+('20200509051257'),
+('20200509072715');
 
 
