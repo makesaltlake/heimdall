@@ -108,7 +108,9 @@ CREATE TABLE public.users (
     unlock_token character varying,
     locked_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    name character varying,
+    super_user boolean DEFAULT false NOT NULL
 );
 
 
@@ -292,6 +294,7 @@ SET search_path TO "$user", public;
 INSERT INTO "schema_migrations" (version) VALUES
 ('20200509012404'),
 ('20200509015628'),
-('20200509021800');
+('20200509021800'),
+('20200509030021');
 
 
