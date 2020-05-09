@@ -46,6 +46,7 @@ gem 'activeadmin_addons'
 # because select2-rails, which activeadmin_addons requires, pins a super old
 # version of thor
 gem 'thor', '0.20.3'
+gem 'faker' # yes, in production too - that lets us seed data into demo environments
 
 group :development do
   # Work around https://github.com/ctran/annotate_models/issues/761. The git
