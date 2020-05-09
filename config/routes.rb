@@ -43,7 +43,6 @@ end
 #          admin_certification_issuance GET        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#show
 #                                       PATCH      /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
 #                                       PUT        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
-#                                       DELETE     /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#destroy
 #                           admin_users GET        /admin/users(.:format)                                                                   admin/users#index
 #                                       POST       /admin/users(.:format)                                                                   admin/users#create
 #                        new_admin_user GET        /admin/users/new(.:format)                                                               admin/users#new

@@ -76,6 +76,137 @@ CREATE TABLE public.ar_internal_metadata (
 
 
 --
+-- Name: badge_reader_certifications; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.badge_reader_certifications (
+    id bigint NOT NULL,
+    badge_reader_id bigint NOT NULL,
+    certification_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: badge_reader_certifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.badge_reader_certifications_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: badge_reader_certifications_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.badge_reader_certifications_id_seq OWNED BY public.badge_reader_certifications.id;
+
+
+--
+-- Name: badge_reader_manual_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.badge_reader_manual_users (
+    id bigint NOT NULL,
+    badge_reader_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: badge_reader_manual_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.badge_reader_manual_users_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: badge_reader_manual_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.badge_reader_manual_users_id_seq OWNED BY public.badge_reader_manual_users.id;
+
+
+--
+-- Name: badge_reader_scans; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.badge_reader_scans (
+    id bigint NOT NULL,
+    badge_reader_id bigint,
+    user_id bigint,
+    scanned_at timestamp without time zone,
+    submitted_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: badge_reader_scans_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.badge_reader_scans_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: badge_reader_scans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.badge_reader_scans_id_seq OWNED BY public.badge_reader_scans.id;
+
+
+--
+-- Name: badge_readers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.badge_readers (
+    id bigint NOT NULL,
+    name character varying,
+    description text,
+    api_token character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: badge_readers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.badge_readers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: badge_readers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.badge_readers_id_seq OWNED BY public.badge_readers.id;
+
+
+--
 -- Name: certification_instructors; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -212,7 +343,8 @@ CREATE TABLE public.users (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying,
-    super_user boolean DEFAULT false NOT NULL
+    super_user boolean DEFAULT false NOT NULL,
+    badge_number character varying
 );
 
 
@@ -278,6 +410,34 @@ ALTER TABLE ONLY public.active_admin_comments ALTER COLUMN id SET DEFAULT nextva
 
 
 --
+-- Name: badge_reader_certifications id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_certifications ALTER COLUMN id SET DEFAULT nextval('public.badge_reader_certifications_id_seq'::regclass);
+
+
+--
+-- Name: badge_reader_manual_users id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_manual_users ALTER COLUMN id SET DEFAULT nextval('public.badge_reader_manual_users_id_seq'::regclass);
+
+
+--
+-- Name: badge_reader_scans id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_scans ALTER COLUMN id SET DEFAULT nextval('public.badge_reader_scans_id_seq'::regclass);
+
+
+--
+-- Name: badge_readers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_readers ALTER COLUMN id SET DEFAULT nextval('public.badge_readers_id_seq'::regclass);
+
+
+--
 -- Name: certification_instructors id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -326,6 +486,38 @@ ALTER TABLE ONLY public.active_admin_comments
 
 ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
+-- Name: badge_reader_certifications badge_reader_certifications_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_certifications
+    ADD CONSTRAINT badge_reader_certifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: badge_reader_manual_users badge_reader_manual_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_manual_users
+    ADD CONSTRAINT badge_reader_manual_users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: badge_reader_scans badge_reader_scans_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_scans
+    ADD CONSTRAINT badge_reader_scans_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: badge_readers badge_readers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_readers
+    ADD CONSTRAINT badge_readers_pkey PRIMARY KEY (id);
 
 
 --
@@ -395,6 +587,62 @@ CREATE INDEX index_active_admin_comments_on_namespace ON public.active_admin_com
 --
 
 CREATE INDEX index_active_admin_comments_on_resource_type_and_resource_id ON public.active_admin_comments USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_badge_reader_certifications_on_badge_reader_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_reader_certifications_on_badge_reader_id ON public.badge_reader_certifications USING btree (badge_reader_id);
+
+
+--
+-- Name: index_badge_reader_certifications_on_certification_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_reader_certifications_on_certification_id ON public.badge_reader_certifications USING btree (certification_id);
+
+
+--
+-- Name: index_badge_reader_certifications_unique; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_badge_reader_certifications_unique ON public.badge_reader_certifications USING btree (badge_reader_id, certification_id);
+
+
+--
+-- Name: index_badge_reader_manual_users_on_badge_reader_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_reader_manual_users_on_badge_reader_id ON public.badge_reader_manual_users USING btree (badge_reader_id);
+
+
+--
+-- Name: index_badge_reader_manual_users_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_reader_manual_users_on_user_id ON public.badge_reader_manual_users USING btree (user_id);
+
+
+--
+-- Name: index_badge_reader_manual_users_unique; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_badge_reader_manual_users_unique ON public.badge_reader_manual_users USING btree (badge_reader_id, user_id);
+
+
+--
+-- Name: index_badge_reader_scans_on_badge_reader_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_reader_scans_on_badge_reader_id ON public.badge_reader_scans USING btree (badge_reader_id);
+
+
+--
+-- Name: index_badge_reader_scans_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_reader_scans_on_user_id ON public.badge_reader_scans USING btree (user_id);
 
 
 --
@@ -497,11 +745,27 @@ ALTER TABLE ONLY public.certification_issuances
 
 
 --
+-- Name: badge_reader_certifications fk_rails_2f8bb70c0e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_certifications
+    ADD CONSTRAINT fk_rails_2f8bb70c0e FOREIGN KEY (badge_reader_id) REFERENCES public.badge_readers(id);
+
+
+--
 -- Name: certification_instructors fk_rails_36d6e25e4c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.certification_instructors
     ADD CONSTRAINT fk_rails_36d6e25e4c FOREIGN KEY (certification_id) REFERENCES public.certifications(id);
+
+
+--
+-- Name: badge_reader_manual_users fk_rails_3b64e9d396; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_manual_users
+    ADD CONSTRAINT fk_rails_3b64e9d396 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -521,11 +785,43 @@ ALTER TABLE ONLY public.certification_issuances
 
 
 --
+-- Name: badge_reader_scans fk_rails_7d850092c6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_scans
+    ADD CONSTRAINT fk_rails_7d850092c6 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: certification_instructors fk_rails_81b503280a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.certification_instructors
     ADD CONSTRAINT fk_rails_81b503280a FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: badge_reader_manual_users fk_rails_ae4ea9e215; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_manual_users
+    ADD CONSTRAINT fk_rails_ae4ea9e215 FOREIGN KEY (badge_reader_id) REFERENCES public.badge_readers(id);
+
+
+--
+-- Name: badge_reader_certifications fk_rails_cc4cb2a586; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_certifications
+    ADD CONSTRAINT fk_rails_cc4cb2a586 FOREIGN KEY (certification_id) REFERENCES public.certifications(id);
+
+
+--
+-- Name: badge_reader_scans fk_rails_eccca2d09b; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_reader_scans
+    ADD CONSTRAINT fk_rails_eccca2d09b FOREIGN KEY (badge_reader_id) REFERENCES public.badge_readers(id);
 
 
 --
@@ -551,6 +847,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200509072715'),
 ('20200509082715'),
 ('20200509090049'),
-('20200509090404');
+('20200509090404'),
+('20200509211533');
 
 
