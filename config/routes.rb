@@ -29,6 +29,16 @@ end
 #                                       PUT        /admin/certifications/:id(.:format)                                                      admin/certifications#update
 #                                       DELETE     /admin/certifications/:id(.:format)                                                      admin/certifications#destroy
 #                       admin_dashboard GET        /admin/dashboard(.:format)                                                               admin/dashboard#index
+#              admin_badge_reader_scans GET        /admin/badge_reader_scans(.:format)                                                      admin/badge_reader_scans#index
+#               admin_badge_reader_scan GET        /admin/badge_reader_scans/:id(.:format)                                                  admin/badge_reader_scans#show
+#                   admin_badge_readers GET        /admin/badge_readers(.:format)                                                           admin/badge_readers#index
+#                                       POST       /admin/badge_readers(.:format)                                                           admin/badge_readers#create
+#                new_admin_badge_reader GET        /admin/badge_readers/new(.:format)                                                       admin/badge_readers#new
+#               edit_admin_badge_reader GET        /admin/badge_readers/:id/edit(.:format)                                                  admin/badge_readers#edit
+#                    admin_badge_reader GET        /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#show
+#                                       PATCH      /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
+#                                       PUT        /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
+#                                       DELETE     /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#destroy
 #       admin_certification_instructors GET        /admin/certification_instructors(.:format)                                               admin/certification_instructors#index
 #                                       POST       /admin/certification_instructors(.:format)                                               admin/certification_instructors#create
 #    new_admin_certification_instructor GET        /admin/certification_instructors/new(.:format)                                           admin/certification_instructors#new
@@ -43,6 +53,14 @@ end
 #          admin_certification_issuance GET        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#show
 #                                       PATCH      /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
 #                                       PUT        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
+#       admin_badge_reader_manual_users GET        /admin/badge_reader_manual_users(.:format)                                               admin/badge_reader_manual_users#index
+#                                       POST       /admin/badge_reader_manual_users(.:format)                                               admin/badge_reader_manual_users#create
+#    new_admin_badge_reader_manual_user GET        /admin/badge_reader_manual_users/new(.:format)                                           admin/badge_reader_manual_users#new
+#   edit_admin_badge_reader_manual_user GET        /admin/badge_reader_manual_users/:id/edit(.:format)                                      admin/badge_reader_manual_users#edit
+#        admin_badge_reader_manual_user GET        /admin/badge_reader_manual_users/:id(.:format)                                           admin/badge_reader_manual_users#show
+#                                       PATCH      /admin/badge_reader_manual_users/:id(.:format)                                           admin/badge_reader_manual_users#update
+#                                       PUT        /admin/badge_reader_manual_users/:id(.:format)                                           admin/badge_reader_manual_users#update
+#                                       DELETE     /admin/badge_reader_manual_users/:id(.:format)                                           admin/badge_reader_manual_users#destroy
 #                           admin_users GET        /admin/users(.:format)                                                                   admin/users#index
 #                                       POST       /admin/users(.:format)                                                                   admin/users#create
 #                        new_admin_user GET        /admin/users/new(.:format)                                                               admin/users#new
@@ -51,6 +69,14 @@ end
 #                                       PATCH      /admin/users/:id(.:format)                                                               admin/users#update
 #                                       PUT        /admin/users/:id(.:format)                                                               admin/users#update
 #                                       DELETE     /admin/users/:id(.:format)                                                               admin/users#destroy
+#     admin_badge_reader_certifications GET        /admin/badge_reader_certifications(.:format)                                             admin/badge_reader_certifications#index
+#                                       POST       /admin/badge_reader_certifications(.:format)                                             admin/badge_reader_certifications#create
+#  new_admin_badge_reader_certification GET        /admin/badge_reader_certifications/new(.:format)                                         admin/badge_reader_certifications#new
+# edit_admin_badge_reader_certification GET        /admin/badge_reader_certifications/:id/edit(.:format)                                    admin/badge_reader_certifications#edit
+#      admin_badge_reader_certification GET        /admin/badge_reader_certifications/:id(.:format)                                         admin/badge_reader_certifications#show
+#                                       PATCH      /admin/badge_reader_certifications/:id(.:format)                                         admin/badge_reader_certifications#update
+#                                       PUT        /admin/badge_reader_certifications/:id(.:format)                                         admin/badge_reader_certifications#update
+#                                       DELETE     /admin/badge_reader_certifications/:id(.:format)                                         admin/badge_reader_certifications#destroy
 #                        admin_comments GET        /admin/comments(.:format)                                                                admin/comments#index
 #                                       POST       /admin/comments(.:format)                                                                admin/comments#create
 #                         admin_comment GET        /admin/comments/:id(.:format)                                                            admin/comments#show
