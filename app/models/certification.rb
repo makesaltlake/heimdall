@@ -16,4 +16,8 @@ class Certification < ApplicationRecord
 
   has_many :certified_users, through: :certification_issuances, source: :user
   has_many :instructors, through: :certification_instructors, source: :user
+
+  has_many :badge_reader_certifications
+
+  has_many :badge_readers, through: :badge_reader_certifications
 end

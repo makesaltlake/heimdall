@@ -44,12 +44,14 @@ class User < ApplicationRecord
   has_many :certification_instructors
 
   has_many :received_certifications, through: :certification_issuances, source: :certification
-  has_many :instructing_certifications, through: :certification_issuances, source: :certification
+  has_many :instructed_certifications, through: :certification_instructors, source: :certification
 
   has_many :certified_certification_issuances, class_name: 'CertificationIssuance', foreign_key: 'certifier_id', inverse_of: :certifier
 
   has_many :badge_reader_manual_users
   has_many :badge_reader_scans
+
+  has_many :manual_user_badge_readers, through: :badge_reader_manual_users, source: :badge_reader
 
   def display_name
     name

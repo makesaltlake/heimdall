@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :name, :email, :super_user, :password, :password_confirmation
+  permit_params :name, :email, :super_user, :password, :password_confirmation, :instructed_certification_ids
 
   filter :name
   filter :email
@@ -20,14 +20,8 @@ ActiveAdmin.register User do
       row(:super_user)
       row('Last Signed In', &:current_sign_in_at)
       row('Failed Sign In Attempts', &:failed_attempts)
-    end
-
-    paginated_table_panel(
-      resource.certification_instructors.includes(:certification).order('certifications.name'),
-      title: link_to('Instructor of these certifications - click to filter or add', admin_certification_instructors_path({ q: { user_id_eq: resource.id } })),
-      param_name: :instructors_page
-    ) do
-      column(:name) { |certification_instructor| auto_link(certification_instructor, certification_instructor.certification.name) }
+      row('Instructs these certifications') { |user| user.instructed_certifications.order(:name).map { |certification| auto_link(certification) }.join(', ').html_safe }
+      row('Manual access to these badge readers') { |user| user.manual_user_badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join(', ').html_safe }
     end
 
     paginated_table_panel(

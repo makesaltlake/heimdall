@@ -183,7 +183,9 @@ CREATE TABLE public.badge_readers (
     description text,
     api_token character varying,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    api_token_regenerated_at timestamp without time zone,
+    restricted_access boolean DEFAULT false NOT NULL
 );
 
 
@@ -848,6 +850,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200509082715'),
 ('20200509090049'),
 ('20200509090404'),
-('20200509211533');
+('20200509211533'),
+('20200511102058'),
+('20200511102904');
 
 

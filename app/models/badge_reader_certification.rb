@@ -20,6 +20,8 @@
 #  fk_rails_...  (certification_id => certifications.id)
 #
 class BadgeReaderCertification < ApplicationRecord
+  has_paper_trail
+
   belongs_to :badge_reader
   belongs_to :certification
 end
