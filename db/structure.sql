@@ -311,6 +311,36 @@ ALTER SEQUENCE public.certifications_id_seq OWNED BY public.certifications.id;
 
 
 --
+-- Name: households; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.households (
+    id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: households_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.households_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: households_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.households_id_seq OWNED BY public.households.id;
+
+
+--
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -346,7 +376,8 @@ CREATE TABLE public.users (
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying,
     super_user boolean DEFAULT false NOT NULL,
-    badge_number character varying
+    badge_number character varying,
+    household_id bigint NOT NULL
 );
 
 
@@ -461,6 +492,13 @@ ALTER TABLE ONLY public.certifications ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: households id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.households ALTER COLUMN id SET DEFAULT nextval('public.households_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -544,6 +582,14 @@ ALTER TABLE ONLY public.certification_issuances
 
 ALTER TABLE ONLY public.certifications
     ADD CONSTRAINT certifications_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: households households_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.households
+    ADD CONSTRAINT households_pkey PRIMARY KEY (id);
 
 
 --
@@ -718,6 +764,13 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
+-- Name: index_users_on_household_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_household_id ON public.users USING btree (household_id);
+
+
+--
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -776,6 +829,14 @@ ALTER TABLE ONLY public.badge_reader_manual_users
 
 ALTER TABLE ONLY public.certification_issuances
     ADD CONSTRAINT fk_rails_4e734beac3 FOREIGN KEY (certifier_id) REFERENCES public.users(id);
+
+
+--
+-- Name: users fk_rails_5121351c36; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT fk_rails_5121351c36 FOREIGN KEY (household_id) REFERENCES public.households(id);
 
 
 --
@@ -852,6 +913,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200509090404'),
 ('20200509211533'),
 ('20200511102058'),
-('20200511102904');
+('20200511102904'),
+('20200511105701');
 
 

@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :name, :email, :super_user, :password, :password_confirmation, :instructed_certification_ids
+  permit_params :name, :email, :super_user, :password, :password_confirmation, household_user_ids: []
 
   filter :name
   filter :email
@@ -20,8 +20,9 @@ ActiveAdmin.register User do
       row(:super_user)
       row('Last Signed In', &:current_sign_in_at)
       row('Failed Sign In Attempts', &:failed_attempts)
-      row('Instructs these certifications') { |user| user.instructed_certifications.order(:name).map { |certification| auto_link(certification) }.join(', ').html_safe }
-      row('Manual access to these badge readers') { |user| user.manual_user_badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join(', ').html_safe }
+      row('Household members') { |user| user.household_users.order(:name).map { |other_user| auto_link(other_user) }.join('<br/>').html_safe }
+      row('Instructs these certifications') { |user| user.instructed_certifications.order(:name).map { |certification| auto_link(certification) }.join('<br/>').html_safe }
+      row('Manual access to these badge readers') { |user| user.manual_user_badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join('<br/>').html_safe }
     end
 
     paginated_table_panel(
@@ -47,6 +48,7 @@ ActiveAdmin.register User do
       end
       f.input(:password, hint: 'Type a new password for this user here, or leave blank to leave their password unchanged')
       f.input(:password_confirmation, hint: 'Retype the new password here')
+      f.input(:household_user_ids, label: 'Household members', as: :selected_list, url: admin_users_path)
     end
     f.actions
   end
