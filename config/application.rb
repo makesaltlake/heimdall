@@ -33,5 +33,9 @@ module Heimdall
     config.generators.system_tests = nil
 
     config.active_record.schema_format = :sql
+
+    console do
+      ARGV.push('-r', root.join('lib/heimdall_irbrc.rb'))
+    end
   end
 end
