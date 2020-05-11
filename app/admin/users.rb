@@ -3,8 +3,8 @@ ActiveAdmin.register User do
 
   filter :name
   filter :email
-  filter :current_sign_in_at
-  filter :sign_in_count
+  filter :has_multiple_household_members, as: :boolean, filters: [:eq]
+  filter :current_sign_in_at, label: 'Last Signed In'
   filter :created_at
 
   index do

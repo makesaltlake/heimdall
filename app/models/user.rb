@@ -61,6 +61,10 @@ class User < ApplicationRecord
 
   has_many :manual_user_badge_readers, through: :badge_reader_manual_users, source: :badge_reader
 
+  ransacker :has_multiple_household_members, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
+    Arel.sql('exists(select id from users as household_users where household_users.household_id = users.household_id and household_users.id != users.id)')
+  end
+
   def display_name
     name
   end
