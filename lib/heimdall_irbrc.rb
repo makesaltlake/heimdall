@@ -3,7 +3,7 @@ puts 'hi from irbrc'
 env = ENV['HEIMDALL_ENV'] || 'local'
 color = {
   'local' => [nil, :bold],
-  'demo' => [:white, :blue, :bold],
+  'demo' => [:white, :cyan, :bold],
   'staging' => [:white, :yellow, :bold],
   'production' => [:white, :red, :bold]
 }.fetch(env)
