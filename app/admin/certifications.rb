@@ -16,7 +16,7 @@ ActiveAdmin.register Certification do
       row(:name)
       row(:description) { |certification| format_multi_line_text(certification.description) }
       row(:instructors) { |certification| certification.instructors.order(:name).map { |user| auto_link(user) }.join('<br/>').html_safe }
-      row('Users with this certification can open these badge readers') { |certification| certification.badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join('<br/>').html_safe }
+      row('Grants badge reader access to') { |certification| certification.badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join('<br/>').html_safe }
     end
 
     paginated_table_panel(
