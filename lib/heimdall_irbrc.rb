@@ -1,5 +1,3 @@
-puts 'hi from irbrc'
-
 env = ENV['HEIMDALL_ENV'] || 'local'
 color = {
   'local' => [nil, :bold],
