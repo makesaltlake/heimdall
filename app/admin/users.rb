@@ -3,9 +3,10 @@ ActiveAdmin.register User do
 
   filter :name
   filter :email
-  filter :has_multiple_household_members, as: :boolean, filters: [:eq]
+  filter :has_multiple_household_members, as: :boolean, filters: [:eq], label: 'Has Household Members'
   filter :current_sign_in_at, label: 'Last Signed In'
   filter :created_at
+  filter :super_user
 
   index do
     column(:name) { |user| auto_link(user, user.name.presence || '(no name)') }
