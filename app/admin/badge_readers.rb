@@ -43,7 +43,7 @@ ActiveAdmin.register BadgeReader do
     f.inputs do
       f.input(:name)
       f.input(:description)
-      f.input(:certification_ids, label: 'Certifications', as: :selected_list, url: admin_certifications_path, minimum_input_length: 0, hint: 'A user holding any of these certifications (as well as active membership) will be allowed to badge into this reader. If no certifications are specified, any user with an active membership can badge in.')
+      f.input(:certification_ids, label: 'Certifications', as: :selected_list, url: admin_certifications_path, minimum_input_length: 0, hint: 'A user holding any of these certifications (as well as active membership) will be allowed to badge into this reader. If no certifications are specified, any user with an active membership can badge in. (Not applicable if "Prevent access by the general membership" is checked.)')
       f.input(:manual_user_ids, label: 'Manual users', as: :selected_list, url: admin_users_path, hint: 'Any user listed here can badge into this reader, whether or not they hold active membership. Good for staff members or outside instructors or volunteers. (If you need a way to add the same group of users to multiple badge readers, ask the IT team and they will add a way to make this easier, maybe user groups or something.)')
       f.input(:restricted_access, label: 'Prevent access by the general membership', hint: 'If checked, only the manual users listed above will be able to badge in. Good for staff closets and the like. If unchecked, any paid member, or any member with one of the certifications listed above, will be allowed access in addition to the listed manual users.')
     end
