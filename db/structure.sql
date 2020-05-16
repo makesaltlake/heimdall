@@ -23,6 +23,83 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: delayed_jobs_after_delete_row_tr_fn(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.delayed_jobs_after_delete_row_tr_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+      DECLARE
+        running_count integer;
+      BEGIN
+        IF OLD.strand IS NOT NULL THEN
+          PERFORM pg_advisory_xact_lock(half_md5_as_bigint(OLD.strand));
+          IF OLD.id % 20 = 0 THEN
+            running_count := (SELECT COUNT(*) FROM (
+              SELECT 1 as one FROM delayed_jobs WHERE strand = OLD.strand AND next_in_strand = 't' LIMIT OLD.max_concurrent
+            ) subquery_for_count);
+            IF running_count < OLD.max_concurrent THEN
+              UPDATE delayed_jobs SET next_in_strand = 't' WHERE id IN (
+                SELECT id FROM delayed_jobs j2 WHERE next_in_strand = 'f' AND
+                j2.strand = OLD.strand ORDER BY j2.id ASC LIMIT (OLD.max_concurrent - running_count) FOR UPDATE
+              );
+            END IF;
+          ELSE
+            UPDATE delayed_jobs SET next_in_strand = 't' WHERE id =
+              (SELECT id FROM delayed_jobs j2 WHERE next_in_strand = 'f' AND
+                j2.strand = OLD.strand ORDER BY j2.id ASC LIMIT 1 FOR UPDATE);
+          END IF;
+        END IF;
+        RETURN OLD;
+      END;
+      $$;
+
+
+--
+-- Name: delayed_jobs_before_insert_row_tr_fn(); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.delayed_jobs_before_insert_row_tr_fn() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+      BEGIN
+        IF NEW.strand IS NOT NULL THEN
+          PERFORM pg_advisory_xact_lock(half_md5_as_bigint(NEW.strand));
+          IF (SELECT COUNT(*) FROM (
+              SELECT 1 AS one FROM delayed_jobs WHERE strand = NEW.strand LIMIT NEW.max_concurrent
+            ) subquery_for_count) = NEW.max_concurrent THEN
+            NEW.next_in_strand := 'f';
+          END IF;
+        END IF;
+        RETURN NEW;
+      END;
+      $$;
+
+
+--
+-- Name: half_md5_as_bigint(character varying); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.half_md5_as_bigint(strand character varying) RETURNS bigint
+    LANGUAGE plpgsql
+    AS $$
+      DECLARE
+        strand_md5 bytea;
+      BEGIN
+        strand_md5 := decode(md5(strand), 'hex');
+        RETURN (CAST(get_byte(strand_md5, 0) AS bigint) << 56) +
+                                  (CAST(get_byte(strand_md5, 1) AS bigint) << 48) +
+                                  (CAST(get_byte(strand_md5, 2) AS bigint) << 40) +
+                                  (CAST(get_byte(strand_md5, 3) AS bigint) << 32) +
+                                  (CAST(get_byte(strand_md5, 4) AS bigint) << 24) +
+                                  (get_byte(strand_md5, 5) << 16) +
+                                  (get_byte(strand_md5, 6) << 8) +
+                                   get_byte(strand_md5, 7);
+      END;
+      $$;
+
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -311,6 +388,97 @@ ALTER SEQUENCE public.certifications_id_seq OWNED BY public.certifications.id;
 
 
 --
+-- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.delayed_jobs (
+    id integer NOT NULL,
+    priority integer DEFAULT 0,
+    attempts integer DEFAULT 0,
+    handler text,
+    last_error text,
+    queue character varying(255) NOT NULL,
+    run_at timestamp without time zone NOT NULL,
+    locked_at timestamp without time zone,
+    failed_at timestamp without time zone,
+    locked_by character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    tag character varying(255),
+    max_attempts integer,
+    strand character varying(255),
+    next_in_strand boolean DEFAULT true NOT NULL,
+    source character varying(255),
+    max_concurrent integer DEFAULT 1 NOT NULL,
+    expires_at timestamp without time zone
+);
+
+
+--
+-- Name: delayed_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.delayed_jobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: delayed_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.delayed_jobs_id_seq OWNED BY public.delayed_jobs.id;
+
+
+--
+-- Name: failed_jobs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.failed_jobs (
+    id integer NOT NULL,
+    priority integer DEFAULT 0,
+    attempts integer DEFAULT 0,
+    handler character varying(512000),
+    last_error text,
+    queue character varying(255),
+    run_at timestamp without time zone,
+    locked_at timestamp without time zone,
+    failed_at timestamp without time zone,
+    locked_by character varying(255),
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    tag character varying(255),
+    max_attempts integer,
+    strand character varying(255),
+    original_job_id bigint,
+    source character varying(255),
+    expires_at timestamp without time zone
+);
+
+
+--
+-- Name: failed_jobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.failed_jobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: failed_jobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.failed_jobs_id_seq OWNED BY public.failed_jobs.id;
+
+
+--
 -- Name: households; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -492,6 +660,20 @@ ALTER TABLE ONLY public.certifications ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: delayed_jobs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.delayed_jobs ALTER COLUMN id SET DEFAULT nextval('public.delayed_jobs_id_seq'::regclass);
+
+
+--
+-- Name: failed_jobs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.failed_jobs ALTER COLUMN id SET DEFAULT nextval('public.failed_jobs_id_seq'::regclass);
+
+
+--
 -- Name: households id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -585,6 +767,22 @@ ALTER TABLE ONLY public.certifications
 
 
 --
+-- Name: delayed_jobs delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.delayed_jobs
+    ADD CONSTRAINT delayed_jobs_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: failed_jobs failed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.failed_jobs
+    ADD CONSTRAINT failed_jobs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: households households_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -614,6 +812,13 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.versions
     ADD CONSTRAINT versions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: get_delayed_jobs_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX get_delayed_jobs_index ON public.delayed_jobs USING btree (queue, priority, run_at, id) WHERE ((locked_at IS NULL) AND next_in_strand);
 
 
 --
@@ -750,6 +955,34 @@ CREATE INDEX index_certification_issuances_on_user_id ON public.certification_is
 
 
 --
+-- Name: index_delayed_jobs_on_locked_by; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_delayed_jobs_on_locked_by ON public.delayed_jobs USING btree (locked_by) WHERE (locked_by IS NOT NULL);
+
+
+--
+-- Name: index_delayed_jobs_on_run_at_and_tag; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_delayed_jobs_on_run_at_and_tag ON public.delayed_jobs USING btree (run_at, tag);
+
+
+--
+-- Name: index_delayed_jobs_on_strand; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_delayed_jobs_on_strand ON public.delayed_jobs USING btree (strand, id);
+
+
+--
+-- Name: index_delayed_jobs_on_tag; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_delayed_jobs_on_tag ON public.delayed_jobs USING btree (tag);
+
+
+--
 -- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -789,6 +1022,20 @@ CREATE UNIQUE INDEX index_users_on_unlock_token ON public.users USING btree (unl
 --
 
 CREATE INDEX index_versions_on_item_type_and_item_id ON public.versions USING btree (item_type, item_id);
+
+
+--
+-- Name: delayed_jobs delayed_jobs_after_delete_row_tr; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER delayed_jobs_after_delete_row_tr AFTER DELETE ON public.delayed_jobs FOR EACH ROW WHEN (((old.strand IS NOT NULL) AND (old.next_in_strand = true))) EXECUTE PROCEDURE public.delayed_jobs_after_delete_row_tr_fn();
+
+
+--
+-- Name: delayed_jobs delayed_jobs_before_insert_row_tr; Type: TRIGGER; Schema: public; Owner: -
+--
+
+CREATE TRIGGER delayed_jobs_before_insert_row_tr BEFORE INSERT ON public.delayed_jobs FOR EACH ROW WHEN ((new.strand IS NOT NULL)) EXECUTE PROCEDURE public.delayed_jobs_before_insert_row_tr_fn();
 
 
 --
@@ -914,6 +1161,30 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200509211533'),
 ('20200511102058'),
 ('20200511102904'),
-('20200511105701');
+('20200511105701'),
+('20200516145940'),
+('20200516145941'),
+('20200516145942'),
+('20200516145943'),
+('20200516145944'),
+('20200516145945'),
+('20200516145946'),
+('20200516145947'),
+('20200516145948'),
+('20200516145949'),
+('20200516145950'),
+('20200516145951'),
+('20200516145952'),
+('20200516145953'),
+('20200516145954'),
+('20200516145955'),
+('20200516145956'),
+('20200516145957'),
+('20200516145958'),
+('20200516145959'),
+('20200516145960'),
+('20200516145961'),
+('20200516145962'),
+('20200516145963');
 
 

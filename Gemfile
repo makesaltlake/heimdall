@@ -48,6 +48,7 @@ gem 'activeadmin_addons'
 gem 'thor', '0.20.3'
 gem 'faker' # yes, in production too - that lets us seed data into demo environments
 gem 'paint'
+gem 'inst-jobs'
 
 group :development do
   # Work around https://github.com/ctran/annotate_models/issues/761. The git
