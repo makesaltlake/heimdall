@@ -20,12 +20,15 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
+#  subscription_active    :boolean
+#  subscription_created   :datetime
 #  super_user             :boolean          default(FALSE), not null
 #  unconfirmed_email      :string
 #  unlock_token           :string
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
 #  household_id           :bigint           not null
+#  subscription_id        :string
 #
 # Indexes
 #

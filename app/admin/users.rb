@@ -3,14 +3,18 @@ ActiveAdmin.register User do
 
   filter :name
   filter :email
+  filter :subscription_active
   filter :has_multiple_household_members, as: :boolean, filters: [:eq], label: 'Has Household Members'
   filter :current_sign_in_at, label: 'Last Signed In'
+  filter :subscription_created
   filter :created_at
   filter :super_user
 
   index do
     column(:name) { |user| auto_link(user, user.name.presence || '(no name)') }
     column(:email)
+    column(:subscription_active)
+    column(:subscription_created)
     column('Last Signed In', :current_sign_in_at)
   end
 
@@ -18,6 +22,9 @@ ActiveAdmin.register User do
     attributes_table do
       row(:name)
       row(:email)
+      row(:subscription_active)
+      row(:subscription_id)
+      row(:subscription_created)
       row(:super_user)
       row('Last Signed In', &:current_sign_in_at)
       row('Failed Sign In Attempts', &:failed_attempts)

@@ -254,6 +254,7 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stripe (5.22.0)
     thor (0.20.3)
     thread_safe (0.3.6)
     tilt (2.0.10)
@@ -295,6 +296,7 @@ DEPENDENCIES
   puma (~> 4.1)
   rails (~> 6.0.3)
   sass-rails (>= 6)
+  stripe
   thor (= 0.20.3)
   tzinfo-data
   web-console (>= 3.3.0)

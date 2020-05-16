@@ -545,7 +545,10 @@ CREATE TABLE public.users (
     name character varying,
     super_user boolean DEFAULT false NOT NULL,
     badge_number character varying,
-    household_id bigint NOT NULL
+    household_id bigint NOT NULL,
+    subscription_active boolean,
+    subscription_id character varying,
+    subscription_created timestamp without time zone
 );
 
 
@@ -1185,6 +1188,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200516145960'),
 ('20200516145961'),
 ('20200516145962'),
-('20200516145963');
+('20200516145963'),
+('20200516150411');
 
 

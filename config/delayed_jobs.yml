@@ -1,0 +1,9 @@
+development:
+  sleep_delay: 5
+  workers:
+    - workers: 2
+
+production:
+  sleep_delay: 5
+  workers:
+    - workers: 5
