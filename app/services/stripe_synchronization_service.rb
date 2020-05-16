@@ -11,16 +11,10 @@ module StripeSynchronizationService
   end
 
   def self.sync_single_user_now(email, subscriptions = nil)
-    # fetch subscriptions for this user if they weren't specified
-    unless subscriptions
-      subscriptions = []
+    Rails.logger.info("Synchronizing subscription for email #{email}...")
 
-      Stripe::Customer.list(email: email, limit: 100).auto_paging_each do |customer|
-        Stripe::Subscription.list(customer: customer.id, status: 'all', expand: ['data.plan.product'], limit: 100).auto_paging_each do |subscription|
-          subscriptions << subscription
-        end
-      end
-    end
+    # fetch subscriptions for this user if they weren't specified
+    subscriptions = load_subscriptions_for_email(email) unless subscriptions
 
     # Filter out subscriptions that aren't memberships
     subscriptions = subscriptions.select { |subscription| is_membership_subscription?(subscription) }
@@ -36,7 +30,7 @@ module StripeSynchronizationService
 
     TransactionRetry.run do
       User.transaction do
-        user = User.find_by(email: email)
+        user = User.find_for_authentication(email: email)
         user = User.new(email: email, name: name, password: SecureRandom.hex) unless user
 
         user.subscription_active = !active_subscriptions.empty?
@@ -49,23 +43,31 @@ module StripeSynchronizationService
       end
     end
 
-    nil
+    Rails.logger.info("Done synchronizing subscription for email #{email}.")
   end
 
   def self.sync_all_users_now
+    Rails.logger.info('Synchronizing all subscriptions...')
+
     # When synchronizing all users, we load all subscriptions into memory. This
     # vastly increases the speed of synchronization, but it won't scale
     # forever. Luckily, the membership counts at which this will become a
     # problem are huge.
     subscriptions_by_email = {}
+    subscription_count = 0
 
     Stripe::Subscription.list(status: 'all', expand: ['data.plan.product', 'data.customer'], limit: 100).auto_paging_each do |subscription|
+      subscription_count += 1
+      Rails.logger.info("#{subscription_count} subscriptions and counting...") if subscription_count % 100 == 0
+
       next if subscription.customer.respond_to?(:deleted) && subscription.customer.deleted
 
       email = subscription.customer.email
       subscriptions_by_email[email] ||= []
       subscriptions_by_email[email] << subscription
     end
+
+    Rails.logger.info("#{subscription_count} #{'subscription'.pluralize(subscription_count)}!")
 
     # Also sync users we know about but didn't find any subscriptions for. The
     # note above about things not scaling applies here because we load all
@@ -79,7 +81,19 @@ module StripeSynchronizationService
       sync_single_user_now(email, subscriptions)
     end
 
-    nil
+    Rails.logger.info('Done synchronizing all subscriptions.')
+  end
+
+  def self.load_subscriptions_for_email(email)
+    subscriptions = []
+
+    Stripe::Customer.list(email: email, limit: 100).auto_paging_each do |customer|
+      Stripe::Subscription.list(customer: customer.id, status: 'all', expand: ['data.plan.product'], limit: 100).auto_paging_each do |subscription|
+        subscriptions << subscription
+      end
+    end
+
+    subscriptions
   end
 
   def self.is_membership_subscription?(subscription)
@@ -88,7 +102,8 @@ module StripeSynchronizationService
     # They almost certainly represent cancelled subscriptions, but no reason
     # not to count them as memberships since they'll be filtered out on that
     # basis later.
-    !subscription.plan.product.name || subscription.plan.product.name.downcase.include?('membership')
+    product = subscription.plan.product
+    !product.respond_to?(:name) || !product.name || product.name.downcase.include?('membership')
   end
 
   def self.extract_name(subscription)
