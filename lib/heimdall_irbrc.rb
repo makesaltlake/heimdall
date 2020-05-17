@@ -1,8 +1,8 @@
 env = ENV['HEIMDALL_ENV'] || 'local'
 color = {
   'local' => [nil, :bold],
-  'demo' => [:white, :cyan, :bold],
-  'staging' => [:white, :yellow, :bold],
+  'dev' => [:cyan, :bold],
+  'staging' => [:yellow, :bold],
   'production' => [:white, :red, :bold]
 }.fetch(env)
 
