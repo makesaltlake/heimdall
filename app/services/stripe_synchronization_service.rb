@@ -10,6 +10,15 @@ module StripeSynchronizationService
   # events arrive all in short order.
   SYNC_DELAY = 15.seconds
 
+  SubscriptionData = Struct.new(
+    :id,
+    :is_membership_subscription,
+    :extracted_name,
+    :start_date,
+    :status,
+    keyword_init: true
+  )
+
   def self.sync_all_users_later
     send_later_enqueue_args(:sync_all_users_now, { singleton: SINGLETON_KEY, run_at: Time.now + SYNC_DELAY })
   end
@@ -17,35 +26,29 @@ module StripeSynchronizationService
   def self.sync_single_user_now(email, subscriptions)
     Rails.logger.info("Synchronizing subscription for email #{email}...")
 
-    # TODO: re-enable this and re-add ` = nil` after `subscriptions` in the
-    # arguments to this method.
-    # It's disabled because Stripe doesn't have a way to search customers by
-    # email case-insensitively from their API and we have members who have
-    # entered their email in a different case across the different times
-    # they've signed up for and cancelled membership. For now we force
-    # synchronization of all users at once to get around that (since that's
-    # only slightly more expensive than synchronizing a single user but
-    # iterating through all customers to do so). In the future, we'll want to
-    # work around this by being more intelligent about how we synchronize
-    # customers and subscriptions; specifically, we'll want to store a list of
-    # all customers for a user and synchronize only the subscriptions belonging
-    # to those customers when asked to sync a single user. Then we'll only need
-    # to sync all subscriptions (and the customers associated with each user)
-    # when a customer changes, which happens far less often than when a
-    # subscription changes.
-    # subscriptions = load_subscriptions_for_email(email) unless subscriptions
+    # TODO: redo how we sync subscriptions.
+    # Stripe doesn't have a way to search customers by email case-insensitively
+    # from their API and we have members who have entered their email in a
+    # different case across the different times they've signed up for and
+    # cancelled membership. For now we force synchronization of all users at
+    # once to get around that (since that's only slightly more expensive than
+    # synchronizing a single user but iterating through all customers to do
+    # so). In the future, we'll want to work around this by being more
+    # intelligent about how we synchronize customers and subscriptions;
+    # specifically, we'll want to store a list of all customers for a user and
+    # synchronize only the subscriptions belonging to those customers when
+    # asked to sync a single user. Then we'll only need to sync all
+    # subscriptions (and the customers associated with each user) when a
+    # customer changes, which happens far less often than when a subscription
+    # changes.
 
     # Filter out subscriptions that aren't memberships
-    subscriptions = subscriptions.select { |subscription| is_membership_subscription?(subscription) }
+    subscriptions = subscriptions.select { |subscription| subscription.is_membership_subscription }
 
     subscriptions = subscriptions.sort_by(&:start_date)
     active_subscriptions = subscriptions.select { |s| ACTIVE_SUBSCRIPTION_STATUSES.include?(s.status) }
 
-    name = nil
-    subscriptions.each do |subscription|
-      name = extract_name(subscription).presence
-      break if name
-    end
+    name = subscriptions.map(&:extracted_name).detect { |name| name.present? }
 
     TransactionRetry.run do
       User.transaction do
@@ -84,7 +87,12 @@ module StripeSynchronizationService
 
       email = subscription.customer.email&.downcase
       subscriptions_by_email[email] ||= []
-      subscriptions_by_email[email] << subscription
+      subscriptions_by_email[email] << SubscriptionData.new(
+        is_membership_subscription: is_membership_subscription?(subscription),
+        extracted_name: extract_name(subscription),
+        start_date: subscription.start_date,
+        status: subscription.status
+      )
     end
 
     Rails.logger.info("#{subscription_count} #{'subscription'.pluralize(subscription_count)}!")
@@ -103,20 +111,6 @@ module StripeSynchronizationService
 
     Rails.logger.info('Done synchronizing all subscriptions.')
   end
-
-  # See comment in sync_single_user_now for why this is commented out.
-  #
-  # def self.load_subscriptions_for_email(email)
-  #   subscriptions = []
-  #
-  #   Stripe::Customer.list(email: email, limit: 100).auto_paging_each do |customer|
-  #     Stripe::Subscription.list(customer: customer.id, status: 'all', expand: ['data.plan.product'], limit: 100).auto_paging_each do |subscription|
-  #       subscriptions << subscription
-  #     end
-  #   end
-  #
-  #   subscriptions
-  # end
 
   def self.is_membership_subscription?(subscription)
     # Plans without names appear to be old, deleted plans created by Paid
