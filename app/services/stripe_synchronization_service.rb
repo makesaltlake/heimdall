@@ -74,7 +74,7 @@ module StripeSynchronizationService
     subscriptions_by_email = {}
     subscription_count = 0
 
-    Stripe::Subscription.list(status: 'all', expand: ['data.plan.product', 'data.customer'], limit: 100).auto_paging_each do |subscription|
+    Stripe::Subscription.list(status: 'all', expand: ['data.plan.product', 'data.customer'], limit: 25).auto_paging_each do |subscription|
       subscription_count += 1
       Rails.logger.info("#{subscription_count} subscriptions and counting...") if subscription_count % 100 == 0
 

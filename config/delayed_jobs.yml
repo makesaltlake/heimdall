@@ -6,4 +6,4 @@ development:
 production:
   sleep_delay: 5
   workers:
-    - workers: 5
+    - workers: 2
