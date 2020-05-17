@@ -43,8 +43,14 @@
 #  fk_rails_...  (household_id => households.id)
 #
 class User < ApplicationRecord
+  ALL_HOUSEHOLD_MEMBER_IDS_SQL = '(select household_users.id from users as household_users where household_users.household_id = users.household_id)'
+  FELLOW_HOUSEHOLD_MEMBER_IDS_SQL = '(select household_users.id from users as household_users where household_users.household_id = users.household_id and household_users.id != users.id)'
+
+  HAS_HOUSEHOLD_MEMBERSHIP_SQL = 'exists(select household_users.id from users as household_users where household_users.household_id = users.household_id and household_users.subscription_active)'
+  HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL = "#{HAS_HOUSEHOLD_MEMBERSHIP_SQL} as has_household_membership"
+
   # Include default devise modules. Others available are:
-  # :confirmable, :timeoutable,, :registerable, and :omniauthable
+  # :confirmable, :timeoutable, :registerable, and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :trackable, :lockable
 
   has_paper_trail skip: [:password, :password_confirmation, :encrypted_password]
@@ -65,7 +71,11 @@ class User < ApplicationRecord
   has_many :manual_user_badge_readers, through: :badge_reader_manual_users, source: :badge_reader
 
   ransacker :has_multiple_household_members, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
-    Arel.sql('exists(select id from users as household_users where household_users.household_id = users.household_id and household_users.id != users.id)')
+    Arel.sql("exists(#{FELLOW_HOUSEHOLD_MEMBER_IDS_SQL})")
+  end
+
+  ransacker :has_household_membership, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
+    Arel.sql(HAS_HOUSEHOLD_MEMBERSHIP_SQL)
   end
 
   def display_name
@@ -132,5 +142,13 @@ class User < ApplicationRecord
     end
 
     @household_user_ids = nil
+  end
+
+  def has_household_membership
+    if attributes.has_key?('has_household_membership')
+      attributes['has_household_membership']
+    else
+      User.where(id: id).select(HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL).take&.has_household_membership
+    end
   end
 end

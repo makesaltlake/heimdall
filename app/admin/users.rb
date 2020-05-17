@@ -3,7 +3,7 @@ ActiveAdmin.register User do
 
   filter :name
   filter :email
-  filter :subscription_active
+  filter :has_household_membership, as: :boolean, filters: [:eq], label: 'Household Has Membership'
   filter :has_multiple_household_members, as: :boolean, filters: [:eq], label: 'Has Household Members'
   filter :current_sign_in_at, label: 'Last Signed In'
   filter :subscription_created
@@ -13,7 +13,7 @@ ActiveAdmin.register User do
   index do
     column(:name) { |user| auto_link(user, user.name.presence || '(no name)') }
     column(:email)
-    column(:subscription_active)
+    column(:household_has_membership, &:has_household_membership)
     column(:subscription_created)
     column('Last Signed In', :current_sign_in_at)
   end
@@ -22,7 +22,8 @@ ActiveAdmin.register User do
     attributes_table do
       row(:name)
       row(:email)
-      row(:subscription_active)
+      row(:household_has_membership, &:has_household_membership)
+      row(:individual_has_membership, &:subscription_active)
       row(:subscription_id)
       row(:subscription_created)
       row(:super_user)
@@ -62,6 +63,10 @@ ActiveAdmin.register User do
   end
 
   controller do
+    def scoped_collection
+      end_of_association_chain.select("users.*, #{User::HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL}")
+    end
+
     def update
       # Don't try to update the user's password if no password is specified.
       # TODO: consider ripping out the ability to set passwords directly
