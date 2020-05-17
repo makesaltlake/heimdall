@@ -8,7 +8,7 @@ module StripeSynchronizationService
   # singleton (which debounces any repeat schedulings before the job actually
   # runs) helps to cut down on extra jobs being kicked off if multiple webhook
   # events arrive all in short order.
-  SYNC_DELAY = 10.seconds
+  SYNC_DELAY = 15.seconds
 
   def self.sync_all_users_later
     send_later_enqueue_args(:sync_all_users_now, { singleton: SINGLETON_KEY, run_at: Time.now + SYNC_DELAY })
@@ -80,8 +80,9 @@ module StripeSynchronizationService
       Rails.logger.info("#{subscription_count} subscriptions and counting...") if subscription_count % 100 == 0
 
       next if subscription.customer.respond_to?(:deleted) && subscription.customer.deleted
+      next if !subscription.customer.email
 
-      email = subscription.customer.email.downcase
+      email = subscription.customer.email&.downcase
       subscriptions_by_email[email] ||= []
       subscriptions_by_email[email] << subscription
     end
