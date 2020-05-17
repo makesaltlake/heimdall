@@ -24,8 +24,6 @@ module StripeSynchronizationService
   end
 
   def self.sync_single_user_now(email, subscriptions)
-    Rails.logger.info("Synchronizing subscription for email #{email}...")
-
     # TODO: redo how we sync subscriptions.
     # Stripe doesn't have a way to search customers by email case-insensitively
     # from their API and we have members who have entered their email in a
@@ -64,8 +62,6 @@ module StripeSynchronizationService
         user.save!
       end
     end
-
-    Rails.logger.info("Done synchronizing subscription for email #{email}.")
   end
 
   def self.sync_all_users_now
@@ -105,8 +101,11 @@ module StripeSynchronizationService
       subscriptions_by_email[email.downcase] ||= []
     end
 
-    subscriptions_by_email.each do |email, subscriptions|
+    Rails.logger.info("#{subscriptions_by_email.count} unique email addresses")
+
+    subscriptions_by_email.each_with_index do |(email, subscriptions), index|
       sync_single_user_now(email, subscriptions)
+      Rails.logger.info("#{index + 1} users updated and counting...") if (index + 1) % 100 == 0
     end
 
     Rails.logger.info('Done synchronizing all subscriptions.')
