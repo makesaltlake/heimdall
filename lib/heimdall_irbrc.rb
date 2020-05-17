@@ -1,9 +1,9 @@
 env = ENV['HEIMDALL_ENV'] || 'local'
 color = {
-  'local' => [nil, :bold],
+  'local' => [:bold],
   'dev' => [:cyan, :bold],
   'staging' => [:yellow, :bold],
-  'production' => [:white, :red, :bold]
+  'production' => [:red, :bold]
 }.fetch(env)
 
 IRB.conf[:PROMPT][:HEIMDALL] = IRB.conf[:PROMPT][:DEFAULT].merge({
