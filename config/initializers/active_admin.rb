@@ -45,6 +45,11 @@ ActiveAdmin.setup do |config|
   #
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add label: 'Developer Stuff', priority: 20
+    end
+  end
 
   # == User Authentication
   #
