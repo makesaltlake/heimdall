@@ -3,6 +3,8 @@ ActiveAdmin.register Certification do
 
   permit_params :name, :description, instructor_ids: []
 
+  config.sort_order = 'name_asc'
+
   filter :name
 
   index do

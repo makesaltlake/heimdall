@@ -1,6 +1,8 @@
 ActiveAdmin.register User do
   permit_params :name, :email, :super_user, :password, :password_confirmation, household_user_ids: []
 
+  config.sort_order = 'subscription_created_desc'
+
   filter :name
   filter :email
   filter :has_household_membership, as: :boolean, filters: [:eq], label: 'Household Has Membership'

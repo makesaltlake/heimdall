@@ -3,6 +3,8 @@ ActiveAdmin.register CertificationIssuance do
 
   permit_params [:certification_id, :user_id, :issued_at, :certifier_id, :notes]
 
+  config.sort_order = 'issued_at_desc'
+
   actions :all, except: [:destroy]
 
   filter :certification

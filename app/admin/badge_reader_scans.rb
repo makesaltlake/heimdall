@@ -1,6 +1,8 @@
 ActiveAdmin.register BadgeReaderScan do
   menu parent: 'Badge Readers', priority: 4
 
+  config.sort_order = 'scanned_at_desc'
+
   actions :index, :show
 
   filter :badge_reader

@@ -3,6 +3,8 @@ ActiveAdmin.register BadgeReader do
 
   menu parent: 'Badge Readers', priority: 1
 
+  config.sort_order = 'name_asc'
+
   permit_params :name, :description, :restricted_access, certification_ids: [], manual_user_ids: []
 
   filter :name
