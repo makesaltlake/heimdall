@@ -55,7 +55,7 @@ class User < ApplicationRecord
   # :confirmable, :timeoutable, :registerable, and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :trackable, :lockable
 
-  has_paper_trail skip: [:password, :password_confirmation, :encrypted_password]
+  has_paper_trail skip: [:password, :password_confirmation, :encrypted_password, :badge_token]
 
   belongs_to :household
 

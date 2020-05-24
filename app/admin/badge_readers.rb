@@ -1,7 +1,7 @@
 ActiveAdmin.register BadgeReader do
-  REGENERATE_API_TOKEN_WARNING = "WARNING: Regenerating a badge reader's API token will cause it to stop working until the new API token has been entered in. Are you sure you want to regenerate this badge reader's API token?"
+  REGENERATE_BADGE_READER_API_TOKEN_WARNING = "WARNING: Regenerating a badge reader's API token will cause it to stop working until the new API token has been entered in. Are you sure you want to regenerate this badge reader's API token?"
 
-  menu parent: 'Badge Readers', priority: 1
+  menu parent: 'Badges', priority: 1
 
   config.sort_order = 'name_asc'
 
@@ -21,7 +21,7 @@ ActiveAdmin.register BadgeReader do
     attributes_table do
       row(:name)
       row(:description) { |badge_reader| format_multi_line_text(badge_reader.description) }
-      row(:api_token) { |badge_reader| "#{link_to('Reveal', reveal_api_token_admin_badge_reader_path(badge_reader))}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;#{link_to('Regenerate', regenerate_api_token_admin_badge_reader_path(badge_reader), method: :post, data: { confirm: REGENERATE_API_TOKEN_WARNING })}".html_safe }
+      row(:api_token) { |badge_reader| "#{link_to('Reveal', reveal_api_token_admin_badge_reader_path(badge_reader))}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;#{link_to('Regenerate', regenerate_api_token_admin_badge_reader_path(badge_reader), method: :post, data: { confirm: REGENERATE_BADGE_READER_API_TOKEN_WARNING })}".html_safe }
       row(:certifications) do
         certifications = badge_reader.certifications
         if certifications.empty?
@@ -53,7 +53,7 @@ ActiveAdmin.register BadgeReader do
   end
 
   action_item :regenerate, only: :reveal_api_token do
-    link_to 'Regenerate', regenerate_api_token_admin_badge_reader_path(resource), method: :post, data: { confirm: REGENERATE_API_TOKEN_WARNING }
+    link_to 'Regenerate', regenerate_api_token_admin_badge_reader_path(resource), method: :post, data: { confirm: REGENERATE_BADGE_READER_API_TOKEN_WARNING }
   end
 
   member_action :regenerate_api_token, method: :post do
