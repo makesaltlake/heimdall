@@ -1,10 +1,25 @@
 Rails.application.routes.draw do
+  # helper to scope routes to a controller. useful where you would use
+  # `resource` but don't actually want any of the default routes `resource`
+  # will give you.
+  def controller_namespace(name)
+    scope path: name, controller: name, as: name do
+      yield
+    end
+  end
+
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: 'home#home'
 
   post '/webhooks/stripe', to: 'stripe#webhook'
+
+  namespace :api do
+    controller_namespace :badge_writers do
+      post :program
+    end
+  end
 end
 
 # == Route Map

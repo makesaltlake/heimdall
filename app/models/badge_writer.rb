@@ -48,10 +48,37 @@ class BadgeWriter < ApplicationRecord
     self.api_token_regenerated_at = Time.now
   end
 
+  # called to set the user whose badge will be programmed when program_badge!
+  # is called
   def set_currently_programming_user!(user)
     self.currently_programming_user = user
     self.currently_programming_user_until = Time.now + CAN_PROGRAM_FOR
     save!
+  end
+
+  # called to program a badge for the currently_programming_user. returns that
+  # user if programming was successful, or nil if there is no such user or if
+  # the time to program a badge for that user has expired.
+  def program_badge!(badge_token)
+    return unless programming?
+
+    user = TransactionRetry.run do
+      User.transaction do
+        user = self.currently_programming_user
+
+        user.badge_token = badge_token
+        user.badge_token_set_at = Time.now
+        user.save!
+
+        self.currently_programming_user = nil
+        self.currently_programming_user_until = nil
+        self.save!
+
+        user
+      end
+    end
+
+    user
   end
 
   def programming?
