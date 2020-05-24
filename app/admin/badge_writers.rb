@@ -55,6 +55,8 @@ ActiveAdmin.register BadgeWriter do
 
   collection_action :set_currently_programming_user, method: :post do
     badge_writer = BadgeWriter.find(params[:badge_writer][:id])
+    authorize_resource! badge_writer
+
     user = User.find(params[:badge_writer][:currently_programming_user_id])
 
     badge_writer.set_currently_programming_user!(user)
