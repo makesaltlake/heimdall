@@ -41,6 +41,7 @@ end
 #            admin_delayed_backend_active_record_job GET        /admin/delayed_backend_active_record_jobs/:id(.:format)                                  admin/delayed_backend_active_record_jobs#show
 #            regenerate_api_token_admin_badge_writer POST       /admin/badge_writers/:id/regenerate_api_token(.:format)                                  admin/badge_writers#regenerate_api_token
 #                reveal_api_token_admin_badge_writer GET        /admin/badge_writers/:id/reveal_api_token(.:format)                                      admin/badge_writers#reveal_api_token
+#              cancel_programming_admin_badge_writer POST       /admin/badge_writers/:id/cancel_programming(.:format)                                    admin/badge_writers#cancel_programming
 # set_currently_programming_user_admin_badge_writers POST       /admin/badge_writers/set_currently_programming_user(.:format)                            admin/badge_writers#set_currently_programming_user
 #                                admin_badge_writers GET        /admin/badge_writers(.:format)                                                           admin/badge_writers#index
 #                                                    POST       /admin/badge_writers(.:format)                                                           admin/badge_writers#create

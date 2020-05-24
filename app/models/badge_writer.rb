@@ -61,6 +61,13 @@ class BadgeWriter < ApplicationRecord
     save!
   end
 
+  # called to cancel the current programming session
+  def cancel_programming!
+    self.currently_programming_user = nil
+    self.currently_programming_user_until = nil
+    save!
+  end
+
   # called to program a badge for the currently_programming_user. returns that
   # user if programming was successful, or nil if there is no such user or if
   # the time to program a badge for that user has expired.

@@ -23,7 +23,9 @@ ActiveAdmin.register BadgeWriter do
         if badge_writer.programming?
           text_node auto_link(badge_writer.currently_programming_user)
           text_node "&nbsp;&nbsp;".html_safe
-          text_node "(#{distance_of_time_in_words(Time.now, badge_writer.currently_programming_user_until, include_seconds: true)} left to program)"
+          text_node "(#{distance_of_time_in_words(Time.now, badge_writer.currently_programming_user_until, include_seconds: true)} left to program. "
+          text_node link_to('Cancel', cancel_programming_admin_badge_writer_path(badge_writer), method: :post)
+          text_node ')'
         elsif badge_writer.last_programmed_user
           "No-one, but this badge writer was used to program a badge for #{auto_link(badge_writer.last_programmed_user)} #{distance_of_time_in_words(badge_writer.last_programmed_at, Time.now, include_seconds: true)} ago".html_safe
         else
@@ -63,7 +65,13 @@ ActiveAdmin.register BadgeWriter do
 
     badge_writer.set_currently_programming_user!(user)
 
-    flash[:notice] = "A badge for #{user.name} can now be programmed using #{badge_writer.name}. Now, tap the new badge against this badge writer to program it for this user."
-    redirect_to admin_badge_writer_path(badge_writer)
+    flash[:notice] = "Great - now tap the new badge against this badge writer to program it for #{user.name}."
+    redirect_to resource_path(badge_writer)
+  end
+
+  member_action :cancel_programming, method: :post do
+    resource.cancel_programming!
+    flash[:notice] = "Programming has been cancelled."
+    redirect_to resource_path(resource)
   end
 end
