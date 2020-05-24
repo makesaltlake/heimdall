@@ -37,5 +37,8 @@ module Heimdall
     console do
       ARGV.push('-r', root.join('lib/heimdall_irbrc.rb'))
     end
+
+    # Set default time zone to Mountain Time (where Make Salt Lake is located)
+    config.time_zone = 'Mountain Time (US & Canada)'
   end
 end
