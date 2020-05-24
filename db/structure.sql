@@ -286,6 +286,42 @@ ALTER SEQUENCE public.badge_readers_id_seq OWNED BY public.badge_readers.id;
 
 
 --
+-- Name: badge_writers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.badge_writers (
+    id bigint NOT NULL,
+    name character varying,
+    description text,
+    api_token character varying,
+    api_token_regenerated_at timestamp without time zone,
+    currently_programming_user_id bigint,
+    currently_programming_user_until timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: badge_writers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.badge_writers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: badge_writers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.badge_writers_id_seq OWNED BY public.badge_writers.id;
+
+
+--
 -- Name: certification_instructors; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -548,7 +584,9 @@ CREATE TABLE public.users (
     household_id bigint NOT NULL,
     subscription_active boolean,
     subscription_id character varying,
-    subscription_created timestamp without time zone
+    subscription_created timestamp without time zone,
+    badge_token character varying,
+    badge_token_set_at timestamp without time zone
 );
 
 
@@ -639,6 +677,13 @@ ALTER TABLE ONLY public.badge_reader_scans ALTER COLUMN id SET DEFAULT nextval('
 --
 
 ALTER TABLE ONLY public.badge_readers ALTER COLUMN id SET DEFAULT nextval('public.badge_readers_id_seq'::regclass);
+
+
+--
+-- Name: badge_writers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_writers ALTER COLUMN id SET DEFAULT nextval('public.badge_writers_id_seq'::regclass);
 
 
 --
@@ -743,6 +788,14 @@ ALTER TABLE ONLY public.badge_reader_scans
 
 ALTER TABLE ONLY public.badge_readers
     ADD CONSTRAINT badge_readers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: badge_writers badge_writers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_writers
+    ADD CONSTRAINT badge_writers_pkey PRIMARY KEY (id);
 
 
 --
@@ -899,6 +952,13 @@ CREATE INDEX index_badge_reader_scans_on_badge_reader_id ON public.badge_reader_
 --
 
 CREATE INDEX index_badge_reader_scans_on_user_id ON public.badge_reader_scans USING btree (user_id);
+
+
+--
+-- Name: index_badge_writers_on_currently_programming_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_writers_on_currently_programming_user_id ON public.badge_writers USING btree (currently_programming_user_id);
 
 
 --
@@ -1130,6 +1190,14 @@ ALTER TABLE ONLY public.badge_reader_certifications
 
 
 --
+-- Name: badge_writers fk_rails_dc219c3789; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_writers
+    ADD CONSTRAINT fk_rails_dc219c3789 FOREIGN KEY (currently_programming_user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: badge_reader_scans fk_rails_eccca2d09b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1189,6 +1257,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200516145961'),
 ('20200516145962'),
 ('20200516145963'),
-('20200516150411');
+('20200516150411'),
+('20200523235430');
 
 

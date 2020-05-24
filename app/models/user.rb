@@ -4,6 +4,8 @@
 #
 #  id                     :bigint           not null, primary key
 #  badge_number           :string
+#  badge_token            :string
+#  badge_token_set_at     :datetime
 #  confirmation_sent_at   :datetime
 #  confirmation_token     :string
 #  confirmed_at           :datetime
