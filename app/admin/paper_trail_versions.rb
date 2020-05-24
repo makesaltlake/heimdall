@@ -16,10 +16,7 @@ ActiveAdmin.register PaperTrail::Version do
         "#{version.item_type} ##{version.item_id}"
       end
     end
-    column(:user) do |version|
-      user = User.find_by(id: version.whodunnit) if version.whodunnit
-      user ? auto_link(user) : version.whodunnit
-    end
+    column(:author) { |version| paper_trail_version_author(version) }
     column(:created_at)
   end
 
@@ -46,19 +43,20 @@ ActiveAdmin.register PaperTrail::Version do
       row(:item_type)
       row('Item ID', &:item_id)
       row(:item)
-      row(:user) do |version|
-        user = User.find_by(id: version.whodunnit) if version.whodunnit
-        user ? auto_link(user) : version.whodunnit
-      end
+      row(:author) { |version| paper_trail_version_author(version) }
       row(:created_at)
     end
 
     panel 'Changes' do
-      table_for resource.object_changes.to_a do
+      table_for resource.object_changes.to_a.sort do
         column(:attribute) { |change| change[0] }
         column(:before) { |change| change[1][0] }
         column(:after) { |change| change[1][1] }
       end
+    end
+
+    panel 'Metadata' do
+      pre JSON.pretty_generate(resource.metadata)
     end
   end
 end

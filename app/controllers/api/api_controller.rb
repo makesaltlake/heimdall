@@ -1,5 +1,8 @@
 class Api::ApiController < ApplicationController
-  before_action :authenticate_api_request
+  # prepend this one so that it happens before ApplicationController's
+  # set_paper_trail_whodunnit; otherwise we haven't loaded @resource when
+  # info_for_paper_trail is called
+  prepend_before_action :authenticate_api_request
   skip_before_action :verify_authenticity_token
 
   class_attribute :authentication_model_class
@@ -22,5 +25,16 @@ class Api::ApiController < ApplicationController
     return render plain: 'Forbidden', status: :forbidden unless resource
 
     @resource = resource
+  end
+
+  def info_for_paper_trail
+    super.deep_merge({
+      metadata: {
+        api_resource: @resource && {
+          type: resource.class.name,
+          id: resource.id
+        }
+      }
+    })
   end
 end

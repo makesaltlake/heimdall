@@ -72,6 +72,8 @@ end
 #                                                    PATCH      /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
 #                                                    PUT        /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
 #                                                    DELETE     /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#destroy
+#                         admin_paper_trail_versions GET        /admin/paper_trail_versions(.:format)                                                    admin/paper_trail_versions#index
+#                          admin_paper_trail_version GET        /admin/paper_trail_versions/:id(.:format)                                                admin/paper_trail_versions#show
 #                revoke_admin_certification_issuance GET        /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
 #                                                    POST       /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
 #                      admin_certification_issuances GET        /admin/certification_issuances(.:format)                                                 admin/certification_issuances#index

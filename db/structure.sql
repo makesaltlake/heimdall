@@ -623,7 +623,8 @@ CREATE TABLE public.versions (
     whodunnit character varying,
     object jsonb,
     object_changes jsonb,
-    created_at timestamp without time zone
+    created_at timestamp without time zone,
+    metadata jsonb
 );
 
 
@@ -1097,6 +1098,27 @@ CREATE INDEX index_versions_on_item_type_and_item_id ON public.versions USING bt
 
 
 --
+-- Name: index_versions_on_metadata; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_versions_on_metadata ON public.versions USING gin (metadata);
+
+
+--
+-- Name: index_versions_on_object; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_versions_on_object ON public.versions USING gin (object);
+
+
+--
+-- Name: index_versions_on_object_changes; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_versions_on_object_changes ON public.versions USING gin (object_changes);
+
+
+--
 -- Name: delayed_jobs delayed_jobs_after_delete_row_tr; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -1276,6 +1298,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200516145963'),
 ('20200516150411'),
 ('20200523235430'),
-('20200524052326');
+('20200524052326'),
+('20200524080043');
 
 
