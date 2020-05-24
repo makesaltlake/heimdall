@@ -45,11 +45,6 @@ ActiveAdmin.setup do |config|
   #
   # This will ONLY change the title for the admin section. Other
   # namespaces will continue to use the main "site_title" configuration.
-  config.namespace :admin do |admin|
-    admin.build_menu do |menu|
-      menu.add label: 'Developer Stuff', priority: 20
-    end
-  end
 
   # == User Authentication
   #
@@ -337,6 +332,16 @@ ActiveAdmin.setup do |config|
   # You can switch to using Webpacker here.
   #
   # config.use_webpacker = true
+
+  # Change menu order
+  config.namespace :admin do |admin|
+    admin.build_menu do |menu|
+      menu.add label: 'Users', priority: 11
+      menu.add label: 'Certifications', priority: 12
+      menu.add label: 'Badges', priority: 13
+      menu.add label: 'Developer Stuff', priority: 20
+    end
+  end
 end
 
 module ActiveAdmin::ViewHelpers
