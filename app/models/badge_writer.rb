@@ -7,18 +7,22 @@
 #  api_token_regenerated_at         :datetime
 #  currently_programming_user_until :datetime
 #  description                      :text
+#  last_programmed_at               :datetime
 #  name                             :string
 #  created_at                       :datetime         not null
 #  updated_at                       :datetime         not null
 #  currently_programming_user_id    :bigint
+#  last_programmed_user_id          :bigint
 #
 # Indexes
 #
 #  index_badge_writers_on_currently_programming_user_id  (currently_programming_user_id)
+#  index_badge_writers_on_last_programmed_user_id        (last_programmed_user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (currently_programming_user_id => users.id)
+#  fk_rails_...  (last_programmed_user_id => users.id)
 #
 class BadgeWriter < ApplicationRecord
   API_TOKEN_LENGTH = 40
@@ -29,6 +33,7 @@ class BadgeWriter < ApplicationRecord
   has_paper_trail skip: [:api_token]
 
   belongs_to :currently_programming_user, class_name: 'User', optional: true
+  belongs_to :last_programmed_user, class_name: 'User', optional: true
 
   # Give every badge writer an API token on creation.
   # Also, BadgeReader and BadgeWriter share the same API token code; if we find
@@ -65,13 +70,16 @@ class BadgeWriter < ApplicationRecord
     user = TransactionRetry.run do
       User.transaction do
         user = self.currently_programming_user
+        now = Time.now
 
         user.badge_token = badge_token
-        user.badge_token_set_at = Time.now
+        user.badge_token_set_at = now
         user.save!
 
         self.currently_programming_user = nil
         self.currently_programming_user_until = nil
+        self.last_programmed_user = user
+        self.last_programmed_at = now
         self.save!
 
         user

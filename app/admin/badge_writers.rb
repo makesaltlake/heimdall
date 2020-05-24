@@ -24,6 +24,8 @@ ActiveAdmin.register BadgeWriter do
           text_node auto_link(badge_writer.currently_programming_user)
           text_node "&nbsp;&nbsp;".html_safe
           text_node "(#{distance_of_time_in_words(Time.now, badge_writer.currently_programming_user_until, include_seconds: true)} left to program)"
+        elsif badge_writer.last_programmed_user
+          "No-one, but this badge writer was used to program a badge for #{auto_link(badge_writer.last_programmed_user)} #{distance_of_time_in_words(badge_writer.last_programmed_at, Time.now, include_seconds: true)} ago".html_safe
         else
           nil # TODO: show the most recently programmed user for convenience
         end

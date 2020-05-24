@@ -298,7 +298,9 @@ CREATE TABLE public.badge_writers (
     currently_programming_user_id bigint,
     currently_programming_user_until timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    last_programmed_user_id bigint,
+    last_programmed_at timestamp without time zone
 );
 
 
@@ -962,6 +964,13 @@ CREATE INDEX index_badge_writers_on_currently_programming_user_id ON public.badg
 
 
 --
+-- Name: index_badge_writers_on_last_programmed_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_writers_on_last_programmed_user_id ON public.badge_writers USING btree (last_programmed_user_id);
+
+
+--
 -- Name: index_certification_instructors_on_certification_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1118,6 +1127,14 @@ ALTER TABLE ONLY public.badge_reader_certifications
 
 
 --
+-- Name: badge_writers fk_rails_32034669f0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.badge_writers
+    ADD CONSTRAINT fk_rails_32034669f0 FOREIGN KEY (last_programmed_user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: certification_instructors fk_rails_36d6e25e4c; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1258,6 +1275,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200516145962'),
 ('20200516145963'),
 ('20200516150411'),
-('20200523235430');
+('20200523235430'),
+('20200524052326');
 
 
