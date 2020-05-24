@@ -19,6 +19,15 @@ ActiveAdmin.register BadgeWriter do
       row(:name)
       row(:description) { |badge_writer| format_multi_line_text(badge_writer.description) }
       row(:api_token) { |badge_writer| "#{link_to('Reveal', reveal_api_token_admin_badge_writer_path(badge_writer))}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;#{link_to('Regenerate', regenerate_api_token_admin_badge_writer_path(badge_writer), method: :post, data: { confirm: REGENERATE_BADGE_WRITER_API_TOKEN_WARNING })}".html_safe }
+      row(:currently_programming_a_badge_for) do |badge_writer|
+        if badge_writer.programming?
+          text_node auto_link(badge_writer.currently_programming_user)
+          text_node "&nbsp;&nbsp;".html_safe
+          text_node "(#{distance_of_time_in_words(Time.now, badge_writer.currently_programming_user_until, include_seconds: true)} left to program)"
+        else
+          nil # TODO: show the most recently programmed user for convenience
+        end
+      end
     end
   end
 
@@ -42,5 +51,15 @@ ActiveAdmin.register BadgeWriter do
 
   member_action :reveal_api_token, method: :get do
     @page_title = "API token for #{resource.name}"
+  end
+
+  collection_action :set_currently_programming_user, method: :post do
+    badge_writer = BadgeWriter.find(params[:badge_writer][:id])
+    user = User.find(params[:badge_writer][:currently_programming_user_id])
+
+    badge_writer.set_currently_programming_user!(user)
+
+    flash[:notice] = "A badge for #{user.name} can now be programmed using #{badge_writer.name}. Now, tap the new badge against this badge writer to program it for this user."
+    redirect_to admin_badge_writer_path(badge_writer)
   end
 end

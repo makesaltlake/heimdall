@@ -36,6 +36,33 @@ ActiveAdmin.register User do
       row('Manual access to these badge readers') { |user| user.manual_user_badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join('<br/>').html_safe }
     end
 
+    panel 'Badge' do
+      attributes_table_for resource do
+        row(:has_a_badge) do
+          if user.badge_token
+            status_tag 'Yes'
+            text_node " - programmed on #{user.badge_token_set_at}"
+          else
+            status_tag 'No'
+          end
+        end
+      end
+
+      form method: :post, action: set_currently_programming_user_admin_badge_writers_path do
+        span 'Program a new badge for this user using the following badge writer:'
+
+        select name: 'badge_writer[id]' do
+          BadgeWriter.all.order(:name).each do |badge_writer|
+            option badge_writer.name, value: badge_writer.id
+          end
+        end
+
+        input type: :hidden, name: 'badge_writer[currently_programming_user_id]', value: resource.id
+        input type: :hidden, name: 'authenticity_token', value: form_authenticity_token
+        input type: :submit, value: 'Program'
+      end
+    end
+
     paginated_table_panel(
       resource.certification_issuances.active.includes(:certification).order('certifications.name'),
       title: link_to('Currently holds these certifications - click to filter or add', admin_certification_issuances_path({ q: { user_id_eq: resource.id } })),

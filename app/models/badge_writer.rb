@@ -22,6 +22,9 @@
 #
 class BadgeWriter < ApplicationRecord
   API_TOKEN_LENGTH = 40
+  # How long a badge can be programmed for a user using a badge writer before
+  # the badge writer times out
+  CAN_PROGRAM_FOR = 5.minutes
 
   has_paper_trail skip: [:api_token]
 
@@ -43,5 +46,15 @@ class BadgeWriter < ApplicationRecord
   def generate_api_token
     self.api_token = SecureRandom.hex(API_TOKEN_LENGTH / 2) # because SecureRandom.hex expects a number of bytes, not characters
     self.api_token_regenerated_at = Time.now
+  end
+
+  def set_currently_programming_user!(user)
+    self.currently_programming_user = user
+    self.currently_programming_user_until = Time.now + CAN_PROGRAM_FOR
+    save!
+  end
+
+  def programming?
+    currently_programming_user && currently_programming_user_until > Time.now
   end
 end
