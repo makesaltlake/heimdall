@@ -3,6 +3,8 @@ ActiveAdmin.register Delayed::Job do
 
   actions :index, :show
 
+  config.sort_order = 'id_desc'
+
   filter :id
   filter :tag
   filter :strand
