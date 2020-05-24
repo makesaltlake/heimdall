@@ -23,7 +23,7 @@ ActiveAdmin.register BadgeWriter do
         if badge_writer.programming?
           text_node auto_link(badge_writer.currently_programming_user)
           text_node "&nbsp;&nbsp;".html_safe
-          text_node "(#{distance_of_time_in_words(Time.now, badge_writer.currently_programming_user_until, include_seconds: true)} left to program. "
+          text_node "(#{distance_of_time_in_words(Time.now, badge_writer.currently_programming_until, include_seconds: true)} left to program. "
           text_node link_to('Cancel', cancel_programming_admin_badge_writer_path(badge_writer), method: :post)
           text_node ')'
         elsif badge_writer.last_programmed_user

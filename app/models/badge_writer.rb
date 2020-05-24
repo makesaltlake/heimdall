@@ -2,17 +2,17 @@
 #
 # Table name: badge_writers
 #
-#  id                               :bigint           not null, primary key
-#  api_token                        :string
-#  api_token_regenerated_at         :datetime
-#  currently_programming_user_until :datetime
-#  description                      :text
-#  last_programmed_at               :datetime
-#  name                             :string
-#  created_at                       :datetime         not null
-#  updated_at                       :datetime         not null
-#  currently_programming_user_id    :bigint
-#  last_programmed_user_id          :bigint
+#  id                            :bigint           not null, primary key
+#  api_token                     :string
+#  api_token_regenerated_at      :datetime
+#  currently_programming_until   :datetime
+#  description                   :text
+#  last_programmed_at            :datetime
+#  name                          :string
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  currently_programming_user_id :bigint
+#  last_programmed_user_id       :bigint
 #
 # Indexes
 #
@@ -59,14 +59,14 @@ class BadgeWriter < ApplicationRecord
   # is called
   def set_currently_programming_user!(user)
     self.currently_programming_user = user
-    self.currently_programming_user_until = Time.now + CAN_PROGRAM_FOR
+    self.currently_programming_until = Time.now + CAN_PROGRAM_FOR
     save!
   end
 
   # called to cancel the current programming session
   def cancel_programming!
     self.currently_programming_user = nil
-    self.currently_programming_user_until = nil
+    self.currently_programming_until = nil
     save!
   end
 
@@ -88,7 +88,7 @@ class BadgeWriter < ApplicationRecord
         user.save!
 
         self.currently_programming_user = nil
-        self.currently_programming_user_until = nil
+        self.currently_programming_until = nil
         self.last_programmed_user = user
         self.last_programmed_at = now
         self.save!
@@ -101,6 +101,6 @@ class BadgeWriter < ApplicationRecord
   end
 
   def programming?
-    currently_programming_user && currently_programming_user_until > Time.now
+    currently_programming_user && currently_programming_until > Time.now
   end
 end

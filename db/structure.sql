@@ -296,7 +296,7 @@ CREATE TABLE public.badge_writers (
     api_token character varying,
     api_token_regenerated_at timestamp without time zone,
     currently_programming_user_id bigint,
-    currently_programming_user_until timestamp without time zone,
+    currently_programming_until timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     last_programmed_user_id bigint,
@@ -1308,6 +1308,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200524052326'),
 ('20200524080043'),
 ('20200524094055'),
-('20200524101824');
+('20200524101824'),
+('20200524102747');
 
 
