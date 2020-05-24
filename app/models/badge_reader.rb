@@ -18,7 +18,7 @@ class BadgeReader < ApplicationRecord
 
   has_many :badge_reader_certifications
   has_many :badge_reader_manual_users
-  has_many :badge_reader_scans
+  has_many :badge_scans
 
   has_many :certifications, through: :badge_reader_certifications
   has_many :manual_users, through: :badge_reader_manual_users, source: :user

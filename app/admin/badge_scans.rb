@@ -1,4 +1,4 @@
-ActiveAdmin.register BadgeReaderScan do
+ActiveAdmin.register BadgeScan do
   menu parent: 'Badges', priority: 3
 
   config.sort_order = 'scanned_at_desc'
@@ -10,7 +10,7 @@ ActiveAdmin.register BadgeReaderScan do
   filter :scanned_at
 
   index do
-    column(:description) { |badge_reader_scan| auto_link(badge_reader_scan)  }
+    column(:description) { |badge_scan| auto_link(badge_scan)  }
     column(:badge_reader, sortable: 'badge_readers.name')
     column(:user, sortable: 'users.name')
     column(:scanned_at)

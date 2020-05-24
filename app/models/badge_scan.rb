@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: badge_reader_scans
+# Table name: badge_scans
 #
 #  id              :bigint           not null, primary key
 #  scanned_at      :datetime
@@ -12,15 +12,15 @@
 #
 # Indexes
 #
-#  index_badge_reader_scans_on_badge_reader_id  (badge_reader_id)
-#  index_badge_reader_scans_on_user_id          (user_id)
+#  index_badge_scans_on_badge_reader_id  (badge_reader_id)
+#  index_badge_scans_on_user_id          (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (badge_reader_id => badge_readers.id)
 #  fk_rails_...  (user_id => users.id)
 #
-class BadgeReaderScan < ApplicationRecord
+class BadgeScan < ApplicationRecord
   has_paper_trail
 
   belongs_to :badge_reader

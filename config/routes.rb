@@ -64,8 +64,6 @@ end
 #                                                    PUT        /admin/certifications/:id(.:format)                                                      admin/certifications#update
 #                                                    DELETE     /admin/certifications/:id(.:format)                                                      admin/certifications#destroy
 #                                    admin_dashboard GET        /admin/dashboard(.:format)                                                               admin/dashboard#index
-#                           admin_badge_reader_scans GET        /admin/badge_reader_scans(.:format)                                                      admin/badge_reader_scans#index
-#                            admin_badge_reader_scan GET        /admin/badge_reader_scans/:id(.:format)                                                  admin/badge_reader_scans#show
 #            regenerate_api_token_admin_badge_reader POST       /admin/badge_readers/:id/regenerate_api_token(.:format)                                  admin/badge_readers#regenerate_api_token
 #                reveal_api_token_admin_badge_reader GET        /admin/badge_readers/:id/reveal_api_token(.:format)                                      admin/badge_readers#reveal_api_token
 #                                admin_badge_readers GET        /admin/badge_readers(.:format)                                                           admin/badge_readers#index
@@ -76,6 +74,8 @@ end
 #                                                    PATCH      /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
 #                                                    PUT        /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
 #                                                    DELETE     /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#destroy
+#                                  admin_badge_scans GET        /admin/badge_scans(.:format)                                                             admin/badge_scans#index
+#                                   admin_badge_scan GET        /admin/badge_scans/:id(.:format)                                                         admin/badge_scans#show
 #                         admin_paper_trail_versions GET        /admin/paper_trail_versions(.:format)                                                    admin/paper_trail_versions#index
 #                          admin_paper_trail_version GET        /admin/paper_trail_versions/:id(.:format)                                                admin/paper_trail_versions#show
 #                revoke_admin_certification_issuance GET        /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
