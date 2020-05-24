@@ -24,5 +24,9 @@ class BadgeReaderScan < ApplicationRecord
   has_paper_trail
 
   belongs_to :badge_reader
-  belongs_to :user
+  # usually required, but optional in case a badge scan got queued up and
+  # submitted after the user's badge had been rotated. perhaps we should store
+  # a historical record of a user's badge tokens so that we can still correlate
+  # them in such a case...
+  belongs_to :user, optional: true
 end
