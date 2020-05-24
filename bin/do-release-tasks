@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# this script is run automatically by heroku just before booting up the new
+# code that's about to be released. add any tasks that need to run when a
+# release happens here.
+
+set -e
+
+# notify via slack, if configured, about this deploy (but don't fail the
+# release hook if the slack notification fails)
+if [ -n "$SLACK_RELEASE_WEBHOOK" -a -n "$HEROKU_SLUG_COMMIT" ]; then
+  echo "Notifying via Slack about this deploy"
+  github_url="https://github.com/makesaltlake/heimdall/commit/$HEROKU_SLUG_COMMIT"
+  short_commit_hash="${HEROKU_SLUG_COMMIT:0:7}"
+  curl -X POST -H 'Content-Type: application/json' --data "{\"text\": \"deploying <$github_url|$short_commit_hash> to $HEIMDALL_ENV\"}" "$SLACK_RELEASE_WEBHOOK" || true
+  echo
+fi
+
+# run migrations
+echo Running migrations...
+bundle exec rake db:migrate
