@@ -19,6 +19,10 @@ Rails.application.routes.draw do
     controller_namespace :badge_writers do
       post :program
     end
+    controller_namespace :badge_readers do
+      get :access_list
+      post :record_scans
+    end
   end
 end
 
@@ -98,6 +102,8 @@ end
 #                                               root GET        /                                                                                        home#home
 #                                    webhooks_stripe POST       /webhooks/stripe(.:format)                                                               stripe#webhook
 #                          api_badge_writers_program POST       /api/badge_writers/program(.:format)                                                     api/badge_writers#program
+#                      api_badge_readers_access_list GET        /api/badge_readers/access_list(.:format)                                                 api/badge_readers#access_list
+#                     api_badge_readers_record_scans POST       /api/badge_readers/record_scans(.:format)                                                api/badge_readers#record_scans
 #                      rails_postmark_inbound_emails POST       /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #                         rails_relay_inbound_emails POST       /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
 #                      rails_sendgrid_inbound_emails POST       /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                  action_mailbox/ingresses/sendgrid/inbound_emails#create

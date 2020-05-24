@@ -1,6 +1,10 @@
 class Api::BadgeWritersController < Api::ApiController
   authenticate_using BadgeWriter
 
+  rescue_from BadgeWriter::DuplicateBadgeTokenError do
+    render json: { status: :duplicate_badge_token }
+  end
+
   def program
     user = resource.program_badge!(params[:badge_token])
 

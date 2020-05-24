@@ -30,6 +30,8 @@ class BadgeWriter < ApplicationRecord
   # the badge writer times out
   CAN_PROGRAM_FOR = 5.minutes
 
+  class DuplicateBadgeTokenError < StandardError; end
+
   has_paper_trail skip: [:api_token]
 
   belongs_to :currently_programming_user, class_name: 'User', optional: true
@@ -78,6 +80,8 @@ class BadgeWriter < ApplicationRecord
       User.transaction do
         user = self.currently_programming_user
         now = Time.now
+
+        raise DuplicateBadgeTokenError.new if User.where(badge_token: badge_token).where.not(id: user.id).exists?
 
         user.badge_token = badge_token
         user.badge_token_set_at = now

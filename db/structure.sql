@@ -1056,6 +1056,13 @@ CREATE INDEX index_delayed_jobs_on_tag ON public.delayed_jobs USING btree (tag);
 
 
 --
+-- Name: index_users_on_badge_token; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_badge_token ON public.users USING btree (badge_token);
+
+
+--
 -- Name: index_users_on_confirmation_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1299,6 +1306,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200516150411'),
 ('20200523235430'),
 ('20200524052326'),
-('20200524080043');
+('20200524080043'),
+('20200524094055');
 
 

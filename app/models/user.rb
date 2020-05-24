@@ -34,6 +34,7 @@
 #
 # Indexes
 #
+#  index_users_on_badge_token           (badge_token) UNIQUE
 #  index_users_on_confirmation_token    (confirmation_token) UNIQUE
 #  index_users_on_email                 (email) UNIQUE
 #  index_users_on_household_id          (household_id)
