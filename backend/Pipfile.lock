@@ -1,0 +1,85 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "554deb6fd5b295f2cba4c83a9ccf32ddd8ddbdf3a36bf27437922f4abf3c65ae"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.8"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "certifi": {
+            "hashes": [
+                "sha256:1d987a998c75633c40847cc966fcf5904906c920a7f17ef374f5aa4282abd304",
+                "sha256:51fcb31174be6e6664c5f69e3e1691a2d72a1a12e90f872cbdb1567eb47b6519"
+            ],
+            "version": "==2020.4.5.1"
+        },
+        "chardet": {
+            "hashes": [
+                "sha256:84ab92ed1c4d4f16916e05906b6b75a6c0fb5db821cc65e70cbd64a3e2a5eaae",
+                "sha256:fc323ffcaeaed0e0a02bf4d117757b98aed530d9ed4531e3e15460124c106691"
+            ],
+            "version": "==3.0.4"
+        },
+        "idna": {
+            "hashes": [
+                "sha256:7588d1c14ae4c77d74036e8c22ff447b26d0fde8f007354fd48a7814db15b7cb",
+                "sha256:a068a21ceac8a4d63dbfd964670474107f541babbd2250d61922f029858365fa"
+            ],
+            "version": "==2.9"
+        },
+        "pi-rc522": {
+            "hashes": [
+                "sha256:438a65a8a50a824e800353e3642878f44e410444b67b028fc25474fb19e653f8",
+                "sha256:a5f5f1946a4b302a13c270c0b4420a28ae4fcf79478a8ec9647550877ff1fd34"
+            ],
+            "index": "pypi",
+            "version": "==2.2.1"
+        },
+        "requests": {
+            "hashes": [
+                "sha256:43999036bfa82904b6af1d99e4882b560e5e2c68e5c4b0aa03b655f3d7d73fee",
+                "sha256:b3f43d496c6daba4493e7c431722aeb7dbc6288f52a6e04e7b6023b0247817e6"
+            ],
+            "index": "pypi",
+            "version": "==2.23.0"
+        },
+        "requests-cache": {
+            "hashes": [
+                "sha256:813023269686045f8e01e2289cc1e7e9ae5ab22ddd1e2849a9093ab3ab7270eb",
+                "sha256:81e13559baee64677a7d73b85498a5a8f0639e204517b5d05ff378e44a57831a"
+            ],
+            "index": "pypi",
+            "version": "==0.5.2"
+        },
+        "rpi.gpio": {
+            "hashes": [
+                "sha256:7424bc6c205466764f30f666c18187a0824077daf20b295c42f08aea2cb87d3f"
+            ],
+            "version": "==0.7.0"
+        },
+        "spidev": {
+            "hashes": [
+                "sha256:4314e52f573d95233c907f307558893313a8a606e197e77bb711526b0e179e80"
+            ],
+            "version": "==3.4"
+        },
+        "urllib3": {
+            "hashes": [
+                "sha256:3018294ebefce6572a474f0604c2021e33b3fd8006ecd11d62107a5d2a963527",
+                "sha256:88206b0eb87e6d677d424843ac5209e3fb9d0190d0ee169599165ec25e9d9115"
+            ],
+            "version": "==1.25.9"
+        }
+    },
+    "develop": {}
+}
