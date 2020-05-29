@@ -8,14 +8,15 @@ import threading
 from pirc522 import RFID
 
 
-tag_key = os.environ['BADGE_KEY']
-
-
 class HeimdallWeb:
 
     def __init__(self):
-        self.reader_api_key = os.environ['READER_API_KEY']
-        self.writer_api_key = os.environ['WRITER_API_KEY']
+        try:
+            self.reader_api_key = os.environ['READER_API_KEY']
+            self.writer_api_key = os.environ['WRITER_API_KEY']
+        except KeyError:
+            self.reader_api_key = None
+            self.writer_api_key = None
 
         self.badge_token_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_readers/access_list'
         self.badge_scan_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_readers/record_scans'
@@ -58,6 +59,10 @@ class BadgeReader:
         self.util.auth(self.rdr.auth_b, [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
 
         (error, data) = self.rdr.read(self.util.block_addr(0, 1))
+
+        if not error:
+            token = uuid.UUID(bytes=data)
+
         self.util.deauth()
         if not error:
             return data
@@ -89,12 +94,15 @@ class BadgeWriter:
             (error, tid) = self.rdr.anticoll()
         if not error:
             badge_token = uuid.uuid4()
-            self.rdr.write(block_address=1, data=badge_token[0:8])
-            self.rdr.write(block_address=2, data=badge_token[9:24])
-            self.rdr.write(block_address=3, data=badge_token[25:])
+
+            a = badge_token.replace('-', '')
+            i = int(a, 16)
+            h = i.to_bytes(length=16)
+
+            self.rdr.write(block_address=1, data=h)
 
 
-def badge_reader_thread(web):
+def badge_reader_thread():
     reader = BadgeReader()
 
     while True:
@@ -104,19 +112,22 @@ def badge_reader_thread(web):
             web.post_badge_scan(badge_token, time.time())
 
 
-def web_thread(web):
+def web_thread():
 
     while True:
         web.get_badge_list()
 
 
 if __name__ == "__main__":
+
     web = HeimdallWeb()
 
-    reader_thread = threading.Thread(target=badge_reader_thread, args=(web,))
+    tag_key = os.environ['BADGE_KEY']
+
+    reader_thread = threading.Thread(target=badge_reader_thread)
     reader_thread.start()
 
-    web_thread = threading.Thread(target=web_thread, args=(web,))
+    web_thread = threading.Thread(target=web_thread)
     web_thread.start()
 
     reader_thread.join()

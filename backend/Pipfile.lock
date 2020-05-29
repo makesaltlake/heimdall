@@ -1,11 +1,11 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "554deb6fd5b295f2cba4c83a9ccf32ddd8ddbdf3a36bf27437922f4abf3c65ae"
+            "sha256": "e3d1803096df830ced9b471dccebd18b8abcd02ad3be7fdcc8125fcf31ee269a"
         },
         "pipfile-spec": 6,
         "requires": {
-            "python_version": "3.8"
+            "python_version": "3.7"
         },
         "sources": [
             {
@@ -66,6 +66,16 @@
                 "sha256:7424bc6c205466764f30f666c18187a0824077daf20b295c42f08aea2cb87d3f"
             ],
             "version": "==0.7.0"
+        },
+        "smbus": {
+            "hashes": [
+                "sha256:39923448455a41c6bbe823de62b191103dd711917056362d9e4b1d2c6ec0f06d",
+                "sha256:529f9effc383b6381534d1d845eaf1078bdd2d4e625c945b23cf274d5cf1c306",
+                "sha256:b467235734ae5c147c4ec0eff1afb9dba189d9d3cc086ed7e0d3dbf0ae485230",
+                "sha256:f96d345e0aa10053a8a4917634f1dc37ba1f656fa5cace7629b71777e90855c6"
+            ],
+            "index": "pypi",
+            "version": "==1.1.post2"
         },
         "spidev": {
             "hashes": [
