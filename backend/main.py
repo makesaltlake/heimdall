@@ -1,15 +1,16 @@
 import requests
 import requests_cache
 import os
+import json
 import uuid
 import time
 import argparse
 import threading
+import RPi.GPIO
 from pirc522 import RFID
 from gpiozero import LED
 from gpiozero import TonalBuzzer
-import json
-import RPi.GPIO
+from I2C_LCD_driver import lcd
 
 
 class UserFeedback:
@@ -18,6 +19,7 @@ class UserFeedback:
         self.green_led = LED(pin=26)
         self.red_led = LED(pin=19)
         self.buzzer = TonalBuzzer(pin=13)
+        self.lcd = lcd()
 
     def error(self):
         self.red_led.blink(on_time=0.5, off_time=0.5)
@@ -45,6 +47,12 @@ class UserFeedback:
             time.sleep(0.5)
 
         self.red_led.off()
+
+    def msg(self, message, line):
+        self.lcd.lcd_display_string(message, line)
+
+    def msg_clear(self):
+        self.lcd.lcd_clear()
 
 
 class HeimdallWeb:
@@ -89,7 +97,7 @@ class HeimdallWeb:
     def post_programmed_badge(self, badge_token):
         program_info = {'badge_token': str(badge_token)}
         response = requests.post(self.badge_program_url, headers=self.writer_headers, json=program_info)
-        return response.ok
+        return response
 
 
 class BadgeReader:
@@ -106,22 +114,25 @@ class BadgeReader:
     def get_badge_token(self, tid):
         self.util.set_tag(tid)
         self.util.auth(self.rdr.auth_b, [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
-        self.util.do_auth(self.util.block_addr(0, 1))
-        (error, data) = self.rdr.read(self.util.block_addr(0, 1))
+        self.util.do_auth(block_address=1)
+        (error, data) = self.rdr.read(block_address=1)
 
         if not error:
             print('Successfully read data')
+            i = int.from_bytes(bytes=data, byteorder="little")
+            print('data: ' + format(i, '02x'))
             try:
-                token = uuid.UUID(bytes=data)
+                token = uuid.UUID(bytes=i.to_bytes(length=16, byteorder="big"))
                 print('Got badge token ' + str(token))
             except AssertionError:
                 print('Invalid UUID read from badge.')
+                error = True
         else:
             print('Failed to read data.')
 
         self.util.deauth()
         if not error:
-            return data
+            return str(token)
 
         return None
 
@@ -145,38 +156,106 @@ class BadgeReader:
 
 class BadgeWriter:
 
-    def __init__(self, web):
-        self.rdr = RFID()
+    def __init__(self):
+        self.rdr = RFID(pin_mode=RPi.GPIO.BCM, pin_irq=24, pin_rst=25)
         self.util = self.rdr.util()
-        self.web = web
+        self.util.debug = True
 
     def __del__(self):
         self.rdr.cleanup()
 
-    def program_badge(self):
+    def scan_badge(self):
         self.rdr.wait_for_tag()
         (error, tag_data) = self.rdr.request()
         if not error:
             (error, tid) = self.rdr.anticoll()
-        if not error:
-            badge_token = uuid.uuid4()
+            return tid
 
-            a = badge_token.replace('-', '')
-            i = int(a, 16)
-            h = i.to_bytes(length=16)
+        return None
 
-            self.rdr.write(block_address=1, data=h)
+    def program_badge(self, tid, badge_token):
+        badge_token_128bit_int = int(badge_token.replace('-', ''), 16)
+        badge_token_16_bytes = badge_token_128bit_int.to_bytes(length=16, byteorder="little")
+
+        self.util.set_tag(tid)
+        self.util.auth(self.rdr.auth_b, [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
+        self.util.do_auth(self.util.block_addr(0, 1))
+
+        error = self.rdr.write(block_address=1, data=badge_token_16_bytes)
+        return error
 
 
 def badge_reader_thread():
     reader = BadgeReader()
 
     while True:
+        print("Waiting for badge")
         tid = reader.scan_tag()
         if tid is not None:
             reader.get_badge_token(tid)
 
+        time.sleep(2)
+
 #            web.post_badge_scan(badge_token, time.time())
+
+
+def badge_writer_thread():
+    writer = BadgeWriter()
+
+    while True:
+        ui.msg_clear()
+        ui.msg("Ready to write badge", 1)
+        ui.msg("Place badge onto", 3)
+        ui.msg("RFID writer.", 4)
+
+        tid = writer.scan_badge()
+        if tid is None:
+            continue
+
+        ui.msg_clear()
+        ui.msg("Found badge.", 1)
+
+        badge_token = uuid.uuid4()
+
+        ui.msg("Badge token: ", 2)
+        values = str(badge_token).split('-')
+        ui.msg(values[0] + '-' + values[1] + '-' + values[2], 3)
+        ui.msg(values[3], 4)
+
+        time.sleep(1)
+
+        response = web.post_programmed_badge(badge_token=badge_token)
+        if response.ok:
+            rsp_json = json.loads(response.content)
+            status = rsp_json['status']
+            if status == "ok":
+                ui.msg_clear()
+                ui.msg('Web API: OK', 1)
+                ui.msg('Writing badge', 2)
+                error = writer.program_badge(tid=tid, badge_token=str(badge_token))
+                if error:
+                    ui.msg("RFID WRITE ERROR", 3)
+                else:
+                    ui.msg("RFID WRITE SUCCESS", 3)
+                    print('Programmed badge token: ' + str(badge_token))
+            elif status == "duplicate_badge_token":
+                ui.msg_clear()
+                ui.msg("Web API ERROR", 1)
+                ui.msg("Duplicate token", 2)
+            elif status == "not_programming":
+                ui.msg_clear()
+                ui.msg("Web API ERROR", 1)
+                ui.msg("Not programming", 2)
+            else:
+                ui.msg_clear()
+                ui.msg("Web API ERROR", 1)
+                ui.msg(status, 2)
+        else:
+            ui.msg_clear()
+            ui.msg("Web API ERROR", 1)
+            ui.msg(str(response.status_code), 2)
+
+        time.sleep(5)
 
 
 def web_thread():
@@ -189,21 +268,28 @@ def web_thread():
 if __name__ == "__main__":
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--verbose', dest='verbose', action='store_true')
+    parser.add_argument('-v', '--verbose', dest='verbose', action='store_true')
+    parser.add_argument('-m', '--mode', dest='mode', choices=['READER', 'WRITER'], default='READER')
+
+    args = parser.parse_args()
 
     web = HeimdallWeb()
     ui = UserFeedback()
 
     tag_key = os.environ['BADGE_KEY']
 
-    print("Ready.")
+    if args.mode is 'READER':
+        print('Operating in READER mode.')
+        web_thread = threading.Thread(target=web_thread)
+        web_thread.start()
+        reader_thread = threading.Thread(target=badge_reader_thread)
+        reader_thread.start()
+        reader_thread.join()
+        web_thread.join()
+    else:
+        print('Operating in WRITER mode.')
+        writer_thread = threading.Thread(target=badge_writer_thread)
+        writer_thread.start()
+        writer_thread.join()
 
-    reader_thread = threading.Thread(target=badge_reader_thread)
-    reader_thread.start()
-
-    web_thread = threading.Thread(target=web_thread)
-    web_thread.start()
-
-    reader_thread.join()
-    web_thread.join()
 
