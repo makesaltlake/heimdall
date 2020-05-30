@@ -1,7 +1,7 @@
 ActiveAdmin.register CertificationIssuance do
   menu parent: 'Certifications', priority: 3
 
-  permit_params [:certification_id, :user_id, :issued_at, :certifier_id, :notes]
+  permit_params [:certification_id, :user_id, :tentative_recipient_name, :issued_at, :certifier_id, :notes]
 
   config.sort_order = 'issued_at_desc'
 
@@ -9,9 +9,10 @@ ActiveAdmin.register CertificationIssuance do
 
   filter :certification
   filter :user_id, as: :search_select_filter
+  filter :tentative, as: :boolean, filters: [:eq], label: 'Tentative (not yet connected to a user)'
+  filter :tentative_recipient_name
   filter :issued_at
   filter :certifier_id, as: :search_select_filter, url: ->(_) { admin_users_path }
-  filter :active
 
   scope :active, default: true
   scope :revoked
@@ -20,7 +21,7 @@ ActiveAdmin.register CertificationIssuance do
   index do
     column(:description) { |certification_issuance| auto_link(certification_issuance)  }
     column(:certification, sortable: 'certifications.name')
-    column(:user, sortable: 'users.name')
+    column(:user, sortable: 'users.name') { |certification_issuance| auto_link(certification_issuance.user, certification_issuance.name_of_recipient) }
     column(:active)
     column(:issued_at)
     column(:certified_by, &:certifier)
@@ -30,6 +31,7 @@ ActiveAdmin.register CertificationIssuance do
     attributes_table do
       row(:certification)
       row(:user)
+      row(:tentative_recipient_name)
       row(:issued_at)
       row(:certifier)
       row(:active)
@@ -44,15 +46,14 @@ ActiveAdmin.register CertificationIssuance do
     f.inputs do
       if f.object.new_record?
         f.object.issued_at = Date.today # TODO: double check the timezone
-
         f.input :certification
-        f.input :user, input_html: { class: 'select2' }, hint: 'The user who is receiving the certification'
       else
         f.fixed_text 'Certification', auto_link(f.object.certification)
-        f.fixed_text 'User', auto_link(f.object.user)
       end
+      f.input :user, input_html: { class: 'select2' }, hint: "The user who is receiving the certification, if they have a user in the system. (If they don't and if you can't create one right now, leave this blank and enter their name into \"Tentative recipient name\".)"
+      f.input :tentative_recipient_name, hint: "The name of the user who is receiving the certification, if they don't have a user in the system. Only required if the \"User\" field is left blank. Note that the certification will not grant the recipient any privileges until the \"User\" field is filled in later."
       f.input :issued_at, as: :datepicker, hint: "The date this certification was issued. Leave set to today's date unless you're backfilling old certifications or processing certifications that happened a few days ago."
-      f.input :certifier, input_html: { class: 'select2' }, hint: 'The user who performed the certification'
+      f.input :certifier, input_html: { class: 'select2' }, hint: 'The user who performed the certification, if known'
       f.fixed_text 'Active', f.object.active ? 'Yes' : 'No'
       if f.object.revoked?
         f.fixed_text 'Revocation Reason', format_multi_line_text(f.object.revocation_reason)
@@ -74,12 +75,12 @@ ActiveAdmin.register CertificationIssuance do
 
   member_action :revoke, method: [:get, :post] do
     if request.get?
-      @page_title = "Revoke #{resource.user.name}'s certification on #{resource.certification.name}"
+      @page_title = "Revoke #{resource.name_of_recipient}'s certification on #{resource.certification.name}"
       return
     end
 
     resource.revoke!(current_user, params[:certification_issuance][:revocation_reason])
-    flash[:notice] = "#{resource.user.name}'s certification on #{resource.certification.name} has been revoked."
+    flash[:notice] = "#{resource.name_of_recipient}'s certification on #{resource.certification.name} has been revoked."
     redirect_to resource_path(resource), status: :see_other
   end
 end

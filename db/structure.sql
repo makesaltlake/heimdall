@@ -362,7 +362,7 @@ ALTER SEQUENCE public.certification_instructors_id_seq OWNED BY public.certifica
 CREATE TABLE public.certification_issuances (
     id bigint NOT NULL,
     certification_id bigint NOT NULL,
-    user_id bigint NOT NULL,
+    user_id bigint,
     issued_at date,
     active boolean DEFAULT true,
     certifier_id bigint,
@@ -370,7 +370,8 @@ CREATE TABLE public.certification_issuances (
     revocation_reason text,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
-    revoked_by_id bigint
+    revoked_by_id bigint,
+    tentative_recipient_name character varying
 );
 
 
@@ -1309,6 +1310,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200524080043'),
 ('20200524094055'),
 ('20200524101824'),
-('20200524102747');
+('20200524102747'),
+('20200530214001');
 
 
