@@ -1,7 +1,13 @@
 module StripeSynchronizationService
   ACTIVE_SUBSCRIPTION_STATUSES = ['active', 'trialing']
   # This will need to become a shared strand rather than a singleton when
-  # individual user synchronization is re-enabled.
+  # individual user synchronization is re-enabled. (Alternatively, we could
+  # have singleton strands for every customer and subscription and then have a
+  # single, singleton "sync all the things" strand whose jobs iterate the list
+  # of subscriptions and customers and then schedule jobs on the other
+  # singleton strands to do the actual synchronization. Or we could rewrite the
+  # synchronization code to be tolerant to multiple synchronizations happening
+  # at once.)
   SINGLETON_KEY = 'stripe-synchronization'
   # Number of seconds to wait after sync_all_users_later is invoked to kick off
   # synchronization. This in combination with the job being scheduled as a
