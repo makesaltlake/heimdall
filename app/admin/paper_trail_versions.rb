@@ -43,7 +43,7 @@ ActiveAdmin.register PaperTrail::Version do
       row(:item_type)
       row('Item ID', &:item_id)
       row(:item)
-      row(:author) { |version| paper_trail_version_author(version) }
+      row(:author) { |version| paper_trail_version_author(version, show_unknown: true) }
       row(:created_at)
     end
 
