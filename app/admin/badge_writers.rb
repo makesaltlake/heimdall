@@ -65,7 +65,7 @@ ActiveAdmin.register BadgeWriter do
 
     badge_writer.set_currently_programming_user!(user)
 
-    flash[:notice] = "Great - now tap the new badge against this badge writer to program it for #{user.name}."
+    flash[:notice] = "Great - now tap the new badge against this badge writer to program it for #{user.name}, then refresh this page."
     redirect_to resource_path(badge_writer)
   end
 
