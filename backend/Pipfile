@@ -10,6 +10,7 @@ requests = "*"
 pi-rc522 = "*"
 requests-cache = "*"
 smbus = "*"
+gpiozero = "*"
 
 [requires]
 python_version = "3.7"
