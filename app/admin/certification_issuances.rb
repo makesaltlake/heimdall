@@ -51,7 +51,7 @@ ActiveAdmin.register CertificationIssuance do
         f.fixed_text 'Certification', auto_link(f.object.certification)
       end
       f.input :user, input_html: { class: 'select2' }, hint: "The user who is receiving the certification, if they have a user in the system. (If they don't and if you can't create one right now, leave this blank and enter their name into \"Tentative recipient name\".)"
-      f.input :tentative_recipient_name, hint: "The name of the user who is receiving the certification, if they don't have a user in the system. Only required if the \"User\" field is left blank. Note that the certification will not grant the recipient any privileges until the \"User\" field is filled in later."
+      f.input :tentative_recipient_name, hint: "The name of the person who is receiving the certification, if they don't have a user in the system. Only required if the \"User\" field is left blank. Note that the certification will not grant the recipient any privileges until the \"User\" field is filled in later."
       f.input :issued_at, as: :datepicker, hint: "The date this certification was issued. Leave set to today's date unless you're backfilling old certifications or processing certifications that happened a few days ago."
       f.input :certifier, input_html: { class: 'select2' }, hint: 'The user who performed the certification, if known'
       f.fixed_text 'Active', f.object.active ? 'Yes' : 'No'
