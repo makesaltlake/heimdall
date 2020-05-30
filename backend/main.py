@@ -33,8 +33,8 @@ class UserFeedback:
 
     def access_allowed(self):
         self.green_led.on()
-        self.buzzer.play(tone=880)
-        time.sleep(2)
+        self.buzzer.play(tone=700)
+        time.sleep(1)
         self.green_led.off()
         self.buzzer.stop()
 
@@ -58,6 +58,7 @@ class UserFeedback:
 class HeimdallWeb:
 
     def __init__(self):
+        self.allowed_badge_tokens = []
         try:
             self.reader_api_key = os.environ['READER_API_KEY']
             self.writer_api_key = os.environ['WRITER_API_KEY']
@@ -80,7 +81,9 @@ class HeimdallWeb:
     def get_badge_list(self):
         response = requests.get(url=self.badge_token_url, headers=self.reader_headers)
         if response.ok:
+            self.allowed_badge_tokens = json.loads(response.content)['badge_tokens']
             print('get_badge_list, content = ' + str(json.loads(response.content)))
+
         else:
             print('Web API returned error ' + str(response.status_code))
 
@@ -92,10 +95,12 @@ class HeimdallWeb:
                            'scanned_at': str(time_of_scan)}
 
         response = requests.post(self.badge_scan_url, headers=self.reader_headers, json=badge_scan_info)
+        print('response: ' + str(response.content))
         return response.ok
 
-    def post_programmed_badge(self, badge_token):
-        program_info = {'badge_token': str(badge_token)}
+    def post_programmed_badge(self, badge_token, time_of_scan=time):
+        program_info = {'badge_token': str(badge_token),
+                        'scanned_at:': str(time_of_scan)}
         response = requests.post(self.badge_program_url, headers=self.writer_headers, json=program_info)
         return response
 
@@ -192,7 +197,16 @@ def badge_reader_thread():
         print("Waiting for badge")
         tid = reader.scan_tag()
         if tid is not None:
-            reader.get_badge_token(tid)
+            badge_token = reader.get_badge_token(tid)
+            if badge_token is None:
+                ui.error()
+            elif badge_token not in web.allowed_badge_tokens:
+                ui.access_denied()
+            else:
+                ui.access_allowed()
+                web.post_badge_scan(badge_token=badge_token, time_of_scan=int(time.time()))
+        else:
+            ui.error()
 
         time.sleep(2)
 
@@ -237,7 +251,8 @@ def badge_writer_thread():
                     ui.msg("RFID WRITE ERROR", 3)
                 else:
                     ui.msg("RFID WRITE SUCCESS", 3)
-                    print('Programmed badge token: ' + str(badge_token))
+                    print('Programmed badge: ' + str(badge_token))
+                    ui.msg(rsp_json['user']['name'], 4)
             elif status == "duplicate_badge_token":
                 ui.msg_clear()
                 ui.msg("Web API ERROR", 1)
