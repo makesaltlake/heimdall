@@ -25,14 +25,9 @@ ActiveAdmin.register BadgeScan do
   show do
     attributes_table do
       row(:badge_reader)
-      row(:user) do
-        if resource.user
-          auto_link(resource.user)
-        elsif resource.badge_token
-          "None. A badge token was provided but it couldn't be matched to a user in the system."
-        end
-      end
+      row(:user)
       row('Badge ID', &:badge_id)
+      row(:badge_token) { '[hidden]' if resource.badge_token }
       row(:authorized)
       row(:scanned_at)
     end
