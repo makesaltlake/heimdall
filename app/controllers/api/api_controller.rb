@@ -1,6 +1,6 @@
 class Api::ApiController < ApplicationController
   # prepend this one so that it happens before ApplicationController's
-  # set_paper_trail_whodunnit; otherwise we haven't loaded @resource when
+  # set_paper_trail_whodunnit; otherwise we won't have loaded @resource when
   # info_for_paper_trail is called
   prepend_before_action :authenticate_api_request
   skip_before_action :verify_authenticity_token

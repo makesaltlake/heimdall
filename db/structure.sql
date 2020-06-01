@@ -262,7 +262,10 @@ CREATE TABLE public.badge_scans (
     scanned_at timestamp without time zone,
     submitted_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    badge_token character varying,
+    badge_id character varying,
+    authorized boolean DEFAULT true
 );
 
 
@@ -945,6 +948,20 @@ CREATE UNIQUE INDEX index_badge_reader_manual_users_unique ON public.badge_reade
 
 
 --
+-- Name: index_badge_scans_on_authorized; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_scans_on_authorized ON public.badge_scans USING btree (authorized);
+
+
+--
+-- Name: index_badge_scans_on_badge_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_badge_scans_on_badge_id ON public.badge_scans USING btree (badge_id);
+
+
+--
 -- Name: index_badge_scans_on_badge_reader_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1311,6 +1328,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200524094055'),
 ('20200524101824'),
 ('20200524102747'),
-('20200530214001');
+('20200530214001'),
+('20200601105500');
 
 

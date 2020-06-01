@@ -15,7 +15,10 @@ class Api::BadgeReadersController < Api::ApiController
       BadgeReader.transaction do
         params[:scans].each do |scan|
           resource.badge_scans.create!(
+            badge_id: scan.fetch(:badge_id),
+            badge_token: scan.fetch(:badge_token),
             user: User.find_by(badge_token: scan.fetch(:badge_token)),
+            authorized: scan.fetch(:authorized),
             scanned_at: Time.at(scan.fetch(:scanned_at)),
             submitted_at: Time.now
           )
