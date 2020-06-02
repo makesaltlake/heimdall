@@ -62,7 +62,7 @@ ActiveAdmin.register User do
 
         input type: :hidden, name: 'badge_writer[currently_programming_user_id]', value: resource.id
         input type: :hidden, name: 'authenticity_token', value: form_authenticity_token
-        input type: :submit, value: 'Program'
+        input type: :submit, value: 'Start Programming'
       end
     end
 
