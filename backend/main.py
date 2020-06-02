@@ -1,15 +1,17 @@
+import argparse
+import json
+import os
+import threading
+import time
+import uuid
+
+import RPi.GPIO
 import requests
 import requests_cache
-import os
-import json
-import uuid
-import time
-import argparse
-import threading
-import RPi.GPIO
-from pirc522 import RFID
 from gpiozero import LED
 from gpiozero import TonalBuzzer
+from pirc522 import RFID
+
 from I2C_LCD_driver import lcd
 
 
@@ -23,7 +25,7 @@ class UserFeedback:
 
     def error(self):
         self.red_led.blink(on_time=0.5, off_time=0.5)
-        for i in range(0,3):
+        for i in range(0, 3):
             self.buzzer.play(tone=220)
             time.sleep(0.2)
             self.buzzer.stop()
@@ -40,7 +42,7 @@ class UserFeedback:
 
     def access_denied(self):
         self.red_led.blink(on_time=0.5, off_time=0.5)
-        for i in range(0,2):
+        for i in range(0, 2):
             self.buzzer.play(tone=220)
             time.sleep(0.5)
             self.buzzer.stop()
@@ -89,10 +91,12 @@ class HeimdallWeb:
 
         return response.ok
 
-    def post_badge_scan(self, badge_token, time_of_scan):
+    def post_badge_scan(self, tag_id, badge_token, authorized, time_of_scan):
 
-        badge_scan_info = {'badge_token': str(badge_token),
-                           'scanned_at': str(time_of_scan)}
+        badge_scan_info = {'scans': [{'badge_id': str(tag_id),
+                                      'authorized': authorized,
+                                      'badge_token': str(badge_token),
+                                      'scanned_at': time_of_scan}]}
 
         response = requests.post(self.badge_scan_url, headers=self.reader_headers, json=badge_scan_info)
         print('response: ' + str(response.content))
@@ -196,6 +200,9 @@ def badge_reader_thread():
     while True:
         print("Waiting for badge")
         tid = reader.scan_tag()
+        badge_token = None
+        authorized = False
+
         if tid is not None:
             badge_token = reader.get_badge_token(tid)
             if badge_token is None:
@@ -204,13 +211,24 @@ def badge_reader_thread():
                 ui.access_denied()
             else:
                 ui.access_allowed()
-                web.post_badge_scan(badge_token=badge_token, time_of_scan=int(time.time()))
+                authorized = True
         else:
             ui.error()
 
-        time.sleep(2)
+        # Convert the list representing the tag ID to
+        # a hex representation
+        shift = (len(tid) - 1) * 8
+        tag_id = 0
+        for t in tid:
+            tag_id += int(t) << shift
+            shift -= 8
 
-#            web.post_badge_scan(badge_token, time.time())
+        hex_tag_id = format(tag_id, '0' + str(len(tid) * 2) + 'x')
+
+        web.post_badge_scan(tag_id=hex_tag_id, badge_token=badge_token, authorized=authorized,
+                            time_of_scan=int(time.time()))
+
+        time.sleep(2)
 
 
 def badge_writer_thread():
@@ -274,7 +292,6 @@ def badge_writer_thread():
 
 
 def web_thread():
-
     while True:
         web.get_badge_list()
         time.sleep(300)
@@ -306,5 +323,3 @@ if __name__ == "__main__":
         writer_thread = threading.Thread(target=badge_writer_thread)
         writer_thread.start()
         writer_thread.join()
-
-
