@@ -26,7 +26,7 @@ ActiveAdmin.register Certification do
       title: link_to('Current certification holders - click to filter or add', admin_certification_issuances_path({ q: { certification_id_eq: resource.id } })),
       param_name: :issuances_page
     ) do
-      column(:name) { |certification_issuance| auto_link(certification_issuance, certification_issuance.user.name) }
+      column(:name) { |certification_issuance| auto_link(certification_issuance, certification_issuance.name_of_recipient) }
       column(:issued_at)
     end
   end
