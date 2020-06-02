@@ -40,6 +40,8 @@ en:
   date:
     formats:
       long: '%B %e, %Y'
+      default: '%B %e, %Y'
   time:
     formats:
       long: '%B %e, %Y  %l:%M %p'
+      default: '%B %e, %Y  %l:%M %p'

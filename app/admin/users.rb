@@ -41,7 +41,7 @@ ActiveAdmin.register User do
         row(:has_a_badge) do
           if user.badge_token
             status_tag 'Yes'
-            text_node " - programmed on #{user.badge_token_set_at}"
+            text_node " - programmed on #{I18n.l(user.badge_token_set_at)}"
           else
             status_tag 'No'
           end
