@@ -9,6 +9,8 @@ ActiveAdmin.register User do
   filter :has_multiple_household_members, as: :boolean, filters: [:eq], label: 'Has Household Members'
   filter :current_sign_in_at, label: 'Last Signed In'
   filter :subscription_created
+  filter :has_a_badge, as: :boolean, filters: [:eq]
+  filter :badge_token_set_at, label: 'Badge Programmed At'
   filter :created_at
   filter :super_user
 

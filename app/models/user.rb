@@ -81,6 +81,10 @@ class User < ApplicationRecord
     Arel.sql(HAS_HOUSEHOLD_MEMBERSHIP_SQL)
   end
 
+  ransacker :has_a_badge, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
+    arel_table[:badge_token].not_eq(nil)
+  end
+
   def display_name
     name
   end
