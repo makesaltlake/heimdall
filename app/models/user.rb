@@ -158,4 +158,12 @@ class User < ApplicationRecord
       User.where(id: id).select(HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL).take&.has_household_membership
     end
   end
+
+  # removes a user's badge from their account. useful when the user's badge has
+  # been lost or stolen.
+  def remove_badge!
+    self.badge_token = nil
+    self.badge_token_set_at = nil
+    self.save!
+  end
 end

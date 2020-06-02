@@ -43,7 +43,8 @@ ActiveAdmin.register User do
         row(:has_a_badge) do
           if user.badge_token
             status_tag 'Yes'
-            text_node " - programmed on #{I18n.l(user.badge_token_set_at)}"
+            text_node " - programmed on #{I18n.l(user.badge_token_set_at)}. "
+            text_node link_to('Remove', remove_badge_admin_user_path(resource), method: :post, data: { confirm: "Are you sure you want to remove #{resource.name}'s badge? You won't be able to undo this; their badge (or a new badge) will need to be re-programmed to their account in order to work again. (There is no need to do this for members whose subscriptions have lapsed as their access will be disabled automatically.)" })
           else
             status_tag 'No'
           end
@@ -115,4 +116,10 @@ ActiveAdmin.register User do
     end
   end
 
+  member_action :remove_badge, method: :post do
+    resource.remove_badge!
+
+    flash[:notice] = "#{resource.name}'s badge has been removed."
+    redirect_to resource_path(resource), status: :see_other
+  end
 end
