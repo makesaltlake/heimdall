@@ -3,7 +3,9 @@ module StripeUtils
   # ENV['STRIPE_API_KEY'] is for, or nil if Stripe is not set up.
   def self.mode
     if Stripe.api_key
-      Stripe.api_key.match(/^sk_live/) ? 'live' : 'test'
+      # first character can be either s or r depending on whether it's a
+      # full key or a restricted key
+      Stripe.api_key.match(/^[rs]k_live/) ? 'live' : 'test'
     end
   end
 
