@@ -28,7 +28,7 @@ ActiveAdmin.register User do
       row(:email)
       row(:household_has_membership, &:has_household_membership)
       row(:individual_has_membership, &:subscription_active)
-      row(:subscription_id)
+      row('Subscription ID') { |user| user.subscription_id && a(user.subscription_id, href: StripeUtils.dashboard_url(Stripe::Subscription, user.subscription_id)) }
       row(:subscription_created)
       row(:super_user)
       row('Last Signed In', &:current_sign_in_at)
