@@ -18,6 +18,7 @@ module PaginatedTableHelpers
   end
 end
 ActiveAdmin::Views::Pages::Show.include(PaginatedTableHelpers)
+ActiveAdmin::Views::Pages::Page.include(PaginatedTableHelpers)
 
 # Helper to display a form field that contains static text inside an AA form
 module FixedTextFormHelpers
