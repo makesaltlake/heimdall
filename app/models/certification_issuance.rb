@@ -31,6 +31,11 @@
 #  fk_rails_...  (user_id => users.id)
 #
 class CertificationIssuance < ApplicationRecord
+  # SQL that can be used to grab the user name or the tentative recipient name
+  # of a certification issuance. Good for when you need to sort by the
+  # recipient name.
+  USER_NAME_OR_RECIPIENT_SQL = '(COALESCE((SELECT unors_users.name FROM users AS unors_users WHERE unors_users.id = certification_issuances.user_id), tentative_recipient_name))'
+
   has_paper_trail
 
   belongs_to :certification

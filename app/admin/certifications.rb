@@ -22,7 +22,7 @@ ActiveAdmin.register Certification do
     end
 
     paginated_table_panel(
-      resource.certification_issuances.active.includes(:user).order('users.name'),
+      resource.certification_issuances.active.includes(:user).order(CertificationIssuance::USER_NAME_OR_RECIPIENT_SQL),
       title: link_to('Current certification holders - click to filter or add', admin_certification_issuances_path({ q: { certification_id_eq: resource.id } })),
       param_name: :issuances_page
     ) do

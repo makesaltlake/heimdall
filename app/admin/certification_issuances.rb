@@ -18,10 +18,14 @@ ActiveAdmin.register CertificationIssuance do
   scope :revoked
   scope :all
 
+  order_by(:user) do |order_clause|
+    "#{CertificationIssuance::USER_NAME_OR_RECIPIENT_SQL} #{order_clause.order}"
+  end
+
   index do
     column(:description) { |certification_issuance| auto_link(certification_issuance)  }
     column(:certification, sortable: 'certifications.name')
-    column(:user, sortable: 'users.name') { |certification_issuance| auto_link(certification_issuance.user, certification_issuance.name_of_recipient) }
+    column(:user, sortable: true) { |certification_issuance| auto_link(certification_issuance.user, certification_issuance.name_of_recipient) }
     column(:active)
     column(:issued_at)
     column(:certified_by, &:certifier)
