@@ -12,8 +12,6 @@ ActiveAdmin.register_page "Dashboard" do
             per_page: 10
           ) do
             column(:description) { |certification_issuance| auto_link(certification_issuance) }
-            column(:user) { |certification_issuance| auto_link(certification_issuance.user, certification_issuance.name_of_recipient) }
-            column(:certification)
             column(:issued_at)
           end
         end
