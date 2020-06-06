@@ -166,4 +166,12 @@ class User < ApplicationRecord
     self.badge_token_set_at = nil
     self.save!
   end
+
+  def name_and_email
+    "#{name} (#{email})"
+  end
+
+  def as_json(options = {})
+    super.merge(name_and_email: name_and_email)
+  end
 end

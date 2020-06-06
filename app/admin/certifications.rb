@@ -35,7 +35,7 @@ ActiveAdmin.register Certification do
     f.inputs do
       f.input(:name)
       f.input(:description)
-      f.input(:instructor_ids, label: 'Instructors', as: :selected_list, url: admin_users_path)
+      f.input(:instructor_ids, label: 'Instructors', as: :selected_list, url: admin_users_path, display_name: 'name_and_email')
     end
     f.actions
   end

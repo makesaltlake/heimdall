@@ -6,7 +6,7 @@ ActiveAdmin.register BadgeScan do
   actions :index, :show
 
   filter :badge_reader
-  filter :user_id, as: :search_select_filter
+  filter :user_id, as: :search_select_filter, display_name: 'name_and_email'
   filter :badge_id, label: 'Badge ID'
   filter :scanned_at
 
