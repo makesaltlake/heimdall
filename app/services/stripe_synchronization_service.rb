@@ -90,6 +90,7 @@ module StripeSynchronizationService
       email = subscription.customer.email&.downcase
       subscriptions_by_email[email] ||= []
       subscriptions_by_email[email] << SubscriptionData.new(
+        id: subscription.id,
         is_membership_subscription: is_membership_subscription?(subscription),
         extracted_name: extract_name(subscription),
         start_date: subscription.start_date,
