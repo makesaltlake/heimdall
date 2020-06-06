@@ -72,7 +72,7 @@ class CertificationIssuance < ApplicationRecord
     if user
       user.name
     else
-      "(tentative recipient) #{tentative_recipient_name}"
+      "[#{tentative_recipient_name}]"
     end
   end
 
