@@ -1,4 +1,5 @@
-env = ENV['HEIMDALL_ENV'] || 'local'
+env = HeimdallEnvironment.environment
+
 color = {
   'local' => [:bold],
   'dev' => [:cyan, :bold],
