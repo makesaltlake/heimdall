@@ -13,6 +13,7 @@ ActiveAdmin.register_page "Dashboard" do
           ) do
             column(:description) { |certification_issuance| auto_link(certification_issuance) }
             column(:issued_at)
+            column(:user_has_membership) { |certification_issuance| certification_issuance.user&.has_household_membership }
           end
         end
       end
