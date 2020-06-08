@@ -26,7 +26,8 @@ ActiveAdmin.register CertificationIssuance do
     column(:description) { |certification_issuance| auto_link(certification_issuance)  }
     column(:certification, sortable: 'certifications.name')
     column(:user, sortable: true) { |certification_issuance| auto_link(certification_issuance.user, certification_issuance.name_of_recipient) }
-    column(:active)
+    column('Active (Not Revoked)', &:active)
+    column(:user_has_membership) { |certification_issuance| certification_issuance.user&.has_household_membership }
     column(:issued_at)
     column(:certified_by, &:certifier)
   end
