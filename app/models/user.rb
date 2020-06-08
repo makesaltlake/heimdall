@@ -73,6 +73,8 @@ class User < ApplicationRecord
 
   has_many :manual_user_badge_readers, through: :badge_reader_manual_users, source: :badge_reader
 
+  has_many :badge_access_grants
+
   ransacker :has_multiple_household_members, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
     Arel.sql("exists(#{FELLOW_HOUSEHOLD_MEMBER_IDS_SQL})")
   end

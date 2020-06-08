@@ -39,6 +39,15 @@ ActiveAdmin.register BadgeReader do
       end
       row('Prevent access by the general membership', &:restricted_access)
     end
+
+    paginated_table_panel(
+      resource.badge_access_grants.includes(:user).order('users.name'),
+      title: 'Users who can badge into this reader',
+      param_name: :badge_access_grants_page,
+    ) do
+      column(:user)
+      column(:reason, &:access_reason)
+    end
   end
 
   form do |f|

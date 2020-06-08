@@ -23,6 +23,9 @@ class BadgeReader < ApplicationRecord
   has_many :certifications, through: :badge_reader_certifications
   has_many :manual_users, through: :badge_reader_manual_users, source: :user
 
+  has_many :badge_access_grants
+  has_many :badge_access_grant_users, through: :badge_access_grants, source: :user
+
   # Give every badge reader an API token on creation
   after_initialize do
     generate_api_token if new_record?

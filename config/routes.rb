@@ -87,6 +87,7 @@ end
 #                       admin_certification_issuance GET        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#show
 #                                                    PATCH      /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
 #                                                    PUT        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
+#                            remove_badge_admin_user POST       /admin/users/:id/remove_badge(.:format)                                                  admin/users#remove_badge
 #                                        admin_users GET        /admin/users(.:format)                                                                   admin/users#index
 #                                                    POST       /admin/users(.:format)                                                                   admin/users#create
 #                                     new_admin_user GET        /admin/users/new(.:format)                                                               admin/users#new

@@ -2,11 +2,10 @@ class Api::BadgeReadersController < Api::ApiController
   authenticate_using BadgeReader
 
   def access_list
-    # TODO: actually filter the list down to users who can access this badge
-    # reader. For the purposes of testing we're just returning every badge in
-    # the system.
+    allowed_badge_tokens = resource.badge_access_grant_users.where.not(badge_token: nil).pluck(:badge_token)
+
     render json: {
-      badge_tokens: User.where.not(badge_token: nil).pluck(:badge_token)
+      badge_tokens: allowed_badge_tokens
     }
   end
 

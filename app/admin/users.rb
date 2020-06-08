@@ -67,6 +67,15 @@ ActiveAdmin.register User do
     end
 
     paginated_table_panel(
+      resource.badge_access_grants.includes(:badge_reader).order('badge_readers.name'),
+      title: 'Currently has access to these badge readers',
+      param_name: :badge_access_grants_page
+    ) do
+      column(:badge_reader)
+      column(:reason, &:access_reason)
+    end
+
+    paginated_table_panel(
       resource.certification_issuances.active.includes(:certification).order('certifications.name'),
       title: link_to('Currently holds these certifications - click to filter or add', admin_certification_issuances_path({ q: { user_id_eq: resource.id } })),
       param_name: :issuances_page

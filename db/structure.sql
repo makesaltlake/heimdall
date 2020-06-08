@@ -166,6 +166,126 @@ CREATE TABLE public.badge_reader_certifications (
 
 
 --
+-- Name: badge_reader_manual_users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.badge_reader_manual_users (
+    id bigint NOT NULL,
+    badge_reader_id bigint NOT NULL,
+    user_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: badge_readers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.badge_readers (
+    id bigint NOT NULL,
+    name character varying,
+    description text,
+    api_token character varying,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    api_token_regenerated_at timestamp without time zone,
+    restricted_access boolean DEFAULT false NOT NULL
+);
+
+
+--
+-- Name: certification_issuances; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.certification_issuances (
+    id bigint NOT NULL,
+    certification_id bigint NOT NULL,
+    user_id bigint,
+    issued_at date,
+    active boolean DEFAULT true,
+    certifier_id bigint,
+    notes text,
+    revocation_reason text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    revoked_by_id bigint,
+    tentative_recipient_name character varying
+);
+
+
+--
+-- Name: users; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.users (
+    id bigint NOT NULL,
+    email character varying DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
+    reset_password_token character varying,
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0 NOT NULL,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip character varying,
+    last_sign_in_ip character varying,
+    confirmation_token character varying,
+    confirmed_at timestamp without time zone,
+    confirmation_sent_at timestamp without time zone,
+    unconfirmed_email character varying,
+    failed_attempts integer DEFAULT 0 NOT NULL,
+    unlock_token character varying,
+    locked_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL,
+    name character varying,
+    super_user boolean DEFAULT false NOT NULL,
+    badge_number character varying,
+    household_id bigint NOT NULL,
+    subscription_active boolean,
+    subscription_id character varying,
+    subscription_created timestamp without time zone,
+    badge_token character varying,
+    badge_token_set_at timestamp without time zone
+);
+
+
+--
+-- Name: badge_access_grants; Type: VIEW; Schema: public; Owner: -
+--
+
+CREATE VIEW public.badge_access_grants AS
+ SELECT badge_access_grants_subquery.id,
+    badge_access_grants_subquery.user_id,
+    badge_access_grants_subquery.badge_reader_id,
+    badge_access_grants_subquery.access_reason
+   FROM ( SELECT ((('u:'::text || u.id) || ',br:'::text) || br.id) AS id,
+            u.id AS user_id,
+            br.id AS badge_reader_id,
+                CASE
+                    WHEN (EXISTS ( SELECT 1
+                       FROM public.badge_reader_manual_users brmu
+                      WHERE ((brmu.badge_reader_id = br.id) AND (brmu.user_id = u.id)))) THEN 'This user is listed under the badge reader''s list of manual users'::text
+                    WHEN ((NOT br.restricted_access) AND (EXISTS ( SELECT 1
+                       FROM public.users hu
+                      WHERE ((hu.household_id = u.household_id) AND hu.subscription_active))) AND (NOT (EXISTS ( SELECT 1
+                       FROM public.badge_reader_certifications brc
+                      WHERE (brc.badge_reader_id = br.id))))) THEN 'This user has an active membership and the badge reader is open to anyone with an active membership'::text
+                    WHEN ((NOT br.restricted_access) AND (EXISTS ( SELECT 1
+                       FROM public.users hu
+                      WHERE ((hu.household_id = u.household_id) AND hu.subscription_active))) AND (EXISTS ( SELECT 1
+                       FROM (public.badge_reader_certifications brc
+                         JOIN public.certification_issuances ci ON ((ci.certification_id = brc.certification_id)))
+                      WHERE ((brc.badge_reader_id = br.id) AND (ci.user_id = u.id) AND ci.active)))) THEN 'This user has an active membership and holds a certification that grants access to this badge reader'::text
+                    ELSE NULL::text
+                END AS access_reason
+           FROM (public.users u
+             JOIN public.badge_readers br ON (true))) badge_access_grants_subquery
+  WHERE (badge_access_grants_subquery.access_reason IS NOT NULL);
+
+
+--
 -- Name: badge_reader_certifications_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -185,19 +305,6 @@ ALTER SEQUENCE public.badge_reader_certifications_id_seq OWNED BY public.badge_r
 
 
 --
--- Name: badge_reader_manual_users; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.badge_reader_manual_users (
-    id bigint NOT NULL,
-    badge_reader_id bigint NOT NULL,
-    user_id bigint NOT NULL,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
 -- Name: badge_reader_manual_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -214,22 +321,6 @@ CREATE SEQUENCE public.badge_reader_manual_users_id_seq
 --
 
 ALTER SEQUENCE public.badge_reader_manual_users_id_seq OWNED BY public.badge_reader_manual_users.id;
-
-
---
--- Name: badge_readers; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.badge_readers (
-    id bigint NOT NULL,
-    name character varying,
-    description text,
-    api_token character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    api_token_regenerated_at timestamp without time zone,
-    restricted_access boolean DEFAULT false NOT NULL
-);
 
 
 --
@@ -356,26 +447,6 @@ CREATE SEQUENCE public.certification_instructors_id_seq
 --
 
 ALTER SEQUENCE public.certification_instructors_id_seq OWNED BY public.certification_instructors.id;
-
-
---
--- Name: certification_issuances; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.certification_issuances (
-    id bigint NOT NULL,
-    certification_id bigint NOT NULL,
-    user_id bigint,
-    issued_at date,
-    active boolean DEFAULT true,
-    certifier_id bigint,
-    notes text,
-    revocation_reason text,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    revoked_by_id bigint,
-    tentative_recipient_name character varying
-);
 
 
 --
@@ -556,43 +627,6 @@ ALTER SEQUENCE public.households_id_seq OWNED BY public.households.id;
 
 CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
-);
-
-
---
--- Name: users; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.users (
-    id bigint NOT NULL,
-    email character varying DEFAULT ''::character varying NOT NULL,
-    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
-    reset_password_token character varying,
-    reset_password_sent_at timestamp without time zone,
-    remember_created_at timestamp without time zone,
-    sign_in_count integer DEFAULT 0 NOT NULL,
-    current_sign_in_at timestamp without time zone,
-    last_sign_in_at timestamp without time zone,
-    current_sign_in_ip character varying,
-    last_sign_in_ip character varying,
-    confirmation_token character varying,
-    confirmed_at timestamp without time zone,
-    confirmation_sent_at timestamp without time zone,
-    unconfirmed_email character varying,
-    failed_attempts integer DEFAULT 0 NOT NULL,
-    unlock_token character varying,
-    locked_at timestamp without time zone,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL,
-    name character varying,
-    super_user boolean DEFAULT false NOT NULL,
-    badge_number character varying,
-    household_id bigint NOT NULL,
-    subscription_active boolean,
-    subscription_id character varying,
-    subscription_created timestamp without time zone,
-    badge_token character varying,
-    badge_token_set_at timestamp without time zone
 );
 
 
@@ -1329,6 +1363,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200524101824'),
 ('20200524102747'),
 ('20200530214001'),
-('20200601105500');
+('20200601105500'),
+('20200608081455');
 
 
