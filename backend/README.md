@@ -4,10 +4,10 @@ Raspberry Pi based RFID access control system
 Components
 ---
 (links are to Amazon, PiShop.us and AdaFruit)
-- Raspberry Pi Zero W V1.1
+- 2x Raspberry Pi Zero W V1.1
   (C) Raspberry Pi 2017 - [Raspberry Pi Zero Wireless WH (Pre-Soldered Header)](https://www.pishop.us/product/raspberry-pi-zero-wireless-wh-pre-soldered-header/)
-- uSD Card - [SanDisk Ultra 32GB MicroSDHC UHS-I Card with Adapter - 98MB/s U1 A1 - SDSQUAR-032G-GN6MA ](https://www.amazon.com/gp/product/B073JWXGNT/ref=ppx_yo_dt_b_asin_title_o07_s00?ie=UTF8&psc=1)
-- RFID Reader/Writer - [SunFounder RFID Kit Mifare RC522 RFID Reader Module with S50 White Card and Key Ring for Arduino Raspberry Pi ](https://www.amazon.com/gp/product/B07KGBJ9VG/ref=ppx_yo_dt_b_asin_title_o03_s00?ie=UTF8&psc=1)
+- 2x uSD Card - [SanDisk Ultra 32GB MicroSDHC UHS-I Card with Adapter - 98MB/s U1 A1 - SDSQUAR-032G-GN6MA ](https://www.amazon.com/gp/product/B073JWXGNT/ref=ppx_yo_dt_b_asin_title_o07_s00?ie=UTF8&psc=1)
+- 2x RFID Reader/Writer - [SunFounder RFID Kit Mifare RC522 RFID Reader Module with S50 White Card and Key Ring for Arduino Raspberry Pi ](https://www.amazon.com/gp/product/B07KGBJ9VG/ref=ppx_yo_dt_b_asin_title_o03_s00?ie=UTF8&psc=1)
 - 20x4 LCD Display - [SunFounder IIC I2C TWI Serial 2004 20x4 LCD Module Shield for Arduino R3 Mega2560 ](https://www.amazon.com/gp/product/B01GPUMP9C/ref=ppx_yo_dt_b_asin_title_o05_s00?ie=UTF8&psc=1)
 - 2x 82 Ω resistors - [EDGELEC 100pcs 82 ohm Resistor 1/4w (0.25 Watt) ±1% Tolerance Metal Film Fixed Resistor, Multiple Values of Resistance Optional ](https://www.amazon.com/gp/product/B07HDG2MXW/ref=ppx_yo_dt_b_asin_title_o07_s01?ie=UTF8&psc=1)
 - Logic Level Converter - [KeeYees 10pcs 4 Channels IIC I2C Logic Level Converter Bi-Directional Module 3.3V to 5V Shifter for Arduino (Pack of 10) ](https://www.amazon.com/gp/product/B07LG646VS/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1)
@@ -18,6 +18,9 @@ Components
 
 Connection Details
 ---
+
+The card reader (i.e. door/machinery control) doesn't use the level converter or LCD.<br>
+The card writer (i.e. card programmer) doesn't use the LEDs, buzzer, resistors or relay.
 
 _Note_ All "pins" listed are shown as BOARD (Physical) pins, not BCM/GPIO pins.<br>
 In the following, "Raspberry Pi" is shortened to "RPi"
@@ -46,22 +49,23 @@ GPIO26 (37) (38) GPIO20
    GND (39) (40) GPIO21
 
 
-    RPi => Level Converter => LCD
+RPi => Level Converter => LCD
 
-    RPi Pin   Level Converter    LCD
-    -------   ---------------    ---
-    1     --> LV
-    2     -------------> HV  --> VCC
-    3     --> LV1 ------ HV1 --> SDA
-    5     --> LV4 ------ HV4 --> SCL
-    39    --> GND ------ GND --> GND
+RPi Pin   Level Converter    LCD
+-------   ---------------    ---
+1     --> LV
+2     -------------> HV  --> VCC
+3     --> LV1 ------ HV1 --> SDA
+5     --> LV4 ------ HV4 --> SCL
+39    --> GND ------ GND --> GND
 
-    RPi => LED/Buzzer
+RPi => LED/Buzzer/Relay
 
-    RPi Pin
-    -------
-    37    --> 82 Ω resistor --> Green LED    --> GND
-    35    --> 82 Ω resistor --> Red LED      --> GND
-    33    --------------------> Piezo Buzzer --> GND
+RPi Pin
+-------
+37    --> 82 Ω resistor --> Green LED    --> GND
+35    --> 82 Ω resistor --> Red LED      --> GND
+33    --------------------> Piezo Buzzer --> GND
+TBD   --------------------> Relay ---------> GND
 ```
 See https://pinout.xyz/ for more details about the Raspberry Pi pinouts
