@@ -1,6 +1,7 @@
 from pirc522 import RFID
 import RPi.GPIO
 import uuid
+import logging
 
 
 class BadgeReader:
@@ -17,25 +18,31 @@ class BadgeReader:
     def __del__(self):
         self.rdr.cleanup()
 
-    def get_badge_token(self, tid):
-        self.util.set_tag(tid)
+    def get_badge_token(self, tag_id):
+        """
+        Attempts to read the badge token that we store on the badge/tag.
+
+        :param tag_id: a list of bytes representing the tag UID.
+        :return: a string representation of the badge token, as a UUID.
+        """
+        self.util.set_tag(tag_id)
         token = None
         self.util.auth(self.rdr.auth_b, [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
         self.util.do_auth(block_address=1)
         (error, data) = self.rdr.read(block_address=1)
 
         if not error:
-            print('Successfully read data')
+            logging.info('Successfully read data')
             i = int.from_bytes(bytes=data, byteorder="little")
-            print('data: ' + format(i, '02x'))
+            logging.info('data: ' + format(i, '02x'))
             try:
                 token = uuid.UUID(bytes=i.to_bytes(length=16, byteorder="big"))
-                print('Got badge token ' + str(token))
+                logging.info('Got badge token ' + str(token))
             except AssertionError:
-                print('Invalid UUID read from badge.')
+                logging.info('Invalid UUID read from badge.')
                 error = True
         else:
-            print('Failed to read data.')
+            logging.info('Failed to read data.')
 
         self.util.deauth()
         if not error:
@@ -48,15 +55,15 @@ class BadgeReader:
         (error, tag_data) = self.rdr.request()
 
         if not error:
-            print('Found badge: running anti-collision')
+            logging.info('Found badge: running anti-collision')
             (error, tid) = self.rdr.anticoll()
             if not error:
-                print('Found a badge with Tag ID ' + str(tid))
+                logging.info('Found a badge with Tag ID ' + str(tid))
                 return tid
             else:
-                print('Anti-collision failed')
+                logging.info('Anti-collision failed')
         else:
-            print('Error reading badge')
+            logging.info('Error reading badge')
 
         return None
 

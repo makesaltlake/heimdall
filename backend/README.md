@@ -16,11 +16,13 @@ Components
 - Green LED - [Diffused Green 10mm LED (25 pack)](https://www.adafruit.com/product/844)
 - Piezo Electric Tone Buzzer [6 Pack 3-24v Piezo Electric Tone Buzzer Alarm dc 3-24 v for Physics Circuits Continuous Sound ](https://www.amazon.com/gp/product/B07JDBF4V3/ref=ppx_yo_dt_b_asin_title_o07_s00?ie=UTF8&psc=1)
 
+Beware of bad RFID-RC522 boards using fake/clone NXP RC522 chips. See [\[Collection\] Bad boards - https://github.com/miguelbalboa/rfid/issues/428](https://github.com/miguelbalboa/rfid/issues/428).
+
 Connection Details
 ---
 
 The card reader (i.e. door/machinery control) doesn't use the level converter or LCD.<br>
-The card writer (i.e. card programmer) doesn't use the LEDs, buzzer, resistors or relay.
+The card writer (i.e. badge programmer) doesn't use the LEDs, buzzer, resistors or relay.
 
 _Note_ All "pins" listed are shown as BOARD (Physical) pins, not BCM/GPIO pins.<br>
 In the following, "Raspberry Pi" is shortened to "RPi"

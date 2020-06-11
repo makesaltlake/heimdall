@@ -1,0 +1,3 @@
+[submodule "backend/backend/pi-rc522"]
+	path = backend/backend/pi-rc522
+	url = https://github.com/ondryaso/pi-rc522.git

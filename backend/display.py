@@ -26,8 +26,9 @@ class UserFeedback:
         self.green_led.on()
         self.buzzer.play(tone=700)
         time.sleep(1)
-        self.green_led.off()
         self.buzzer.stop()
+        time.sleep(1)
+        self.green_led.off()
 
     def access_denied(self):
         self.red_led.blink(on_time=0.5, off_time=0.5)

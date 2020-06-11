@@ -7,10 +7,11 @@ verify_ssl = true
 
 [packages]
 requests = "*"
-pi-rc522 = "*"
+spidev = "*"
 requests-cache = "*"
 smbus = "*"
 gpiozero = "*"
+"RPi.GPIO" = "*"
 
 [requires]
 python_version = "3.7"

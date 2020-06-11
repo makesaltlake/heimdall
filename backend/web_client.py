@@ -2,6 +2,7 @@ import requests
 import requests_cache
 import os
 import json
+import logging
 
 
 class HeimdallWebClient:
@@ -31,10 +32,10 @@ class HeimdallWebClient:
         response = requests.get(url=self.badge_token_url, headers=self.reader_headers)
         if response.ok:
             self.allowed_badge_tokens = json.loads(response.content)['badge_tokens']
-            print('get_badge_list, content = ' + str(json.loads(response.content)))
+            logging.info('get_badge_list, content = ' + str(json.loads(response.content)))
 
         else:
-            print('Web API returned error ' + str(response.status_code))
+            logging.info('Web API returned error ' + str(response.status_code))
 
         return response.ok
 
@@ -46,7 +47,7 @@ class HeimdallWebClient:
                                       'scanned_at': time_of_scan}]}
 
         response = requests.post(self.badge_scan_url, headers=self.reader_headers, json=badge_scan_info)
-        print('response: ' + str(response.content))
+        logging.info('response: ' + str(response.content))
         return response.ok
 
     def post_programmed_badge(self, badge_token, time_of_scan):
