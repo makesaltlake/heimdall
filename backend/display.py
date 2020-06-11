@@ -1,7 +1,9 @@
+import time
+
 from gpiozero import LED
 from gpiozero import TonalBuzzer
+
 from I2C_LCD_driver import lcd
-import time
 
 
 class UserFeedback:

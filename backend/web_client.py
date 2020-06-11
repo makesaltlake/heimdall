@@ -1,8 +1,9 @@
-import requests
-import requests_cache
-import os
 import json
 import logging
+import os
+
+import requests
+import requests_cache
 
 
 class HeimdallWebClient:

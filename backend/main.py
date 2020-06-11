@@ -8,17 +8,18 @@ __version__ = "0.1"
 __status__ = "Development"
 
 import argparse
-import logging
 import json
+import logging
 import os
 import threading
 import time
 import uuid
+from signal import signal, SIGINT
+
+from display import UserFeedback
 from rfid_badge import BadgeReader
 from rfid_badge import BadgeWriter
 from web_client import HeimdallWebClient
-from display import UserFeedback
-from signal import signal, SIGINT
 
 
 def badge_reader_thread():

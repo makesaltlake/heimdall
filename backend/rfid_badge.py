@@ -1,7 +1,9 @@
-from pirc522 import RFID
-import RPi.GPIO
-import uuid
 import logging
+import uuid
+
+import RPi.GPIO
+
+from pirc522 import RFID
 
 
 class BadgeReader:
