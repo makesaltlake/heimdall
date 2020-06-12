@@ -25,6 +25,9 @@ class HeimdallWebClient:
             self.writer_headers = {'Content-Type': 'application/json',
                                    'Authorization': 'Bearer {0}'.format(self.writer_api_key)}
 
+    def get_allowed_badge_tokens(self):
+        return self.__allowed_badge_tokens
+
     def get_badge_list(self):
         response = requests.get(url=self.badge_token_url, headers=self.reader_headers)
         if response.ok:

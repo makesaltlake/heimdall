@@ -50,7 +50,7 @@ def badge_reader_thread():
 
         if tid is None or badge_token is None:
             ui.error()
-        elif badge_token in web.__allowed_badge_tokens:
+        elif badge_token in web.get_allowed_badge_tokens():
             authorized = True
             ui.access_allowed()
         else:
