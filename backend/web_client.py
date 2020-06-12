@@ -9,7 +9,7 @@ import requests_cache
 class HeimdallWebClient:
 
     def __init__(self, operating_mode):
-        self.allowed_badge_tokens = []
+        self.__allowed_badge_tokens = []
 
         if operating_mode == 'READER':
             self.reader_api_key = os.environ['READER_API_KEY']
@@ -28,7 +28,7 @@ class HeimdallWebClient:
     def get_badge_list(self):
         response = requests.get(url=self.badge_token_url, headers=self.reader_headers)
         if response.ok:
-            self.allowed_badge_tokens = json.loads(response.content)['badge_tokens']
+            self.__allowed_badge_tokens = json.loads(response.content)['badge_tokens']
             logging.info('get_badge_list, content = ' + str(json.loads(response.content)))
 
         else:
