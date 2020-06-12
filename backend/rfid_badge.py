@@ -1,9 +1,20 @@
 import logging
 import uuid
+import os
+import random
 
 import RPi.GPIO
 
 from pirc522 import RFID
+
+TAG_KEY_BYTES = 6
+
+
+def get_tag_key():
+    tag_key_env = os.environ['TAG_KEY']
+    tag_key_int = int(tag_key_env, 16)
+    tag_key_bytes =  tag_key_int.to_bytes(length=TAG_KEY_BYTES, byteorder="big")
+    return list(tag_key_bytes)
 
 
 class BadgeReader:
@@ -17,6 +28,11 @@ class BadgeReader:
         self.rdr = RFID(pin_mode=RPi.GPIO.BCM, pin_irq=24, pin_rst=25)
         self.util = self.rdr.util()
 
+        if logging.getLogger().isEnabledFor(logging.DEBUG):
+            self.util.debug = True
+
+        self.tag_key = get_tag_key()
+
     def __del__(self):
         self.rdr.cleanup()
 
@@ -29,8 +45,12 @@ class BadgeReader:
         """
         self.util.set_tag(tag_id)
         token = None
-        self.util.auth(self.rdr.auth_b, [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
-        self.util.do_auth(block_address=1)
+        self.util.auth(self.rdr.auth_a, self.tag_key)
+        error = self.util.do_auth(block_address=1)
+        if error:
+            logging.warning('Failed to authenticate card using TAG_KEY as MIFARE KEY A')
+            return None
+
         (error, data) = self.rdr.read(block_address=1)
 
         if not error:
@@ -86,7 +106,11 @@ class BadgeWriter:
     def __init__(self):
         self.rdr = RFID(pin_mode=RPi.GPIO.BCM, pin_irq=24, pin_rst=25)
         self.util = self.rdr.util()
-        self.util.debug = True
+
+        if logging.getLogger().isEnabledFor(logging.DEBUG):
+            self.util.debug = True
+
+        self.tag_key = get_tag_key()
 
     def __del__(self):
         self.rdr.cleanup()
@@ -101,10 +125,13 @@ class BadgeWriter:
         self.rdr.wait_for_tag()
         (error, tag_data) = self.rdr.request()
         if not error:
+            logging.info('Found tag of type ' + str(hex(tag_data)))
             (error, tag_id) = self.rdr.anticoll()
             if error:
+                logging.warning('anti-collision failed')
                 return None
 
+            logging.info('Found tag with UID ' + str(tag_id))
             return tag_id
 
         return None
@@ -121,8 +148,67 @@ class BadgeWriter:
         badge_token_16_bytes = badge_token_128bit_int.to_bytes(length=16, byteorder="little")
 
         self.util.set_tag(tag_id)
-        self.util.auth(self.rdr.auth_b, [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF])
-        self.util.do_auth(self.util.block_addr(0, 1))
+        manufacturer_default_key = [0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF]
+        self.util.auth(auth_method=self.rdr.auth_a, key=manufacturer_default_key)
+        error = self.util.do_auth(block_address=0)
+        if error:
+            #  Retry using the TAG_KEY
+            logging.warning('Failed to authenticate tag with manufacturer default KEY A; trying '
+                            'to authenticate using TAG_KEY instead.')
 
-        error = self.rdr.write(block_address=1, data=badge_token_16_bytes)
+            self.util.deauth()
+            self.rdr.stop_crypto()
+            tag_id = self.scan_badge()
+            self.util.set_tag(uid=tag_id)
+            self.util.auth(auth_method=self.rdr.auth_a, key=self.tag_key)
+            error = self.util.do_auth(block_address=0)
+
+        if not error:
+            # We can now write the tag
+            (error, data) = self.rdr.read(block_address=3)
+            if not error:
+                i = 0
+                # Fill in the new KEY A
+                for key in self.tag_key:
+                    data[i] = self.tag_key[i]
+                    i += 1
+
+                i = 10
+                # Set KEY B to a series of random bytes
+                for key in self.tag_key:
+                    data[i] = random.randint(0, 255)
+                    i += 1
+
+                logging.debug('writing new sector trailer: ' + str(data))
+                error = self.rdr.write(block_address=3, data=data)
+                if error:
+                    logging.error('failed to write sector trailer')
+
+                self.util.deauth()
+                self.rdr.stop_crypto()
+
+                tag_id = self.scan_badge()
+                if tag_id is None:
+                    logging.error('error re-scanning badge')
+                    return True
+
+                self.util.set_tag(tag_id)
+                self.util.auth(self.rdr.auth_a, self.tag_key)
+                error = self.util.do_auth(block_address=0)
+                if error:
+                    logging.error('error occurred re-authenticating the tag')
+                    return True
+
+                (error, newdata) = self.rdr.read(block_address=3)
+                if error:
+                    logging.error('error reading back sector trailer')
+                if newdata != data:
+                    logging.error('read back of sector trailer does not match data written')
+
+                error = self.rdr.write(block_address=1, data=badge_token_16_bytes)
+                if error:
+                    logging.error('error writing badge_id to block 1')
+        else:
+            logging.error('Failed to authenticate card: is MIFARE KEY A non-standard?')
+
         return error

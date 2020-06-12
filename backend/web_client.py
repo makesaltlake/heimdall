@@ -10,12 +10,9 @@ class HeimdallWebClient:
 
     def __init__(self):
         self.allowed_badge_tokens = []
-        try:
-            self.reader_api_key = os.environ['READER_API_KEY']
-            self.writer_api_key = os.environ['WRITER_API_KEY']
-        except KeyError:
-            self.reader_api_key = None
-            self.writer_api_key = None
+
+        self.reader_api_key = os.environ['READER_API_KEY']
+        self.writer_api_key = os.environ['WRITER_API_KEY']
 
         self.badge_token_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_readers/access_list'
         self.badge_scan_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_readers/record_scans'

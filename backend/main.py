@@ -140,18 +140,45 @@ if __name__ == "__main__":
     parser.add_argument('-d', '--debug', help="Print debug output",
                         action="store_const", dest="debuglevel", const=logging.DEBUG, default=logging.WARNING)
     parser.add_argument('-v', '--verbose', help="Increase verbosity",
-                        action='store_const', dest="loglevel", const=logging.INFO)
+                        action='store_const', dest="debuglevel", const=logging.INFO)
     parser.add_argument('-m', '--mode', dest='mode', choices=['READER', 'WRITER'], required=True)
     parser.add_argument('--version', action='version', version='%(prog)s ' + __version__)
 
     args = parser.parse_args()
 
+    logging.basicConfig(level=args.debuglevel)
+
+    if args.mode == 'READER':
+        if ('READER_API_KEY' not in os.environ or
+                'TAG_KEY' not in os.environ):
+            print('Both READER_API_KEY and TAG_KEY environment variables must be set '
+                  'when operating in READER mode')
+            exit(1)
+    else:
+        if ('WRITER_API_KEY' not in os.environ or
+                'TAG_KEY' not in os.environ):
+            print('Both WRITER_API_KEY and TAG_KEY environment variables must be set '
+                  'when operating in WRITER mode')
+            exit(1)
+
+    TAG_KEY_BYTES = 6
+
+    num_hex_digits = 2 * TAG_KEY_BYTES
+
+    if len(os.environ['TAG_KEY']) != num_hex_digits:
+        print('TAG_KEY format error: should be ' + str(num_hex_digits) + ' hexadecimal digits')
+        exit(1)
+    else:
+        try:
+            tag_key = os.environ['TAG_KEY']
+            tag_int = int(tag_key, 16)
+            tag_bytes = tag_int.to_bytes(length=TAG_KEY_BYTES, byteorder="big")
+        except (ValueError, OverflowError):
+            print('TAG_KEY format error: should be of the format ABCDEF01')
+            exit(1)
+
     web = HeimdallWebClient()
     ui = UserFeedback()
-
-    tag_key = os.environ['BADGE_KEY']
-
-    logging.basicConfig(level=args.loglevel)
 
     if args.mode == 'READER':
         logging.info('Operating in READER mode.')
@@ -163,7 +190,7 @@ if __name__ == "__main__":
         reader_thread.start()
         reader_thread.join()
         web_thread.join()
-    elif args.mode == 'WRITER':
+    else:
         logging.info('Operating in WRITER mode.')
         writer_thread = threading.Thread(target=badge_writer_thread)
         writer_thread.daemon = True  # Kill thread when main thread ends

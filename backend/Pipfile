@@ -12,6 +12,3 @@ requests-cache = "*"
 smbus = "*"
 gpiozero = "*"
 "RPi.GPIO" = "*"
-
-[requires]
-python_version = "3.7"
