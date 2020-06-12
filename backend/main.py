@@ -177,7 +177,7 @@ if __name__ == "__main__":
             print('TAG_KEY format error: should be of the format ABCDEF01')
             exit(1)
 
-    web = HeimdallWebClient()
+    web = HeimdallWebClient(operating_mode=args.mode)
     ui = UserFeedback()
 
     if args.mode == 'READER':

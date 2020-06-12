@@ -202,8 +202,6 @@ class BadgeWriter:
                 (error, newdata) = self.rdr.read(block_address=3)
                 if error:
                     logging.error('error reading back sector trailer')
-                if newdata != data:
-                    logging.error('read back of sector trailer does not match data written')
 
                 error = self.rdr.write(block_address=1, data=badge_token_16_bytes)
                 if error:

@@ -8,23 +8,22 @@ import requests_cache
 
 class HeimdallWebClient:
 
-    def __init__(self):
+    def __init__(self, operating_mode):
         self.allowed_badge_tokens = []
 
-        self.reader_api_key = os.environ['READER_API_KEY']
-        self.writer_api_key = os.environ['WRITER_API_KEY']
+        if operating_mode == 'READER':
+            self.reader_api_key = os.environ['READER_API_KEY']
+            self.badge_token_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_readers/access_list'
+            self.badge_scan_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_readers/record_scans'
+            self.reader_headers = {'Content-Type': 'application/json',
+                                   'Authorization': 'Bearer {0}'.format(self.reader_api_key)}
 
-        self.badge_token_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_readers/access_list'
-        self.badge_scan_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_readers/record_scans'
-        self.badge_program_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_writers/program'
-
-        self.reader_headers = {'Content-Type': 'application/json',
-                               'Authorization': 'Bearer {0}'.format(self.reader_api_key)}
-
-        self.writer_headers = {'Content-Type': 'application/json',
-                               'Authorization': 'Bearer {0}'.format(self.writer_api_key)}
-
-        requests_cache.install_cache(backend='memory', expire_after=300, old_data_on_error=True)
+            requests_cache.install_cache(backend='memory', expire_after=300, old_data_on_error=True)
+        else:
+            self.writer_api_key = os.environ['WRITER_API_KEY']
+            self.badge_program_url = 'https://msl-heimdall-dev.herokuapp.com/api/badge_writers/program'
+            self.writer_headers = {'Content-Type': 'application/json',
+                                   'Authorization': 'Bearer {0}'.format(self.writer_api_key)}
 
     def get_badge_list(self):
         response = requests.get(url=self.badge_token_url, headers=self.reader_headers)
