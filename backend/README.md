@@ -1,10 +1,12 @@
-Raspberry Pi based RFID access control system
+ESP32 based 13.56 MHz RFID access control system
 ===
 
 Components
 ---
-(links are to Amazon, PiShop.us and AdaFruit)
+(links are to Amazon, AdaFruit and Mouser Electronics)
 
+- Adafruit HUZZAH32 - [Assembled Adafruit HUZZAH32 - ESP32 Feather Board - with Stacking Headers](https://www.adafruit.com/product/3619)
+- CLEV6630ARD (CLRC663 RFID reader/writer) - [NXP Semiconductors CLEV6630ARD](https://www.mouser.com/ProductDetail/NXP-Semiconductors/CLEV6630ARD?qs=%2Fha2pyFadujWtMY8yNDgyDVMb%252BUPmISJ5aW3tRgK33PclfjweBuHLg%3D%3D)
 - 20x4 LCD Display - [SunFounder IIC I2C TWI Serial 2004 20x4 LCD Module Shield for Arduino R3 Mega2560 ](https://www.amazon.com/gp/product/B01GPUMP9C/ref=ppx_yo_dt_b_asin_title_o05_s00?ie=UTF8&psc=1)
 - 2x 82 Ω resistors - [EDGELEC 100pcs 82 ohm Resistor 1/4w (0.25 Watt) ±1% Tolerance Metal Film Fixed Resistor, Multiple Values of Resistance Optional ](https://www.amazon.com/gp/product/B07HDG2MXW/ref=ppx_yo_dt_b_asin_title_o07_s01?ie=UTF8&psc=1)
 - Logic Level Converter - [KeeYees 10pcs 4 Channels IIC I2C Logic Level Converter Bi-Directional Module 3.3V to 5V Shifter for Arduino (Pack of 10) ](https://www.amazon.com/gp/product/B07LG646VS/ref=ppx_yo_dt_b_asin_title_o05_s01?ie=UTF8&psc=1)
