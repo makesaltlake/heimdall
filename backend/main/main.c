@@ -5,6 +5,7 @@
 
 #include <string.h>
 #include <unistd.h>
+#include <stdio.h>
 
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
@@ -33,11 +34,19 @@ static const char* TAG = "heimdall";
 
 static EventGroupHandle_t s_wifi_event_group;
 
-//static int RED_LED_PIN = 12;
-//static int GREEN_LED_PIN = 13;
-// static int BUZZER_PIN = TBD;
+static int RED_LED_PIN = 12;
+static int GREEN_LED_PIN = 13;
+//static int BUZZER_PIN = TBD;
 
 static int s_retry_num = 0;
+
+char *heimdall_url = NULL;
+char *reader_api_key = NULL;
+char *writer_api_key = NULL;
+char *tag_key = NULL;
+
+cJSON *access_list = NULL;
+
 
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT BIT1
@@ -53,14 +62,14 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
         if (s_retry_num < 10) {
             esp_wifi_connect();
             s_retry_num++;
-            ESP_LOGI(TAG, "retry to connect to the AP");
+            ESP_LOGI(TAG, "Retrying to connect to the WiFi AP");
         } else {
             xEventGroupSetBits(s_wifi_event_group, WIFI_FAIL_BIT);
         }
-        ESP_LOGI(TAG,"connect to the AP fail");
+        ESP_LOGI(TAG,"Failed to connect to the WiFi AP");
     } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
         ip_event_got_ip_t* event = (ip_event_got_ip_t*) event_data;
-        ESP_LOGI(TAG, "got ip:" IPSTR, IP2STR(&event->ip_info.ip));
+        ESP_LOGI(TAG, "got IP address:" IPSTR, IP2STR(&event->ip_info.ip));
         s_retry_num = 0;
         xEventGroupSetBits(s_wifi_event_group, WIFI_CONNECTED_BIT);
     }
@@ -70,30 +79,12 @@ esp_err_t _http_event_handle(esp_http_client_event_t *evt)
 {
     switch(evt->event_id) {
         case HTTP_EVENT_ERROR:
-            ESP_LOGI(TAG, "HTTP_EVENT_ERROR");
-            break;
         case HTTP_EVENT_ON_CONNECTED:
-            ESP_LOGI(TAG, "HTTP_EVENT_ON_CONNECTED");
-            break;
         case HTTP_EVENT_HEADER_SENT:
-            ESP_LOGI(TAG, "HTTP_EVENT_HEADER_SENT");
-            break;
         case HTTP_EVENT_ON_HEADER:
-            ESP_LOGI(TAG, "HTTP_EVENT_ON_HEADER");
-            printf("%.*s", evt->data_len, (char*)evt->data);
-            break;
         case HTTP_EVENT_ON_DATA:
-            ESP_LOGI(TAG, "HTTP_EVENT_ON_DATA, len=%d", evt->data_len);
-            if (!esp_http_client_is_chunked_response(evt->client)) {
-                printf("%.*s", evt->data_len, (char*)evt->data);
-            }
-
-            break;
         case HTTP_EVENT_ON_FINISH:
-            ESP_LOGI(TAG, "HTTP_EVENT_ON_FINISH");
-            break;
         case HTTP_EVENT_DISCONNECTED:
-            ESP_LOGI(TAG, "HTTP_EVENT_DISCONNECTED");
             break;
     }
     return ESP_OK;
@@ -159,7 +150,7 @@ static void heimdall_setup_wifi(char *wifi_ssid, char *wifi_password)
 	if (bits & WIFI_CONNECTED_BIT) {
         	ESP_LOGI(TAG, "connected to WiFi");
 	} else if (bits & WIFI_FAIL_BIT) {
-        	ESP_LOGI(TAG, "Failed to connect to WiFi");
+            ESP_LOGI(TAG, "failed to connect to WiFi");
 	} else {
         	ESP_LOGE(TAG, "UNEXPECTED EVENT");
 	}
@@ -170,44 +161,82 @@ static void heimdall_setup_wifi(char *wifi_ssid, char *wifi_password)
 	vEventGroupDelete(s_wifi_event_group);
 }
 
-#if 0
-spi_device_handle_t spi;
 
-static spi_device_handle_t heimdall_setup_spi(void)
+static void access_list_fetcher_thread(__attribute__((unused)) void *param)
 {
-    int RC522_SPI_MISO_PIN_NUM = 19;
-    int RC522_SPI_MOSI_PIN_NUM = 18;
-    int RC522_SPI_SCLK_PIN_NUM = 5;
-    int RC522_SPI_CS_PIN_NUM = 4;
+    int http_status_code;
+    int length;
+    char *url;
+    char authorization_value[49];
+    char *buffer;
+    const char * const url_path = "/api/badge_readers/access_list";
 
-    spi_bus_config_t buscfg = {
-        .miso_io_num = RC522_SPI_MISO_PIN_NUM,
-        .mosi_io_num = RC522_SPI_MOSI_PIN_NUM,
-        .sclk_io_num = RC522_SPI_SCLK_PIN_NUM,
-        .quadwp_io_num = -1,
-        .quadhd_io_num = -1,
-        .max_transfer_sz = 0,
-        .flags = SPICOMMON_BUSFLAG_MASTER
-    };
+    const int MAX_BADGE_TOKENS = 500;
 
-    spi_device_interface_config_t devcfg = {
-        .clock_speed_hz = SPI_BUS_SPEED_HZ,
-        .mode = 0,
-        .spics_io_num = RC522_SPI_CS_PIN_NUM,
-        .queue_size = 20,
-        .pre_cb = NULL,
-        .command_bits=0,
-        .address_bits=8,
-        .flags = 0,
-    };
-    
-    ESP_LOGI(TAG, "Setting up SPI");
-    ESP_ERROR_CHECK(spi_bus_initialize(HSPI_HOST, &buscfg, 0));
-    ESP_ERROR_CHECK(spi_bus_add_device(HSPI_HOST, &devcfg, &spi));
+    buffer = malloc(MAX_BADGE_TOKENS * 40);
+    assert(buffer != NULL);
 
-    return spi;
+    esp_http_client_config_t config = {
+	   .event_handler = _http_event_handle,
+	   .timeout_ms = 60000,
+	};
+
+    url = malloc(strlen(heimdall_url) + strlen(url_path) + 1);
+    assert(url != NULL);
+
+    sprintf(url, "%s%s", heimdall_url, url_path);
+    config.url = url;
+
+    while (1) {
+
+        esp_http_client_handle_t client = esp_http_client_init(&config);
+
+        sprintf(authorization_value, "Bearer %s", reader_api_key);
+
+        esp_http_client_set_header(client, "Content-Type", "application/json");
+        esp_http_client_set_header(client, "Authorization", authorization_value);
+        esp_http_client_set_method(client, HTTP_METHOD_GET);
+
+        ESP_LOGI(TAG, "Sending request to %s", heimdall_url);
+        esp_err_t err = esp_http_client_perform(client);
+
+        if (err == ESP_OK) {
+            http_status_code = esp_http_client_get_status_code(client);
+            if (http_status_code == 200) {
+
+                memset(buffer, 0, MAX_BADGE_TOKENS * 40);
+
+                length = esp_http_client_read(client, buffer, MAX_BADGE_TOKENS * 40);
+                if (length > 0) {
+                    if (access_list != NULL) {
+                        cJSON_Delete(access_list);
+                    }
+
+                    access_list = cJSON_Parse(buffer);
+                    const cJSON *tokens;
+                    const cJSON *badge_token;
+
+                    tokens = cJSON_GetObjectItem(access_list, "badge_tokens");
+                    cJSON_ArrayForEach(badge_token, tokens) {
+                        ESP_LOGI(TAG, "Token: %s", badge_token->valuestring);
+                    }
+                }
+                else {
+                    ESP_LOGW(TAG, "Zero-length HTTP read");
+                }
+            }
+            else {
+                ESP_LOGW(TAG, "HTTP request returned error %d", http_status_code);
+            }
+        }
+        else {
+            ESP_LOGW(TAG, "HTTP request failed: %d", err);
+        }
+
+        esp_http_client_cleanup(client);
+        sleep(300);
+    }
 }
-#endif
 
 
 static void heimdall_setup_ui_gpio(void)
@@ -216,7 +245,7 @@ static void heimdall_setup_ui_gpio(void)
 
 	io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
 	io_conf.mode = GPIO_MODE_OUTPUT;
-	io_conf.pin_bit_mask = ((1ULL << 12) | (1ULL << 13));
+	io_conf.pin_bit_mask = ((1ULL << RED_LED_PIN) | (1ULL << GREEN_LED_PIN));
 	io_conf.pull_down_en = 1;
 	io_conf.pull_up_en = 0;
 
@@ -231,10 +260,6 @@ void app_main(void)
 
 	char *wifi_ssid;
 	char *wifi_password;
-	char *heimdall_url;
-	char *reader_api_key;
-	char *writer_api_key;
-	char *tag_key;    
 
 	ret = nvs_flash_init();
 	if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NOT_FOUND) {
@@ -261,32 +286,6 @@ void app_main(void)
 
 	heimdall_setup_wifi(wifi_ssid, wifi_password);
 	heimdall_setup_ui_gpio();
+
+    xTaskCreate(&access_list_fetcher_thread, "access_list_fetcher", 4096, NULL, 5, NULL);
 }
-
-
-#if 0 
-//	xTaskCreate(&blinky, "blinky", 4096, NULL, 5, NULL);
-
-    esp_http_client_config_t config = {
-	   .url = "https://httpbin.org/delay/5",
-	   .event_handler = _http_event_handle,
-	   .timeout_ms = 60000,
-	};
-
-//    sprintf(config.url, "%s/api/badge_readers/access_list", heimdall_url);
-//    sprintf(config.url, "%s/api/badge_readers/record_scans", heimdall_url);
-//    sprintf(config.url, "%s/api/badge_writers/program", heimdall_url);
-
-
-    cJSON *access_list = cJSON_Parse(wifi_ssid);
-
-	esp_http_client_handle_t client = esp_http_client_init(&config);
-	ESP_LOGI(TAG, "Sending request to https://httpbin.org/delay/5");
-	esp_err_t err = esp_http_client_perform(client);
-
-	if (err == ESP_OK) {
-		ESP_LOGI(TAG, "Status = %d, content_length = %d",
-           esp_http_client_get_status_code(client),
-           esp_http_client_get_content_length(client));
-	}
-#endif
