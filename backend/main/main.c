@@ -40,16 +40,17 @@ static int GREEN_LED_PIN = 13;
 
 static int s_retry_num = 0;
 
-char *heimdall_url = NULL;
+char *heimdall_url   = NULL;
 char *reader_api_key = NULL;
 char *writer_api_key = NULL;
-char *tag_key = NULL;
+char *tag_key        = NULL;
 
 cJSON *access_list = NULL;
 
 
 #define WIFI_CONNECTED_BIT BIT0
-#define WIFI_FAIL_BIT BIT1
+#define WIFI_FAIL_BIT      BIT1
+
 
 // Mostly copied from 
 // https://github.com/espressif/esp-idf/tree/release/v4.1/examples/wifi/getting_started/station/main
@@ -75,32 +76,6 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
     }
 }
 
-esp_err_t _http_event_handle(esp_http_client_event_t *evt)
-{
-    switch(evt->event_id) {
-        case HTTP_EVENT_ERROR:
-        case HTTP_EVENT_ON_CONNECTED:
-        case HTTP_EVENT_HEADER_SENT:
-        case HTTP_EVENT_ON_HEADER:
-        case HTTP_EVENT_ON_DATA:
-        case HTTP_EVENT_ON_FINISH:
-        case HTTP_EVENT_DISCONNECTED:
-            break;
-    }
-    return ESP_OK;
-}
-
-static void heimdall_get_param(nvs_handle_t nvs, char *name, char **value)
-{
-	size_t required_len;
-
-	ESP_ERROR_CHECK(nvs_get_str(nvs, name, NULL, &required_len));
-
-	*value = malloc(required_len);
-	assert(value != NULL);
-
-	ESP_ERROR_CHECK(nvs_get_str(nvs, name, *value, &required_len));
-}
 
 // Mostly copied from 
 // https://github.com/espressif/esp-idf/tree/release/v4.1/examples/wifi/getting_started/station/main
@@ -148,17 +123,33 @@ static void heimdall_setup_wifi(char *wifi_ssid, char *wifi_password)
 	/* xEventGroupWaitBits() returns the bits before the call returned, hence we can test which event actually
 	 * happened. */
 	if (bits & WIFI_CONNECTED_BIT) {
-        	ESP_LOGI(TAG, "connected to WiFi");
+        ESP_LOGI(TAG, "connected to WiFi");
 	} else if (bits & WIFI_FAIL_BIT) {
-            ESP_LOGI(TAG, "failed to connect to WiFi");
+        ESP_LOGI(TAG, "failed to connect to WiFi");
 	} else {
-        	ESP_LOGE(TAG, "UNEXPECTED EVENT");
+        ESP_LOGE(TAG, "UNEXPECTED EVENT");
 	}
 
 	/* The event will not be processed after unregister */
 	ESP_ERROR_CHECK(esp_event_handler_unregister(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler));
 	ESP_ERROR_CHECK(esp_event_handler_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler));
 	vEventGroupDelete(s_wifi_event_group);
+}
+
+
+static esp_err_t _http_event_handle(esp_http_client_event_t *evt)
+{
+    switch(evt->event_id) {
+        case HTTP_EVENT_ERROR:
+        case HTTP_EVENT_ON_CONNECTED:
+        case HTTP_EVENT_HEADER_SENT:
+        case HTTP_EVENT_ON_HEADER:
+        case HTTP_EVENT_ON_DATA:
+        case HTTP_EVENT_ON_FINISH:
+        case HTTP_EVENT_DISCONNECTED:
+            break;
+    }
+    return ESP_OK;
 }
 
 
@@ -251,6 +242,20 @@ static void heimdall_setup_ui_gpio(void)
 
 	ESP_ERROR_CHECK(gpio_config(&io_conf));
 }
+
+
+static void heimdall_get_param(nvs_handle_t nvs, char *name, char **value)
+{
+	size_t required_len;
+
+	ESP_ERROR_CHECK(nvs_get_str(nvs, name, NULL, &required_len));
+
+	*value = malloc(required_len);
+	assert(value != NULL);
+
+	ESP_ERROR_CHECK(nvs_get_str(nvs, name, *value, &required_len));
+}
+
 
 void app_main(void)
 {
