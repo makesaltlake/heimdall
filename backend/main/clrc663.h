@@ -3,7 +3,7 @@
 
 /*
  * Copyright (C) 2020 Rebecca Cran <rebecca@bsdio.com>.
- * 
+ *
  */
 
 #include <driver/spi_master.h>
@@ -146,7 +146,7 @@ enum RC522_CMD
 
 
 uint8_t heimdall_rc663_get_version(spi_device_handle_t spi);
-void heimdall_rc663_init(spi_device_handle_t spi);
+spi_device_handle_t heimdall_rc663_init(void);
 bool heimdall_rc663_selftest(spi_device_handle_t spi);
 
 

@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2020 Rebecca Cran <rebecca@bsdio.com>.
- * 
+ *
  */
 
 #include <freertos/FreeRTOS.h>
@@ -64,15 +64,45 @@ uint8_t heimdall_rc663_get_version(spi_device_handle_t spi)
 
 
 
-void heimdall_rc663_init(spi_device_handle_t spi)
+spi_device_handle_t heimdall_rc663_init(void)
 {
+    spi_device_handle_t spi;
 
+    const int RC522_SPI_MISO_PIN_NUM = 19;
+    const int RC522_SPI_MOSI_PIN_NUM = 18;
+    const int RC522_SPI_SCLK_PIN_NUM = 5;
+    const int RC522_SPI_CS_PIN_NUM   = 4;
 
+    spi_bus_config_t buscfg = {
+        .miso_io_num = RC522_SPI_MISO_PIN_NUM,
+        .mosi_io_num = RC522_SPI_MOSI_PIN_NUM,
+        .sclk_io_num = RC522_SPI_SCLK_PIN_NUM,
+        .quadwp_io_num = -1,
+        .quadhd_io_num = -1,
+        .max_transfer_sz = 0,
+        .flags = SPICOMMON_BUSFLAG_MASTER
+    };
+
+    spi_device_interface_config_t devcfg = {
+        .clock_speed_hz = SPI_BUS_SPEED_HZ,
+        .mode = 0,
+        .spics_io_num = RC522_SPI_CS_PIN_NUM,
+        .queue_size = 20,
+        .pre_cb = NULL,
+        .command_bits=0,
+        .address_bits=8,
+        .flags = 0,
+    };
+
+    ESP_LOGI(TAG, "Setting up SPI");
+    ESP_ERROR_CHECK(spi_bus_initialize(HSPI_HOST, &buscfg, 0));
+    ESP_ERROR_CHECK(spi_bus_add_device(HSPI_HOST, &devcfg, &spi));
+
+    return spi;
 }
 
 
 bool heimdall_rc663_selftest(spi_device_handle_t spi)
 {
-
     return false;
 }

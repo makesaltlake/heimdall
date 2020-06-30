@@ -1,6 +1,6 @@
 /*
  * Copyright (C) 2020 Rebecca Cran <rebecca@bsdio.com>.
- * 
+ *
  */
 
 #include <string.h>
@@ -29,6 +29,7 @@
 #include <lwip/sys.h>
 
 #include <esp_adc_cal.h>
+#include "clrc663.h"
 
 static const char* TAG = "heimdall";
 
@@ -52,7 +53,7 @@ cJSON *access_list = NULL;
 #define WIFI_FAIL_BIT      BIT1
 
 
-// Mostly copied from 
+// Mostly copied from
 // https://github.com/espressif/esp-idf/tree/release/v4.1/examples/wifi/getting_started/station/main
 static void wifi_event_handler(void* arg, esp_event_base_t event_base,
                                 int32_t event_id, void* event_data)
@@ -77,63 +78,63 @@ static void wifi_event_handler(void* arg, esp_event_base_t event_base,
 }
 
 
-// Mostly copied from 
+// Mostly copied from
 // https://github.com/espressif/esp-idf/tree/release/v4.1/examples/wifi/getting_started/station/main
 static void heimdall_setup_wifi(char *wifi_ssid, char *wifi_password)
 {
-	s_wifi_event_group = xEventGroupCreate();
+    s_wifi_event_group = xEventGroupCreate();
 
-	ESP_ERROR_CHECK(esp_netif_init());
-	ESP_ERROR_CHECK(esp_event_loop_create_default());
-	esp_netif_create_default_wifi_sta();
+    ESP_ERROR_CHECK(esp_netif_init());
+    ESP_ERROR_CHECK(esp_event_loop_create_default());
+    esp_netif_create_default_wifi_sta();
 
-	wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
-	ESP_ERROR_CHECK(esp_wifi_init(&cfg));
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    ESP_ERROR_CHECK(esp_wifi_init(&cfg));
 
-	ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT,
-                                                        ESP_EVENT_ANY_ID,
-                                                        &wifi_event_handler,
-                                                        NULL));
-	ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT,
-                                                        IP_EVENT_STA_GOT_IP,
-                                                        &wifi_event_handler,
-                                                        NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(WIFI_EVENT,
+                                               ESP_EVENT_ANY_ID,
+                                               &wifi_event_handler,
+                                               NULL));
+    ESP_ERROR_CHECK(esp_event_handler_register(IP_EVENT,
+                                               IP_EVENT_STA_GOT_IP,
+                                               &wifi_event_handler,
+                                               NULL));
 
-	wifi_config_t wifi_config = {};
+    wifi_config_t wifi_config = {};
 
-	strncpy((char*)wifi_config.sta.ssid, wifi_ssid, sizeof(wifi_config.sta.ssid));
-	strncpy((char*)wifi_config.sta.password, wifi_password, sizeof(wifi_config.sta.password));
-	wifi_config.sta.pmf_cfg.capable = true;
-	wifi_config.sta.pmf_cfg.required = false;
+    strncpy((char*)wifi_config.sta.ssid, wifi_ssid, sizeof(wifi_config.sta.ssid));
+    strncpy((char*)wifi_config.sta.password, wifi_password, sizeof(wifi_config.sta.password));
+    wifi_config.sta.pmf_cfg.capable = true;
+    wifi_config.sta.pmf_cfg.required = false;
 
-	ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
-	ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config));
-	ESP_ERROR_CHECK(esp_wifi_start());
+    ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
+    ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config));
+    ESP_ERROR_CHECK(esp_wifi_start());
 
-	esp_wifi_set_ps(WIFI_PS_NONE);
+    esp_wifi_set_ps(WIFI_PS_NONE);
 
-	/* Waiting until either the connection is established (WIFI_CONNECTED_BIT) or connection failed for the maximum
-	 * number of re-tries (WIFI_FAIL_BIT). The bits are set by event_handler() (see above) */
-	EventBits_t bits = xEventGroupWaitBits(s_wifi_event_group,
+  /* Waiting until either the connection is established (WIFI_CONNECTED_BIT) or connection failed for the maximum
+   * number of re-tries (WIFI_FAIL_BIT). The bits are set by event_handler() (see above) */
+  EventBits_t bits = xEventGroupWaitBits(s_wifi_event_group,
             WIFI_CONNECTED_BIT | WIFI_FAIL_BIT,
             pdFALSE,
             pdFALSE,
             portMAX_DELAY);
 
-	/* xEventGroupWaitBits() returns the bits before the call returned, hence we can test which event actually
-	 * happened. */
-	if (bits & WIFI_CONNECTED_BIT) {
+    /* xEventGroupWaitBits() returns the bits before the call returned, hence we can test which event actually
+    * happened. */
+    if (bits & WIFI_CONNECTED_BIT) {
         ESP_LOGI(TAG, "connected to WiFi");
-	} else if (bits & WIFI_FAIL_BIT) {
+    } else if (bits & WIFI_FAIL_BIT) {
         ESP_LOGI(TAG, "failed to connect to WiFi");
-	} else {
+    } else {
         ESP_LOGE(TAG, "UNEXPECTED EVENT");
-	}
+    }
 
-	/* The event will not be processed after unregister */
-	ESP_ERROR_CHECK(esp_event_handler_unregister(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler));
-	ESP_ERROR_CHECK(esp_event_handler_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler));
-	vEventGroupDelete(s_wifi_event_group);
+    /* The event will not be processed after unregister */
+    ESP_ERROR_CHECK(esp_event_handler_unregister(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler));
+    ESP_ERROR_CHECK(esp_event_handler_unregister(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler));
+    vEventGroupDelete(s_wifi_event_group);
 }
 
 
@@ -168,9 +169,9 @@ static void access_list_fetcher_thread(__attribute__((unused)) void *param)
     assert(buffer != NULL);
 
     esp_http_client_config_t config = {
-	   .event_handler = _http_event_handle,
-	   .timeout_ms = 60000,
-	};
+     .event_handler = _http_event_handle,
+     .timeout_ms = 60000,
+  };
 
     url = malloc(strlen(heimdall_url) + strlen(url_path) + 1);
     assert(url != NULL);
@@ -232,65 +233,70 @@ static void access_list_fetcher_thread(__attribute__((unused)) void *param)
 
 static void heimdall_setup_ui_gpio(void)
 {
-	gpio_config_t io_conf;
+    gpio_config_t io_conf;
 
-	io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
-	io_conf.mode = GPIO_MODE_OUTPUT;
-	io_conf.pin_bit_mask = ((1ULL << RED_LED_PIN) | (1ULL << GREEN_LED_PIN));
-	io_conf.pull_down_en = 1;
-	io_conf.pull_up_en = 0;
+    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_OUTPUT;
+    io_conf.pin_bit_mask = ((1ULL << RED_LED_PIN) | (1ULL << GREEN_LED_PIN));
+    io_conf.pull_down_en = 1;
+    io_conf.pull_up_en = 0;
 
-	ESP_ERROR_CHECK(gpio_config(&io_conf));
+    ESP_ERROR_CHECK(gpio_config(&io_conf));
 }
 
 
 static void heimdall_get_param(nvs_handle_t nvs, char *name, char **value)
 {
-	size_t required_len;
+    size_t required_len;
 
-	ESP_ERROR_CHECK(nvs_get_str(nvs, name, NULL, &required_len));
+    ESP_ERROR_CHECK(nvs_get_str(nvs, name, NULL, &required_len));
 
-	*value = malloc(required_len);
-	assert(value != NULL);
+    *value = malloc(required_len);
+    assert(value != NULL);
 
-	ESP_ERROR_CHECK(nvs_get_str(nvs, name, *value, &required_len));
+    ESP_ERROR_CHECK(nvs_get_str(nvs, name, *value, &required_len));
 }
 
 
 void app_main(void)
 {
-	esp_err_t ret;
-	nvs_handle_t nvs;
-	size_t required_len;
+    esp_err_t ret;
+    nvs_handle_t nvs;
+    size_t required_len;
+    spi_device_handle_t spi;
 
-	char *wifi_ssid;
-	char *wifi_password;
+    char *wifi_ssid;
+    char *wifi_password;
 
-	ret = nvs_flash_init();
-	if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NOT_FOUND) {
-		ESP_ERROR_CHECK(ret);
-	}
+    ret = nvs_flash_init();
+    if (ret == ESP_ERR_NVS_NO_FREE_PAGES || ret == ESP_ERR_NOT_FOUND) {
+        ESP_ERROR_CHECK(ret);
+    }
 
-	ESP_ERROR_CHECK(nvs_open("heimdall", NVS_READWRITE, &nvs));
-	
-	heimdall_get_param(nvs, "wifi_ssid", &wifi_ssid);
-	heimdall_get_param(nvs, "wifi_password", &wifi_password);
- 	heimdall_get_param(nvs, "heimdall_url", &heimdall_url);
-	heimdall_get_param(nvs, "reader_api_key", &reader_api_key);
-	heimdall_get_param(nvs, "writer_api_key", &writer_api_key);
+    ESP_ERROR_CHECK(nvs_open("heimdall", NVS_READWRITE, &nvs));
 
-	ESP_ERROR_CHECK(nvs_get_blob(nvs, "tag_key", NULL, &required_len));
+    heimdall_get_param(nvs, "wifi_ssid", &wifi_ssid);
+    heimdall_get_param(nvs, "wifi_password", &wifi_password);
+    heimdall_get_param(nvs, "heimdall_url", &heimdall_url);
+    heimdall_get_param(nvs, "reader_api_key", &reader_api_key);
+    heimdall_get_param(nvs, "writer_api_key", &writer_api_key);
 
-	tag_key = malloc(required_len + 1);
- 	assert(tag_key != NULL);
+    ESP_ERROR_CHECK(nvs_get_blob(nvs, "tag_key", NULL, &required_len));
 
-	ESP_ERROR_CHECK(nvs_get_blob(nvs, "tag_key", tag_key, &required_len));
-	nvs_close(nvs);
+    tag_key = malloc(required_len + 1);
+    assert(tag_key != NULL);
 
-	tag_key[required_len] = 0;
+    ESP_ERROR_CHECK(nvs_get_blob(nvs, "tag_key", tag_key, &required_len));
+    nvs_close(nvs);
 
-	heimdall_setup_wifi(wifi_ssid, wifi_password);
-	heimdall_setup_ui_gpio();
+    tag_key[required_len] = 0;
+
+    heimdall_setup_wifi(wifi_ssid, wifi_password);
+    heimdall_setup_ui_gpio();
+    spi = heimdall_rc663_init();
 
     xTaskCreate(&access_list_fetcher_thread, "access_list_fetcher", 4096, NULL, 5, NULL);
+
+    uint8_t version = heimdall_rc663_get_version(spi);
+    ESP_LOGI(TAG, "CLRC663 revision %x", version);
 }
