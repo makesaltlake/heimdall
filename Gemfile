@@ -50,6 +50,7 @@ gem 'faker' # yes, in production too - that lets us seed data into demo environm
 gem 'paint'
 gem 'inst-jobs'
 gem 'stripe'
+gem 'sentry-raven'
 
 group :development do
   # Work around https://github.com/ctran/annotate_models/issues/761. The git
