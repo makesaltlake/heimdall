@@ -271,10 +271,39 @@ static void heimdall_get_param(nvs_handle_t nvs, char *name, char **value)
 void tag_reader(void *param)
 {
     spi_device_handle_t spi;
+    bool got_card;
+    uint8_t *uid = NULL;
+    uint8_t len = 0;
+    uint8_t bcc = 0;
+    uint8_t sak;
 
-    spi = heimdall_rc663_init();
+    spi = heimdall_rfid_init();
 
-    while (1) { sleep(1); }
+    while (1) {
+        do {
+            got_card = heimdall_rfid_reqa(spi);
+        } while (!got_card);
+
+        ESP_LOGI(TAG, "Got card");
+
+        heimdall_rfid_anticollision(spi, 1, &uid, &len, &bcc);
+        sak = heimdall_rfid_check_sak(spi, uid, len, bcc);
+
+        if (sak & 0x04) {
+            heimdall_rfid_anticollision(spi, 2, &uid, &len, &bcc);
+            sak = heimdall_rfid_check_sak(spi, uid, len, bcc);
+        }
+
+        if (sak & 0x04) {
+            heimdall_rfid_anticollision(spi, 3, &uid, &len, &bcc);
+            sak = heimdall_rfid_check_sak(spi, uid, len, bcc);
+        }
+
+        for (int i = 0; i < len; i++)
+        {
+            ESP_LOGV(TAG, "U[%d] = %x", i, uid[i]);
+        }
+    }
 }
 
 void app_main(void)

@@ -22,6 +22,7 @@ static const char* TAG = "heimdall-clrc663";
 static void heimdall_rc663_write_reg(spi_device_handle_t spi, uint8_t reg, uint8_t value);
 static void heimdall_rc663_cmd(spi_device_handle_t spi, uint8_t cmd);
 static uint8_t heimdall_rc663_read_reg(spi_device_handle_t spi, uint8_t reg);
+static void clear_irq(spi_device_handle_t spi, int irq);
 
 static void heimdall_rc663_cmd(spi_device_handle_t spi, uint8_t cmd)
 {
@@ -79,10 +80,7 @@ uint8_t heimdall_rc663_get_version(spi_device_handle_t spi)
     return version;
 }
 
-static uint8_t check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t uid_len, uint8_t bcc);
-static void clear_irq(spi_device_handle_t spi, int irq);
-
-static bool reqa(spi_device_handle_t spi)
+bool heimdall_rfid_reqa(spi_device_handle_t spi)
 {
     uint8_t b1_b8;
     uint8_t b9_b16;
@@ -157,9 +155,9 @@ static void clear_irq(spi_device_handle_t spi, int irq)
         heimdall_rc663_write_reg(spi, RC663_REG_IRQ1, 0x7F);
 }
 
-static int anticollision(spi_device_handle_t spi, int level, uint8_t **uid, uint8_t *len, uint8_t *bcc)
+int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **uid, uint8_t *len, uint8_t *bcc)
 {
-    uint8_t sel;
+    uint8_t sel = 0;
     uint8_t irq1;
     uint8_t error;
     uint8_t fifo_length;
@@ -269,7 +267,7 @@ static int anticollision(spi_device_handle_t spi, int level, uint8_t **uid, uint
         for (j = 0; j < fifo_length; j++) {
             val = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
             if ((i > 0 && j == 0) || (collision && (collision_bit / 8) == j)) {
-                p[j + byte_start] |= val;
+                p[byte_start + j] |= val;
                 shift = collision_bit % 8;
                 if (collision)
                     num_valid_bits += (collision_bit % 8);
@@ -278,7 +276,7 @@ static int anticollision(spi_device_handle_t spi, int level, uint8_t **uid, uint
                     num_valid_bits += 8;
                 }
             } else {
-                p[j + byte_start] |= val;
+                p[byte_start + j] |= val;
                 num_valid_bits += 8;
             }
         }
@@ -321,12 +319,11 @@ static int anticollision(spi_device_handle_t spi, int level, uint8_t **uid, uint
     return 0;
 }
 
-spi_device_handle_t heimdall_rc663_init(void)
+spi_device_handle_t heimdall_rfid_init(void)
 {
     spi_device_handle_t spi;
     uint8_t value;
     uint8_t clrc663_version;
-    bool got_card;
 
     const int RC522_SPI_MISO_PIN_NUM = 19;
     const int RC522_SPI_MOSI_PIN_NUM = 18;
@@ -421,40 +418,10 @@ spi_device_handle_t heimdall_rc663_init(void)
     heimdall_rc663_write_reg(spi, RC663_REG_IRQ0, 0x7F);
     heimdall_rc663_write_reg(spi, RC663_REG_IRQ1, 0x7F);
 
-    do {
-        got_card = reqa(spi);
-    } while (!got_card);
-
-    ESP_LOGI(TAG, "Got card");
-    uint8_t *uid = NULL;
-    uint8_t len = 0;
-    uint8_t bcc = 0;
-    uint8_t sak;
-    uint8_t error;
-
-    error = anticollision(spi, 1, &uid, &len, &bcc);
-    sak = check_sak(spi, uid, len, bcc);
-
-    if (sak & 0x04) {
-        error = anticollision(spi, 2, &uid, &len, &bcc);
-        sak = check_sak(spi, uid, len, bcc);
-    }
-
-    if (sak & 0x04) {
-        error = anticollision(spi, 3, &uid, &len, &bcc);
-        sak = check_sak(spi, uid, len, bcc);
-    }
-
-    // First byte is the Cascade Tag (CT)
-    for (int i = 0; i < len; i++)
-    {
-        ESP_LOGV(TAG, "U[%d] = %x", i, uid[i]);
-    }
-
     return spi;
 }
 
-static uint8_t check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t uid_len, uint8_t bcc)
+uint8_t heimdall_rfid_check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t uid_len, uint8_t bcc)
 {
     uint8_t irq1;
     uint8_t sak;
@@ -524,10 +491,4 @@ static uint8_t check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t uid_len,
     sak = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
 
     return sak;
-}
-
-
-bool heimdall_rc663_selftest(spi_device_handle_t spi)
-{
-    return false;
 }
