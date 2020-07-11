@@ -20,7 +20,7 @@
 
 
 
-#define SPI_BUS_SPEED_HZ 500 * 1000
+#define SPI_BUS_SPEED_HZ 1000 * 1000
 
 enum RC663_REG {
 

@@ -19,7 +19,6 @@
 #include <esp_http_client.h>
 #include <driver/gpio.h>
 #include <driver/adc.h>
-#include <driver/gpio.h>
 #include <driver/i2c.h>
 #include <driver/spi_master.h>
 #include <esp_log.h>
@@ -235,9 +234,21 @@ static void heimdall_setup_ui_gpio(void)
 {
     gpio_config_t io_conf;
 
+    const int NFC_POWERDOWN_PIN = 12;
+    const int NFC_IRQ_PIN = 13;
+
     io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
     io_conf.mode = GPIO_MODE_OUTPUT;
-    io_conf.pin_bit_mask = ((1ULL << RED_LED_PIN) | (1ULL << GREEN_LED_PIN));
+    io_conf.pin_bit_mask = ((1ULL << RED_LED_PIN) | (1ULL << GREEN_LED_PIN)) | (1ULL << NFC_POWERDOWN_PIN);
+    io_conf.pull_down_en = 1;
+    io_conf.pull_up_en = 0;
+
+    ESP_ERROR_CHECK(gpio_config(&io_conf));
+
+
+    io_conf.intr_type = GPIO_PIN_INTR_HILEVEL;
+    io_conf.mode = GPIO_MODE_INPUT;
+    io_conf.pin_bit_mask = (1ULL << NFC_IRQ_PIN);
     io_conf.pull_down_en = 1;
     io_conf.pull_up_en = 0;
 
@@ -257,13 +268,20 @@ static void heimdall_get_param(nvs_handle_t nvs, char *name, char **value)
     ESP_ERROR_CHECK(nvs_get_str(nvs, name, *value, &required_len));
 }
 
+void tag_reader(void *param)
+{
+    spi_device_handle_t spi;
+
+    spi = heimdall_rc663_init();
+
+    while (1) { sleep(1); }
+}
 
 void app_main(void)
 {
     esp_err_t ret;
     nvs_handle_t nvs;
     size_t required_len;
-    spi_device_handle_t spi;
 
     char *wifi_ssid;
     char *wifi_password;
@@ -293,10 +311,9 @@ void app_main(void)
 
     heimdall_setup_wifi(wifi_ssid, wifi_password);
     heimdall_setup_ui_gpio();
-    spi = heimdall_rc663_init();
 
     xTaskCreate(&access_list_fetcher_thread, "access_list_fetcher", 4096, NULL, 5, NULL);
+    xTaskCreate(&tag_reader, "tag_reader", 4096, NULL, 5, NULL);
 
-    uint8_t version = heimdall_rc663_get_version(spi);
-    ESP_LOGI(TAG, "CLRC663 revision %x", version);
+    while (1) { sleep(60); }
 }
