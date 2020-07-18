@@ -49,15 +49,11 @@ bool heimdall_rfid_read(spi_device_handle_t spi, uint8_t block, uint8_t data[16]
     heimdall_rc663_write_reg(spi, RC663_REG_IRQ0, 0x7F);
     heimdall_rc663_write_reg(spi, RC663_REG_IRQ1, 0x7F);
 
+    heimdall_rfid_set_timer(spi, 200);
+
     heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
 
-    while (1) {
-        irq1 = heimdall_rc663_read_reg(spi, RC663_REG_IRQ1);
-
-        if ((irq1 & 0x40) != 0) {
-            break;
-        }
-    }
+    heimdall_wait(spi);
 
     error = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
     if (!error)

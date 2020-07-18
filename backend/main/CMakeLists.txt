@@ -2,7 +2,7 @@
 set(COMPONENT_REQUIRES )
 set(COMPONENT_PRIV_REQUIRES )
 
-set(COMPONENT_SRCS "main.c" "clrc663.c")
+set(COMPONENT_SRCS "main.c" "iso14443.c" "mifare_classic.c" "clrc663.c")
 set(COMPONENT_ADD_INCLUDEDIRS "")
 
 register_component()

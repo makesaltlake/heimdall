@@ -253,6 +253,103 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
 }
 
 
+// Sends a Request for Answer To Select (RATS)
+void heimdall_rfid_send_rats(spi_device_handle_t spi)
+{
+    int max_picc_frame;
+    
+    // FSD 256, FSDI 8
+    // CID 0
+    uint8_t param = (8 << 4) | 0x00;
+
+    const uint8_t ISO14443_CMD_RATS = 0xE0;
+
+    heimdall_rfid_set_timer(spi, 100);
+    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, ISO14443_CMD_RATS);
+    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, param);
+
+    heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
+
+    if (heimdall_wait(spi)) {
+
+        vTaskDelay(500 / portTICK_PERIOD_MS);
+
+        uint8_t len = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH);
+        if (heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA) != len)
+            ESP_LOGW(TAG, "ATS Length and FIFO length disagree");
+
+        ESP_LOGV(TAG, "FIFO LEN is %d", len);
+
+        if (len > 1) {
+                uint8_t format_t0 = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
+                bool ta = (format_t0 & 0x10);
+                bool tb = (format_t0 & 0x20);
+                bool tc = (format_t0 & 0x40);
+
+                uint8_t fsdi = format_t0 & 0x0F;
+
+                switch (fsdi) {
+                    case 0x00:
+                        max_picc_frame = 16;
+                        break;
+                    case 0x01:
+                        max_picc_frame = 24;
+                        break;
+                    case 0x02:
+                        max_picc_frame = 32;
+                        break;
+                    case 0x03:
+                        max_picc_frame = 40;
+                        break;
+                    case 0x04:
+                        max_picc_frame = 48;
+                        break;
+                    case 0x05:
+                        max_picc_frame = 64;
+                        break;
+                    case 0x06:
+                        max_picc_frame = 96;
+                        break;
+                    case 0x07:
+                        max_picc_frame = 128;
+                        break;
+                    case 0x08:
+                        max_picc_frame = 256;
+                        break;
+                    case 0x09:
+                        max_picc_frame = 512;
+                        break;
+                    case 0x0A:
+                        max_picc_frame = 1024;
+                        break;
+                    case 0x0B:
+                        max_picc_frame = 2048;
+                        break;
+                    case 0x0C:
+                        max_picc_frame = 4096;
+                        break;
+                    default:
+                        ESP_LOGE(TAG, "Got reserved (RFU) FSDI value %d", fsdi);
+                        assert(0);
+                }
+
+                ESP_LOGV(TAG, "PICC frame size: %d", max_picc_frame);
+
+                if (ta)
+                    ESP_LOGV(TAG, "TA: %x", heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA));
+                if (tb)
+                    ESP_LOGV(TAG, "TB: %x", heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA));
+                if (tc)
+                    ESP_LOGV(TAG, "TC: %x", heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA));
+
+                for (int i = 0; i < heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH); i++)
+                {
+                    ESP_LOGV(TAG, "ATS Historical byte: %x", heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA));
+                }
+        }
+    }
+}
+
 uint8_t heimdall_rfid_check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t uid_len, uint8_t bcc)
 {
     uint8_t irq1;
