@@ -348,6 +348,7 @@ void tag_reader(void *param)
             memset(data, 0, 16);
 
             heimdall_rfid_authenticate(spi, uid, "");
+
             if (heimdall_rfid_read(spi, 1, &data))
             {
                 ESP_LOGV(TAG, "DATA: %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x",
@@ -355,6 +356,8 @@ void tag_reader(void *param)
             } else {
                 ESP_LOGW(TAG, "Failed to read data");
             }
+
+
         }
 
      //   heimdall_rfid_personalize(spi);
@@ -394,7 +397,7 @@ void app_main(void)
 
     tag_key[required_len] = 0;
 
- //   heimdall_setup_wifi(wifi_ssid, wifi_password);
+//    heimdall_setup_wifi(wifi_ssid, wifi_password);
     heimdall_setup_ui_gpio();
 
  //   xTaskCreate(&access_list_fetcher_thread, "access_list_fetcher", 4096, NULL, 5, NULL);
