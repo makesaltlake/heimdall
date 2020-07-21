@@ -13,6 +13,17 @@ Comment2 ""
 Comment3 ""
 Comment4 ""
 $EndDescr
+$Comp
+L Connector_Generic:Conn_01x09 J1
+U 1 1 5F14F04E
+P 1600 4050
+F 0 "J1" H 1518 4667 50  0000 C CNN
+F 1 "Conn_01x09" H 1518 4576 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical" H 1600 4050 50  0001 C CNN
+F 3 "~" H 1600 4050 50  0001 C CNN
+	1    1600 4050
+	-1   0    0    -1  
+$EndComp
 Wire Wire Line
 	1800 3650 2050 3650
 Wire Wire Line
@@ -71,7 +82,7 @@ F 4 "RES-07869" H 4950 5371 60  0000 C CNN "Field4"
 	1    0    0    -1  
 $EndComp
 $Comp
-L heimdall_outsideboard-rescue:1000UF-RADIAL-5MM-25V-20%-SparkFun-Capacitors C1
+L SparkFun-Capacitors:1000UF-RADIAL-5MM-25V-20% C1
 U 1 1 5F15FBF3
 P 2350 5200
 F 0 "C1" H 2478 5245 45  0000 L CNN
@@ -95,6 +106,17 @@ Wire Wire Line
 	1800 4150 5900 4150
 Wire Wire Line
 	1800 4250 5900 4250
+$Comp
+L Connector_Generic:Conn_01x06 J2
+U 1 1 5F170A36
+P 6100 3950
+F 0 "J2" H 6180 3942 50  0000 L CNN
+F 1 "Conn_01x06" H 6180 3851 50  0000 L CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical" H 6100 3950 50  0001 C CNN
+F 3 "~" H 6100 3950 50  0001 C CNN
+	1    6100 3950
+	1    0    0    -1  
+$EndComp
 Wire Wire Line
 	1800 4450 6450 4450
 Wire Wire Line
@@ -128,59 +150,4 @@ Wire Wire Line
 Connection ~ 2800 5200
 Wire Wire Line
 	2800 5200 2800 5550
-$Comp
-L Connector:Screw_Terminal_01x03 J1
-U 1 1 5F16624A
-P 1600 3750
-F 0 "J1" H 1518 4067 50  0000 C CNN
-F 1 "Screw_Terminal_01x03" H 1518 3976 50  0000 C CNN
-F 2 "Connectors:SCREWTERMINAL-5MM-3" H 1600 3750 50  0001 C CNN
-F 3 "~" H 1600 3750 50  0001 C CNN
-	1    1600 3750
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:Screw_Terminal_01x03 J2
-U 1 1 5F166739
-P 1600 4050
-F 0 "J2" H 1518 4367 50  0000 C CNN
-F 1 "Screw_Terminal_01x03" H 1518 4276 50  0000 C CNN
-F 2 "Connectors:SCREWTERMINAL-5MM-3" H 1600 4050 50  0001 C CNN
-F 3 "~" H 1600 4050 50  0001 C CNN
-	1    1600 4050
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:Screw_Terminal_01x03 J3
-U 1 1 5F166DE5
-P 1600 4350
-F 0 "J3" H 1518 4667 50  0000 C CNN
-F 1 "Screw_Terminal_01x03" H 1518 4576 50  0000 C CNN
-F 2 "Connectors:SCREWTERMINAL-5MM-3" H 1600 4350 50  0001 C CNN
-F 3 "~" H 1600 4350 50  0001 C CNN
-	1    1600 4350
-	-1   0    0    -1  
-$EndComp
-$Comp
-L Connector:Screw_Terminal_01x03 J4
-U 1 1 5F1677E6
-P 6100 3850
-F 0 "J4" H 6180 3892 50  0000 L CNN
-F 1 "Screw_Terminal_01x03" H 6180 3801 50  0000 L CNN
-F 2 "Connectors:SCREWTERMINAL-5MM-3" H 6100 3850 50  0001 C CNN
-F 3 "~" H 6100 3850 50  0001 C CNN
-	1    6100 3850
-	1    0    0    -1  
-$EndComp
-$Comp
-L Connector:Screw_Terminal_01x03 J5
-U 1 1 5F168062
-P 6100 4150
-F 0 "J5" H 6180 4192 50  0000 L CNN
-F 1 "Screw_Terminal_01x03" H 6180 4101 50  0000 L CNN
-F 2 "Connectors:SCREWTERMINAL-5MM-3" H 6100 4150 50  0001 C CNN
-F 3 "~" H 6100 4150 50  0001 C CNN
-	1    6100 4150
-	1    0    0    -1  
-$EndComp
 $EndSCHEMATC
