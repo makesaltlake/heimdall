@@ -24,3 +24,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+# Ignore board backup and rescue files (the symbols will be present in the
+# cache files which are *not* ignored)
+/boards/**/*-bak
+/boards/**/*-rescue.*
