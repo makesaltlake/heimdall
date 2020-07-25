@@ -5,8 +5,8 @@ $Descr USLetter 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Heimdall Outside Board"
-Date "2020-07-22"
-Rev "0.3"
+Date "2020-07-24"
+Rev "01"
 Comp ""
 Comment1 "https://opensource.org/licenses/MIT"
 Comment2 "License: MIT"
