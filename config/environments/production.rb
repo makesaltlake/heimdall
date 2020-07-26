@@ -38,10 +38,15 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 
-  # Mount Action Cable outside main process or domain.
+  # Mount Action Cable outside main process or domain. N.B. We mount in
+  # config/application.yml so that it's mounted for all environments, but we
+  # restrict request origins here as local dev environments won't have a
+  # HEIMDALL_HOST set.
+  #
   # config.action_cable.mount_path = nil
   # config.action_cable.url = 'wss://example.com/cable'
   # config.action_cable.allowed_request_origins = [ 'http://example.com', /http:\/\/example.*/ ]
+  config.action_cable.allowed_request_origins = [HeimdallHost.host]
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   config.force_ssl = true

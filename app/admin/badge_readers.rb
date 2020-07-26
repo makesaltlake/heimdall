@@ -40,6 +40,22 @@ ActiveAdmin.register BadgeReader do
       row('Prevent access by the general membership', &:restricted_access)
     end
 
+    panel 'Manual Access' do
+      link_text = 'Click here to act as if a badge was scanned and manually open this badge reader for a moment.'
+      confirm_text = "Are you sure you want to open #{resource.name} for a moment?"
+
+      text_node link_to link_text, request_manual_open_admin_badge_reader_path(resource), method: :post, data: { confirm: confirm_text }
+      hr
+
+      if resource.last_manual_open_at && resource.last_manual_open_at >= resource.last_manual_open_requested_at
+        div "Last opened manually: #{distance_of_time_in_words(resource.last_manual_open_at, Time.now, include_seconds: true)} ago (and it worked)"
+      elsif resource.last_manual_open_requested_at && resource.last_manual_open_requested_at > 30.seconds.ago
+        div "Currently opening... (refresh in a moment to see if the request went through)"
+      elsif resource.last_manual_open_requested_at
+        div "Last attempt: #{distance_of_time_in_words(resource.last_manual_open_requested_at, Time.now, include_seconds: true)} ago. Looks like it didn't work. (Maybe there's internet trouble at the space? Feel free to try again.)"
+      end
+    end
+
     paginated_table_panel(
       resource.badge_access_grants.includes(:user).order('users.name'),
       title: 'Users who can badge into this reader',
@@ -73,5 +89,11 @@ ActiveAdmin.register BadgeReader do
 
   member_action :reveal_api_token, method: :get do
     @page_title = "API token for #{resource.name}"
+  end
+
+  member_action :request_manual_open, method: :post do
+    resource.request_manual_open!
+    flash[:notice] = "An open request has been sent to #{resource.name}. Refresh in a moment to see if it went through."
+    redirect_to admin_badge_reader_path(resource)
   end
 end

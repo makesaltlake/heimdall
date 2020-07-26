@@ -66,6 +66,7 @@ end
 #                                    admin_dashboard GET        /admin/dashboard(.:format)                                                               admin/dashboard#index
 #            regenerate_api_token_admin_badge_reader POST       /admin/badge_readers/:id/regenerate_api_token(.:format)                                  admin/badge_readers#regenerate_api_token
 #                reveal_api_token_admin_badge_reader GET        /admin/badge_readers/:id/reveal_api_token(.:format)                                      admin/badge_readers#reveal_api_token
+#             request_manual_open_admin_badge_reader POST       /admin/badge_readers/:id/request_manual_open(.:format)                                   admin/badge_readers#request_manual_open
 #                                admin_badge_readers GET        /admin/badge_readers(.:format)                                                           admin/badge_readers#index
 #                                                    POST       /admin/badge_readers(.:format)                                                           admin/badge_readers#create
 #                             new_admin_badge_reader GET        /admin/badge_readers/new(.:format)                                                       admin/badge_readers#new

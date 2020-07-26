@@ -2,7 +2,7 @@
 #
 # Table name: badge_access_grants
 #
-#  id              :text
+#  id              :text             primary key
 #  access_reason   :text
 #  badge_reader_id :bigint
 #  user_id         :bigint

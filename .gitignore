@@ -29,3 +29,6 @@
 # cache files which are *not* ignored)
 /boards/**/*-bak
 /boards/**/*-rescue.*
+
+# Ignore Visual Studio Code IDE artifacts
+.vscode

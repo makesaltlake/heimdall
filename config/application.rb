@@ -40,5 +40,7 @@ module Heimdall
 
     # Set default time zone to Mountain Time (where Make Salt Lake is located)
     config.time_zone = 'Mountain Time (US & Canada)'
+
+    config.action_cable.mount_path = '/websocket'
   end
 end
