@@ -17,13 +17,9 @@ cd heimdall
 
 ### Ruby
 
-You'll need a [compatible](.ruby-version) Ruby version. Skip this section if you already have one.
+You'll need a [compatible](.ruby-version) Ruby version. [rbenv](https://github.com/rbenv/rbenv) is recommended, but plenty of other tools like [RVM](https://github.com/rvm/rvm) will work as well.
 
-[rbenv](https://github.com/rbenv/rbenv) is recommended, but plenty of other tools like [RVM](https://github.com/rvm/rvm) will work as well.
-
-First, [install Homebrew](https://brew.sh/) if you don't have it already.
-
-Then install rbenv:
+The easiest way to install rbenv is to use Homebrew. [Follow the directions](https://brew.sh/) to install Homebrew if you don't have it already, then install rbenv:
 
 ```shell
 brew install rbenv
