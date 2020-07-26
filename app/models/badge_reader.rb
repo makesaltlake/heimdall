@@ -62,6 +62,8 @@ class BadgeReader < ApplicationRecord
   end
 
   def report_manually_opened!
+    reload
+
     # Set last_manual_open_at to the max of the current time and
     # last_manual_open_requested_at to ensure backward clock skew on one server
     # doesn't cause us to report an open time that's less than an open request
