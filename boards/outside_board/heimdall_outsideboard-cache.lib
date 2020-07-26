@@ -61,15 +61,16 @@ X Pin_9 9 -200 -400 150 R 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
-# LED_WS2812B
+# LED_NeoPixel_THT
 #
-DEF LED_WS2812B D 0 10 Y Y 1 F N
+DEF LED_NeoPixel_THT D 0 10 Y Y 1 F N
 F0 "D" 200 225 50 H V R BNN
-F1 "LED_WS2812B" 50 -225 50 H V L TNN
-F2 "LED_SMD:LED_WS2812B_PLCC4_5.0x5.0mm_P3.2mm" 50 -300 50 H I L TNN
+F1 "LED_NeoPixel_THT" 50 -225 50 H V L TNN
+F2 "" 50 -300 50 H I L TNN
 F3 "" 100 -375 50 H I L TNN
 $FPLIST
- LED*WS2812*PLCC*5.0x5.0mm*P3.2mm*
+ LED*D5.0mm*
+ LED*D8.0mm*
 $ENDFPLIST
 DRAW
 T 0 90 -165 30 0 0 0 RGB Normal 0 C C
@@ -81,63 +82,81 @@ P 3 0 1 0 90 -100 50 -140 50 -120 N
 P 3 0 1 0 90 -60 50 -100 50 -80 N
 P 3 0 1 0 145 -40 145 -140 145 -160 N
 P 4 0 1 0 185 -60 105 -60 145 -140 185 -60 N
-X VDD 1 0 300 100 D 50 50 1 1 W
-X DOUT 2 300 0 100 L 50 50 1 1 O
-X VSS 3 0 -300 100 U 50 50 1 1 W
+X DOUT 1 300 0 100 L 50 50 1 1 O
+X GND 2 0 -300 100 U 50 50 1 1 W
+X VDD 3 0 300 100 D 50 50 1 1 W
 X DIN 4 -300 0 100 R 50 50 1 1 I
 ENDDRAW
 ENDDEF
 #
-# SparkFun-Capacitors_1000UF-RADIAL-5MM-25V-20%
+# SparkFun-Resistors_10KOHM-HORIZ-1_4W-1%
 #
-DEF SparkFun-Capacitors_1000UF-RADIAL-5MM-25V-20% C 0 40 N N 1 F N
-F0 "C" 40 25 45 H V L BNN
-F1 "SparkFun-Capacitors_1000UF-RADIAL-5MM-25V-20%" 40 -165 45 H V L BNN
-F2 "CPOL-RADIAL-5MM-10MM" 0 250 20 H I C CNN
-F3 "" 0 0 50 H I C CNN
-F4 "CAP-09538" 0 300 60 H V C CNN
-$FPLIST
- *CPOL-RADIAL-5MM-10MM*
- *CPOL-RADIAL-5MM-10MM-KIT*
-$ENDFPLIST
-DRAW
-A 0 -199 159 901 1273 1 1 0 N 0 -40 -97 -72
-A 0 -198 159 523 899 1 1 0 N 98 -73 0 -39
-S -88 26 -53 31 1 1 0 F
-S -73 11 -68 46 1 1 0 F
-P 2 1 0 0 -100 0 100 0 N
-P 2 1 0 0 0 -40 0 -100 N
-X + 1 0 100 100 D 40 40 1 1 P
-X - 2 0 -200 100 U 40 40 1 1 P
-ENDDRAW
-ENDDEF
-#
-# SparkFun-Electromechanical_SPEAKER
-#
-DEF SparkFun-Electromechanical_SPEAKER LS 0 40 Y Y 1 L N
-F0 "LS" -200 250 45 H V L BNN
-F1 "SparkFun-Electromechanical_SPEAKER" -200 -300 45 H V L BNN
-F2 "PCB_MOUNT_SPEAKER" 0 400 20 H I C CNN
-F3 "" 0 0 50 H I C CNN
-F4 "COMP-11789" 0 450 60 H V C CNN
-$FPLIST
- *PCB_MOUNT_SPEAKER*
-$ENDFPLIST
-DRAW
-P 2 1 0 0 100 200 300 400 N
-P 2 1 0 0 300 -400 100 -200 N
-P 2 1 0 0 300 400 300 -400 N
-P 5 1 1 0 -200 200 -200 -200 100 -200 100 200 -200 200 N
-X + + -400 100 200 R 40 40 1 1 B
-X - - -400 -100 200 R 40 40 1 1 B
-ENDDRAW
-ENDDEF
-#
-# SparkFun-Resistors_470OHM
-#
-DEF SparkFun-Resistors_470OHM R 0 40 N N 1 L N
+DEF SparkFun-Resistors_10KOHM-HORIZ-1_4W-1% R 0 40 N N 1 L N
 F0 "R" -200 50 45 H V L BNN
-F1 "SparkFun-Resistors_470OHM" -200 -150 45 H V L BNN
+F1 "SparkFun-Resistors_10KOHM-HORIZ-1_4W-1%" -200 -150 45 H V L BNN
+F2 "AXIAL-0.3" 0 150 20 H I C CNN
+F3 "" 0 0 60 H I C CNN
+F4 "RES-12183" 0 200 60 H V C CNN
+$FPLIST
+ *AXIAL-0.3*
+ *AXIAL-0.3*
+ *AXIAL-0.3*
+ *AXIAL-0.3-KIT*
+ *AXIAL-0.3-KIT*
+ *AXIAL-0.3-KIT*
+ *AXIAL-0.1*
+ *AXIAL-0.1*
+ *AXIAL-0.1*
+ *AXIAL-0.1-KIT*
+ *AXIAL-0.1-KIT*
+ *AXIAL-0.1-KIT*
+$ENDFPLIST
+DRAW
+P 2 1 0 0 -100 0 -85 40 N
+P 2 1 0 0 -85 40 -60 -40 N
+P 2 1 0 0 -60 -40 -35 40 N
+P 2 1 0 0 -35 40 -10 -40 N
+P 2 1 0 0 -10 -40 15 40 N
+P 2 1 0 0 15 40 40 -40 N
+P 2 1 0 0 40 -40 65 40 N
+P 2 1 0 0 65 40 90 -40 N
+P 2 1 0 0 90 -40 100 0 N
+X 1 1 -200 0 100 R 40 40 1 1 P
+X 2 2 200 0 100 L 40 40 1 1 P
+ENDDRAW
+ENDDEF
+#
+# SparkFun-Resistors_1KOHM-0603-1_10W-1%
+#
+DEF SparkFun-Resistors_1KOHM-0603-1_10W-1% R 0 40 N N 1 L N
+F0 "R" -200 50 45 H V L BNN
+F1 "SparkFun-Resistors_1KOHM-0603-1_10W-1%" -200 -150 45 H V L BNN
+F2 "0603" 0 150 20 H I C CNN
+F3 "" 0 0 60 H I C CNN
+F4 "RES-07856" 0 200 60 H V C CNN
+$FPLIST
+ *0603*
+$ENDFPLIST
+DRAW
+P 2 1 0 0 -100 0 -85 40 N
+P 2 1 0 0 -85 40 -60 -40 N
+P 2 1 0 0 -60 -40 -35 40 N
+P 2 1 0 0 -35 40 -10 -40 N
+P 2 1 0 0 -10 -40 15 40 N
+P 2 1 0 0 15 40 40 -40 N
+P 2 1 0 0 40 -40 65 40 N
+P 2 1 0 0 65 40 90 -40 N
+P 2 1 0 0 90 -40 100 0 N
+X 1 1 -200 0 100 R 40 40 1 1 P
+X 2 2 200 0 100 L 40 40 1 1 P
+ENDDRAW
+ENDDEF
+#
+# SparkFun-Resistors_470OHM-0603-1_10W-1%
+#
+DEF SparkFun-Resistors_470OHM-0603-1_10W-1% R 0 40 N N 1 L N
+F0 "R" -200 50 45 H V L BNN
+F1 "SparkFun-Resistors_470OHM-0603-1_10W-1%" -200 -150 45 H V L BNN
 F2 "0603" 0 150 20 H I C CNN
 F3 "" 0 0 60 H I C CNN
 F4 "RES-07869" 0 200 60 H V C CNN
@@ -156,6 +175,159 @@ P 2 1 0 0 65 40 90 -40 N
 P 2 1 0 0 90 -40 100 0 N
 X 1 1 -200 0 100 R 40 40 1 1 P
 X 2 2 200 0 100 L 40 40 1 1 P
+ENDDRAW
+ENDDEF
+#
+# dk_Alarms-Buzzers-and-Sirens_PS1240P02BT
+#
+DEF dk_Alarms-Buzzers-and-Sirens_PS1240P02BT BZ 0 0 Y Y 1 F N
+F0 "BZ" 0 200 60 H V L CNN
+F1 "dk_Alarms-Buzzers-and-Sirens_PS1240P02BT" -50 -150 60 H V L CNN
+F2 "digikey-footprints:Piezo_Transducer_THT_PS1240P02BT" 200 200 60 H I L CNN
+F3 "https://product.tdk.com/info/en/catalog/datasheets/piezoelectronic_buzzer_ps_en.pdf" 200 300 60 H I L CNN
+F4 "445-2525-1-ND" 200 400 60 H I L CNN "Digi-Key_PN"
+F5 "PS1240P02BT" 200 500 60 H I L CNN "MPN"
+F6 "Audio Products" 200 600 60 H I L CNN "Category"
+F7 "Alarms, Buzzers, and Sirens" 200 700 60 H I L CNN "Family"
+F8 "https://product.tdk.com/info/en/catalog/datasheets/piezoelectronic_buzzer_ps_en.pdf" 200 800 60 H I L CNN "DK_Datasheet_Link"
+F9 "/product-detail/en/tdk-corporation/PS1240P02BT/445-2525-1-ND/935930" 200 900 60 H I L CNN "DK_Detail_Page"
+F10 "AUDIO PIEZO TRANSDUCER 30V TH" 200 1000 60 H I L CNN "Description"
+F11 "TDK Corporation" 200 1100 60 H I L CNN "Manufacturer"
+F12 "Active" 200 1200 60 H I L CNN "Status"
+DRAW
+A 200 50 71 450 -450 0 1 0 N 250 100 250 0
+A 200 50 112 634 -634 0 1 0 N 250 150 250 -50
+S 0 150 100 -50 0 1 0 f
+P 5 0 1 0 100 100 200 150 200 -50 100 0 100 100 f
+X ~ 1 -100 100 100 R 50 50 1 1 I
+X ~ 2 -100 0 100 R 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+# dk_Transistors-Bipolar-BJT-Single_2N3904
+#
+DEF dk_Transistors-Bipolar-BJT-Single_2N3904 Q 0 0 Y Y 1 F N
+F0 "Q" -126 166 60 H V L CNN
+F1 "dk_Transistors-Bipolar-BJT-Single_2N3904" 206 0 60 V V C CNN
+F2 "digikey-footprints:TO-92-3" 200 200 60 H I L CNN
+F3 "https://my.centralsemi.com/get_document.php?cmp=1&mergetype=pd&mergepath=pd&pdf_id=LSSGP072.PDF" 200 300 60 H I L CNN
+F4 "2N3904CS-ND" 200 400 60 H I L CNN "Digi-Key_PN"
+F5 "2N3904" 200 500 60 H I L CNN "MPN"
+F6 "Discrete Semiconductor Products" 200 600 60 H I L CNN "Category"
+F7 "Transistors - Bipolar (BJT) - Single" 200 700 60 H I L CNN "Family"
+F8 "https://my.centralsemi.com/get_document.php?cmp=1&mergetype=pd&mergepath=pd&pdf_id=LSSGP072.PDF" 200 800 60 H I L CNN "DK_Datasheet_Link"
+F9 "/product-detail/en/central-semiconductor-corp/2N3904/2N3904CS-ND/4806876" 200 900 60 H I L CNN "DK_Detail_Page"
+F10 "TRANS NPN 40V TO-92" 200 1000 60 H I L CNN "Description"
+F11 "Central Semiconductor Corp" 200 1100 60 H I L CNN "Manufacturer"
+F12 "Active" 200 1200 60 H I L CNN "Status"
+DRAW
+C 0 0 128 0 1 0 f
+P 2 0 1 0 -150 0 -100 0 N
+P 2 0 1 0 -140 0 0 0 N
+P 2 0 1 0 0 -50 100 -100 N
+P 2 0 1 0 0 50 100 100 N
+P 2 0 1 0 0 100 0 -100 N
+P 4 0 1 0 60 -50 80 -90 40 -100 60 -50 F
+X E 1 100 -200 100 U 50 50 1 1 P
+X C 2 100 200 100 D 50 50 1 1 P
+X B 3 -200 0 100 R 50 50 1 1 I
+ENDDRAW
+ENDDEF
+#
+# dk_Transistors-FETs-MOSFETs-Single_2N7000
+#
+DEF dk_Transistors-FETs-MOSFETs-Single_2N7000 Q 0 0 Y Y 1 F N
+F0 "Q" -106 143 60 H V R CNN
+F1 "dk_Transistors-FETs-MOSFETs-Single_2N7000" 136 0 60 V V C CNN
+F2 "digikey-footprints:TO-92-3" 200 200 60 H I L CNN
+F3 "https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF" 200 300 60 H I L CNN
+F4 "2N7000FS-ND" 200 400 60 H I L CNN "Digi-Key_PN"
+F5 "2N7000" 200 500 60 H I L CNN "MPN"
+F6 "Discrete Semiconductor Products" 200 600 60 H I L CNN "Category"
+F7 "Transistors - FETs, MOSFETs - Single" 200 700 60 H I L CNN "Family"
+F8 "https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF" 200 800 60 H I L CNN "DK_Datasheet_Link"
+F9 "/product-detail/en/on-semiconductor/2N7000/2N7000FS-ND/244278" 200 900 60 H I L CNN "DK_Detail_Page"
+F10 "MOSFET N-CH 60V 200MA TO-92" 200 1000 60 H I L CNN "Description"
+F11 "ON Semiconductor" 200 1100 60 H I L CNN "Manufacturer"
+F12 "Active" 200 1200 60 H I L CNN "Status"
+DRAW
+C -50 0 130 0 1 0 f
+C 0 -75 5 0 1 0 N
+C 0 -55 5 0 1 0 N
+C 0 75 5 0 1 0 N
+P 2 0 1 0 0 -55 -100 -55 N
+P 3 0 1 0 -200 -100 -120 -100 -120 55 N
+P 3 0 1 0 0 -100 0 0 -100 0 N
+P 3 0 1 0 0 100 0 55 -100 55 N
+P 5 0 1 0 -5 -75 40 -75 40 55 40 75 -5 75 N
+P 2 1 1 0 -100 -55 -100 -75 N
+P 2 1 1 0 -100 -55 -100 -35 N
+P 2 1 1 0 -100 0 -100 -20 N
+P 2 1 1 0 -100 0 -100 20 N
+P 2 1 1 0 -100 75 -100 35 N
+P 2 1 1 0 60 20 20 20 N
+P 4 1 1 0 -100 0 -70 20 -70 -20 -100 0 F
+P 4 1 1 0 40 20 20 -10 60 -10 40 20 F
+X S 1 0 -200 100 U 50 50 1 1 B
+X G 2 -300 -100 100 R 50 50 1 1 B
+X D 3 0 200 100 D 50 50 1 1 B
+ENDDRAW
+ENDDEF
+#
+# power_+3V3
+#
+DEF power_+3V3 #PWR 0 0 Y Y 1 F P
+F0 "#PWR" 0 -150 50 H I C CNN
+F1 "power_+3V3" 0 140 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+ALIAS +3.3V
+DRAW
+P 2 0 1 0 -30 50 0 100 N
+P 2 0 1 0 0 0 0 100 N
+P 2 0 1 0 0 100 30 50 N
+X +3V3 1 0 0 0 U 50 50 1 1 W N
+ENDDRAW
+ENDDEF
+#
+# power_+5V
+#
+DEF power_+5V #PWR 0 0 Y Y 1 F P
+F0 "#PWR" 0 -150 50 H I C CNN
+F1 "power_+5V" 0 140 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+P 2 0 1 0 -30 50 0 100 N
+P 2 0 1 0 0 0 0 100 N
+P 2 0 1 0 0 100 30 50 N
+X +5V 1 0 0 0 U 50 50 1 1 W N
+ENDDRAW
+ENDDEF
+#
+# power_GND
+#
+DEF power_GND #PWR 0 0 Y Y 1 F P
+F0 "#PWR" 0 -250 50 H I C CNN
+F1 "power_GND" 0 -150 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+P 6 0 1 0 0 0 0 -50 50 -50 0 -100 -50 -50 0 -50 N
+X GND 1 0 0 0 D 50 50 1 1 W N
+ENDDRAW
+ENDDEF
+#
+# power_PWR_FLAG
+#
+DEF power_PWR_FLAG #FLG 0 0 N N 1 F P
+F0 "#FLG" 0 75 50 H I C CNN
+F1 "power_PWR_FLAG" 0 150 50 H V C CNN
+F2 "" 0 0 50 H I C CNN
+F3 "" 0 0 50 H I C CNN
+DRAW
+P 6 0 1 0 0 0 0 50 -40 75 0 100 40 75 0 50 N
+X pwr 1 0 0 0 U 50 50 0 0 w
 ENDDRAW
 ENDDEF
 #
