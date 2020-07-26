@@ -1,6 +1,6 @@
 # Heimdall
 
-Heimdall is an access control system built by (and primarily for) [Make Salt Lake](https://makesaltlake.org). It consists of a few different parts:
+Heimdall is [Make Salt Lake](https://makesaltlake.org)'s access control system. It consists of a few different parts:
 
   - A web interface, written in Ruby on Rails. The rest of this README deals with the web interface.
   - A [component](backend) intended to run on an [ESP32](https://en.wikipedia.org/wiki/ESP32), one per door or other device that needs access control
@@ -54,7 +54,7 @@ On Windows, [download Postgres directly](https://www.postgresql.org/download/) a
 
 ### Redis
 
-[Redis](https://redis.io/) is used to synchronize [Action Cable](https://guides.rubyonrails.org/action_cable_overview.html) state between multiple Heimdall servers or job workers.
+[Redis](https://redis.io/) is used to synchronize [Action Cable](https://guides.rubyonrails.org/action_cable_overview.html) state between Heimdall servers and job workers.
 
 On Mac, the easiest way to install Redis is via Homebrew:
 
@@ -65,6 +65,14 @@ brew install redis
 On Windows, you'll want to [download and install it directly](https://redis.io/download).
 
 By default, Heimdall will use database #5; if you're using that one for some other purpose, you'll want to `export REDIS_URL=redis://localhost/6` to use e.g. database #6 before starting Heimdall.
+
+### Stripe
+
+Make Salt Lake uses [Stripe](http://stripe.com/) to process membership dues. Heimdall integrates with Stripe to automatically create users for new members and deactivate badge access when a user cancels their membership. (Feel free to submit a PR if you're looking to use Heimdall and would like it to support another payment processor.)
+
+Head on over to https://dashboard.stripe.com/register, create yourself an account, then go to your dashboard, grab your test mode secret key, and set it into an environment variable named `STRIPE_SECRET_KEY`.
+
+Heimdall supports Stripe webhooks to proactively update membership information the moment something changes in Stripe. If you're making changes to the webhook code, you'll also want to [install the Stripe CLI and forward test webhook events](https://stripe.com/docs/webhooks/test) to your local Heimdall instance. When Stripe prints out your webhook signing secret (which will change every time you run `stripe listen`), you'll want to set it into an environment variable named `STRIPE_WEBHOOK_SECRET`.
 
 ### Ruby Dependencies
 
@@ -131,3 +139,7 @@ Whoops - there aren't any tests yet. You should write some! We plan to use [RSpe
 ## Deployment
 
 TBD
+
+## Contact
+
+Join [Make Salt Lake's Slack team](https://slack.makesaltlake.org/), then head over to [#rfid-strikeforce](https://app.slack.com/client/T16JZCGBY/CGDLBCCCT) if you'd like to get in touch.
