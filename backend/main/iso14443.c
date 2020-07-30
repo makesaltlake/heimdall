@@ -27,9 +27,22 @@ bool heimdall_rfid_reqa(spi_device_handle_t spi)
     uint8_t bit_frame_anticollision;
     uint8_t uid_size;
     uint8_t error;
+    uint8_t val;
+
+
+    uint8_t cmd = heimdall_rc663_read_reg(spi, RC663_REG_COMMAND);
 
     clear_irq(spi, 0);
     clear_irq(spi, 1);
+
+    // Switch CRC extension OFF for Tx
+    heimdall_rc663_write_reg(spi, RC663_REG_TX_CRC_PRESET, 0x18);
+    // Switch CRC extension OFF for Rx
+    heimdall_rc663_write_reg(spi, RC663_REG_RX_CRC_PRESET, 0x18);
+    // Only last 7 bits will be sent
+    heimdall_rc663_write_reg(spi, RC663_REG_TX_DATA_NUM, 0x0F);
+
+    heimdall_rfid_set_timer(spi, 200);
 
     // Fill FIFO with 0x26 (REQA)
     heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, 0x26);
@@ -37,12 +50,9 @@ bool heimdall_rfid_reqa(spi_device_handle_t spi)
     heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
     // Wait until a card responds by checking IRQ0 register
 
-    while (1) {
-        irq1 = heimdall_rc663_read_reg(spi, RC663_REG_IRQ1);
-
-        if ((irq1 & 0x40) != 0) {
-            break;
-        }
+    if (!heimdall_wait(spi)) {
+        heimdall_rc663_cmd(spi, RC663_CMD_IDLE);
+        return false;
     }
 
     error = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
@@ -51,8 +61,16 @@ bool heimdall_rfid_reqa(spi_device_handle_t spi)
         return false;
     }
 
+    val = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH);
+
+    if (val == 0) {
+        ESP_LOGV(TAG, "FIFO is empty");
+        assert(0);
+        return false;
+    }
+    
     // Read 2 bytes from FIFO to get ATQA
-    assert(heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH) == 2);
+    assert(val == 2);
 
 
     b1_b8 = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
@@ -102,6 +120,17 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
     uint8_t *p;
     uint8_t uid_start = 4 * (level - 1);
     uint8_t shift = 0;
+    const int MAX_UID_LEN = 11;
+
+    if (level == 1)
+    {
+        if (*uid != NULL) {
+            memset(*uid, 0, MAX_UID_LEN);
+        }
+
+        *len = 0;
+        *bcc = 0;
+    }
 
     const int CASCADE_LEVEL_1 = 0x93;
     const int CASCADE_LEVEL_2 = 0x95;
@@ -122,8 +151,6 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
             ESP_ERROR_CHECK(0);
     }
 
-    const int MAX_UID_LEN = 11;
-
     // Disable CRC
     heimdall_rc663_write_reg(spi, RC663_REG_TX_CRC_PRESET, 0x18 | 0);
     heimdall_rc663_write_reg(spi, RC663_REG_RX_CRC_PRESET, 0x18 | 0);
@@ -133,8 +160,8 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
 
     // Since each CLx has 4 bytes at most, we have a maximum of 32 times
     // around the anti-collision loop
-    for (i = 0; i < 32; i++) {
-
+    for (i = 0; i < 32; i++)
+    {
         // Fill FIFO with [ SEL - NVB ]
         heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, sel);
         heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, ((num_valid_bits / 8) << 4) + (num_valid_bits % 8));
@@ -177,7 +204,7 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
 
         if (collision) {
             collision_bit = heimdall_rc663_read_reg(spi, RC663_REG_RX_COLL) & 0x7F;
-            ESP_LOGW(TAG, "Collision detected at bit position %d", collision_bit);
+            ESP_LOGI(TAG, "Collision detected at bit position %d", collision_bit);
             uint8_t irq0 = heimdall_rc663_read_reg(spi, RC663_REG_IRQ0);
             if (irq0 & 2)
                 ESP_LOGW(TAG, "IRQ0 reports an error");
@@ -247,7 +274,12 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
     heimdall_rc663_write_reg(spi, RC663_REG_TX_DATA_NUM, 0x08);
     heimdall_rc663_write_reg(spi, RC663_REG_RX_BIT_CTRL, 0);
 
-    assert(bcc_val == bcc_calc);
+    if (bcc_val != bcc_calc)
+    {
+        ESP_LOGE(TAG, "BCC mismatch: expected %x, calculatd %x", bcc_val, bcc_calc);
+        assert(bcc_val == bcc_calc);
+    }
+
     *bcc = bcc_val;
     return 0;
 }

@@ -45,8 +45,8 @@ bool heimdall_rfid_read(spi_device_handle_t spi, uint8_t block, uint8_t data[16]
     heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, MIFARE_READ_CMD);
     heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, block);
 
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ0, 0x7F);
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ1, 0x7F);
+    clear_irq(spi, 0);
+    clear_irq(spi, 1);
 
     heimdall_rfid_set_timer(spi, 200);
 
@@ -67,7 +67,7 @@ bool heimdall_rfid_read(spi_device_handle_t spi, uint8_t block, uint8_t data[16]
 }
 
 const int MIFARE_ACK = 0x0A;
-cont int MIFARE_NACK_INVALID_OP = 0x01;
+const int MIFARE_NACK_INVALID_OP = 0x01;
 
 bool heimdall_rfid_write(spi_device_handle_t spi, uint8_t block, uint8_t data[16])
 {
@@ -118,10 +118,10 @@ bool heimdall_rfid_write(spi_device_handle_t spi, uint8_t block, uint8_t data[16
 
 }
 
-void heimdall_rfid_authenticate(spi_device_handle_t spi, uint8_t *serial, char *key)
+bool heimdall_rfid_authenticate(spi_device_handle_t spi, uint8_t *serial, char *key)
 {
     uint8_t status;
-    uint8_t error;
+    bool success = false;
 
     ESP_LOGV(TAG, "Attempting to authenticate");
 
@@ -145,17 +145,25 @@ void heimdall_rfid_authenticate(spi_device_handle_t spi, uint8_t *serial, char *
 
     ESP_LOGV(TAG, "Authenticating...");
 
-    int i = 0;
+    int retries = 0;
 
-    do {
+    while (retries++ < 10)
+    {
         status = heimdall_rc663_read_reg(spi, RC663_REG_STATUS);
-        error = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
         if (status & 0x20) {
             ESP_LOGV(TAG, "Authentication succeeded");
+            success = true;
             break;
         }
 
-        ESP_LOGV(TAG, "ERROR%d %x, STATUS %x", i, error, status);
-        i++;
-    } while (1);
+        vTaskDelay(50 / portTICK_PERIOD_MS);
+    }
+
+    return success;
+}
+
+void heimdall_rfid_deauthenticate(spi_device_handle_t spi)
+{
+    // Turn off MIFARE Classic Crypto
+    heimdall_rc663_write_reg(spi, RC663_REG_STATUS, 0);
 }

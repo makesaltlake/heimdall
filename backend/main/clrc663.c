@@ -82,15 +82,17 @@ uint8_t heimdall_rc663_get_version(spi_device_handle_t spi)
     return version;
 }
 
+
 spi_device_handle_t heimdall_rfid_init(void)
 {
     spi_device_handle_t spi;
     uint8_t clrc663_version;
 
-    const int SPI_MISO_PIN_NUM = 19;
-    const int SPI_MOSI_PIN_NUM = 18;
-    const int SPI_SCLK_PIN_NUM = 5;
-    const int SPI_CS_PIN_NUM   = 4;
+    // Pins are as specified in the KiCad project boards/inside_board
+    const int SPI_MISO_PIN_NUM = 27;
+    const int SPI_MOSI_PIN_NUM = 26;
+    const int SPI_SCLK_PIN_NUM = 33;
+    const int SPI_CS_PIN_NUM   = 32;
 
     spi_bus_config_t buscfg = {
         .miso_io_num = SPI_MISO_PIN_NUM,
@@ -206,7 +208,7 @@ bool heimdall_wait(spi_device_handle_t spi)
 {
     bool success = true;
     uint8_t irq1;
-    uint8_t error;
+    uint8_t error = 0;
 
     while (1) {
         irq1 = heimdall_rc663_read_reg(spi, RC663_REG_IRQ1);
@@ -217,11 +219,11 @@ bool heimdall_wait(spi_device_handle_t spi)
     }
 
     if (irq1 & 0x01) {
-        ESP_LOGV(TAG, "Timeout occurred");
         success = false;
     }
 
-    error = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
+    if (success)
+        error = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
 
     if (error) {
         ESP_LOGV(TAG, "ERROR: %x", error);

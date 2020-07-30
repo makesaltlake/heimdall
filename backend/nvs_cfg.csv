@@ -1,7 +1,7 @@
 heimdall,namespace,
 wifi_ssid,data,string
 wifi_password,data,string
-heimdall_url,data,string
+heimdall_host,data,string
 reader_api_key,data,string
 writer_api_key,data,string
 tag_key,data,hex2bin
