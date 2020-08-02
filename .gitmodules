@@ -1,3 +1,9 @@
 [submodule "backend/python3-rpi-rc522/pi-rc522"]
 	path = backend/python3-rpi-rc522/pi-rc522
 	url = https://github.com/ondryaso/pi-rc522.git
+[submodule "backend/ESP32-NeoPixel-WS2812-RMT"]
+	path = backend/ESP32-NeoPixel-WS2812-RMT
+	url = https://github.com/JSchaenzle/ESP32-NeoPixel-WS2812-RMT
+[submodule "backend/esp32-camera"]
+	path = backend/esp32-camera
+	url = https://github.com/espressif/esp32-camera

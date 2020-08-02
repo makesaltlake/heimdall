@@ -24,16 +24,22 @@
 #include "clrc663.h"
 #include "iso14443.h"
 #include "mifare_classic.h"
-#include "card_reader.h"
+#include "tag.h"
 #include "network.h"
+#include "../ESP32-NeoPixel-WS2812-RMT/ws2812_control.h"
 
 
 static const char* TAG = "heimdall";
 
-static int LED_GPIO_PIN = 12;
-static int BUZZER_GPIO_PIN = 22;
+const int LED_GPIO_PIN = 12;
+const int BUZZER_GPIO_PIN = 22;
+const int RELAY1_GPIO_PIN = 17;
+const int RELAY2_GPIO_PIN = 16;
+const int RELAY3_GPIO_PIN = 4;
+const int TAMPER_SWITCH_GPIO_PIN = 18;
 
-
+const int RFID_CS_GPIO_PIN = 32;
+const int CAM_CS_GPIO_PIN = 15;
 
 extern char *heimdall_host;
 extern char *reader_api_key;
@@ -52,15 +58,32 @@ static void heimdall_setup_ui_gpio(void)
 {
     gpio_config_t io_conf;
 
+    // Set up output GPIOs
     io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
     io_conf.mode = GPIO_MODE_OUTPUT;
 
-    io_conf.pin_bit_mask = (1ULL << LED_GPIO_PIN) | (1ULL << BUZZER_GPIO_PIN);
+    io_conf.pin_bit_mask =  (1ULL << LED_GPIO_PIN) | 
+                            (1ULL << BUZZER_GPIO_PIN) |
+                            (1ULL << RELAY1_GPIO_PIN) |
+                            (1ULL << RELAY2_GPIO_PIN) |
+                            (1ULL << RELAY3_GPIO_PIN);
+
     io_conf.pull_down_en = 1;
     io_conf.pull_up_en = 0;
 
     ESP_ERROR_CHECK(gpio_config(&io_conf));
 
+    // And set up input GPIOs
+    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_INPUT;
+
+    io_conf.pin_bit_mask =  (1ULL << TAMPER_SWITCH_GPIO_PIN);
+    io_conf.pull_up_en = 0;
+
+    ESP_ERROR_CHECK(gpio_config(&io_conf));
+
+    // Set up the RMT driver to control the LED
+    ws2812_control_init();
 }
 
 

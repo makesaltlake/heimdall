@@ -4,3 +4,4 @@
  */
 
 void tag_reader(void *param);
+void tag_writer(void *param);

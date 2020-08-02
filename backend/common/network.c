@@ -20,10 +20,6 @@
 #include <esp_log.h>
 #include <esp_wifi.h>
 
-#include <esp_vfs_fat.h>
-#include <diskio_wl.h>
-#include <esp_vfs.h>
-
 #include <lwip/err.h>
 #include <lwip/sys.h>
 

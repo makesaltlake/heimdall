@@ -18,14 +18,18 @@
 #include <driver/i2c.h>
 #include <driver/spi_master.h>
 #include <esp_log.h>
-#include <esp_adc_cal.h>
+#include <cJSON.h>
 
 #include "clrc663.h"
 #include "iso14443.h"
 #include "mifare_classic.h"
+#include "access.h"
 
 
 static const char* TAG = "heimdall-card";
+
+
+extern cJSON *access_list;
 
 enum MIFARE_CARD_TYPE
 {
@@ -48,7 +52,7 @@ void tag_reader(void *param)
     uint8_t len = 0;
     uint8_t bcc = 0;
     uint8_t sak;
-    uint8_t data[16];
+    uint8_t badge_uuid[16];
 
     spi = heimdall_rfid_init();
 
@@ -79,49 +83,76 @@ void tag_reader(void *param)
             ESP_LOGV(TAG, "U[%d] = %x", i, uid[i]);
         }
 
-
-        // MIFARE card types:
-        // MIFARE DESfire light: ATQA 0x0344, SAK 0x20
-        // MIFARE Classic 1K (S50): ATQA 0x0004, SAK 0x08
-        // MIFARE Classic 4K (S70): ATQA 0x0002, SAK 0x18
-
         enum MIFARE_CARD_TYPE card = sak;
 
-        switch (card)
-        {
-            case MIFARE_DESFIRE_LIGHT:
-                ESP_LOGI(TAG, "Found MIFARE DESFire Light card");
-                heimdall_rfid_send_rats(spi);
-                break;
-            case MIFARE_CLASSIC_1K:
+        if (card == MIFARE_CLASSIC_1K || card == MIFARE_CLASSIC_4K)
+        {  
+            if (card == MIFARE_CLASSIC_1K)
                 ESP_LOGI(TAG, "Found MIFARE Classic 1K card");
-                break;
-            case MIFARE_CLASSIC_4K:
+            else
                 ESP_LOGI(TAG, "Found MIFARE Classic 4K card");
-                break;
-            default:
-                ESP_LOGI(TAG, "Unknown card found");
-                break;
-        }
 
-        if (card == MIFARE_CLASSIC_1K)
-        {
-            memset(data, 0, 16);
+            memset(badge_uuid, 0, 16);
 
             if (heimdall_rfid_authenticate(spi, uid, ""))
             {
-
-                if (heimdall_rfid_read(spi, 1, &data))
+                if (heimdall_rfid_read(spi, 1, &badge_uuid))
                 {
-                    ESP_LOGV(TAG, "DATA: %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x %x",
-                    data[0], data[1], data[2], data[3], data[4], data[5], data[6], data[7], data[8], data[9], data[10], data[11], data[12], data[13], data[14], data[15]);
-                } else {
+                    char badge_uuid[37];
+                    const cJSON *valid_token;
+                    bool access_allowed = false;
+
+                    sprintf(badge_uuid, "%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+                        badge_uuid[0], badge_uuid[1], badge_uuid[2], badge_uuid[3],
+                        badge_uuid[4], badge_uuid[5],
+                        badge_uuid[6], badge_uuid[7],
+                        badge_uuid[8], badge_uuid[9],
+                        badge_uuid[10], badge_uuid[11], badge_uuid[12], badge_uuid[13], badge_uuid[14], badge_uuid[15]);
+
+                    ESP_LOGI(TAG, "Badge Token: %s", badge_uuid);
+
+                    cJSON_ArrayForEach(valid_token, access_list)
+                    {
+                        if (strcasecmp(valid_token->valuestring, badge_uuid) == 0)
+                        {
+                            access_allowed = true;
+                            
+                            break;
+                        }
+                    }
+
+                    if (access_allowed) 
+                    {
+                        heimdall_access_allowed();
+                    }
+                    else
+                    {                    
+                        heimdall_access_denied();
+                    }
+                }
+                else 
+                {
                     ESP_LOGW(TAG, "Failed to read data");
                 }
 
                 heimdall_rfid_deauthenticate(spi);
             }
+            else
+            {
+                ESP_LOGI(TAG, "Failed to authenticate tag");
+            }
+            
+
             heimdall_rc663_cmd(spi, RC663_CMD_IDLE);
+        }
+        else if (card == MIFARE_DESFIRE_LIGHT)
+        {
+            ESP_LOGI(TAG, "Found MIFARE DESFire Light card");
+            heimdall_rfid_send_rats(spi);
+        }
+        else
+        {
+            ESP_LOGW(TAG, "Unknown/unsupported card detected.");
         }
 
         // Delay to allow other tasks to run
