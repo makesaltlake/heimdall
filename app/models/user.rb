@@ -53,8 +53,8 @@ class User < ApplicationRecord
   HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL = "#{HAS_HOUSEHOLD_MEMBERSHIP_SQL} as has_household_membership"
 
   # Include default devise modules. Others available are:
-  # :confirmable, :timeoutable, :registerable, and :omniauthable
-  devise :database_authenticatable, :recoverable, :rememberable, :validatable, :trackable, :lockable
+  # :confirmable, :registerable, and :omniauthable
+  devise :database_authenticatable, :recoverable, :rememberable, :validatable, :trackable, :lockable, :timeoutable
 
   has_paper_trail skip: [:password, :password_confirmation, :encrypted_password, :badge_token]
 
