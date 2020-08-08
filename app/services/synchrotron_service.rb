@@ -179,8 +179,7 @@ module SynchrotronService
   end
 
   def self.handle_stripe_event_later(event)
-    # send_later_enqueue_args(:handle_stripe_event_now, { strand: STRAND }, event)
-    handle_stripe_event_now(event)
+    send_later_enqueue_args(:handle_stripe_event_now, { strand: STRAND }, event)
   end
 
   def self.handle_stripe_event_now(event)
