@@ -92,7 +92,7 @@ module StripeSynchronizationService
       subscriptions_by_email[email] << SubscriptionData.new(
         id: subscription.id,
         is_membership_subscription: is_membership_subscription?(subscription),
-        extracted_name: extract_name(subscription),
+        extracted_name: extract_name(subscription.customer),
         start_date: subscription.start_date,
         status: subscription.status
       )
@@ -128,13 +128,13 @@ module StripeSynchronizationService
     !product.respond_to?(:name) || !product.name || product.name.downcase.include?('membership')
   end
 
-  def self.extract_name(subscription)
-    return subscription.customer.name if subscription.customer.name.presence
+  def self.extract_name(customer)
+    return customer.name if customer.name.presence
 
     # Old subscriptions created by Paid Memberships Pro have a description of
     # the format "Full Name (email@address)". Newer subscriptions just use the
     # name as the description (the email is embedded in a separate field
     # anyway). Handle both formats gracefully.
-    subscription.customer.description&.sub(/ *\([^)]+\)/, '')
+    customer.description&.sub(/ *\([^)]+\)/, '')
   end
 end
