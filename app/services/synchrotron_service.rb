@@ -201,7 +201,7 @@ module SynchrotronService
       previous_attributes = event.data.previous_attributes || {}
 
       # Check to see if the subscription's cancel_at_period_end has changed
-      if previous_attributes.has_key?('cancel_at_period_end') && cancel_at_period_end != previous_attributes['cancel_at_period_end']
+      if previous_attributes.keys.include?(:cancel_at_period_end) && cancel_at_period_end != previous_attributes['cancel_at_period_end']
         # It has. Check to see if it has one now; if so, this was a cancellation being scheduled (or being rescheduled
         # for another time)
         if cancel_at_period_end
