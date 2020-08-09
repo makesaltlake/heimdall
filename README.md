@@ -40,6 +40,12 @@ Then install Bundler:
 gem install bundler
 ```
 
+### Node.js & Yarn
+
+TBD
+
+Install NVM, then `nvm install`, then `nvm use`, then `npm install -g yarn`, then `cd frontend && yarn && start`
+
 ### Postgres
 
 Heimdall uses [Postgres](https://www.postgresql.org/) as its database.

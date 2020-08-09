@@ -1,0 +1,13 @@
+<html>
+  <body>
+    <div id="react-container">
+      Loading... <%# TODO: replace this with something nice looking like a spinner %>
+    </div>
+
+    <% if Rails.env.development? %>
+      <script src="http://localhost:5001/main.js"></script>
+    <% else %>
+      <script src="/frontend/dist/main.js"></script>
+    <% end %>
+  </body>
+</html>

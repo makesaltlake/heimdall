@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   post '/webhooks/stripe', to: 'stripe#webhook'
 
+  get 'frontend-demo', to: 'frontend#frontend'
+
   namespace :api do
     controller_namespace :badge_writers do
       post :program

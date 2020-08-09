@@ -1,0 +1,12 @@
+{
+  "name": "Heimdall",
+  "repository": "https://github.com/makesaltlake/heimdall",
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-ruby"
+    },
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-nodejs"
+    }
+  ]
+}

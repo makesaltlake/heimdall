@@ -1,10 +1,11 @@
 {
-  "name": "heimdall",
+  "name": "heimdall-dummy-heroku-nodejs-buildpack-package",
   "private": true,
-  "dependencies": {
-    "@rails/ujs": "^6.0.0",
-    "@rails/activestorage": "^6.0.0",
-    "@rails/actioncable": "^6.0.0"
+  "engines": {
+    "node": "14.x",
+    "yarn": "1.x"
   },
-  "version": "0.1.0"
+  "scripts": {
+    "heroku-postbuild": "cd frontend && yarn install --production=false && yarn build && rm -rf node_modules"
+  }
 }

@@ -32,3 +32,7 @@
 
 # Ignore Visual Studio Code IDE artifacts
 .vscode
+
+node_modules
+
+/public/frontend/dist
