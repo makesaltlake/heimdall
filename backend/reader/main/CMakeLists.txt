@@ -7,4 +7,4 @@ set(COMPONENT_ADD_INCLUDEDIRS "../../common/")
 
 register_component()
 
-target_compile_options(${COMPONENT_TARGET} PRIVATE -Wall -Wstrict-prototypes -DLOG_LOCAL_LEVEL=ESP_LOG_DEBUG)
+target_compile_options(${COMPONENT_TARGET} PRIVATE -Wall -Wstrict-prototypes -DRFID_READER -DLOG_LOCAL_LEVEL=ESP_LOG_DEBUG)

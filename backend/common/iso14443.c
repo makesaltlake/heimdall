@@ -19,7 +19,7 @@
 static const char* TAG = "heimdall-iso14443";
 
 
-bool heimdall_rfid_reqa(spi_device_handle_t spi)
+bool heimdall_rfid_reqa(spi_device_handle_t spi, uint8_t *proprietary_coding)
 {
     uint8_t b1_b8;
     uint8_t b9_b16;
@@ -76,7 +76,8 @@ bool heimdall_rfid_reqa(spi_device_handle_t spi)
     b1_b8 = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
     b9_b16 = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
 
-    ESP_LOGV(TAG, "b1:b8: %X, b9:b16: %x", b1_b8, b9_b16);
+    if (proprietary_coding != NULL)
+        *proprietary_coding = b9_b16 & 0x0F;
 
     //bit_frame_anticollision = b1_b8 & 0x1F;
     uid_size = (b1_b8 & 0xC0) >> 5;
@@ -86,20 +87,20 @@ bool heimdall_rfid_reqa(spi_device_handle_t spi)
     // 1: double
     // 2: triple
     // 3: reserved for future use
-    ESP_LOGV(TAG, "UID size:");
+    ESP_LOGD(TAG, "UID size:");
 
     switch (uid_size) {
         case 0:
-            ESP_LOGV(TAG, "\tsingle");
+            ESP_LOGD(TAG, "\tsingle");
             break;
         case 1:
-            ESP_LOGV(TAG, "\tdouble");
+            ESP_LOGD(TAG, "\tdouble");
             break;
         case 2:
-            ESP_LOGV(TAG, "\ttriple");
+            ESP_LOGD(TAG, "\ttriple");
             break;
         default:
-            ESP_LOGV(TAG, "\treserved");
+            ESP_LOGD(TAG, "\treserved");
             break;
     }
 

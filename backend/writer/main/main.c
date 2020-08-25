@@ -21,6 +21,12 @@
 #include <diskio_wl.h>
 #include <esp_vfs.h>
 
+#include <cam.h>
+#include <ov2640.h>
+#include <board.h>
+#include <sensor.h>
+#include <lcd.h>
+
 #include "clrc663.h"
 #include "iso14443.h"
 #include "mifare_classic.h"
@@ -40,6 +46,10 @@ char *tag_key = NULL;
 
 extern char *wifi_ssid;
 extern char *wifi_password;
+
+
+#define CAM_WIDTH   (320)
+#define CAM_HIGH    (240)
 
 
 static void heimdall_get_param(nvs_handle_t nvs, char *name, char **value)

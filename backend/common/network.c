@@ -295,6 +295,65 @@ static void send_scan_tag(char *uid, int uid_len, char *badge_token)
     client = esp_http_client_init(&config);
 }
 
+
+void send_badge_scan(char *badge_id, uint8_t tag_length, char *badge_token, bool authorized, int64_t time_of_scan)
+{
+    const char * const url_path = "/api/badge_readers/record_scans";
+
+    int http_status_code;
+    char *url;
+    char authorization_value[49];
+    char *data;
+
+
+    esp_http_client_config_t config = {
+        .event_handler = _http_event_handle,
+        .timeout_ms = 10 * 1000,
+        .cert_pem = heimdall_dev_root_cert_pem_start,
+    };
+
+    url = malloc(strlen("https://") + strlen(heimdall_host) + strlen(url_path) + 1);
+    assert(url != NULL);
+
+    sprintf(url, "https://%s%s", heimdall_host, url_path);
+    config.url = url;
+
+    data = malloc(200);
+    assert(data != NULL);
+
+    sprintf(data, "{'scans': [{'badge_id': '%.48s', 'authorized': %s, 'badge_token': '%s', 'scanned_at': %lld}]}",
+        badge_id, authorized? "True":"False", badge_token, time_of_scan);
+
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+
+    sprintf(authorization_value, "Bearer %s", reader_api_key);
+
+    esp_http_client_set_header(client, "Content-Type", "application/json");
+    esp_http_client_set_header(client, "Authorization", authorization_value);
+    esp_http_client_set_method(client, HTTP_METHOD_POST);
+
+    esp_http_client_set_post_field(client, data, strlen(data));
+
+    ESP_LOGI(TAG, "Sending request to https://%s", heimdall_host);
+    esp_err_t err = esp_http_client_perform(client);
+
+    if (err == ESP_OK) {
+        http_status_code = esp_http_client_get_status_code(client);
+        if (http_status_code == 200) {
+            ESP_LOGI(TAG, "Uploaded badge scan successfully");
+        }
+        else {
+            ESP_LOGW(TAG, "Badge scan upload: HTTP request returned error %d", http_status_code);
+        }
+    }
+    else {
+        ESP_LOGW(TAG, "Badge scan upload: HTTP request failed: %d", err);
+    }
+
+    esp_http_client_cleanup(client);
+}
+
+
 void access_list_fetcher_thread(__attribute__((unused)) void *param)
 {
     int http_status_code;

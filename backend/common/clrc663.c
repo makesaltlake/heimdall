@@ -89,10 +89,18 @@ spi_device_handle_t heimdall_rfid_init(void)
     uint8_t clrc663_version;
 
     // Pins are as specified in the KiCad project boards/inside_board
+#ifdef RFID_READER
     const int SPI_MISO_PIN_NUM = 27;
     const int SPI_MOSI_PIN_NUM = 26;
     const int SPI_SCLK_PIN_NUM = 33;
     const int SPI_CS_PIN_NUM   = 32;
+#else
+    // Writer
+    const int SPI_MISO_PIN_NUM = 2;
+    const int SPI_MOSI_PIN_NUM = 3;
+    const int SPI_SCLK_PIN_NUM = 1;
+    const int SPI_CS_PIN_NUM   = 4;
+#endif
 
     spi_bus_config_t buscfg = {
         .miso_io_num = SPI_MISO_PIN_NUM,
