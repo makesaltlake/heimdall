@@ -83,24 +83,36 @@ uint8_t heimdall_rc663_get_version(spi_device_handle_t spi)
 }
 
 
-spi_device_handle_t heimdall_rfid_init(void)
+spi_device_handle_t heimdall_rfid_init(bool rfid_reader)
 {
     spi_device_handle_t spi;
     uint8_t clrc663_version;
 
+    int SPI_MISO_PIN_NUM;
+    int SPI_MOSI_PIN_NUM;
+    int SPI_SCLK_PIN_NUM;
+    int SPI_CS_PIN_NUM;
+
     // Pins are as specified in the KiCad project boards/inside_board
-#ifdef RFID_READER
-    const int SPI_MISO_PIN_NUM = 27;
-    const int SPI_MOSI_PIN_NUM = 26;
-    const int SPI_SCLK_PIN_NUM = 33;
-    const int SPI_CS_PIN_NUM   = 32;
-#else
-    // Writer
-    const int SPI_MISO_PIN_NUM = 2;
-    const int SPI_MOSI_PIN_NUM = 3;
-    const int SPI_SCLK_PIN_NUM = 1;
-    const int SPI_CS_PIN_NUM   = 4;
-#endif
+    if (rfid_reader)
+    {
+        SPI_MISO_PIN_NUM = 27;
+        SPI_MOSI_PIN_NUM = 26;
+        SPI_SCLK_PIN_NUM = 25;
+        SPI_CS_PIN_NUM   = 32;
+
+        ESP_LOGI(TAG, "Operating in RFID Reader mode");
+    }
+    else
+    {
+        // Writer
+        SPI_MISO_PIN_NUM = 2;
+        SPI_MOSI_PIN_NUM = 3;
+        SPI_SCLK_PIN_NUM = 1;
+        SPI_CS_PIN_NUM   = 4;
+
+        ESP_LOGI(TAG, "Operating in RFID Writer mode");
+    }
 
     spi_bus_config_t buscfg = {
         .miso_io_num = SPI_MISO_PIN_NUM,
@@ -126,15 +138,12 @@ spi_device_handle_t heimdall_rfid_init(void)
     ESP_ERROR_CHECK(spi_bus_initialize(HSPI_HOST, &buscfg, 0));
     ESP_ERROR_CHECK(spi_bus_add_device(HSPI_HOST, &devcfg, &spi));
 
-    // reset the CLRC663
-    gpio_set_level(12, 1);
-    vTaskDelay(250 / portTICK_PERIOD_MS);
-    gpio_set_level(12, 0);
-
     heimdall_rc663_cmd(spi, RC663_CMD_SOFT_RESET);
     vTaskDelay(500 / portTICK_PERIOD_MS);
 
     heimdall_rc663_write_reg(spi, RC663_REG_COMMAND, 0);
+
+    ESP_LOGI(TAG, "Waiting for RC663 to complete power-up");
 
     while ((heimdall_rc663_read_reg(spi, RC663_REG_COMMAND) & 0xC0) > 0) {
         vTaskDelay(50 / portTICK_PERIOD_MS);

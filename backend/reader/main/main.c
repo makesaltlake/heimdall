@@ -31,8 +31,8 @@
 
 static const char* TAG = "heimdall";
 
-const int LED_GPIO_PIN = 12;
-const int BUZZER_GPIO_PIN = 22;
+const int LED_GPIO_PIN = 22;
+const int BUZZER_GPIO_PIN = 23;
 const int RELAY1_GPIO_PIN = 17;
 const int RELAY2_GPIO_PIN = 16;
 const int RELAY3_GPIO_PIN = 4;
@@ -62,8 +62,7 @@ static void heimdall_setup_ui_gpio(void)
     io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
     io_conf.mode = GPIO_MODE_OUTPUT;
 
-    io_conf.pin_bit_mask =  (1ULL << LED_GPIO_PIN) | 
-                            (1ULL << BUZZER_GPIO_PIN) |
+    io_conf.pin_bit_mask =  (1ULL << BUZZER_GPIO_PIN) |
                             (1ULL << RELAY1_GPIO_PIN) |
                             (1ULL << RELAY2_GPIO_PIN) |
                             (1ULL << RELAY3_GPIO_PIN);
@@ -84,6 +83,27 @@ static void heimdall_setup_ui_gpio(void)
 
     // Set up the RMT driver to control the LED
     ws2812_control_init();
+
+    struct led_state led;
+
+    // Red
+    led.leds[0] = 0xFF0000;
+    ws2812_write_leds(led);
+    sleep(1);
+
+    // Green
+    led.leds[0] = 0x00FF00;
+    ws2812_write_leds(led);
+    sleep(1);
+
+    // Blue
+    led.leds[0] = 0x0000FF;
+    ws2812_write_leds(led);
+    sleep(1);
+
+    // Off
+    led.leds[0] = 0x000000;
+    ws2812_write_leds(led);
 }
 
 
@@ -178,6 +198,7 @@ void app_main(void)
         ESP_LOGE(TAG, "Failed to create access list fetcher thread: %d", rtret);
         assert(0);
     }
+
     rtret = xTaskCreate(&tag_reader, "tag_reader", 4096, NULL, 5, NULL);
     if (rtret != pdPASS)
     {

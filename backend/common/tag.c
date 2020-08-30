@@ -108,7 +108,7 @@ void tag_writer(void *param)
     uint8_t *uid = NULL;
     uint8_t uid_len;
 
-    spi = heimdall_rfid_init();
+    spi = heimdall_rfid_init(false);
 
 
      bool got_card;
@@ -129,7 +129,7 @@ void tag_reader(void *param)
 
     uint8_t badge_uuid[16];
 
-    spi = heimdall_rfid_init();
+    spi = heimdall_rfid_init(true);
 
     while (1) {
 

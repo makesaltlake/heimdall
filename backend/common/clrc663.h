@@ -145,7 +145,7 @@ enum RC522_CMD
 };
 
 
-spi_device_handle_t heimdall_rfid_init(void);
+spi_device_handle_t heimdall_rfid_init(bool rfid_reader);
 uint8_t heimdall_rc663_get_version(spi_device_handle_t spi);
 bool heimdall_rfid_read(spi_device_handle_t spi, uint8_t block, uint8_t data[16]);
 
