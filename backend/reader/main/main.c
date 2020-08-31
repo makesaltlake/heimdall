@@ -17,6 +17,9 @@
 #include <nvs_flash.h>
 #include <esp_log.h>
 
+#include <driver/ledc.h>
+#include <soc/ledc_reg.h>
+
 #include <esp_vfs_fat.h>
 #include <diskio_wl.h>
 #include <esp_vfs.h>
@@ -52,37 +55,34 @@ cJSON *access_list = NULL;
 extern char *wifi_ssid;
 extern char *wifi_password;
 
-
-
-static void heimdall_setup_ui_gpio(void)
+static void set_buzzer_duty(uint32_t duty)
 {
-    gpio_config_t io_conf;
+    ledc_set_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_0, duty);
+    ledc_update_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_0);
+}
 
-    // Set up output GPIOs
-    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
-    io_conf.mode = GPIO_MODE_OUTPUT;
+static void heimdall_setup_buzzer(void)
+{
+    // Configure the buzzer
+    const ledc_timer_config_t buzzer_timer = {LEDC_HIGH_SPEED_MODE, {LEDC_TIMER_10_BIT}, LEDC_TIMER_0, 2670, LEDC_AUTO_CLK};
+    const ledc_channel_config_t channel = {BUZZER_GPIO_PIN, LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_0, LEDC_INTR_DISABLE, LEDC_TIMER_0, 0, LEDC_HPOINT_HSCH1_S};
 
-    io_conf.pin_bit_mask =  (1ULL << BUZZER_GPIO_PIN) |
-                            (1ULL << RELAY1_GPIO_PIN) |
-                            (1ULL << RELAY2_GPIO_PIN) |
-                            (1ULL << RELAY3_GPIO_PIN);
+    ESP_ERROR_CHECK(ledc_timer_config(&buzzer_timer));
+    ESP_ERROR_CHECK(ledc_channel_config(&channel));
 
-    io_conf.pull_down_en = 1;
-    io_conf.pull_up_en = 0;
+    // Test the buzzer.
+    ESP_LOGI(TAG, "Testing the buzzer");
+    set_buzzer_duty(512);
+    sleep(1);
+    set_buzzer_duty(0);
+}
 
-    ESP_ERROR_CHECK(gpio_config(&io_conf));
-
-    // And set up input GPIOs
-    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
-    io_conf.mode = GPIO_MODE_INPUT;
-
-    io_conf.pin_bit_mask =  (1ULL << TAMPER_SWITCH_GPIO_PIN);
-    io_conf.pull_up_en = 0;
-
-    ESP_ERROR_CHECK(gpio_config(&io_conf));
-
+static void heimdall_setup_led(void)
+{
     // Set up the RMT driver to control the LED
     ws2812_control_init();
+
+    ESP_LOGI(TAG, "Testing the LED");
 
     struct led_state led;
 
@@ -104,6 +104,57 @@ static void heimdall_setup_ui_gpio(void)
     // Off
     led.leds[0] = 0x000000;
     ws2812_write_leds(led);
+}
+
+static void heimdall_setup_ui_gpio(void)
+{
+    gpio_config_t io_conf;
+
+    esp_err_t err;
+
+    // Set up output GPIOs
+    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_OUTPUT;
+
+    io_conf.pin_bit_mask =  (1ULL << RELAY1_GPIO_PIN) |
+                            (1ULL << RELAY2_GPIO_PIN) |
+                            (1ULL << RELAY3_GPIO_PIN);
+
+    io_conf.pull_down_en = 1;
+    io_conf.pull_up_en = 0;
+
+    ESP_ERROR_CHECK(gpio_config(&io_conf));
+
+    // And set up input GPIOs
+    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
+    io_conf.mode = GPIO_MODE_INPUT;
+
+    io_conf.pin_bit_mask =  (1ULL << TAMPER_SWITCH_GPIO_PIN);
+    io_conf.pull_up_en = 0;
+
+    ESP_ERROR_CHECK(gpio_config(&io_conf));
+
+    ESP_LOGI(TAG, "Testing the RELAY1");
+    gpio_set_level(RELAY1_GPIO_PIN, 1);
+    sleep(1);
+    gpio_set_level(RELAY1_GPIO_PIN, 0);
+
+    sleep(1);
+
+    ESP_LOGI(TAG, "Testing the RELAY2");
+    gpio_set_level(RELAY2_GPIO_PIN, 1);
+    sleep(1);
+    gpio_set_level(RELAY2_GPIO_PIN, 0);
+
+    sleep(1);
+
+    ESP_LOGI(TAG, "Testing the RELAY3");
+    gpio_set_level(RELAY3_GPIO_PIN, 1);
+    sleep(1);
+    gpio_set_level(RELAY3_GPIO_PIN, 0);
+
+    heimdall_setup_buzzer();
+    heimdall_setup_led();
 }
 
 

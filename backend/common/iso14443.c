@@ -121,14 +121,9 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
     uint8_t *p;
     uint8_t uid_start = 4 * (level - 1);
     uint8_t shift = 0;
-    const int MAX_UID_LEN = 11;
 
     if (level == 1)
     {
-        if (*uid != NULL) {
-            memset(*uid, 0, MAX_UID_LEN);
-        }
-
         *len = 0;
         *bcc = 0;
     }
@@ -212,11 +207,6 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
         }
 
         fifo_length = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH);
-
-        if (*uid == NULL) {
-            *uid = malloc(MAX_UID_LEN);
-            memset(*uid, 0, MAX_UID_LEN);
-        }
 
         assert(*uid != NULL);
 

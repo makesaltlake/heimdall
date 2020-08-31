@@ -126,12 +126,17 @@ void tag_reader(void *param)
     spi_device_handle_t spi;
     uint8_t *uid = NULL;
     uint8_t uid_len;
+    const int MAX_UID_LEN = 11;
 
     uint8_t badge_uuid[16];
 
     spi = heimdall_rfid_init(true);
 
+    uid = malloc(MAX_UID_LEN);
+
     while (1) {
+
+        memset(uid, 0, MAX_UID_LEN);
 
         enum MIFARE_CARD_TYPE card = wait_for_tag(spi, uid, &uid_len);
     
@@ -143,6 +148,14 @@ void tag_reader(void *param)
                 ESP_LOGI(TAG, "Found MIFARE Classic 4K card");
 
             memset(badge_uuid, 0, 16);
+
+            printf("Tag UID (len %d): ", uid_len);
+            for (int i = 0; i < uid_len; i++)
+            {
+                printf("%02x", uid[i]);
+            }
+
+            printf("\n");
 
             if (!heimdall_rfid_authenticate(spi, uid, "")) {
                 ESP_LOGI(TAG, "Failed to authenticate tag");
