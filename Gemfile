@@ -61,3 +61,10 @@ group :development do
   # merges and is released.
   gem 'annotate', git: 'https://github.com/javawizard/annotate_models.git', branch: 'fix-annotate-routes-rake-task-position'
 end
+
+group :development, :test do
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+end

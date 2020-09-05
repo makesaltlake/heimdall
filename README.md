@@ -130,9 +130,15 @@ Then browse to http://localhost:3000, log in, and you're off to the races.
 
 ## Tests
 
-Whoops - there aren't any tests yet. You should write some! We plan to use [RSpec](https://rspec.info/), so go ahead and add it to the Gemfile and write Heimdall's first test. We'll be forever indebted to you.
+Whoops - we kinda skipped writing tests when building Heimdall. There are a few and we're always adding more - help us out and code some up!
 
-(Note: Alex's opinion is that we should write mostly integration tests at this point, given how much logic lives in the Active Admin panels. Add [Capybara](https://github.com/teamcapybara/capybara) to the Gemfile, configure it to use `:selenium_chrome` as the driver in integration tests, and knock yourself out.)
+To run what we've got, you'll need to install Chrome and [ChromeDriver](https://chromedriver.chromium.org/). On Mac, you can snag it with `brew cask install chromedriver`. (Note that every time you upgrade to a new Chrome major version, you'll need to upgrade ChromeDriver with `brew cask upgrade chromedriver`.)
+
+Then run the tests:
+
+```shell
+bundle exec rspec
+```
 
 ## Deployment
 
