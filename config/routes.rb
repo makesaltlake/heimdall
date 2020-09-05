@@ -105,6 +105,7 @@ end
 #                                                    DELETE     /admin/comments/:id(.:format)                                                            admin/comments#destroy
 #                                               root GET        /                                                                                        home#home
 #                                    webhooks_stripe POST       /webhooks/stripe(.:format)                                                               stripe#webhook
+#                                      frontend_demo GET        /frontend-demo(.:format)                                                                 frontend#frontend
 #                          api_badge_writers_program POST       /api/badge_writers/program(.:format)                                                     api/badge_writers#program
 #                      api_badge_readers_access_list GET        /api/badge_readers/access_list(.:format)                                                 api/badge_readers#access_list
 #                     api_badge_readers_record_scans POST       /api/badge_readers/record_scans(.:format)                                                api/badge_readers#record_scans
