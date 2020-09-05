@@ -98,7 +98,7 @@ ActiveAdmin.register User do
       end
       f.input(:password, hint: 'Type a new password for this user here, or leave blank to leave their password unchanged')
       f.input(:password_confirmation, hint: 'Retype the new password here')
-      f.input(:household_user_ids, label: 'Household members', as: :selected_list, url: admin_users_path, display_name: 'name_and_email')
+      f.input(:household_user_ids, label: 'Household members', as: :selected_list, url: admin_users_path, display_name: 'dropdown_display_name', fields: User::DROPDOWN_SEARCH_FIELDS)
     end
     f.actions
   end

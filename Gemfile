@@ -53,6 +53,7 @@ gem 'stripe'
 gem 'sentry-raven'
 gem 'after_transaction_commit'
 gem 'slack-ruby-client'
+gem 'nilify_blanks'
 
 group :development do
   # Work around https://github.com/ctran/annotate_models/issues/761. The git

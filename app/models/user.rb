@@ -11,7 +11,7 @@
 #  confirmed_at           :datetime
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :string
-#  email                  :string           default(""), not null
+#  email                  :string
 #  encrypted_password     :string           default(""), not null
 #  failed_attempts        :integer          default(0), not null
 #  last_sign_in_at        :datetime
@@ -52,11 +52,19 @@ class User < ApplicationRecord
   HAS_HOUSEHOLD_MEMBERSHIP_SQL = 'exists(select household_users.id from users as household_users where household_users.household_id = users.household_id and household_users.subscription_active)'
   HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL = "#{HAS_HOUSEHOLD_MEMBERSHIP_SQL} as has_household_membership"
 
+  # The fields to allow users to be searched by when selecting a user in a
+  # dropdown in the admin UI. If you change this, be sure to update the
+  # dropdown_display_name method if you want any of the additional fields to
+  # be shown to the user when they're viewing the list of users that matched.
+  DROPDOWN_SEARCH_FIELDS = ['id', 'email', 'name']
+
   # Include default devise modules. Others available are:
   # :confirmable, :registerable, and :omniauthable
   devise :database_authenticatable, :recoverable, :rememberable, :validatable, :trackable, :lockable, :timeoutable
 
   has_paper_trail skip: [:password, :password_confirmation, :encrypted_password, :badge_token]
+
+  nilify_blanks only: [:email]
 
   belongs_to :household
 
@@ -89,6 +97,24 @@ class User < ApplicationRecord
 
   def display_name
     name
+  end
+
+  # Email addresses are optional - that way household members etc. can be
+  # created and given certifications and access even if we don't know the
+  # household member's email address.
+  def email_required?
+    false
+  end
+
+  # Since email addresses are optional (which isn't the usual case with
+  # Devise), don't allow querying users using a null email address
+  def self.find_for_authentication(conditions)
+    if conditions[:email].present?
+      super
+    else
+      Rails.logger.info("Tried to query a user for authentication using a nil email address; don't do that")
+      nil
+    end
   end
 
   # Household logic. This can probably be simplified, but the gist of what it
@@ -169,11 +195,13 @@ class User < ApplicationRecord
     self.save!
   end
 
-  def name_and_email
-    "#{name} (#{email})"
+  # The name to show when displaying this user in a dropdown. If you change
+  # this, be sure to include any additional fields in DROPDOWN_SEARCH_FIELDS.
+  def dropdown_display_name
+    "#{name} (#{email.presence || 'no email'}, user ##{id})"
   end
 
   def as_json(options = {})
-    super.merge(name_and_email: name_and_email)
+    super.merge(dropdown_display_name: dropdown_display_name)
   end
 end

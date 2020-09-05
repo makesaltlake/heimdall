@@ -103,8 +103,9 @@ module StripeSynchronizationService
     # Also sync users we know about but didn't find any subscriptions for. The
     # note above about things not scaling applies here because we load all
     # users' emails into memory at once, but it'll be a long time before that's
-    # a problem.
-    User.all.pluck(:email).each do |email|
+    # a problem. (Also, note that it's possible for users to not have email
+    # addresses; we ignore such users for the moment.)
+    User.all.pluck(:email).compact.each do |email|
       subscriptions_by_email[email.downcase] ||= []
     end
 
