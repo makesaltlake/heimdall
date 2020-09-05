@@ -122,10 +122,15 @@ class User < ApplicationRecord
   # Every user belongs to exactly one household and every household has one or
   # more users.
 
+  # The IDs of all users who are in this user's household, not including this
+  # user themselves.
   def household_user_ids
     @household_user_ids || household.users.where.not(id: id).pluck(:id)
   end
 
+  # Set the list of IDs of users that should be in this user's household.
+  # This doesn't actually make any changes to the users' households until this
+  # user is saved.
   def household_user_ids=(ids)
     # cleanup; activeadmin addons's selected_list field type passes ids as
     # strings and passes a blank one as the first argument (which looks like
@@ -137,6 +142,8 @@ class User < ApplicationRecord
     @household_user_ids = ids
   end
 
+  # A relation containing all users that are in this user's household, not
+  # including this user themselves.
   def household_users
     User.where(id: household_user_ids)
   end

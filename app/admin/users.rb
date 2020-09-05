@@ -96,11 +96,22 @@ ActiveAdmin.register User do
       else
         f.input(:super_user)
       end
-      f.input(:password, hint: 'Type a new password for this user here, or leave blank to leave their password unchanged')
+      password_blank_action = f.object.new_record? ? "leave their password unset (they'll have to reset it before they can log in)" : 'leave their password unchanged'
+      f.input(:password, hint: "Type a new password for this user here, or leave blank to #{password_blank_action}")
       f.input(:password_confirmation, hint: 'Retype the new password here')
       f.input(:household_user_ids, label: 'Household members', as: :selected_list, url: admin_users_path, display_name: 'dropdown_display_name', fields: User::DROPDOWN_SEARCH_FIELDS)
     end
     f.actions
+  end
+
+  before_create do |user|
+    # Set a randomly generated password for the user if one wasn't specified -
+    # effectively preventing them from logging in if/until they reset their
+    # password.
+    unless user.password.present? || user.password_confirmation.present?
+      user.password = Devise.friendly_token
+      user.password_confirmation = nil
+    end
   end
 
   controller do
@@ -130,5 +141,48 @@ ActiveAdmin.register User do
 
     flash[:notice] = "#{resource.name}'s badge has been removed."
     redirect_to resource_path(resource), status: :see_other
+  end
+
+  action_item :begin_merge, only: :show do
+    link_to 'Merge User', begin_merge_admin_user_path(resource)
+  end
+
+  member_action :begin_merge, method: :get do
+    @page_title = "Merge a user into #{resource.name}"
+  end
+
+  member_action :review_merge, method: :get do
+    source_user_id = params[:user][:user_id]
+    unless source_user_id.present?
+      flash[:warning] = "Please select a user to merge into this user."
+      next redirect_back(fallback_location: begin_merge_admin_user_path(resource))
+    end
+
+    @source_user = User.find(source_user_id)
+    authorize! :merge_user, @source_user
+
+    if @source_user == resource
+      flash[:warning] = "You can't merge a user with themselves. Please select another user."
+      next redirect_back(fallback_location: begin_merge_admin_user_path(resource))
+    end
+
+    @page_title = "Merge #{@source_user.name} into #{resource.name}"
+  end
+
+  member_action :merge, method: :post do
+    @source_user = User.find(params[:source_user_id])
+    authorize! :merge_user, @source_user
+
+    UserMergeService.new(@source_user, resource, current_user).run!
+
+    redirect_to merge_complete_admin_user_path(resource, source_user_id: @source_user.id, source_user_name: @source_user.name)
+  end
+
+  member_action :merge_complete, method: :get do
+    resource # to force authorization
+
+    @page_title = "Merge complete"
+    @source_user_id = params[:source_user_id]
+    @source_user_name = params[:source_user_name]
   end
 end

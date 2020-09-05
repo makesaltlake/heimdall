@@ -1,0 +1,26 @@
+# Hack of the century: activeadmin_addons's search select requires the field
+# it's named after actually exist on the model so that it can attempt to
+# extract a default value, and it requires the field name be an actual
+# association on the model or else be named after a model class that really
+# exists. For that reason we have to call the field below `user_id` and we
+# have to add this dummy `user_id` method onto the resource we hand to the
+# form. We really should submit an upstream PR to activeadmin_addons to fix
+# this.
+class << resource
+  def user_id
+    nil
+  end
+end
+
+
+active_admin_form_for resource, url: review_merge_admin_user_path(resource), method: :get do |f|
+  f.inputs do
+    li "You are about to merge a user into #{auto_link(resource)}'s user account. This will delete the user you select below and transfer all of their certifications, access records, etc. over to this user's account. Select the user you want to merge into this one, then click \"Continue to Review\" to review what will happen.".html_safe
+    f.input :user_id, as: :search_select, url: admin_users_path, display_name: 'dropdown_display_name', fields: User::DROPDOWN_SEARCH_FIELDS
+  end
+
+  f.actions do
+    f.action :submit, label: 'Continue to Review'
+    f.cancel_link resource_path(resource)
+  end
+end

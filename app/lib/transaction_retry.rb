@@ -1,6 +1,37 @@
 module TransactionRetry
   MAX_ATTEMPTS = 5
 
+  # Runs the given block inside a transaction. If the transaction rolls back
+  # because of a database conflict, the block will be automatically re-run, up
+  # to a maximum of MAX_ATTEMPTS times. If the block throws any other
+  # exception, the transaction will be immediately aborted and no further
+  # retries will be made.
+  def self.transaction
+    run do
+      ActiveRecord::Base.transaction do
+        yield
+      end
+    end
+  end
+
+  # Run the given block, which is expected to start and commit a single
+  # database transaction. If the transaction rolls back because of a database
+  # conflict, the block will be automatically re-run, up to a maximum of
+  # MAX_ATTEMPTS times. If the block throws any other exception, the
+  # transaction will be immediately aborted and no further retries will be
+  # made.
+  #
+  # The expected usage is:
+  #
+  # TransactionRetry.run do
+  #   ActiveRecord::Base.transaction do
+  #     # ...code here...
+  #   end
+  # end
+  #
+  # (Alternatively, you can use TransactionRetry.transaction to combine the
+  # two steps. You should probably use that unless you have a good reason to
+  # need fine-grained control over how the transaction gets kicked off.)
   def self.run
     attempts_remaining = MAX_ATTEMPTS
     begin
