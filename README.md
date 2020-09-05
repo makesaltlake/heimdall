@@ -44,7 +44,7 @@ gem install bundler
 
 TBD
 
-Install NVM, then `nvm install`, then `nvm use`, then `npm install -g yarn`, then `cd frontend && yarn && start`
+Install NVM, then `nvm install`, then `nvm use`, then `npm install -g yarn`, then `cd frontend && yarn`
 
 ### Postgres
 
@@ -89,8 +89,10 @@ bundle install
 First, create a database for Heimdall and populate it with the tables Heimdall needs:
 
 ```shell
-bundle exec rake db:create db:structure:load
+bundle exec rake db:setup
 ```
+
+This will also create a default admin user whose email is `admin@example.com` and whose password is `password`.
 
 After you've done that once, on future `git pull`s you'll want to instead do:
 
@@ -100,23 +102,11 @@ bundle exec rake db:migrate
 
 to run migrations and update your database with anything that's changed without blowing it away and starting from scratch every time.
 
-Next, you'll need to create an admin user. Grab a rails console:
-
-```shell
-bundle exec rails console
-```
-
-And run this:
-
-```ruby
-User.create!(email: 'admin@example.com', password: 'password', super_user: true)
-```
-
 At this point you're ready to fire up Heimdall and log in.
 
 ### It's Go Time
 
-Open two terminal windows. In the first, start Heimdall's web server:
+Open three terminal windows. In the first, start Heimdall's web server:
 
 ```shell
 bundle exec rails server
@@ -128,6 +118,12 @@ Then, in the second terminal window, start a background job worker:
 
 ```shell
 bundle exec inst_jobs run
+```
+
+And finally, in the third window, start the frontend development server:
+
+```shell
+cd frontend && yarn start
 ```
 
 Then browse to http://localhost:3000, log in, and you're off to the races.
