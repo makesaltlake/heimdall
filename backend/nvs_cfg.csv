@@ -1,4 +1,5 @@
 heimdall,namespace,
+org_name,data,string
 wifi_ssid,data,string
 wifi_password,data,string
 heimdall_host,data,string

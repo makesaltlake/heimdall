@@ -96,9 +96,9 @@ spi_device_handle_t heimdall_rfid_init(bool rfid_reader)
     // Pins are as specified in the KiCad project boards/inside_board
     if (rfid_reader)
     {
+        SPI_SCLK_PIN_NUM = 25;
         SPI_MISO_PIN_NUM = 27;
         SPI_MOSI_PIN_NUM = 26;
-        SPI_SCLK_PIN_NUM = 25;
         SPI_CS_PIN_NUM   = 32;
 
         ESP_LOGI(TAG, "Operating in RFID Reader mode");
@@ -106,10 +106,10 @@ spi_device_handle_t heimdall_rfid_init(bool rfid_reader)
     else
     {
         // Writer
-        SPI_MISO_PIN_NUM = 2;
-        SPI_MOSI_PIN_NUM = 3;
-        SPI_SCLK_PIN_NUM = 1;
-        SPI_CS_PIN_NUM   = 4;
+        SPI_SCLK_PIN_NUM = 12;
+        SPI_MISO_PIN_NUM = 13;
+        SPI_MOSI_PIN_NUM = 14;
+        SPI_CS_PIN_NUM   = 15;
 
         ESP_LOGI(TAG, "Operating in RFID Writer mode");
     }
