@@ -25,8 +25,6 @@
 #include "lvgl/lvgl.h"
 #include "lvgl_helpers.h"
 
-
-
 #include "clrc663.h"
 #include "iso14443.h"
 #include "mifare_classic.h"
@@ -50,10 +48,6 @@ char *org_name = NULL;
 
 extern char *wifi_ssid;
 extern char *wifi_password;
-
-
-#define CAM_WIDTH   (320)
-#define CAM_HIGH    (240)
 
 
 static void heimdall_get_param(nvs_handle_t nvs, char *name, char **value)
@@ -205,26 +199,6 @@ void app_main(void)
     nvs_close(nvs);
 
     heimdall_setup_wifi(wifi_ssid, wifi_password);
-
-
-/*
-OV2640_Init(0,1);
-
-OV2640_RGB565_Mode(false);
-OV2640_ImageSize_Set(800,600);
-OV2640_ImageWin_Set(0, 0, 800, 600);
-OV2640_OutSize_Set(800, 600);
-
-cam_start();
-*/
-
-
-
-
-
-
-
-
 
     /* If you want to use a task to create the graphic, you NEED to create a Pinned task
      * Otherwise there can be problem such as memory corruption and so on.
