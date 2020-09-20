@@ -1,11 +1,10 @@
 GIT
-  remote: https://github.com/javawizard/annotate_models.git
-  revision: f7bc5fbe05780bb3029c2f74bef67c2d87dec7ac
-  branch: fix-annotate-routes-rake-task-position
+  remote: https://github.com/ctran/annotate_models.git
+  revision: 111640d077836ced23cfffb882c93e40968ab9d9
   specs:
-    annotate (3.1.1)
+    annotate (2.7.5)
       activerecord (>= 3.2, < 7.0)
-      rake (>= 10.4, < 14.0)
+      rake (>= 10.4, < 13.0)
 
 GEM
   remote: https://rubygems.org/
@@ -106,7 +105,7 @@ GEM
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
     childprocess (3.0.0)
-    concurrent-ruby (1.1.6)
+    concurrent-ruby (1.1.7)
     crass (1.0.6)
     devise (4.7.1)
       bcrypt (~> 3.0)
@@ -138,7 +137,7 @@ GEM
       actionpack (>= 4.1)
       activesupport (>= 4.1)
     hashie (4.1.0)
-    i18n (1.8.2)
+    i18n (1.8.5)
       concurrent-ruby (~> 1.0)
     inherited_resources (1.11.0)
       actionpack (>= 5.0, < 6.1)
@@ -185,7 +184,7 @@ GEM
     mimemagic (0.3.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    minitest (5.14.1)
+    minitest (5.14.2)
     msgpack (1.3.3)
     multipart-post (2.1.1)
     nilify_blanks (1.4.0)
@@ -235,7 +234,7 @@ GEM
       method_source
       rake (>= 0.8.7)
       thor (>= 0.20.3, < 2.0)
-    rake (13.0.1)
+    rake (12.3.3)
     ransack (2.3.2)
       activerecord (>= 5.2.1)
       activesupport (>= 5.2.1)
@@ -333,7 +332,7 @@ GEM
       rails (>= 3.2.16)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    zeitwerk (2.3.0)
+    zeitwerk (2.4.0)
 
 PLATFORMS
   ruby

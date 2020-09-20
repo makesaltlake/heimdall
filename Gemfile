@@ -56,10 +56,11 @@ gem 'slack-ruby-client'
 gem 'nilify_blanks'
 
 group :development do
-  # Work around https://github.com/ctran/annotate_models/issues/761. The git
-  # stuff can go away once https://github.com/ctran/annotate_models/pull/803
-  # merges and is released.
-  gem 'annotate', git: 'https://github.com/javawizard/annotate_models.git', branch: 'fix-annotate-routes-rake-task-position'
+  # Work around https://github.com/ctran/annotate_models/issues/761 -
+  # https://github.com/ctran/annotate_models/pull/803 has been merged but not
+  # released yet, so target master until that happens. The git stuff can go
+  # away at that point.
+  gem 'annotate', git: 'https://github.com/ctran/annotate_models.git'
 end
 
 group :development, :test do
