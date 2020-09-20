@@ -140,6 +140,8 @@ Then run the tests:
 bundle exec rspec
 ```
 
+We've also got GitHub Actions set up to run tests on every push. You can view the latest test runs at <https://github.com/makesaltlake/heimdall/actions>.
+
 ## Deployment
 
 TBD
