@@ -100,6 +100,10 @@ RSpec.configure do |config|
   # test failures related to randomization by passing the same `--seed` value
   # as the one that triggered the failure.
   Kernel.srand config.seed
+
+  # Include shared contexts applicable to all specs
+  config.include_context 'global shared context'
+  config.include_context 'feature spec shared context', type: :feature
 end
 
 # Capybara configuration
