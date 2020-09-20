@@ -1,0 +1,40 @@
+name: tests
+on: push
+
+env:
+  PGHOST: localhost
+  PGUSER: postgres
+  PGPASSWORD: postgres
+
+jobs:
+  rspec-tests:
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:12
+        ports: ["5432:5432"]
+        env:
+          POSTGRES_PASSWORD: postgres
+        options: --health-cmd pg_isready --health-interval 5s --health-timeout 3s --health-retries 10
+
+    steps:
+      - uses: actions/checkout@v2
+
+      # Cache gems installed by bundler across workflow runs - taken with modifications from
+      # https://github.com/actions/cache/blob/main/examples.md#ruby---bundler
+      - uses: actions/cache@v1
+        env:
+          cache-name: cache-ruby-gems
+        with:
+          path: ./vendor/bundle
+          key: build-${{ env.cache-name }}-${{ hashFiles('**/Gemfile.lock') }}
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: 2.7.1
+      - run: gem install bundler
+      - run: bundle config path vendor/bundle
+      - run: bundle install --jobs 4
+      - run: bundle exec rake db:setup RAILS_ENV=test
+      - run: bundle exec rspec

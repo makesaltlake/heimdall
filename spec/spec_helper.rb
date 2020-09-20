@@ -108,4 +108,11 @@ end
 
 # Capybara configuration
 Capybara.server = :puma
-Capybara.default_driver = :selenium_chrome
+
+if ENV['CI']
+  # Run tests in a headless Chrome instance in CI
+  Capybara.default_driver = :selenium_chrome_headless
+else
+  # Run tests in a normal Chrome instance when running locally to make it easier to manually troubleshoot failures
+  Capybara.default_driver = :selenium_chrome
+end
