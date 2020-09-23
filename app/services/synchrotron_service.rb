@@ -224,7 +224,7 @@ module SynchrotronService
     when 'charge.dispute.created'
       Rails.logger.warn('A CHARGE HAS BEEN DISPUTED')
 
-      send_slack_message(text: ':beaker: A charge has been disputed :alert2:')
+      send_slack_message(text: '<!channel> :beaker: A charge has been disputed :alert2:')
     else
       Rails.logger.info("SynchrotronService: Ignoring this event; it's not one we care about")
     end
