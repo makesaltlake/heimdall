@@ -45,6 +45,8 @@ static EventGroupHandle_t s_wifi_event_group;
 #define WIFI_CONNECTED_BIT BIT0
 #define WIFI_FAIL_BIT      BIT1
 
+#define HTTP_DATA_RX_BIT   BIT1
+
 /* Root cert for heimdall.makesaltlake.org, taken from heimdall_makesaltlake_org_root_cert.pem
 
    The PEM file was extracted from the output of this command:
@@ -155,6 +157,20 @@ void heimdall_setup_wifi(char *wifi_ssid, char *wifi_password)
 
 }
 
+static char *http_response;
+static int http_response_len = 0;
+EventGroupHandle_t httpEventGroup;
+
+static bool get_httpdata(char *buffer, int len)
+{
+    if (len < http_response_len) {
+        return false;
+    }
+
+    memcpy(buffer, http_response, http_response_len);
+
+    return true;
+}
 
 static esp_err_t _http_event_handle(esp_http_client_event_t *evt)
 {
@@ -163,7 +179,20 @@ static esp_err_t _http_event_handle(esp_http_client_event_t *evt)
         case HTTP_EVENT_ON_CONNECTED:
         case HTTP_EVENT_HEADER_SENT:
         case HTTP_EVENT_ON_HEADER:
+            break;
         case HTTP_EVENT_ON_DATA:
+
+            if (!esp_http_client_is_chunked_response(evt->client)) {
+                http_response = malloc(evt->data_len);
+                memcpy(http_response, evt->data, evt->data_len);
+                http_response_len = evt->data_len;
+            } else {
+                http_response = malloc(evt->data_len);
+                esp_http_client_read_response(evt->client, http_response, evt->data_len);
+                http_response_len = evt->data_len;
+            }
+            xEventGroupSetBits(httpEventGroup, HTTP_DATA_RX_BIT);
+            break;
         case HTTP_EVENT_ON_FINISH:
         case HTTP_EVENT_DISCONNECTED:
             break;
@@ -281,18 +310,101 @@ void heimdall_setup_websocket(void)
 
 
 
-static void send_scan_tag(char *uid, int uid_len, char *badge_token)
+bool send_badge_program(char *badge_token, char *name, int namelen)
 {
-    esp_http_client_handle_t client;
+    const char * const url_path = "/api/badge_writers/program";
 
-    const char * const url_path = "/api/badge_readers/record_scan";
+    int http_status_code;
+    char *url;
+    char authorization_value[49];
+    char *data;
+    bool success = false;
+
 
     esp_http_client_config_t config = {
         .event_handler = _http_event_handle,
-        .timeout_ms = 60000,
+        .timeout_ms = 10 * 1000,
+        .cert_pem = heimdall_dev_root_cert_pem_start,
     };
 
-    client = esp_http_client_init(&config);
+    url = malloc(strlen("https://") + strlen(heimdall_host) + strlen(url_path) + 1);
+    assert(url != NULL);
+
+    sprintf(url, "https://%s%s", heimdall_host, url_path);
+    config.url = url;
+
+    data = malloc(200);
+    assert(data != NULL);
+
+    sprintf(data, "{\"badge_token\": \"%s\"}", badge_token);
+
+    printf("Going to send data: %s\n", data);
+
+    esp_http_client_handle_t client = esp_http_client_init(&config);
+
+    sprintf(authorization_value, "Bearer %s", writer_api_key);
+
+    esp_http_client_set_header(client, "Content-Type", "application/json");
+    esp_http_client_set_header(client, "Authorization", authorization_value);
+    esp_http_client_set_method(client, HTTP_METHOD_POST);
+
+    printf("Auth value: %s\n", authorization_value);
+
+    esp_http_client_set_post_field(client, data, strlen(data));
+
+    ESP_LOGI(TAG, "Sending request to %s", url);
+    esp_err_t err = esp_http_client_perform(client);
+
+    if (err == ESP_OK) {
+        http_status_code = esp_http_client_get_status_code(client);
+        if (http_status_code == 200) {
+            ESP_LOGI(TAG, "Uploaded badge program successfully");
+
+            EventBits_t uxBits;
+            char buffer[128];
+
+            memset(buffer, 0, 128);
+
+            uxBits = xEventGroupWaitBits(httpEventGroup, HTTP_DATA_RX_BIT, pdTRUE, pdTRUE, pdMS_TO_TICKS(5000));
+            if (uxBits  & HTTP_DATA_RX_BIT) {
+                if (!get_httpdata(buffer, sizeof(buffer))) {
+                    ESP_LOGE(TAG, "ERROR: http buffer too small!");
+                    esp_http_client_cleanup(client);
+                    return false;
+                }
+
+                ESP_LOGI(TAG, "Got: %s", buffer);
+
+                cJSON *response = cJSON_Parse(buffer);
+                const cJSON *status;
+
+                status = cJSON_GetObjectItem(response, "status");
+
+                if (strcmp(status->valuestring, "not_programming") == 0)
+                {
+                    printf("Not Programming\n");
+                    sprintf(name, "Web API not programming");
+                } else {
+                    cJSON *json_user = cJSON_GetObjectItem(response, "user");
+                    cJSON *json_name = cJSON_GetObjectItem(json_user, "name");
+
+                    printf("Name: %s\n", json_name->valuestring);
+                    sprintf(name, "%s", json_name->valuestring);
+                    success = true;
+                }
+            }
+        }
+        else {
+            ESP_LOGW(TAG, "Badge program upload: HTTP request returned error %d", http_status_code);
+        }
+    }
+    else {
+        ESP_LOGW(TAG, "Badge program upload: HTTP request failed: %d", err);
+    }
+
+    esp_http_client_cleanup(client);
+
+    return success;
 }
 
 

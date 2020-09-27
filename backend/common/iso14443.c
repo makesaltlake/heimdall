@@ -442,7 +442,5 @@ uint8_t heimdall_rfid_check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t u
 
     sak = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
 
-    ESP_LOGV(TAG, "GOT SAK: %X", sak);
-
     return sak;
 }

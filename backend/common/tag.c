@@ -24,10 +24,17 @@
 #include "iso14443.h"
 #include "mifare_classic.h"
 #include "access.h"
+#include "network.h"
+
+#include "uuid.h"
 
 
 static const char* TAG = "heimdall-card";
+static const int MAX_UID_LEN = 11;
 
+extern char *tag_key;
+
+void print_card_uid(uint8_t *uid, int uid_len);
 
 extern cJSON *access_list;
 
@@ -70,10 +77,12 @@ enum MIFARE_CARD_TYPE wait_for_tag(spi_device_handle_t spi, uint8_t *uid, uint8_
             sak = heimdall_rfid_check_sak(spi, uid, *uid_len, bcc);
         }
 
+        printf("UID: ");
         for (int i = 0; i < *uid_len; i++)
         {
-            ESP_LOGV(TAG, "U[%d] = %x", i, uid[i]);
+            printf(TAG, "%02X", uid[i]);
         }
+        printf("\n");
     }
 
     switch (sak)
@@ -98,27 +107,130 @@ enum MIFARE_CARD_TYPE wait_for_tag(spi_device_handle_t spi, uint8_t *uid, uint8_
     return type;
 }
 
+void update_uuid_lbl(const char *new_uuid);
+void update_status_lbl(const char *txt);
+void update_name_lbl(const char *txt, bool success);
+void welcome_text(void);
+
 void tag_writer(void *param)
 {
-     //   heimdall_rfid_personalize(spi);
-     //   ESP_LOGV(TAG, "Personalization complete");
-
-
     spi_device_handle_t spi;
     uint8_t *uid = NULL;
     uint8_t uid_len;
+    char mfg_default_key[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
+
+    uint8_t badge_uuid[16];
 
     spi = heimdall_rfid_init(false);
 
+    uid = malloc(MAX_UID_LEN);
 
-     bool got_card;
+    while (1) {
+        memset(uid, 0, MAX_UID_LEN);
 
-     while (1) {
+        vTaskDelay(10000 / portTICK_PERIOD_MS);
+        welcome_text();
+
         enum MIFARE_CARD_TYPE card = wait_for_tag(spi, uid, &uid_len);
+        ESP_LOGI(TAG, "Got card %d, with UID %02X%02X%02X%02X", card, uid[0], uid[1], uid[2], uid[3]);
 
+        print_card_uid(uid, uid_len);
 
+        update_status_lbl("Found Card. Informing Web API...");
 
-     }
+        uuid_t badge_uuid, uu2;
+        char uu_str[UUID_STR_LEN];
+        int r;
+        uuid_generate(badge_uuid);
+
+       // ESP_LOG_BUFFER_HEXDUMP(TAG, badge_uuid, sizeof(uuid_t), ESP_LOG_WARN);
+
+        uuid_unparse(badge_uuid, uu_str);
+        ESP_LOGW(TAG, "UUID: %s", uu_str);
+
+        update_uuid_lbl(uu_str);
+
+        char name[128];
+        bool success = send_badge_program(uu_str, name, 128);
+
+        if (success)
+            update_status_lbl("Web API success. Programming card...");
+        else
+            update_status_lbl(name);
+
+        printf("Programming for %s\n", name);
+
+        if (success) {
+            // Actually program the badge
+            if (!heimdall_rfid_authenticate(spi, uid, mfg_default_key)) {
+
+                ESP_LOGI(TAG, "Failed to authenticate with default manufacturer key: retrying with TAG_KEY");
+
+                wait_for_tag(spi, uid, &uid_len);
+                // Retry with the TAG_KEY
+                if (!heimdall_rfid_authenticate(spi, uid, tag_key)) {
+                    ESP_LOGI(TAG, "Failed to authenticate tag");
+                    vTaskDelay(100 / portTICK_PERIOD_MS);
+                    continue;
+                }
+            }
+
+            uint8_t data[16] = {0};
+            ESP_LOGI(TAG, "Reading sector trailer");
+            success = heimdall_rfid_read(spi, 3, data);
+            if (!success) {
+                ESP_LOGW(TAG, "Failed to read existing sector trailer");
+
+                update_status_lbl("Program card: read error");
+
+                continue;
+            }
+
+            // Fill in the new KEY A
+            memcpy(data, tag_key, 6);
+
+            data[6] = 0xff;
+            data[7] = 0x07;
+            data[8] = 0x80;
+            data[9] = 0x00;
+
+            // Set KEY B to a series of random bytes
+            esp_fill_random(data + 10, 6);
+
+            ESP_LOGI(TAG, "New sector trailer:");
+            for (int i = 0; i < 16; i++) {
+                printf("%02x ", data[i]);
+            }
+            printf("\n");
+
+            ESP_LOGI(TAG, "Writing new sector trailer");
+
+            success = heimdall_rfid_write(spi, 3, data);
+            if (!success) {
+                ESP_LOGW(TAG, "Failed to write new sector trailer");
+                update_status_lbl("Program card: write error");
+                continue;
+            }
+
+            heimdall_rc663_cmd(spi, RC663_CMD_IDLE);
+            heimdall_rfid_deauthenticate(spi);
+
+            update_status_lbl("Program card: success");
+            printf("Programmed card for %s\n", name);
+            update_name_lbl(name, true);
+        }
+    }
+}
+
+void print_card_uid(uint8_t *uid, int uid_len)
+{
+    printf("Tag UID (len %d): ", uid_len);
+    for (int i = 0; i < uid_len; i++)
+    {
+        printf("%02x", uid[i]);
+    }
+
+    printf("\n");
 }
 
 void tag_reader(void *param)
@@ -126,7 +238,6 @@ void tag_reader(void *param)
     spi_device_handle_t spi;
     uint8_t *uid = NULL;
     uint8_t uid_len;
-    const int MAX_UID_LEN = 11;
 
     uint8_t badge_uuid[16];
 
@@ -139,9 +250,9 @@ void tag_reader(void *param)
         memset(uid, 0, MAX_UID_LEN);
 
         enum MIFARE_CARD_TYPE card = wait_for_tag(spi, uid, &uid_len);
-    
+
         if (card == MIFARE_CLASSIC_1K || card == MIFARE_CLASSIC_4K)
-        {  
+        {
             if (card == MIFARE_CLASSIC_1K)
                 ESP_LOGI(TAG, "Found MIFARE Classic 1K card");
             else
@@ -149,13 +260,7 @@ void tag_reader(void *param)
 
             memset(badge_uuid, 0, 16);
 
-            printf("Tag UID (len %d): ", uid_len);
-            for (int i = 0; i < uid_len; i++)
-            {
-                printf("%02x", uid[i]);
-            }
-
-            printf("\n");
+            print_card_uid(uid, uid_len);
 
             if (!heimdall_rfid_authenticate(spi, uid, "")) {
                 ESP_LOGI(TAG, "Failed to authenticate tag");
@@ -189,12 +294,12 @@ void tag_reader(void *param)
                     }
                 }
 
-                if (access_allowed) 
+                if (access_allowed)
                 {
                     heimdall_access_allowed();
                 }
                 else
-                {                    
+                {
                     heimdall_access_denied();
                 }
             }
@@ -202,7 +307,7 @@ void tag_reader(void *param)
             {
                 heimdall_access_error();
             }
-            
+
             heimdall_rfid_deauthenticate(spi);
             heimdall_rc663_cmd(spi, RC663_CMD_IDLE);
         }

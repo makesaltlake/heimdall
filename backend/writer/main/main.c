@@ -63,9 +63,9 @@ static void heimdall_get_param(nvs_handle_t nvs, char *name, char **value)
 }
 
 /*****************************************
- * 
+ *
  * Adapted from https://github.com/lvgl/lv_port_esp32/blob/master/main/main.c
- * 
+ *
  *****************************************/
 
 static void create_demo_application(void);
@@ -87,7 +87,7 @@ static void guiTask(void *pvParameter)
     xGuiSemaphore = xSemaphoreCreateMutex();
 
     lv_init();
-    
+
     /* Initialize SPI or I2C bus used by the drivers */
     lvgl_driver_init();
 
@@ -119,7 +119,7 @@ static void guiTask(void *pvParameter)
 
     /* Create the demo application */
     create_demo_application();
-    
+
     while (1) {
         /* Delay 1 tick (assumes FreeRTOS tick is 10ms */
         vTaskDelay(pdMS_TO_TICKS(10));
@@ -135,36 +135,95 @@ static void guiTask(void *pvParameter)
     vTaskDelete(NULL);
 }
 
+lv_obj_t *card_uid_lbl;
+lv_obj_t *status_lbl;
+lv_obj_t *card_owner_lbl;
+
 static void create_demo_application(void)
 {
     /* Get the current screen  */
     lv_obj_t * scr = lv_disp_get_scr_act(NULL);
 
     /* Create a Label on the currently active screen */
-    lv_obj_t *instruction_lbl =  lv_label_create(scr, NULL);
     lv_obj_t *welcome_lbl = lv_label_create(scr, NULL);
-    lv_obj_t *card_uid_lbl = lv_label_create(scr, NULL);
-    lv_obj_t *card_owner_lbl = lv_label_create(scr, NULL);
+    status_lbl =  lv_label_create(scr, NULL);
+    card_uid_lbl = lv_label_create(scr, NULL);
+    card_owner_lbl = lv_label_create(scr, NULL);
 
     char *txt = malloc(128);
     snprintf(txt, 128, "Welcome to %s's\nRFID Card Writer Application.", org_name);
 
+    lv_label_set_text(status_lbl, "Initializing...");
+    lv_label_set_text(card_uid_lbl, "");
+    lv_label_set_text(card_owner_lbl, "");
+
     lv_label_set_text(welcome_lbl, txt);
-    lv_label_set_text(instruction_lbl, "Please swipe new tag to program.");
-    lv_label_set_text(card_uid_lbl, "Card UID: ");
-    lv_label_set_text(card_owner_lbl, "Name: ");
+
 
     /* Align the Label to the center
      * NULL means align on parent (which is the screen now)
      * 0, 0 at the end means an x, y offset after alignment */
 
     lv_obj_align(welcome_lbl, NULL, LV_ALIGN_IN_TOP_MID, 0, 0);
-    lv_obj_align(instruction_lbl, NULL, LV_ALIGN_CENTER, 0, 0);
-    lv_obj_align(card_uid_lbl, NULL, LV_ALIGN_IN_LEFT_MID, 20, 60);
-    lv_obj_align(card_owner_lbl, NULL, LV_ALIGN_IN_LEFT_MID, 20, 100);
+    lv_obj_align(status_lbl, NULL, LV_ALIGN_IN_LEFT_MID, 0, -40);
+    lv_obj_align(card_uid_lbl, NULL, LV_ALIGN_IN_LEFT_MID, 20, 10);
+    lv_obj_align(card_owner_lbl, NULL, LV_ALIGN_IN_LEFT_MID, 20, 80);
 
     free(txt);
 }
+
+void welcome_text(void)
+{
+    lv_label_set_text(status_lbl, "Please swipe new tag to program.");
+    lv_label_set_text(card_uid_lbl, "Card UID: ");
+    lv_label_set_text(card_owner_lbl, "Name: ");
+}
+
+void update_uuid_lbl(const char *new_uuid)
+{
+    char lbl_txt[128];
+    char *uu;
+
+    char *last_chars;
+
+    uu = calloc(strlen(new_uuid) + 1, 1);
+
+    memcpy(uu, new_uuid, strlen(new_uuid));
+
+    last_chars = strrchr(uu, '-');
+    if (last_chars != 0) {
+        last_chars[0] = '\0';
+        last_chars++;
+    }
+
+    sprintf(lbl_txt, "Card UUID:\n%s-\n%s", uu, last_chars);
+
+    lv_label_set_text(card_uid_lbl, lbl_txt);
+
+    free(uu);
+}
+
+void update_name_lbl(const char *txt, bool success)
+{
+    char lbl_txt[128];
+
+    if (success) {
+        sprintf(lbl_txt, "Name: %s", txt);
+    }
+    else
+    {
+        sprintf(lbl_txt, "Error: %s", txt);
+    }
+
+    lv_label_set_text(card_owner_lbl, lbl_txt);
+}
+
+void update_status_lbl(const char *txt)
+{
+    lv_label_set_text(status_lbl, txt);
+}
+
+extern EventGroupHandle_t httpEventGroup;
 
 void app_main(void)
 {
@@ -199,6 +258,8 @@ void app_main(void)
     nvs_close(nvs);
 
     heimdall_setup_wifi(wifi_ssid, wifi_password);
+
+    httpEventGroup = xEventGroupCreate();
 
     /* If you want to use a task to create the graphic, you NEED to create a Pinned task
      * Otherwise there can be problem such as memory corruption and so on.

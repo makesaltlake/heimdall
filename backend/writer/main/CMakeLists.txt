@@ -3,7 +3,7 @@ set(COMPONENT_REQUIRES )
 set(COMPONENT_PRIV_REQUIRES )
 
 set(COMPONENT_SRCS main.c )
-set(COMPONENT_ADD_INCLUDEDIRS "../../common/")
+set(COMPONENT_ADD_INCLUDEDIRS ../../common/ )
 
 register_component()
 
