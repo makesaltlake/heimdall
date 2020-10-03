@@ -24,7 +24,10 @@ RSpec.shared_context 'global shared context' do
       unpaid: false,
       customer_email: user.email,
       subscription_id_in_stripe: 'test_subscription_id',
-      started_at: Time.now
+      started_at: Time.now,
+      interval: 1,
+      interval_type: 'month',
+      interval_amount: 5000 # $50 in cents
     )
     user
   end
