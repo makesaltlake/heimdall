@@ -102,12 +102,12 @@ class UserMergeService
     update_all_or_destroy_if_not_unique(BadgeReaderManualUser, :user)
   end
 
-  step "delete the source user" do
-    source.destroy!
+  step "transfer the source user's subscriptions to the target user" do
+    update_all(StripeSubscription, :user)
   end
 
-  step "kick off a Stripe re-synchronization so that the membership status of the merged user is accurately reflected" do
-    StripeSynchronizationService.sync_all_users_later
+  step "delete the source user" do
+    source.destroy!
   end
 
   # And then some helpers for the merge process.

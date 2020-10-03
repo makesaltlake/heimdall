@@ -4,6 +4,10 @@ RSpec.shared_context 'global shared context' do
 
   let(:normal_user_password) { 'normal_user_password' }
   let(:normal_user) { User.create!(name: 'Normal User', email: 'normal@example.com', password: normal_user_password) }
+  let(:normal_user_2_password) { 'normal_user_2_password' }
+  let(:normal_user_2) { User.create!(name: 'Normal User 2', email: 'normal2@example.com', password: normal_user_2_password) }
+  let(:normal_user_3_password) { 'normal_use_3r_password' }
+  let(:normal_user_3) { User.create!(name: 'Normal User 3', email: 'normal3@example.com', password: normal_user_3_password) }
 
   let(:member_user_password) { 'member_user_password' }
   let(:member_user) do
