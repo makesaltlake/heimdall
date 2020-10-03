@@ -231,7 +231,7 @@ CREATE TABLE public.users (
     super_user boolean DEFAULT false NOT NULL,
     badge_number character varying,
     household_id bigint NOT NULL,
-    subscription_active boolean,
+    subscription_active boolean DEFAULT false NOT NULL,
     subscription_id character varying,
     subscription_created timestamp without time zone,
     badge_token character varying,
@@ -619,6 +619,53 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: stripe_subscriptions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.stripe_subscriptions (
+    id bigint NOT NULL,
+    subscription_id_in_stripe character varying,
+    customer_id_in_stripe character varying,
+    user_id bigint,
+    customer_email character varying,
+    customer_name character varying,
+    customer_description character varying,
+    customer_inferred_name character varying,
+    active boolean,
+    unpaid boolean,
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone,
+    canceled_at timestamp without time zone,
+    cancel_at timestamp without time zone,
+    plan_name character varying,
+    "interval" integer,
+    interval_type character varying,
+    interval_amount integer,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: stripe_subscriptions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.stripe_subscriptions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: stripe_subscriptions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.stripe_subscriptions_id_seq OWNED BY public.stripe_subscriptions.id;
+
+
+--
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
@@ -758,6 +805,13 @@ ALTER TABLE ONLY public.households ALTER COLUMN id SET DEFAULT nextval('public.h
 
 
 --
+-- Name: stripe_subscriptions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.stripe_subscriptions ALTER COLUMN id SET DEFAULT nextval('public.stripe_subscriptions_id_seq'::regclass);
+
+
+--
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -881,6 +935,14 @@ ALTER TABLE ONLY public.households
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: stripe_subscriptions stripe_subscriptions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.stripe_subscriptions
+    ADD CONSTRAINT stripe_subscriptions_pkey PRIMARY KEY (id);
 
 
 --
@@ -1096,6 +1158,34 @@ CREATE INDEX index_delayed_jobs_on_tag ON public.delayed_jobs USING btree (tag);
 
 
 --
+-- Name: index_stripe_subscriptions_on_customer_email; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_stripe_subscriptions_on_customer_email ON public.stripe_subscriptions USING btree (customer_email);
+
+
+--
+-- Name: index_stripe_subscriptions_on_customer_id_in_stripe; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_stripe_subscriptions_on_customer_id_in_stripe ON public.stripe_subscriptions USING btree (customer_id_in_stripe);
+
+
+--
+-- Name: index_stripe_subscriptions_on_subscription_id_in_stripe; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_stripe_subscriptions_on_subscription_id_in_stripe ON public.stripe_subscriptions USING btree (subscription_id_in_stripe);
+
+
+--
+-- Name: index_stripe_subscriptions_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_stripe_subscriptions_on_user_id ON public.stripe_subscriptions USING btree (user_id);
+
+
+--
 -- Name: index_users_on_badge_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1236,6 +1326,14 @@ ALTER TABLE ONLY public.users
 
 
 --
+-- Name: stripe_subscriptions fk_rails_542bf76268; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.stripe_subscriptions
+    ADD CONSTRAINT fk_rails_542bf76268 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: certification_issuances fk_rails_68f52511ca; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1354,6 +1452,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200601105500'),
 ('20200608081455'),
 ('20200726053145'),
-('20200905045021');
+('20200905045021'),
+('20200923015420'),
+('20201003064003');
 
 

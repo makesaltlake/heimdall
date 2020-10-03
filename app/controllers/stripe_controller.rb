@@ -11,10 +11,8 @@ class StripeController < ApplicationController
 
     event = Stripe::Webhook.construct_event(payload, signature_header, WEBHOOK_SECRET)
 
-    case event.type
-    when /^customer.subscription./
-      StripeSynchronizationService.sync_all_users_later
-    end
+    # Ditto for StripeSynchronizationService
+    StripeSynchronizationService.handle_stripe_event_later(event)
 
     # Pass all events off to SynchrotronService. We could be more picky later on and filter out only ones it cares
     # about...

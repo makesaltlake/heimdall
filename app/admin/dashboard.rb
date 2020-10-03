@@ -21,7 +21,7 @@ ActiveAdmin.register_page "Dashboard" do
       column do
         if authorized?(:read_newest_users, User)
           paginated_table_panel(
-            User.accessible_by(current_ability).order('subscription_created DESC NULLS LAST'),
+            User.accessible_by(current_ability).most_recently_subscribed_first,
             title: 'Recent member signups',
             param_name: :new_members_page,
             per_page: 10

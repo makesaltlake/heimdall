@@ -28,14 +28,35 @@ ActiveAdmin.register User do
       row(:email)
       row(:household_has_membership, &:has_household_membership)
       row(:individual_has_membership, &:subscription_active)
-      row('Subscription ID') { |user| user.subscription_id && a(user.subscription_id, href: StripeUtils.dashboard_url(Stripe::Subscription, user.subscription_id)) }
-      row(:subscription_created)
       row(:super_user)
       row('Last Signed In', &:current_sign_in_at)
       row('Failed Sign In Attempts', &:failed_attempts)
       row('Household members') { |user| user.household_users.order(:name).map { |other_user| auto_link(other_user) }.join('<br/>').html_safe }
       row('Instructs these certifications') { |user| user.instructed_certifications.order(:name).map { |certification| auto_link(certification) }.join('<br/>').html_safe }
       row('Manual access to these badge readers') { |user| user.manual_user_badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join('<br/>').html_safe }
+    end
+
+    paginated_table_panel(
+      resource.stripe_subscriptions.order(started_at: :desc),
+      title: 'Subscriptions',
+      param_name: :subscriptions_page
+    ) do
+      column('Stripe ID') { |stripe_subscription| a(stripe_subscription.subscription_id_in_stripe, href: StripeUtils.dashboard_url(Stripe::Subscription, stripe_subscription.subscription_id_in_stripe)) }
+      column(:plan_name)
+      column(:plan, &:plan_label)
+      column(:status) do |stripe_subscription|
+        if stripe_subscription.active && stripe_subscription.cancel_at
+          status_tag 'pending cancellation', class: :yes
+        elsif stripe_subscription.active
+          status_tag 'active', class: :green
+        elsif stripe_subscription.unpaid
+          status_tag 'unpaid', class: :orange
+        else
+          status_tag 'cancelled'
+        end
+      end
+      column(:started_at)
+      column(:ended_at)
     end
 
     panel 'Badge' do

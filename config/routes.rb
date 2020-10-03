@@ -91,6 +91,10 @@ end
 #                                                    PATCH      /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
 #                                                    PUT        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
 #                            remove_badge_admin_user POST       /admin/users/:id/remove_badge(.:format)                                                  admin/users#remove_badge
+#                             begin_merge_admin_user GET        /admin/users/:id/begin_merge(.:format)                                                   admin/users#begin_merge
+#                            review_merge_admin_user GET        /admin/users/:id/review_merge(.:format)                                                  admin/users#review_merge
+#                                   merge_admin_user POST       /admin/users/:id/merge(.:format)                                                         admin/users#merge
+#                          merge_complete_admin_user GET        /admin/users/:id/merge_complete(.:format)                                                admin/users#merge_complete
 #                                        admin_users GET        /admin/users(.:format)                                                                   admin/users#index
 #                                                    POST       /admin/users(.:format)                                                                   admin/users#create
 #                                     new_admin_user GET        /admin/users/new(.:format)                                                               admin/users#new

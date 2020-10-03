@@ -68,6 +68,8 @@ class User < ApplicationRecord
 
   belongs_to :household
 
+  has_many :stripe_subscriptions
+
   has_many :certification_issuances
   has_many :certification_instructors
 
@@ -82,6 +84,8 @@ class User < ApplicationRecord
   has_many :manual_user_badge_readers, through: :badge_reader_manual_users, source: :badge_reader
 
   has_many :badge_access_grants
+
+  scope :most_recently_subscribed_first, -> { order("users.subscription_created DESC NULLS LAST") }
 
   ransacker :has_multiple_household_members, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
     Arel.sql("exists(#{FELLOW_HOUSEHOLD_MEMBER_IDS_SQL})")
@@ -192,6 +196,21 @@ class User < ApplicationRecord
     else
       User.where(id: id).select(HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL).take&.has_household_membership
     end
+  end
+
+  # Called by StripeSubscription's #after_save and #after_destroy to update
+  # the user to whom the subscription refers
+  def regenerate_subscription_attributes
+    # Use the most recent active subscription, or the most recent overall if
+    # none are active
+    most_recent_subscription = stripe_subscriptions.active.most_recently_started_first.first
+    most_recent_subscription ||= stripe_subscriptions.most_recently_started_first.first
+
+    update!(
+      subscription_active: most_recent_subscription&.active? || false,
+      subscription_created: most_recent_subscription&.started_at,
+      subscription_id: most_recent_subscription&.subscription_id_in_stripe
+    )
   end
 
   # removes a user's badge from their account. useful when the user's badge has
