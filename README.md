@@ -42,9 +42,9 @@ gem install bundler
 
 ### Node.js & Yarn
 
-TBD
+(Node.js and Yarn are only needed if you're building the single-page application portion of Heimdall, which isn't actually used just yet. You can probably skip this section.)
 
-Install NVM, then `nvm install`, then `nvm use`, then `npm install -g yarn`, then `cd frontend && yarn`
+TBD - Install NVM, then `nvm install`, then `nvm use`, then `npm install -g yarn`, then `cd frontend && yarn`
 
 ### Postgres
 
