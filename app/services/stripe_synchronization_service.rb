@@ -26,8 +26,14 @@ module StripeSynchronizationService
     end
   end
 
-  def self.upate_customer_attributes_on_subscriptions(event)
-    # TODO
+  def self.update_customer_attributes_on_subscriptions(event)
+    # TODO - implement this (it's not hugely important since customer updates
+    # are cosmetic things like name, email address, or card on file that
+    # Heimdall doens't actually use). Once it's implemented, we'll want to
+    # either run sync_all_subscriptions_later from a Rails console after
+    # deploying or wait for the periodic job in
+    # config/initializers/periodic_jobs.rb to trigger it to update
+    # subscriptions with customer data that's out of date.
   end
 
   def self.create_or_update_subscription(subscription)
