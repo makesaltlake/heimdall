@@ -1,5 +1,5 @@
 ActiveAdmin.register User do
-  permit_params :name, :email, :super_user, :password, :password_confirmation, household_user_ids: []
+  permit_params :name, :email, :super_user, :password, :password_confirmation, :profile_image, household_user_ids: []
 
   config.sort_order = 'subscription_created_desc'
 
@@ -34,6 +34,7 @@ ActiveAdmin.register User do
       row('Household members') { |user| user.household_users.order(:name).map { |other_user| auto_link(other_user) }.join('<br/>').html_safe }
       row('Instructs these certifications') { |user| user.instructed_certifications.order(:name).map { |certification| auto_link(certification) }.join('<br/>').html_safe }
       row('Manual access to these badge readers') { |user| user.manual_user_badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join('<br/>').html_safe }
+      active_storage_input_row(:profile_image)
     end
 
     paginated_table_panel(
@@ -121,6 +122,8 @@ ActiveAdmin.register User do
       f.input(:password, hint: "Type a new password for this user here, or leave blank to #{password_blank_action}")
       f.input(:password_confirmation, hint: 'Retype the new password here')
       f.input(:household_user_ids, label: 'Household members', as: :selected_list, url: admin_users_path, display_name: 'dropdown_display_name', fields: User::DROPDOWN_SEARCH_FIELDS)
+
+      active_storage_input(f, :profile_image)
     end
     f.actions
   end

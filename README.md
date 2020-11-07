@@ -94,6 +94,14 @@ Install Heimdall's Ruby dependencies using Bundler. You'll want to do this every
 bundle install
 ```
 
+### Other Dependencies
+
+ImageMagick is required to transform uploaded user profile images into smaller variants that are rendered on the admin pages. On Mac, the easiest way to install it is via Homebrew:
+
+```
+brew install imagemagick
+```
+
 ### Data Setup
 
 First, create a database for Heimdall and populate it with the tables Heimdall needs:

@@ -64,6 +64,8 @@ class User < ApplicationRecord
 
   has_paper_trail skip: [:password, :password_confirmation, :encrypted_password, :badge_token]
 
+  has_one_attached :profile_image
+
   nilify_blanks only: [:email]
 
   belongs_to :household

@@ -72,3 +72,31 @@ module ActiveAdminResourceControllerAuthorizationChecks
   end
 end
 ActiveAdmin::ResourceController.prepend(ActiveAdminResourceControllerAuthorizationChecks)
+
+# Helpers for rendering and uploading Active Storage image attachments
+module ActiveAdminActiveStorageShowHelper
+  def active_storage_input_row(attribute)
+    row(attribute) do |resource|
+      attachment = resource.send(attribute)
+      if attachment.attached?
+        a href: url_for(attachment) do
+          image_tag attachment.variant(resize_to_limit: [150, 150])
+        end
+      end
+    end
+  end
+end
+ActiveAdmin::Views::Pages::Show.include(ActiveAdminActiveStorageShowHelper)
+module ActiveAdminActiveStorageFormHelper
+  def active_storage_input(form, attribute)
+    attachment = form.object.send(attribute)
+    if attachment
+      hint = "Existing image:<br/><img src=\"#{CGI.escapeHTML(url_for(attachment.variant(resize_to_limit: [150, 150])))}\"/>".html_safe
+    else
+      hint = nil
+    end
+
+    form.input(attribute, as: :file, hint: hint)
+  end
+end
+ActiveAdmin::Views::ActiveAdminForm.include(ActiveAdminActiveStorageFormHelper)
