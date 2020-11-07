@@ -90,7 +90,7 @@ ActiveAdmin::Views::Pages::Show.include(ActiveAdminActiveStorageShowHelper)
 module ActiveAdminActiveStorageFormHelper
   def active_storage_input(form, attribute)
     attachment = form.object.send(attribute)
-    if attachment
+    if attachment.attached?
       hint = "Existing image:<br/><img src=\"#{CGI.escapeHTML(url_for(attachment.variant(resize_to_limit: [150, 150])))}\"/>".html_safe
     else
       hint = nil
