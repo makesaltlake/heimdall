@@ -23,22 +23,29 @@ The easiest way to install rbenv is to use Homebrew. [Follow the directions](htt
 
 ```shell
 brew install rbenv
+```
+
+Then run:
+
+```shell
 rbenv init
 ```
 
-Close your terminal and open a new one to pick up the changes rbenv made to your `.bash_profile` or `.bashrc`. Then, inside your local clone of Heimdall, install Ruby:
+and follow the directions it prints out to set up rbenv to load whenever you open a shell. Close your current shell and reopen it to pick up the changes, then, inside your local clone of Heimdall, install Ruby:
 
 ```shell
 rbenv install
 ```
 
-There's a bug that sometimes causes rbenv to hang while waiting for the answer to a prompt that's never printed out. If you don't see any progress after a few minutes, type `y` and hit enter a few times.
+There's a bug that sometimes causes rbenv to hang while waiting for the answer to a prompt that's never printed out. If you don't see any progress after a few minutes, type `y` and hit enter a few times, then wait a few more minutes.
 
 Then install Bundler:
 
 ```shell
 gem install bundler
 ```
+
+If you see a warning stating that you don't have write permissions for a directory under /Library/Ruby/Gems, you may need to restart your shell to pick up one of the shims rbenv created and then try to install bundler again.
 
 ### Node.js & Yarn
 
@@ -62,6 +69,7 @@ On Mac, the easiest way to install Redis is via Homebrew:
 
 ```shell
 brew install redis
+brew services start redis
 ```
 
 On Windows, you'll want to [download and install it directly](https://redis.io/download).
@@ -69,6 +77,8 @@ On Windows, you'll want to [download and install it directly](https://redis.io/d
 By default, Heimdall will use database #5; if you're using that one for some other purpose, you'll want to `export REDIS_URL=redis://localhost/6` to use e.g. database #6 before starting Heimdall.
 
 ### Stripe
+
+Stripe setup is optional; if you're not working on Heimdall features that use Stripe, you can skip this section.
 
 Make Salt Lake uses [Stripe](http://stripe.com/) to process membership dues. Heimdall integrates with Stripe to automatically create users for new members and deactivate badge access when a user cancels their membership. (Feel free to submit a PR if you're looking to use Heimdall and would like it to support another payment processor.)
 
@@ -120,7 +130,7 @@ Then, in the second terminal window, start a background job worker:
 bundle exec inst_jobs run
 ```
 
-And finally, in the third window, start the frontend development server:
+The third terminal window is only needed if you're building the single-page application portion of Heimdall; if you are, start the frontend development server in this terminal:
 
 ```shell
 cd frontend && yarn start
