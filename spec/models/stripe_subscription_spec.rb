@@ -8,7 +8,7 @@ RSpec.describe StripeSubscription do
         active: true,
         unpaid: false,
         customer_email: normal_user.email,
-        started_at: Time.now,
+        started_at: Time.now.round,
         subscription_id_in_stripe: 'test_subscription_id'
       )
     end
