@@ -127,6 +127,74 @@ ALTER SEQUENCE public.active_admin_comments_id_seq OWNED BY public.active_admin_
 
 
 --
+-- Name: active_storage_attachments; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.active_storage_attachments (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    record_type character varying NOT NULL,
+    record_id bigint NOT NULL,
+    blob_id bigint NOT NULL,
+    created_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: active_storage_attachments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.active_storage_attachments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: active_storage_attachments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.active_storage_attachments_id_seq OWNED BY public.active_storage_attachments.id;
+
+
+--
+-- Name: active_storage_blobs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.active_storage_blobs (
+    id bigint NOT NULL,
+    key character varying NOT NULL,
+    filename character varying NOT NULL,
+    content_type character varying,
+    metadata text,
+    byte_size bigint NOT NULL,
+    checksum character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: active_storage_blobs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.active_storage_blobs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: active_storage_blobs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.active_storage_blobs_id_seq OWNED BY public.active_storage_blobs.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -728,6 +796,20 @@ ALTER TABLE ONLY public.active_admin_comments ALTER COLUMN id SET DEFAULT nextva
 
 
 --
+-- Name: active_storage_attachments id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_attachments ALTER COLUMN id SET DEFAULT nextval('public.active_storage_attachments_id_seq'::regclass);
+
+
+--
+-- Name: active_storage_blobs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_blobs ALTER COLUMN id SET DEFAULT nextval('public.active_storage_blobs_id_seq'::regclass);
+
+
+--
 -- Name: badge_reader_certifications id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -831,6 +913,22 @@ ALTER TABLE ONLY public.versions ALTER COLUMN id SET DEFAULT nextval('public.ver
 
 ALTER TABLE ONLY public.active_admin_comments
     ADD CONSTRAINT active_admin_comments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: active_storage_attachments active_storage_attachments_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_attachments
+    ADD CONSTRAINT active_storage_attachments_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: active_storage_blobs active_storage_blobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_blobs
+    ADD CONSTRAINT active_storage_blobs_pkey PRIMARY KEY (id);
 
 
 --
@@ -987,6 +1085,27 @@ CREATE INDEX index_active_admin_comments_on_namespace ON public.active_admin_com
 --
 
 CREATE INDEX index_active_admin_comments_on_resource_type_and_resource_id ON public.active_admin_comments USING btree (resource_type, resource_id);
+
+
+--
+-- Name: index_active_storage_attachments_on_blob_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_active_storage_attachments_on_blob_id ON public.active_storage_attachments USING btree (blob_id);
+
+
+--
+-- Name: index_active_storage_attachments_uniqueness; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_active_storage_attachments_uniqueness ON public.active_storage_attachments USING btree (record_type, record_id, name, blob_id);
+
+
+--
+-- Name: index_active_storage_blobs_on_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_active_storage_blobs_on_key ON public.active_storage_blobs USING btree (key);
 
 
 --
@@ -1366,6 +1485,14 @@ ALTER TABLE ONLY public.badge_reader_manual_users
 
 
 --
+-- Name: active_storage_attachments fk_rails_c3b3935057; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.active_storage_attachments
+    ADD CONSTRAINT fk_rails_c3b3935057 FOREIGN KEY (blob_id) REFERENCES public.active_storage_blobs(id);
+
+
+--
 -- Name: badge_reader_certifications fk_rails_cc4cb2a586; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1454,6 +1581,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200726053145'),
 ('20200905045021'),
 ('20200923015420'),
-('20201003064003');
+('20201003064003'),
+('20201107060445');
 
 

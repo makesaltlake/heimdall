@@ -6,6 +6,16 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
+# Make Salt Lake's Heimdall instance actually uses a DigitalOcean space - and DO spaces expose the same API as S3 does,
+# which we consume here.
+amazon:
+  service: S3
+  access_key_id: <%= ENV['S3_ACCESS_KEY_ID'] %>
+  secret_access_key: <%= ENV['S3_SECRET_ACCESS_KEY'] %>
+  region: <%= ENV['S3_REGION'] %>
+  bucket: <%= ENV['S3_BUCKET'] %>
+  endpoint: <%= ENV['S3_ENDPOINT'] %>
+
 # Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
 # amazon:
 #   service: S3
