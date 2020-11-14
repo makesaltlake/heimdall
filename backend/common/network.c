@@ -181,7 +181,6 @@ static esp_err_t _http_event_handle(esp_http_client_event_t *evt)
         case HTTP_EVENT_ON_HEADER:
             break;
         case HTTP_EVENT_ON_DATA:
-
             if (!esp_http_client_is_chunked_response(evt->client)) {
                 http_response = malloc(evt->data_len);
                 memcpy(http_response, evt->data, evt->data_len);
@@ -222,7 +221,6 @@ static void websocket_event_handler(void *args, esp_event_base_t base, int32_t e
             esp_wifi_connect();
             break;
         case WEBSOCKET_EVENT_DATA:
-            ESP_LOGI(TAG, "free Heap:%d,%d", esp_get_free_heap_size(), heap_caps_get_free_size(MALLOC_CAP_8BIT));
             message = cJSON_Parse(data->data_ptr);
             identifier = cJSON_GetObjectItem(message, "identifier");
             if (identifier != NULL) {
@@ -446,7 +444,6 @@ void send_badge_scan(char *badge_id, uint8_t tag_length, char *badge_token, bool
 
     esp_http_client_set_post_field(client, data, strlen(data));
 
-    ESP_LOGI(TAG, "Sending request to https://%s", heimdall_host);
     esp_err_t err = esp_http_client_perform(client);
 
     if (err == ESP_OK) {
@@ -483,7 +480,7 @@ void access_list_fetcher_thread(__attribute__((unused)) void *param)
     assert(buffer != NULL);
 
     esp_http_client_config_t config = {
-     .event_handler = _http_event_handle,
+     .event_handler = NULL,
      .timeout_ms = 60000,
      .cert_pem = heimdall_dev_root_cert_pem_start
   };
@@ -504,7 +501,6 @@ void access_list_fetcher_thread(__attribute__((unused)) void *param)
         esp_http_client_set_header(client, "Authorization", authorization_value);
         esp_http_client_set_method(client, HTTP_METHOD_GET);
 
-        ESP_LOGI(TAG, "Sending request to https://%s", heimdall_host);
         esp_err_t err = esp_http_client_perform(client);
 
         if (err == ESP_OK) {
@@ -541,6 +537,6 @@ void access_list_fetcher_thread(__attribute__((unused)) void *param)
         }
 
         esp_http_client_cleanup(client);
-        sleep(300);
+        sleep(30);
     }
 }

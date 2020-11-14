@@ -89,21 +89,22 @@ static void heimdall_setup_led(void)
     // Red
     led.leds[0] = 0xFF0000;
     ws2812_write_leds(led);
-    sleep(1);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
 
     // Green
     led.leds[0] = 0x00FF00;
     ws2812_write_leds(led);
-    sleep(1);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
 
     // Blue
     led.leds[0] = 0x0000FF;
     ws2812_write_leds(led);
-    sleep(1);
+    vTaskDelay(500 / portTICK_PERIOD_MS);
 
     // Off
     led.leds[0] = 0x000000;
     ws2812_write_leds(led);
+
 }
 
 static void heimdall_setup_ui_gpio(void)
@@ -133,25 +134,6 @@ static void heimdall_setup_ui_gpio(void)
     io_conf.pull_up_en = 0;
 
     ESP_ERROR_CHECK(gpio_config(&io_conf));
-
-    ESP_LOGI(TAG, "Testing the RELAY1");
-    gpio_set_level(RELAY1_GPIO_PIN, 1);
-    sleep(1);
-    gpio_set_level(RELAY1_GPIO_PIN, 0);
-
-    sleep(1);
-
-    ESP_LOGI(TAG, "Testing the RELAY2");
-    gpio_set_level(RELAY2_GPIO_PIN, 1);
-    sleep(1);
-    gpio_set_level(RELAY2_GPIO_PIN, 0);
-
-    sleep(1);
-
-    ESP_LOGI(TAG, "Testing the RELAY3");
-    gpio_set_level(RELAY3_GPIO_PIN, 1);
-    sleep(1);
-    gpio_set_level(RELAY3_GPIO_PIN, 0);
 
     heimdall_setup_buzzer();
     heimdall_setup_led();
@@ -206,6 +188,7 @@ static void heimdall_setup_badge_scans_file(void)
     // TODO
 }
 
+extern EventGroupHandle_t httpEventGroup;
 
 void app_main(void)
 {
@@ -241,6 +224,9 @@ void app_main(void)
     heimdall_setup_badge_scans_file();
     heimdall_setup_wifi(wifi_ssid, wifi_password);
     heimdall_setup_ui_gpio();
+
+    httpEventGroup = xEventGroupCreate();
+
     heimdall_setup_websocket();
 
     BaseType_t rtret;

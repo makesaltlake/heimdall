@@ -175,6 +175,19 @@ void tag_writer(void *param)
                 }
             }
 
+                        ESP_LOGI(TAG, "Writing new user UUID %02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+                    badge_uuid[0], badge_uuid[1], badge_uuid[2], badge_uuid[3],
+                    badge_uuid[4], badge_uuid[5],
+                    badge_uuid[6], badge_uuid[7],
+                    badge_uuid[8], badge_uuid[9],
+                    badge_uuid[10], badge_uuid[11], badge_uuid[12], badge_uuid[13], badge_uuid[14], badge_uuid[15]);
+            success = heimdall_rfid_write(spi, 1, badge_uuid);
+            if (!success) {
+                ESP_LOGW(TAG, "Failed to write new badge UUID");
+                update_status_lbl("Program card: UUID write error");
+                continue;
+            }
+
             uint8_t data[16] = {0};
             ESP_LOGI(TAG, "Reading sector trailer");
             success = heimdall_rfid_read(spi, 3, data);
@@ -238,8 +251,8 @@ void tag_reader(void *param)
     spi_device_handle_t spi;
     uint8_t *uid = NULL;
     uint8_t uid_len;
-
-    uint8_t badge_uuid[16];
+    const int UUID_LEN = 37;
+    uint8_t badge_uuid[UUID_LEN];
 
     spi = heimdall_rfid_init(true);
 
@@ -248,6 +261,7 @@ void tag_reader(void *param)
     while (1) {
 
         memset(uid, 0, MAX_UID_LEN);
+        memset(badge_uuid, 0, UUID_LEN);
 
         enum MIFARE_CARD_TYPE card = wait_for_tag(spi, uid, &uid_len);
 
@@ -262,33 +276,34 @@ void tag_reader(void *param)
 
             print_card_uid(uid, uid_len);
 
-            if (!heimdall_rfid_authenticate(spi, uid, "")) {
-                ESP_LOGI(TAG, "Failed to authenticate tag");
+            if (!heimdall_rfid_authenticate(spi, uid, tag_key)) {
+                ESP_LOGW(TAG, "Failed to authenticate tag with key %02x%02x%02x%02x%02x%02x",
+                    tag_key[0],tag_key[1],tag_key[2],tag_key[3],tag_key[4],tag_key[5]);
                 heimdall_access_error();
-                vTaskDelay(100 / portTICK_PERIOD_MS);
+                vTaskDelay(5000 / portTICK_PERIOD_MS);
                 continue;
             }
 
-            if (heimdall_rfid_read(spi, 1, &badge_uuid))
+            if (heimdall_rfid_read(spi, 1, badge_uuid))
             {
-                const int UUID_LEN = 37;
-                char badge_uuid[UUID_LEN];
-                const cJSON *valid_token;
+                const cJSON *valid_token, *tokens;
                 bool access_allowed = false;
 
-                sprintf(badge_uuid, "%02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
-                    badge_uuid[0], badge_uuid[1], badge_uuid[2], badge_uuid[3],
-                    badge_uuid[4], badge_uuid[5],
-                    badge_uuid[6], badge_uuid[7],
-                    badge_uuid[8], badge_uuid[9],
-                    badge_uuid[10], badge_uuid[11], badge_uuid[12], badge_uuid[13], badge_uuid[14], badge_uuid[15]);
+                char uu_str[UUID_STR_LEN];
 
-                ESP_LOGI(TAG, "Badge Token: %s", badge_uuid);
+                uuid_unparse(badge_uuid, uu_str);
 
-                cJSON_ArrayForEach(valid_token, access_list)
-                {
-                    if (strcasecmp(valid_token->valuestring, badge_uuid) == 0)
+                ESP_LOGI(TAG, "Badge Token: %s", uu_str);
+
+                tokens = cJSON_GetObjectItem(access_list, "badge_tokens");
+                cJSON_ArrayForEach(valid_token, tokens) {
+
+                    ESP_LOGI(TAG, "valid_token=%p, type=%d", valid_token, valid_token->type);
+
+                    ESP_LOGI(TAG, "Comparing badge against UUID %s\n", valid_token->valuestring);
+                    if (strcasecmp(valid_token->valuestring, uu_str) == 0)
                     {
+                        ESP_LOGI(TAG, "Found badge UUID in access list. Allowing access.");
                         access_allowed = true;
                         break;
                     }
@@ -296,10 +311,12 @@ void tag_reader(void *param)
 
                 if (access_allowed)
                 {
+                    ESP_LOGI(TAG, "Valid token presented. Allowing access.");
                     heimdall_access_allowed();
                 }
                 else
                 {
+                    ESP_LOGI(TAG, "Invalid token presented. Not allowing access.");
                     heimdall_access_denied();
                 }
             }
@@ -326,6 +343,6 @@ void tag_reader(void *param)
         }
 
         // Delay to allow other tasks to run
-        vTaskDelay(100 / portTICK_PERIOD_MS);
+        vTaskDelay(2000 / portTICK_PERIOD_MS);
     }
 }
