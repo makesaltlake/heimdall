@@ -1,0 +1,11 @@
+Reference, Quantity, Value, Footprint, Description, Manufacturer Part Number, Manufacturer,Type
+BZ1 ,1,PS1240P02BT,digikey-footprints:Piezo_Transducer_THT_PS1240P02BT,AUDIO PIEZO TRANSDUCER 30V TH,PS1240P02BT,TDK Corporation,Thru-hole
+D1 ,1,NeoPixel_THT,LED_THT:LED_D5.0mm-4_RGB,Adafruit Neopixel 5mm diffused,1938,Adafruit Industries,Thru-hole
+J1 ,1,Conn_01x09,Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical,1x09 Header,PH1-09-UA,Adam Tech,Thru-hole
+J2 ,1,Conn_01x06,Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical,1x06 Header,PH1-06-UA,Adam Tech,Thru-hole
+J3 J4 J5 J6 ,4,Conn_01x01_Male,Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical,1x01 Header,PH1-01-UA,Adam Tech,Thru-hole
+Q1 ,1,2N3904,Package_TO_SOT_THT:TO-92_Inline,,2N3904,ON Semiconductor,Thru-hole
+Q2 ,1,2N7000,Package_TO_SOT_THT:TO-92_Inline,MOSFET N-CH 60V 200MA TO-92,2N7000,ON Semiconductor,Thru-hole
+R1 R4 ,2,10K,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,10K resistor,MBB0207VD1002BC100,Vishay Beyschlag/Draloric/BC Components,Thru-hole
+R2 R3 ,2,1K,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,1K resistor,MBB0207VD1001BC100,Vishay Beyschlag/Draloric/BC Components,Thru-hole
+R5 ,1,500,Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,500 ohm resistor,UXB02070H5000BCU00,Vishay Beyschlag/Draloric/BC Components,Thru-hole

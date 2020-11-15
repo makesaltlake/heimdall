@@ -5,8 +5,8 @@ $Descr USLetter 11000 8500
 encoding utf-8
 Sheet 1 1
 Title "Heimdall Outside Board"
-Date "2020-07-24"
-Rev "01"
+Date "2020-11-07"
+Rev "02"
 Comp ""
 Comment1 "https://opensource.org/licenses/MIT"
 Comment2 "License: MIT"
@@ -96,12 +96,12 @@ $EndComp
 $Comp
 L LED:NeoPixel_THT D1
 U 1 1 5F17E8A3
-P 4350 4950
-F 0 "D1" H 4694 4996 50  0000 L CNN
-F 1 "NeoPixel_THT" H 4694 4905 50  0000 L CNN
-F 2 "LED:WS2812B" H 4400 4650 50  0001 L TNN
-F 3 "https://www.adafruit.com/product/1938" H 4450 4575 50  0001 L TNN
-	1    4350 4950
+P 4550 4950
+F 0 "D1" H 4894 4996 50  0000 L CNN
+F 1 "NeoPixel_THT" H 4894 4905 50  0000 L CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB" H 4600 4650 50  0001 L TNN
+F 3 "https://www.adafruit.com/product/1938" H 4650 4575 50  0001 L TNN
+	1    4550 4950
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -143,21 +143,7 @@ Wire Wire Line
 Wire Wire Line
 	1700 6950 2000 6950
 Wire Wire Line
-	2900 6750 2900 6700
-Wire Wire Line
 	2900 6250 2900 5450
-Wire Wire Line
-	2900 6250 3950 6250
-Wire Wire Line
-	3950 6250 3950 6400
-Connection ~ 2900 6250
-Wire Wire Line
-	3950 6500 3950 6700
-Wire Wire Line
-	3950 6700 2900 6700
-Connection ~ 2900 6700
-Wire Wire Line
-	2900 6700 2900 6650
 Wire Wire Line
 	5100 7150 5100 5550
 Connection ~ 5100 5550
@@ -171,23 +157,7 @@ Wire Wire Line
 	3350 4250 3400 4250
 Connection ~ 3350 4500
 Wire Wire Line
-	3800 4250 3800 4950
-Wire Wire Line
-	3800 4950 4050 4950
-Wire Wire Line
 	2850 4500 2650 4500
-$Comp
-L SparkFun-Resistors:470OHM-0603-1_10W-1% R5
-U 1 1 5F209E6B
-P 3600 4250
-F 0 "R5" H 3600 4550 45  0000 C CNN
-F 1 "470" H 3600 4466 45  0000 C CNN
-F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 3600 4400 20  0001 C CNN
-F 3 "" H 3600 4250 60  0001 C CNN
-F 4 "RES-07869" H 3600 4371 60  0000 C CNN "Field4"
-	1    3600 4250
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	1350 5450 1650 5450
 Wire Wire Line
@@ -237,15 +207,6 @@ Wire Wire Line
 NoConn ~ 4650 4950
 Wire Wire Line
 	5250 5350 5250 4650
-Wire Wire Line
-	5250 4650 4350 4650
-Wire Wire Line
-	1350 5550 4350 5550
-Wire Wire Line
-	4350 5550 4350 5250
-Connection ~ 4350 5550
-Wire Wire Line
-	4350 5550 5100 5550
 $Comp
 L power:PWR_FLAG #FLG01
 U 1 1 5F231A90
@@ -277,26 +238,6 @@ F 1 "PWR_FLAG" H 2100 3523 50  0000 C CNN
 F 2 "" H 2100 3350 50  0001 C CNN
 F 3 "~" H 2100 3350 50  0001 C CNN
 	1    2100 3350
-	1    0    0    -1  
-$EndComp
-$Comp
-L dk_Transistors-Bipolar-BJT-Single:2N3904 Q1
-U 1 1 5F2401CC
-P 2800 6950
-F 0 "Q1" H 2988 7003 60  0000 L CNN
-F 1 "2N3904" H 2988 6897 60  0000 L CNN
-F 2 "Package_TO_SOT_THT:TO-92_Inline" H 3000 7150 60  0001 L CNN
-F 3 "https://my.centralsemi.com/get_document.php?cmp=1&mergetype=pd&mergepath=pd&pdf_id=LSSGP072.PDF" H 3000 7250 60  0001 L CNN
-F 4 "2N3904CS-ND" H 3000 7350 60  0001 L CNN "Digi-Key_PN"
-F 5 "2N3904" H 3000 7450 60  0001 L CNN "MPN"
-F 6 "Discrete Semiconductor Products" H 3000 7550 60  0001 L CNN "Category"
-F 7 "Transistors - Bipolar (BJT) - Single" H 3000 7650 60  0001 L CNN "Family"
-F 8 "https://my.centralsemi.com/get_document.php?cmp=1&mergetype=pd&mergepath=pd&pdf_id=LSSGP072.PDF" H 3000 7750 60  0001 L CNN "DK_Datasheet_Link"
-F 9 "/product-detail/en/central-semiconductor-corp/2N3904/2N3904CS-ND/4806876" H 3000 7850 60  0001 L CNN "DK_Detail_Page"
-F 10 "TRANS NPN 40V TO-92" H 3000 7950 60  0001 L CNN "Description"
-F 11 "Central Semiconductor Corp" H 3000 8050 60  0001 L CNN "Manufacturer"
-F 12 "Active" H 3000 8150 60  0001 L CNN "Status"
-	1    2800 6950
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -359,4 +300,114 @@ Wire Wire Line
 	1650 3350 1650 3650
 Wire Wire Line
 	2100 3350 2100 3650
+$Comp
+L Connector:Conn_01x01_Male J3
+U 1 1 5FA614DC
+P 3350 6250
+F 0 "J3" H 3458 6431 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 3458 6340 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 3350 6250 50  0001 C CNN
+F 3 "~" H 3350 6250 50  0001 C CNN
+	1    3350 6250
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J4
+U 1 1 5FA62088
+P 3400 6800
+F 0 "J4" H 3508 6981 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 3508 6890 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 3400 6800 50  0001 C CNN
+F 3 "~" H 3400 6800 50  0001 C CNN
+	1    3400 6800
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J5
+U 1 1 5FA690EE
+P 3850 4950
+F 0 "J5" H 3958 5131 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 3958 5040 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 3850 4950 50  0001 C CNN
+F 3 "~" H 3850 4950 50  0001 C CNN
+	1    3850 4950
+	1    0    0    -1  
+$EndComp
+$Comp
+L Connector:Conn_01x01_Male J6
+U 1 1 5FA69F83
+P 4650 4650
+F 0 "J6" H 4758 4831 50  0000 C CNN
+F 1 "Conn_01x01_Male" H 4758 4740 50  0000 C CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical" H 4650 4650 50  0001 C CNN
+F 3 "~" H 4650 4650 50  0001 C CNN
+	1    4650 4650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	1350 5550 4550 5550
+Wire Wire Line
+	4550 5250 4550 5550
+Connection ~ 4550 5550
+Wire Wire Line
+	4550 5550 5100 5550
+Wire Wire Line
+	3850 4250 3800 4250
+Wire Wire Line
+	4050 4950 4250 4950
+Wire Wire Line
+	4850 4650 5250 4650
+Wire Wire Line
+	2900 6650 2900 6750
+Wire Wire Line
+	3950 6400 3950 6250
+Wire Wire Line
+	3950 6250 3550 6250
+Wire Wire Line
+	3550 6250 2900 6250
+Connection ~ 3550 6250
+Connection ~ 2900 6250
+Wire Wire Line
+	3950 6500 3950 6800
+Wire Wire Line
+	3950 6800 3600 6800
+Wire Wire Line
+	3600 6800 3050 6800
+Wire Wire Line
+	3050 6800 3050 6650
+Wire Wire Line
+	3050 6650 2900 6650
+Connection ~ 3600 6800
+Connection ~ 2900 6650
+Wire Wire Line
+	4850 4650 4550 4650
+Connection ~ 4850 4650
+Wire Wire Line
+	4050 4950 3850 4950
+Wire Wire Line
+	3850 4950 3850 4250
+Connection ~ 4050 4950
+$Comp
+L Transistor_BJT:2N3904 Q1
+U 1 1 5FA8FEA8
+P 2800 6950
+F 0 "Q1" H 2990 6996 50  0000 L CNN
+F 1 "2N3904" H 2990 6905 50  0000 L CNN
+F 2 "Package_TO_SOT_THT:TO-92_Inline" H 3000 6875 50  0001 L CIN
+F 3 "https://www.onsemi.com/pub/Collateral/2N3903-D.PDF" H 2800 6950 50  0001 L CNN
+	1    2800 6950
+	1    0    0    -1  
+$EndComp
+$Comp
+L SparkFun-Resistors:470OHM-0603-1_10W-1% R5
+U 1 1 5F209E6B
+P 3600 4250
+F 0 "R5" H 3600 4550 45  0000 C CNN
+F 1 "500" H 3600 4466 45  0000 C CNN
+F 2 "Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal" H 3600 4400 20  0001 C CNN
+F 3 "" H 3600 4250 60  0001 C CNN
+F 4 "RES-07869" H 3600 4371 60  0000 C CNN "Field4"
+	1    3600 4250
+	1    0    0    -1  
+$EndComp
 $EndSCHEMATC
