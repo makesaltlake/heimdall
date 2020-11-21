@@ -13,6 +13,7 @@ First, clone Heimdall:
 ```shell
 git clone git@github.com:makesaltlake/heimdall.git
 cd heimdall
+git submodule update --init --recursive
 ```
 
 ### Ruby
