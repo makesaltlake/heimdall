@@ -4,3 +4,9 @@
 [submodule "backend/ESP32-NeoPixel-WS2812-RMT"]
 	path = backend/ESP32-NeoPixel-WS2812-RMT
 	url = https://github.com/JSchaenzle/ESP32-NeoPixel-WS2812-RMT
+[submodule "backend/esp32-uuid"]
+	path = backend/esp32-uuid
+	url = https://github.com/typester/esp32-uuid
+[submodule "backend/writer/lv_port_esp32"]
+	path = backend/writer/lv_port_esp32
+	url = https://github.com/lvgl/lv_port_esp32
