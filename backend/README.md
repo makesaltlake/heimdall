@@ -27,7 +27,7 @@ The card writer (i.e. badge programmer) doesn't use the LEDs, buzzer, resistors 
 Building
 --------
 
-Install the ESP-IDF by following the steps at https://docs.espressif.com/projects/esp-idf/en/release-v4.1/get-started/index.html#installation-step-by-step . We're using code on the branch `release/v4.1`.
+Install the ESP-IDF by following the steps at https://docs.espressif.com/projects/esp-idf/en/release-v4.1/get-started/index.html#installation-step-by-step . We're using code with tag `4.2-rc`.
 
 Once installed, set up your shell by running `. export.sh` . Then, you can run `idf.py menuconfig` to configure the BSP (Board Support Package), or `idf.py build` to build the project.
 
