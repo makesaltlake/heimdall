@@ -47,23 +47,6 @@ static EventGroupHandle_t s_wifi_event_group;
 
 #define HTTP_DATA_RX_BIT   BIT1
 
-/* Root cert for heimdall.makesaltlake.org, taken from heimdall_makesaltlake_org_root_cert.pem
-
-   The PEM file was extracted from the output of this command:
-   openssl s_client -showcerts -connect heimdall.makesaltlake.org:443 </dev/null
-
-   The CA root cert is the last cert given in the chain of certs.
-
-   To embed it in the app binary, the PEM file is named
-   in the CMakeLists.txt EMBED_TXTFILES list.
-*/
-extern const char heimdall_dev_root_cert_pem_start[] asm("_binary_heimdall_dev_root_cert_pem_start");
-extern const char heimdall_dev_root_cert_pem_end[]   asm("_binary_heimdall_dev_root_cert_pem_end");
-
-extern const char heimdall_makesaltlake_org_root_cert_pem_start[] asm("_binary_heimdall_makesaltlake_org_root_cert_pem_start");
-extern const char heimdall_makesaltlake_org_root_cert_pem_end[]   asm("_binary_heimdall_makesaltlake_org_root_cert_pem_end");
-
-
 
 // Mostly copied from
 // https://github.com/espressif/esp-idf/tree/release/v4.1/examples/wifi/getting_started/station/main
@@ -289,8 +272,7 @@ void heimdall_setup_websocket(void)
     const esp_websocket_client_config_t wscfg = {
         .uri = wsurl,
          .subprotocol = "chat, superchat",
-         .headers = origin_header,
-         .cert_pem = heimdall_dev_root_cert_pem_start,
+         .headers = origin_header
     };
 
     wsclient = esp_websocket_client_init(&wscfg);
@@ -321,8 +303,7 @@ bool send_badge_program(char *badge_token, char *name, int namelen)
 
     esp_http_client_config_t config = {
         .event_handler = _http_event_handle,
-        .timeout_ms = 10 * 1000,
-        .cert_pem = heimdall_dev_root_cert_pem_start,
+        .timeout_ms = 10 * 1000
     };
 
     url = malloc(strlen("https://") + strlen(heimdall_host) + strlen(url_path) + 1);
@@ -418,8 +399,7 @@ void send_badge_scan(char *badge_id, uint8_t tag_length, char *badge_token, bool
 
     esp_http_client_config_t config = {
         .event_handler = _http_event_handle,
-        .timeout_ms = 10 * 1000,
-        .cert_pem = heimdall_dev_root_cert_pem_start,
+        .timeout_ms = 10 * 1000
     };
 
     url = malloc(strlen("https://") + strlen(heimdall_host) + strlen(url_path) + 1);
@@ -481,8 +461,7 @@ void access_list_fetcher_thread(__attribute__((unused)) void *param)
 
     esp_http_client_config_t config = {
      .event_handler = NULL,
-     .timeout_ms = 60000,
-     .cert_pem = heimdall_dev_root_cert_pem_start
+     .timeout_ms = 60000
   };
 
     url = malloc(strlen("https://") + strlen(heimdall_host) + strlen(url_path) + 1);
