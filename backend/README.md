@@ -27,12 +27,13 @@ The card writer (i.e. badge programmer) doesn't use the LEDs, buzzer, resistors 
 Building
 --------
 
-Install the ESP-IDF by following the steps at https://docs.espressif.com/projects/esp-idf/en/release-v4.1/get-started/index.html#installation-step-by-step . We're using code with tag `4.2-rc`.
+Install the ESP-IDF by following the steps at https://docs.espressif.com/projects/esp-idf/en/release-v4.2/get-started/index.html#installation-step-by-step .
+If you clone the esp-idf repository via Git, you should checkout the version with tag `v4.2`.
 
-Once installed, set up your shell by running `. export.sh` . Then, you can run `idf.py menuconfig` to configure the BSP (Board Support Package), or `idf.py build` to build the project.
+Once installed, set up your environment by running `. export.sh` (`export.bat` on Windows). Then, you can run `idf.py menuconfig` to configure the BSP (Board Support Package, or `idf.py build` to build the project.
 
 You can upload the build to the ESP32 by running `idf.py flash`, or later `idf.py app-flash` to save the second flashing the bootloader.
-To write the NVS data to flash, first edit nvs\_data.csv to fill in your WiFi SSID, WiFi password, URL, RFID Reader API key, RFID Writer API key, and the Tag Key. Then, run `gen_nvs_part.sh` to generate the binary file, followed by `write_nvs_part.sh` to write that file to flash.
+To write the NVS data to flash, first edit nvs\_data.csv to fill in your WiFi SSID, WiFi password, URL, RFID Reader API key, RFID Writer API key, and the Tag Key. Then, run `gen_nvs_part.sh` (`gen_nvs_part.cmd` on Windows) to generate the binary file, followed by `write_nvs_part.sh` (`write_nvs_part.cmd` on Windows) to write that file to flash.
 
 Run `idf.py monitor` to cause the ESP32 to reset and attach the serial console.
 
