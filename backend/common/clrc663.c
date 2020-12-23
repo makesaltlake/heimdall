@@ -108,8 +108,9 @@ spi_device_handle_t heimdall_rfid_init(bool rfid_reader)
         // Writer
         SPI_SCLK_PIN_NUM = 12;
         SPI_MISO_PIN_NUM = 13;
-        SPI_MOSI_PIN_NUM = 14;
-        SPI_CS_PIN_NUM   = 15;
+        SPI_MOSI_PIN_NUM = 27;
+        SPI_CS_PIN_NUM   = 26;
+
 
         ESP_LOGI(TAG, "Operating in RFID Writer mode");
     }

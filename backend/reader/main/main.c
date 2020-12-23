@@ -104,7 +104,6 @@ static void heimdall_setup_led(void)
     // Off
     led.leds[0] = 0x000000;
     ws2812_write_leds(led);
-
 }
 
 static void heimdall_setup_ui_gpio(void)
@@ -156,7 +155,7 @@ static void heimdall_get_param(nvs_handle_t nvs, char *name, char **value)
 static void heimdall_setup_badge_scans_file(void)
 {
     esp_err_t ret;
-
+#if 0
     // We don't build the BSP (Board Support Package) with long filenames,
     // so we're limited to MS-DOS style 8.3.
     const char * const BADGE_SCANS_FILENAME = "/spiflash/heimdall.txt";
@@ -184,7 +183,7 @@ static void heimdall_setup_badge_scans_file(void)
             ESP_LOGE(TAG, "Failed to create %s -- not caching badge scans to permament storage", BADGE_SCANS_FILENAME);
         }
     }
-
+#endif
     // TODO
 }
 
