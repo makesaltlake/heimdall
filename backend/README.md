@@ -3,8 +3,8 @@ ESP32 based 13.56 MHz RFID access control system
 
 Components
 ---
-See the KiCad schematics in [boards/inside_board](boards/inside_board) and [boards/outside_board](boards/outside_board) for the components required. 
-The RFID reader/writer module the outside board interfaces to is the [CLEV6630ARD](https://www.nxp.com/design/development-boards/freedom-development-boards/mcu-boards/clev6630ard-nfc-frontend-clrc663-iplus-i-arduino-interface-board:BLE-NFC)
+See the KiCad schematics in [boards/inside_board](/boards/inside_board) and [boards/outside_board](/boards/outside_board) for the components required.<br>
+The RFID reader/writer module the outside board interfaces to is the [CLEV6630ARD](https://www.nxp.com/design/development-boards/freedom-development-boards/mcu-boards/clev6630ard-nfc-frontend-clrc663-iplus-i-arduino-interface-board:BLE-NFC).
 
 Connection Details
 ---
