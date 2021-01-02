@@ -16,6 +16,11 @@ cd heimdall
 git submodule update --init --recursive
 ```
 
+Heimdall has two components: the web interface, and the backend code that controls the RFID readers/writers and the locks, and which communicates with the web interface.
+See [backend/README.md](backend/README.md) for how to set up the environment to build and install the backend ESP32 code.
+
+## Web Interface Setup
+
 ### Ruby
 
 You'll need a [compatible](.ruby-version) Ruby version. [rbenv](https://github.com/rbenv/rbenv) is recommended, but plenty of other tools like [RVM](https://github.com/rvm/rvm) will work as well.
