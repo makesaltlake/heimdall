@@ -11,7 +11,7 @@ Heimdall is [Make Salt Lake](https://makesaltlake.org)'s access control system. 
 First, clone Heimdall:
 
 ```shell
-git clone git@github.com:makesaltlake/heimdall.git
+git clone https://github.com/makesaltlake/heimdall.git
 cd heimdall
 git submodule update --init --recursive
 ```
