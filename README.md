@@ -3,8 +3,8 @@
 Heimdall is [Make Salt Lake](https://makesaltlake.org)'s access control system. It consists of a few different parts:
 
   - A web interface, written in Ruby on Rails. The rest of this README deals with the web interface.
-  - A [component](backend) intended to run on an [ESP32](https://en.wikipedia.org/wiki/ESP32), one per door or other device that needs access control
-  - A set of [printed circuit board designs](boards) that can be used to make the physical badge readers
+  - A backend [component](backend) intended to run on an [ESP32](https://en.wikipedia.org/wiki/ESP32), one per door or other device that needs access control. See the separate [backend/README.md](backend/README.md) file for further details.
+  - A set of [printed circuit board designs](boards) that can be used to make the physical badge readers.
 
 ## Local Environment Setup
 
@@ -15,9 +15,6 @@ git clone https://github.com/makesaltlake/heimdall.git
 cd heimdall
 git submodule update --init --recursive
 ```
-
-Heimdall has two components: the web interface, and the backend code that controls the RFID readers/writers and the locks, and which communicates with the web interface.
-See [backend/README.md](backend/README.md) for how to set up the environment to build and install the backend ESP32 code.
 
 ## Web Interface Setup
 
