@@ -1,6 +1,7 @@
 class WaiverImportService
   WAIVER_FOREVER_BASE_URL = 'https://api.waiverforever.com/openapi/v1'
   WAIVER_FOREVER_API_KEY = ENV['WAIVER_FOREVER_API_KEY']
+  STRAND = 'waiver-import-service-strand'
 
   def self.create_or_update_waiver(waiver_json)
     waiver = Waiver.find_or_initialize_by(waiver_forever_id: waiver_json['id'])
@@ -18,6 +19,10 @@ class WaiverImportService
     waiver.signed_at = signed_at && Time.at(signed_at)
 
     waiver.save!
+  end
+
+  def self.sync_all_waivers_later
+    send_later_enqueue_args(:sync_all_waivers_now, { strand: STRAND })
   end
 
   def self.sync_all_waivers_now
