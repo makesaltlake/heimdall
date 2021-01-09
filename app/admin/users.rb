@@ -1,4 +1,6 @@
 ActiveAdmin.register User do
+  menu priority: 11
+
   permit_params :name, :email, :super_user, :password, :password_confirmation, :profile_image, household_user_ids: []
 
   config.sort_order = 'subscription_created_desc'
@@ -58,6 +60,17 @@ ActiveAdmin.register User do
       end
       column(:started_at)
       column(:ended_at)
+    end
+
+    paginated_table_panel(
+      resource.waivers.order(signed_at: :desc),
+      title: 'Waivers',
+      param_name: :waivers_page
+    ) do
+      column(:waiver) { |waiver| auto_link(waiver) }
+      column(:signer, &:name)
+      column(:email)
+      column(:signed_at)
     end
 
     panel 'Badge' do

@@ -789,6 +789,40 @@ ALTER SEQUENCE public.versions_id_seq OWNED BY public.versions.id;
 
 
 --
+-- Name: waivers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.waivers (
+    id bigint NOT NULL,
+    name character varying,
+    email character varying,
+    waiver_forever_id character varying,
+    signed_at timestamp without time zone,
+    fields jsonb,
+    user_id bigint
+);
+
+
+--
+-- Name: waivers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.waivers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: waivers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.waivers_id_seq OWNED BY public.waivers.id;
+
+
+--
 -- Name: active_admin_comments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -905,6 +939,13 @@ ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_
 --
 
 ALTER TABLE ONLY public.versions ALTER COLUMN id SET DEFAULT nextval('public.versions_id_seq'::regclass);
+
+
+--
+-- Name: waivers id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.waivers ALTER COLUMN id SET DEFAULT nextval('public.waivers_id_seq'::regclass);
 
 
 --
@@ -1057,6 +1098,14 @@ ALTER TABLE ONLY public.users
 
 ALTER TABLE ONLY public.versions
     ADD CONSTRAINT versions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: waivers waivers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.waivers
+    ADD CONSTRAINT waivers_pkey PRIMARY KEY (id);
 
 
 --
@@ -1375,6 +1424,41 @@ CREATE INDEX index_versions_on_object_changes ON public.versions USING gin (obje
 
 
 --
+-- Name: index_waivers_on_email; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_waivers_on_email ON public.waivers USING btree (email);
+
+
+--
+-- Name: index_waivers_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_waivers_on_name ON public.waivers USING btree (name);
+
+
+--
+-- Name: index_waivers_on_signed_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_waivers_on_signed_at ON public.waivers USING btree (signed_at);
+
+
+--
+-- Name: index_waivers_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_waivers_on_user_id ON public.waivers USING btree (user_id);
+
+
+--
+-- Name: index_waivers_on_waiver_forever_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_waivers_on_waiver_forever_id ON public.waivers USING btree (waiver_forever_id);
+
+
+--
 -- Name: delayed_jobs delayed_jobs_after_delete_row_tr; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -1582,6 +1666,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200905045021'),
 ('20200923015420'),
 ('20201003064003'),
-('20201107060445');
+('20201107060445'),
+('20210104033213');
 
 

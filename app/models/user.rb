@@ -22,7 +22,7 @@
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
-#  subscription_active    :boolean
+#  subscription_active    :boolean          default(FALSE), not null
 #  subscription_created   :datetime
 #  super_user             :boolean          default(FALSE), not null
 #  unconfirmed_email      :string
@@ -87,6 +87,8 @@ class User < ApplicationRecord
 
   has_many :badge_access_grants
 
+  has_many :waivers
+
   scope :most_recently_subscribed_first, -> { order("users.subscription_created DESC NULLS LAST") }
 
   ransacker :has_multiple_household_members, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
@@ -99,6 +101,12 @@ class User < ApplicationRecord
 
   ransacker :has_a_badge, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
     arel_table[:badge_token].not_eq(nil)
+  end
+
+  # Associate any unassociated waivers with this user's email address to this user. There's a matching block in Waiver
+  # that does the same thing when a new waiver is created.
+  after_create do
+    Waiver.where(user: nil).where('lower(email) = lower(?)', email).update(user: self)
   end
 
   def display_name

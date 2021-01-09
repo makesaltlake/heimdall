@@ -372,6 +372,7 @@ DEPENDENCIES
   capybara
   devise
   faker
+  faraday
   image_processing
   inst-jobs
   jbuilder (~> 2.7)

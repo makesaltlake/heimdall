@@ -57,6 +57,7 @@ gem 'nilify_blanks'
 gem 'aws-sdk-s3', require: false
 gem 'mini_magick' # for active storage
 gem 'image_processing' # for active storage
+gem 'faraday'
 
 group :development do
   # Work around https://github.com/ctran/annotate_models/issues/761 -

@@ -57,6 +57,14 @@ end
 #                                                    PATCH      /admin/badge_writers/:id(.:format)                                                       admin/badge_writers#update
 #                                                    PUT        /admin/badge_writers/:id(.:format)                                                       admin/badge_writers#update
 #                                                    DELETE     /admin/badge_writers/:id(.:format)                                                       admin/badge_writers#destroy
+#                                      admin_waivers GET        /admin/waivers(.:format)                                                                 admin/waivers#index
+#                                                    POST       /admin/waivers(.:format)                                                                 admin/waivers#create
+#                                   new_admin_waiver GET        /admin/waivers/new(.:format)                                                             admin/waivers#new
+#                                  edit_admin_waiver GET        /admin/waivers/:id/edit(.:format)                                                        admin/waivers#edit
+#                                       admin_waiver GET        /admin/waivers/:id(.:format)                                                             admin/waivers#show
+#                                                    PATCH      /admin/waivers/:id(.:format)                                                             admin/waivers#update
+#                                                    PUT        /admin/waivers/:id(.:format)                                                             admin/waivers#update
+#                                                    DELETE     /admin/waivers/:id(.:format)                                                             admin/waivers#destroy
 #                               admin_certifications GET        /admin/certifications(.:format)                                                          admin/certifications#index
 #                                                    POST       /admin/certifications(.:format)                                                          admin/certifications#create
 #                            new_admin_certification GET        /admin/certifications/new(.:format)                                                      admin/certifications#new
