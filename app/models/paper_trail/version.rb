@@ -27,6 +27,9 @@ module PaperTrail
   class Version < ::ActiveRecord::Base
     include PaperTrail::VersionConcern
 
+    scope :changes_made_by_humans, -> { where.not(whodunnit: nil) }
+    scope :changes_made_by_machines_or_other_automated_processes, -> { where(whodunnit: nil) }
+
     ransacker :merge_users_source_id do
       Arel.sql("COALESCE(CAST(#{table_name}.metadata #> '{merge_users, source_id}' AS VARCHAR), '')")
     end

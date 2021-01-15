@@ -7,6 +7,10 @@ ActiveAdmin.register PaperTrail::Version do
 
   filter :created_at
 
+  scope :all, default: :true
+  scope :changes_made_by_humans
+  scope :changes_made_by_machines_or_other_automated_processes
+
   index do
     column(:event) { |version| auto_link(version, version.event) }
     column(:item) do |version|
