@@ -1,4 +1,4 @@
-class StripeController < ApplicationController
+class Webhooks::StripeController < ApplicationController
   # The webhook signing secret to use to validate requests. Starts with
   # "whsec_".
   WEBHOOK_SECRET = ENV['STRIPE_WEBHOOK_SECRET']

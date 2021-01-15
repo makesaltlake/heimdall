@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
   # helper to scope routes to a controller. useful where you would use
   # `resource` but don't actually want any of the default routes `resource`
   # will give you.
@@ -10,10 +12,10 @@ Rails.application.routes.draw do
 
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+
   root to: 'home#home'
 
-  post '/webhooks/stripe', to: 'stripe#webhook'
+  post '/webhooks/stripe', to: 'webhooks/stripe#webhook'
 
   get 'frontend-demo', to: 'frontend#frontend'
 
