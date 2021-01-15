@@ -1,4 +1,4 @@
-Delayed::Periodic.cron 'Synchronize all Stripe subscriptions', '30 5 * * *' do
+Delayed::Periodic.cron 'Synchronize all Stripe subscriptions', '30 5 * * 0' do
   StripeSynchronizationService.sync_all_subscriptions_later
 end
 
