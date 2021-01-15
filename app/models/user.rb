@@ -52,6 +52,10 @@ class User < ApplicationRecord
   HAS_HOUSEHOLD_MEMBERSHIP_SQL = 'exists(select household_users.id from users as household_users where household_users.household_id = users.household_id and household_users.subscription_active)'
   HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL = "#{HAS_HOUSEHOLD_MEMBERSHIP_SQL} as has_household_membership"
 
+  # I swear there has to be a way to do this with vanilla Ransack, or at least
+  # without resorting to hand-crafted SQL...
+  HAS_A_WAIVER_SQL = 'exists(select waivers.id from waivers where waivers.user_id = users.id)'
+
   # The fields to allow users to be searched by when selecting a user in a
   # dropdown in the admin UI. If you change this, be sure to update the
   # dropdown_display_name method if you want any of the additional fields to
@@ -101,6 +105,10 @@ class User < ApplicationRecord
 
   ransacker :has_a_badge, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
     arel_table[:badge_token].not_eq(nil)
+  end
+
+  ransacker :has_a_waiver, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
+    Arel.sql(HAS_A_WAIVER_SQL)
   end
 
   # Associate any unassociated waivers with this user's email address to this user. There's a matching block in Waiver

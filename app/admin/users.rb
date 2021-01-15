@@ -13,6 +13,7 @@ ActiveAdmin.register User do
   filter :subscription_created
   filter :has_a_badge, as: :boolean, filters: [:eq]
   filter :badge_token_set_at, label: 'Badge Programmed At'
+  filter :has_a_waiver, as: :boolean, filters: [:eq]
   filter :created_at
   filter :super_user
 
@@ -20,6 +21,15 @@ ActiveAdmin.register User do
     column(:name) { |user| auto_link(user, user.name.presence || '(no name)') }
     column(:email)
     column(:household_has_membership, &:has_household_membership)
+    column(:has_a_waiver?) do |user|
+      # Both `user.waivers.exists?` and `user.waivers.count > 0` force AR to
+      # hit the database and thwart our efforts to avoid an N+1 by preloading
+      # `waivers` in the controller's `scoped_collection` below. Calling
+      # `first` instead avoids this. TODO: figure out if there's a good way to
+      # force `exists?` or `count` to use whatever's been preloaded rather
+      # than trying to hit the database from scratch each time.
+      !!user.waivers.first
+    end
     column(:subscription_created)
     column('Last Signed In', :current_sign_in_at)
   end
@@ -153,7 +163,7 @@ ActiveAdmin.register User do
 
   controller do
     def scoped_collection
-      end_of_association_chain.select("users.*, #{User::HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL}")
+      end_of_association_chain.includes(:waivers).select("users.*, #{User::HAS_HOUSEHOLD_MEMBERSHIP_ATTRIBUTE_SQL}")
     end
 
     def update
