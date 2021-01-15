@@ -33,6 +33,12 @@ ActiveAdmin.register Waiver do
         text_node " - Click to view on WaiverForever"
       end
     end
+
+    attributes_table title: "Custom Fields" do
+      waiver.fields&.each do |field|
+        row(field['title']) { field['value'] }
+      end
+    end
   end
 
   form do |f|
