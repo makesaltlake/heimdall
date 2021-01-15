@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   root to: 'home#home'
 
   post '/webhooks/stripe', to: 'webhooks/stripe#webhook'
+  post '/webhooks/waiverforever', to: 'webhooks/waiver_forever#webhook'
 
   get 'frontend-demo', to: 'frontend#frontend'
 

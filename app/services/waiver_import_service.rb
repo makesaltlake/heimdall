@@ -50,6 +50,25 @@ class WaiverImportService
     Rails.logger.info("Done synchronizing waivers.")
   end
 
+  def self.sync_single_waiver_later(waiver_id)
+    send_later_enqueue_args(:sync_single_waiver_now, { strand: STRAND }, waiver_id)
+  end
+
+  def self.sync_single_waiver_now(waiver_id)
+    Rails.logger.info("Synchronizing a single waiver: #{waiver_id}...")
+
+    begin
+      waiver_data = WaiverImportService.api_client.get("waiver/#{waiver_id}").body['data']
+    rescue Faraday::ResourceNotFound
+      Rails.logger.warn("Warning: doesn't look like there's a waiver with ID #{waiver_id}, skipping synchronization")
+      return
+    end
+
+    create_or_update_waiver(waiver_data)
+
+    Rails.logger.info("Done synchronizing a single waiver: #{waiver_id}.")
+  end
+
   def self.api_client
     Faraday.new(url: WAIVER_FOREVER_BASE_URL) do |connection|
       connection.request :json
