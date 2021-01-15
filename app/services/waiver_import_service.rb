@@ -22,7 +22,7 @@ class WaiverImportService
   end
 
   def self.sync_all_waivers_later
-    send_later_enqueue_args(:sync_all_waivers_now, { strand: STRAND })
+    delay(strand: STRAND).sync_all_waivers_now
   end
 
   def self.sync_all_waivers_now
@@ -51,7 +51,7 @@ class WaiverImportService
   end
 
   def self.sync_single_waiver_later(waiver_id)
-    send_later_enqueue_args(:sync_single_waiver_now, { strand: STRAND }, waiver_id)
+    delay(strand: STRAND).sync_single_waiver_now(waiver_id)
   end
 
   def self.sync_single_waiver_now(waiver_id)

@@ -4,7 +4,7 @@ module StripeSynchronizationService
   STRAND = 'stripe-synchronization'
 
   def self.handle_stripe_event_later(event)
-    send_later_enqueue_args(:handle_stripe_event_now, { strand: STRAND }, event)
+    delay(strand: STRAND).handle_stripe_event_now(event)
   end
 
   def self.handle_stripe_event_now(event)
@@ -121,7 +121,7 @@ module StripeSynchronizationService
   end
 
   def self.sync_all_subscriptions_later
-    send_later_enqueue_args(:sync_all_subscriptions_now, { strand: STRAND })
+    delay(strand: STRAND).sync_all_subscriptions_now
   end
 
   def self.sync_all_subscriptions_now

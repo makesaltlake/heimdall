@@ -16,30 +16,52 @@ SET row_security = off;
 CREATE FUNCTION public.delayed_jobs_after_delete_row_tr_fn() RETURNS trigger
     LANGUAGE plpgsql
     AS $$
-      DECLARE
-        running_count integer;
-      BEGIN
-        IF OLD.strand IS NOT NULL THEN
-          PERFORM pg_advisory_xact_lock(half_md5_as_bigint(OLD.strand));
-          IF OLD.id % 20 = 0 THEN
-            running_count := (SELECT COUNT(*) FROM (
-              SELECT 1 as one FROM delayed_jobs WHERE strand = OLD.strand AND next_in_strand = 't' LIMIT OLD.max_concurrent
-            ) subquery_for_count);
-            IF running_count < OLD.max_concurrent THEN
-              UPDATE delayed_jobs SET next_in_strand = 't' WHERE id IN (
-                SELECT id FROM delayed_jobs j2 WHERE next_in_strand = 'f' AND
-                j2.strand = OLD.strand ORDER BY j2.id ASC LIMIT (OLD.max_concurrent - running_count) FOR UPDATE
-              );
+        DECLARE
+          running_count integer;
+          should_lock boolean;
+          should_be_precise boolean;
+        BEGIN
+          IF OLD.strand IS NOT NULL THEN
+            should_lock := true;
+            should_be_precise := OLD.id % (OLD.max_concurrent * 4) = 0;
+        
+            IF NOT should_be_precise AND OLD.max_concurrent > 16 THEN
+              running_count := (SELECT COUNT(*) FROM (
+                SELECT 1 as one FROM delayed_jobs WHERE strand = OLD.strand AND next_in_strand = 't' LIMIT OLD.max_concurrent
+              ) subquery_for_count);
+              should_lock := running_count < OLD.max_concurrent;
             END IF;
-          ELSE
-            UPDATE delayed_jobs SET next_in_strand = 't' WHERE id =
-              (SELECT id FROM delayed_jobs j2 WHERE next_in_strand = 'f' AND
-                j2.strand = OLD.strand ORDER BY j2.id ASC LIMIT 1 FOR UPDATE);
+        
+            IF should_lock THEN
+              PERFORM pg_advisory_xact_lock(half_md5_as_bigint(OLD.strand));
+            END IF;
+        
+            IF should_be_precise THEN
+              running_count := (SELECT COUNT(*) FROM (
+                SELECT 1 as one FROM delayed_jobs WHERE strand = OLD.strand AND next_in_strand = 't' LIMIT OLD.max_concurrent
+              ) subquery_for_count);
+              IF running_count < OLD.max_concurrent THEN
+                UPDATE delayed_jobs SET next_in_strand = 't' WHERE id IN (
+                  SELECT id FROM delayed_jobs j2 WHERE next_in_strand = 'f' AND
+                  j2.strand = OLD.strand ORDER BY j2.strand_order_override ASC, j2.id ASC LIMIT (OLD.max_concurrent - running_count) FOR UPDATE
+                );
+              END IF;
+            ELSE
+              -- n-strands don't require precise ordering; we can make this query more performant
+              IF OLD.max_concurrent > 1 THEN
+                UPDATE delayed_jobs SET next_in_strand = 't' WHERE id =
+                (SELECT id FROM delayed_jobs j2 WHERE next_in_strand = 'f' AND
+                  j2.strand = OLD.strand ORDER BY j2.strand_order_override ASC, j2.id ASC LIMIT 1 FOR UPDATE SKIP LOCKED);
+              ELSE
+                UPDATE delayed_jobs SET next_in_strand = 't' WHERE id =
+                  (SELECT id FROM delayed_jobs j2 WHERE next_in_strand = 'f' AND
+                    j2.strand = OLD.strand ORDER BY j2.strand_order_override ASC, j2.id ASC LIMIT 1 FOR UPDATE);
+              END IF;
+            END IF;
           END IF;
-        END IF;
-        RETURN OLD;
-      END;
-      $$;
+          RETURN OLD;
+        END;
+        $$;
 
 
 --
@@ -579,7 +601,8 @@ CREATE TABLE public.delayed_jobs (
     next_in_strand boolean DEFAULT true NOT NULL,
     source character varying(255),
     max_concurrent integer DEFAULT 1 NOT NULL,
-    expires_at timestamp without time zone
+    expires_at timestamp without time zone,
+    strand_order_override integer DEFAULT 0 NOT NULL
 );
 
 
@@ -624,7 +647,8 @@ CREATE TABLE public.failed_jobs (
     strand character varying(255),
     original_job_id bigint,
     source character varying(255),
-    expires_at timestamp without time zone
+    expires_at timestamp without time zone,
+    strand_order_override integer DEFAULT 0 NOT NULL
 );
 
 
@@ -1459,6 +1483,13 @@ CREATE INDEX index_waivers_on_waiver_forever_id ON public.waivers USING btree (w
 
 
 --
+-- Name: next_in_strand_index; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX next_in_strand_index ON public.delayed_jobs USING btree (strand, strand_order_override, id) WHERE (strand IS NOT NULL);
+
+
+--
 -- Name: delayed_jobs delayed_jobs_after_delete_row_tr; Type: TRIGGER; Schema: public; Owner: -
 --
 
@@ -1667,6 +1698,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20200923015420'),
 ('20201003064003'),
 ('20201107060445'),
-('20210104033213');
+('20210104033213'),
+('20210115130932'),
+('20210115130933');
 
 

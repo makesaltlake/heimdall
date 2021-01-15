@@ -61,8 +61,6 @@ end
 #                                                    PUT        /admin/badge_writers/:id(.:format)                                                       admin/badge_writers#update
 #                                                    DELETE     /admin/badge_writers/:id(.:format)                                                       admin/badge_writers#destroy
 #                                      admin_waivers GET        /admin/waivers(.:format)                                                                 admin/waivers#index
-#                                                    POST       /admin/waivers(.:format)                                                                 admin/waivers#create
-#                                   new_admin_waiver GET        /admin/waivers/new(.:format)                                                             admin/waivers#new
 #                                  edit_admin_waiver GET        /admin/waivers/:id/edit(.:format)                                                        admin/waivers#edit
 #                                       admin_waiver GET        /admin/waivers/:id(.:format)                                                             admin/waivers#show
 #                                                    PATCH      /admin/waivers/:id(.:format)                                                             admin/waivers#update
@@ -119,7 +117,8 @@ end
 #                                      admin_comment GET        /admin/comments/:id(.:format)                                                            admin/comments#show
 #                                                    DELETE     /admin/comments/:id(.:format)                                                            admin/comments#destroy
 #                                               root GET        /                                                                                        home#home
-#                                    webhooks_stripe POST       /webhooks/stripe(.:format)                                                               stripe#webhook
+#                                    webhooks_stripe POST       /webhooks/stripe(.:format)                                                               webhooks/stripe#webhook
+#                             webhooks_waiverforever POST       /webhooks/waiverforever(.:format)                                                        webhooks/waiver_forever#webhook
 #                                      frontend_demo GET        /frontend-demo(.:format)                                                                 frontend#frontend
 #                          api_badge_writers_program POST       /api/badge_writers/program(.:format)                                                     api/badge_writers#program
 #                      api_badge_readers_access_list GET        /api/badge_readers/access_list(.:format)                                                 api/badge_readers#access_list
