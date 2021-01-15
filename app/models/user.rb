@@ -54,7 +54,7 @@ class User < ApplicationRecord
 
   # I swear there has to be a way to do this with vanilla Ransack, or at least
   # without resorting to hand-crafted SQL...
-  HAS_A_WAIVER_SQL = 'exists(select waivers.id from waivers where waivers.user_id = users.id)'
+  HAS_SIGNED_A_WAIVER_SQL = 'exists(select waivers.id from waivers where waivers.user_id = users.id)'
 
   # The fields to allow users to be searched by when selecting a user in a
   # dropdown in the admin UI. If you change this, be sure to update the
@@ -107,8 +107,8 @@ class User < ApplicationRecord
     arel_table[:badge_token].not_eq(nil)
   end
 
-  ransacker :has_a_waiver, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
-    Arel.sql(HAS_A_WAIVER_SQL)
+  ransacker :has_signed_a_waiver, formatter: ActiveModel::Type::Boolean.new.method(:cast) do
+    Arel.sql(HAS_SIGNED_A_WAIVER_SQL)
   end
 
   # Associate any unassociated waivers with this user's email address to this user. There's a matching block in Waiver

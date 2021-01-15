@@ -13,7 +13,7 @@ ActiveAdmin.register User do
   filter :subscription_created
   filter :has_a_badge, as: :boolean, filters: [:eq]
   filter :badge_token_set_at, label: 'Badge Programmed At'
-  filter :has_a_waiver, as: :boolean, filters: [:eq]
+  filter :has_signed_a_waiver, as: :boolean, filters: [:eq]
   filter :created_at
   filter :super_user
 
@@ -21,7 +21,7 @@ ActiveAdmin.register User do
     column(:name) { |user| auto_link(user, user.name.presence || '(no name)') }
     column(:email)
     column(:household_has_membership, &:has_household_membership)
-    column(:has_a_waiver?) do |user|
+    column(:has_signed_a_waiver) do |user|
       # Both `user.waivers.exists?` and `user.waivers.count > 0` force AR to
       # hit the database and thwart our efforts to avoid an N+1 by preloading
       # `waivers` in the controller's `scoped_collection` below. Calling
