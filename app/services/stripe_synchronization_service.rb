@@ -3,11 +3,11 @@ module StripeSynchronizationService
   DEACTIVATED_SUBSCRIPTION_STATUSES = ['canceled', 'incomplete_expired']
   STRAND = 'stripe-synchronization'
 
-  def self.handle_stripe_event_later(event)
-    delay(strand: STRAND).handle_stripe_event_now(event)
+  def self.handle_stripe_event_later(event:)
+    delay(strand: STRAND).handle_stripe_event_now(event: event)
   end
 
-  def self.handle_stripe_event_now(event)
+  def self.handle_stripe_event_now(event:)
     Rails.logger.info("StripeSynchronizationService: Handling webhook event...")
 
     case event.type

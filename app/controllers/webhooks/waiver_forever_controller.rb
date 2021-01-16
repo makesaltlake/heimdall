@@ -8,7 +8,7 @@ class Webhooks::WaiverForeverController < ApplicationController
     waiver_id = params[:id]
     Rails.logger.info("Processing WaiverForever webhook for waiver #{waiver_id}")
 
-    WaiverImportService.sync_single_waiver_later(waiver_id)
+    WaiverImportService.sync_single_waiver_later(waiver_id: waiver_id)
 
     render plain: 'OK'
   end

@@ -12,11 +12,11 @@ class Webhooks::StripeController < ApplicationController
     event = Stripe::Webhook.construct_event(payload, signature_header, WEBHOOK_SECRET)
 
     # Ditto for StripeSynchronizationService
-    StripeSynchronizationService.handle_stripe_event_later(event)
+    StripeSynchronizationService.handle_stripe_event_later(event: event)
 
     # Pass all events off to SynchrotronService. We could be more picky later on and filter out only ones it cares
     # about...
-    SynchrotronService.handle_stripe_event_later(event)
+    SynchrotronService.handle_stripe_event_later(event: event)
 
     render plain: 'OK'
   end

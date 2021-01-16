@@ -178,11 +178,11 @@ module SynchrotronService
     slack_client.chat_postMessage(channel: SLACK_SYNCHROTRON_CHANNEL, as_user: true, **kwargs)
   end
 
-  def self.handle_stripe_event_later(event)
-    delay(strand: STRAND).handle_stripe_event_now(event)
+  def self.handle_stripe_event_later(event:)
+    delay(strand: STRAND).handle_stripe_event_now(event: event)
   end
 
-  def self.handle_stripe_event_now(event)
+  def self.handle_stripe_event_now(event:)
     Rails.logger.info("SynchrotronService: Handling webhook event...")
 
     case event.type

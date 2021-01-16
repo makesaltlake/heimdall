@@ -50,11 +50,11 @@ class WaiverImportService
     Rails.logger.info("Done synchronizing waivers.")
   end
 
-  def self.sync_single_waiver_later(waiver_id)
-    delay(strand: STRAND).sync_single_waiver_now(waiver_id)
+  def self.sync_single_waiver_later(waiver_id:)
+    delay(strand: STRAND).sync_single_waiver_now(waiver_id:)
   end
 
-  def self.sync_single_waiver_now(waiver_id)
+  def self.sync_single_waiver_now(waiver_id:)
     Rails.logger.info("Synchronizing a single waiver: #{waiver_id}...")
 
     begin
