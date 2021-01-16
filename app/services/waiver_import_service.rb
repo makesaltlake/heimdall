@@ -51,7 +51,7 @@ class WaiverImportService
   end
 
   def self.sync_single_waiver_later(waiver_id:)
-    delay(strand: STRAND).sync_single_waiver_now(waiver_id:)
+    delay(strand: STRAND).sync_single_waiver_now(waiver_id: waiver_id)
   end
 
   def self.sync_single_waiver_now(waiver_id:)
