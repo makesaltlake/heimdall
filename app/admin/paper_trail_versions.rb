@@ -5,6 +5,8 @@ ActiveAdmin.register PaperTrail::Version do
 
   config.sort_order = 'id_desc'
 
+  filter :item_type
+  filter :item_id, label: 'Item ID'
   filter :created_at
 
   scope :all, default: :true
