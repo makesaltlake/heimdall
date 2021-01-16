@@ -40,7 +40,7 @@ ActiveAdmin.register User do
       row(:email)
       row(:household_has_membership, &:has_household_membership)
       row(:individual_has_membership, &:subscription_active)
-      row(:super_user)
+      row(:super_user) { |user| status_tag user.super_user, class: user.super_user ? :red : nil }
       row('Last Signed In', &:current_sign_in_at)
       row('Failed Sign In Attempts', &:failed_attempts)
       row('Household members') { |user| user.household_users.order(:name).map { |other_user| auto_link(other_user) }.join('<br/>').html_safe }
@@ -139,7 +139,7 @@ ActiveAdmin.register User do
         # accidentally demote themselves)
         f.input(:super_user, input_html: { disabled: true }, hint: "You can't change your own super user status.")
       else
-        f.input(:super_user)
+        f.input(:super_user, hint: 'ADMIN ACCESS - If this is checked, the user will have full administrative access to Heimdall')
       end
       password_blank_action = f.object.new_record? ? "leave their password unset (they'll have to reset it before they can log in)" : 'leave their password unchanged'
       f.input(:password, hint: "Type a new password for this user here, or leave blank to #{password_blank_action}")
