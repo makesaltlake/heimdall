@@ -86,9 +86,9 @@ module StripeSynchronizationService
       Rails.logger.warn("WARNING - when updating a subscription, Stripe subscription #{subscription.id} does not have a plan") unless subscription.plan
 
       stripe_subscription.plan_name = subscription.plan.try(:product).try(:name)
-      stripe_subscription.interval = subscription.plan.interval_count
-      stripe_subscription.interval_type = subscription.plan.interval
-      stripe_subscription.interval_amount = subscription.plan.amount
+      stripe_subscription.interval = subscription.plan.try(:interval_count)
+      stripe_subscription.interval_type = subscription.plan.try(:interval)
+      stripe_subscription.interval_amount = subscription.plan.try(:amount)
 
       changed = stripe_subscription.changed?
       stripe_subscription.save!
