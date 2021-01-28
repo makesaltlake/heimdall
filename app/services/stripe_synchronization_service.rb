@@ -83,7 +83,9 @@ module StripeSynchronizationService
       stripe_subscription.canceled_at = subscription.canceled_at && Time.at(subscription.canceled_at)
       stripe_subscription.cancel_at = subscription.cancel_at && Time.at(subscription.cancel_at)
 
-      stripe_subscription.plan_name = subscription.plan.product.try(:name)
+      Rails.logger.warn("WARNING - when updating a subscription, Stripe subscription #{subscription.id} does not have a plan") unless subscription.plan
+
+      stripe_subscription.plan_name = subscription.plan.try(:product).try(:name)
       stripe_subscription.interval = subscription.plan.interval_count
       stripe_subscription.interval_type = subscription.plan.interval
       stripe_subscription.interval_amount = subscription.plan.amount
@@ -152,7 +154,10 @@ module StripeSynchronizationService
     # They almost certainly represent cancelled subscriptions, but no reason
     # not to count them as memberships since they'll be filtered out on that
     # basis later.
-    product = subscription.plan.product
+
+    Rails.logger.warn("WARNING - when checking whether a subscription is a membership, Stripe subscription #{subscription.id} does not have a plan") unless subscription.plan
+
+    product = subscription.plan&.product
     !product.respond_to?(:name) || !product.name || product.name.downcase.include?('membership')
   end
 
