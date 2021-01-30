@@ -1,4 +1,7 @@
 class Api::BadgeReadersController < Api::ApiController
+  include Api::Ext::HasFirmware
+  include Api::Ext::HasWirelessCredentials
+
   authenticate_using BadgeReader
 
   def access_list

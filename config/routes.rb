@@ -22,10 +22,14 @@ Rails.application.routes.draw do
 
   namespace :api do
     controller_namespace :badge_writers do
+      get :firmware_blob
+      get :wireless_credentials
       post :program
     end
     controller_namespace :badge_readers do
       get :access_list
+      get :firmware_blob
+      get :wireless_credentials
       post :record_scans
     end
   end
@@ -66,6 +70,23 @@ end
 #                                                    PATCH      /admin/waivers/:id(.:format)                                                             admin/waivers#update
 #                                                    PUT        /admin/waivers/:id(.:format)                                                             admin/waivers#update
 #                                                    DELETE     /admin/waivers/:id(.:format)                                                             admin/waivers#destroy
+#                     admin_wireless_credential_sets GET        /admin/wireless_credential_sets(.:format)                                                admin/wireless_credential_sets#index
+#                                                    POST       /admin/wireless_credential_sets(.:format)                                                admin/wireless_credential_sets#create
+#                  new_admin_wireless_credential_set GET        /admin/wireless_credential_sets/new(.:format)                                            admin/wireless_credential_sets#new
+#                 edit_admin_wireless_credential_set GET        /admin/wireless_credential_sets/:id/edit(.:format)                                       admin/wireless_credential_sets#edit
+#                      admin_wireless_credential_set GET        /admin/wireless_credential_sets/:id(.:format)                                            admin/wireless_credential_sets#show
+#                                                    PATCH      /admin/wireless_credential_sets/:id(.:format)                                            admin/wireless_credential_sets#update
+#                                                    PUT        /admin/wireless_credential_sets/:id(.:format)                                            admin/wireless_credential_sets#update
+#                                                    DELETE     /admin/wireless_credential_sets/:id(.:format)                                            admin/wireless_credential_sets#destroy
+#                     activate_admin_firmware_bundle POST       /admin/firmware_bundles/:id/activate(.:format)                                           admin/firmware_bundles#activate
+#                             admin_firmware_bundles GET        /admin/firmware_bundles(.:format)                                                        admin/firmware_bundles#index
+#                                                    POST       /admin/firmware_bundles(.:format)                                                        admin/firmware_bundles#create
+#                          new_admin_firmware_bundle GET        /admin/firmware_bundles/new(.:format)                                                    admin/firmware_bundles#new
+#                         edit_admin_firmware_bundle GET        /admin/firmware_bundles/:id/edit(.:format)                                               admin/firmware_bundles#edit
+#                              admin_firmware_bundle GET        /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#show
+#                                                    PATCH      /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#update
+#                                                    PUT        /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#update
+#                                                    DELETE     /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#destroy
 #                               admin_certifications GET        /admin/certifications(.:format)                                                          admin/certifications#index
 #                                                    POST       /admin/certifications(.:format)                                                          admin/certifications#create
 #                            new_admin_certification GET        /admin/certifications/new(.:format)                                                      admin/certifications#new
@@ -120,8 +141,12 @@ end
 #                                    webhooks_stripe POST       /webhooks/stripe(.:format)                                                               webhooks/stripe#webhook
 #                             webhooks_waiverforever POST       /webhooks/waiverforever(.:format)                                                        webhooks/waiver_forever#webhook
 #                                      frontend_demo GET        /frontend-demo(.:format)                                                                 frontend#frontend
+#                    api_badge_writers_firmware_blob GET        /api/badge_writers/firmware_blob(.:format)                                               api/badge_writers#firmware_blob
+#             api_badge_writers_wireless_credentials GET        /api/badge_writers/wireless_credentials(.:format)                                        api/badge_writers#wireless_credentials
 #                          api_badge_writers_program POST       /api/badge_writers/program(.:format)                                                     api/badge_writers#program
 #                      api_badge_readers_access_list GET        /api/badge_readers/access_list(.:format)                                                 api/badge_readers#access_list
+#                    api_badge_readers_firmware_blob GET        /api/badge_readers/firmware_blob(.:format)                                               api/badge_readers#firmware_blob
+#             api_badge_readers_wireless_credentials GET        /api/badge_readers/wireless_credentials(.:format)                                        api/badge_readers#wireless_credentials
 #                     api_badge_readers_record_scans POST       /api/badge_readers/record_scans(.:format)                                                api/badge_readers#record_scans
 #                      rails_postmark_inbound_emails POST       /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #                         rails_relay_inbound_emails POST       /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create

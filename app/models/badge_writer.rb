@@ -103,4 +103,8 @@ class BadgeWriter < ApplicationRecord
   def programming?
     currently_programming_user && currently_programming_until > Time.now
   end
+
+  def firmware_bundles
+    FirmwareBundle.where(device_type: 'badge_writer')
+  end
 end

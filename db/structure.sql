@@ -672,6 +672,39 @@ ALTER SEQUENCE public.failed_jobs_id_seq OWNED BY public.failed_jobs.id;
 
 
 --
+-- Name: firmware_bundles; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.firmware_bundles (
+    id bigint NOT NULL,
+    description text,
+    device_type character varying NOT NULL,
+    active boolean DEFAULT false NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: firmware_bundles_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.firmware_bundles_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: firmware_bundles_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.firmware_bundles_id_seq OWNED BY public.firmware_bundles.id;
+
+
+--
 -- Name: households; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -847,6 +880,38 @@ ALTER SEQUENCE public.waivers_id_seq OWNED BY public.waivers.id;
 
 
 --
+-- Name: wireless_credential_sets; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.wireless_credential_sets (
+    id bigint NOT NULL,
+    ssid character varying NOT NULL,
+    password character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: wireless_credential_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.wireless_credential_sets_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: wireless_credential_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.wireless_credential_sets_id_seq OWNED BY public.wireless_credential_sets.id;
+
+
+--
 -- Name: active_admin_comments id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -938,6 +1003,13 @@ ALTER TABLE ONLY public.failed_jobs ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: firmware_bundles id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.firmware_bundles ALTER COLUMN id SET DEFAULT nextval('public.firmware_bundles_id_seq'::regclass);
+
+
+--
 -- Name: households id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -970,6 +1042,13 @@ ALTER TABLE ONLY public.versions ALTER COLUMN id SET DEFAULT nextval('public.ver
 --
 
 ALTER TABLE ONLY public.waivers ALTER COLUMN id SET DEFAULT nextval('public.waivers_id_seq'::regclass);
+
+
+--
+-- Name: wireless_credential_sets id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wireless_credential_sets ALTER COLUMN id SET DEFAULT nextval('public.wireless_credential_sets_id_seq'::regclass);
 
 
 --
@@ -1085,6 +1164,14 @@ ALTER TABLE ONLY public.failed_jobs
 
 
 --
+-- Name: firmware_bundles firmware_bundles_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.firmware_bundles
+    ADD CONSTRAINT firmware_bundles_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: households households_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1130,6 +1217,14 @@ ALTER TABLE ONLY public.versions
 
 ALTER TABLE ONLY public.waivers
     ADD CONSTRAINT waivers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: wireless_credential_sets wireless_credential_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.wireless_credential_sets
+    ADD CONSTRAINT wireless_credential_sets_pkey PRIMARY KEY (id);
 
 
 --
@@ -1347,6 +1442,27 @@ CREATE INDEX index_delayed_jobs_on_strand ON public.delayed_jobs USING btree (st
 --
 
 CREATE INDEX index_delayed_jobs_on_tag ON public.delayed_jobs USING btree (tag);
+
+
+--
+-- Name: index_firmware_bundles_on_active; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_firmware_bundles_on_active ON public.firmware_bundles USING btree (active);
+
+
+--
+-- Name: index_firmware_bundles_on_device_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_firmware_bundles_on_device_type ON public.firmware_bundles USING btree (device_type);
+
+
+--
+-- Name: index_firmware_bundles_only_one_active_for_device_type; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_firmware_bundles_only_one_active_for_device_type ON public.firmware_bundles USING btree (device_type) WHERE active;
 
 
 --
@@ -1700,6 +1816,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20201107060445'),
 ('20210104033213'),
 ('20210115130932'),
-('20210115130933');
+('20210115130933'),
+('20210130012843');
 
 

@@ -72,4 +72,8 @@ class BadgeReader < ApplicationRecord
     # show the request as pending)
     update!(last_manual_open_at: [Time.now, last_manual_open_requested_at].max)
   end
+
+  def firmware_bundles
+    FirmwareBundle.where(device_type: 'badge_reader')
+  end
 end

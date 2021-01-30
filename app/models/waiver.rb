@@ -5,6 +5,7 @@
 #  id                :bigint           not null, primary key
 #  email             :string
 #  fields            :jsonb
+#  name              :string
 #  signed_at         :datetime
 #  user_id           :bigint
 #  waiver_forever_id :string
@@ -12,6 +13,7 @@
 # Indexes
 #
 #  index_waivers_on_email              (email)
+#  index_waivers_on_name               (name)
 #  index_waivers_on_signed_at          (signed_at)
 #  index_waivers_on_user_id            (user_id)
 #  index_waivers_on_waiver_forever_id  (waiver_forever_id)

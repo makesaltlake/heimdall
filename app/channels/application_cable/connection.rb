@@ -1,6 +1,6 @@
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
-    CLIENT_TYPES = ['badge_reader']
+    CLIENT_TYPES = ['badge_reader', 'badge_writer']
 
     identified_by :client_resource
 
@@ -16,6 +16,16 @@ module ApplicationCable
       reject_unauthorized_connection unless token.presence
 
       resource = BadgeReader.find_by(api_token: token)
+      reject_unauthorized_connection unless resource
+
+      self.client_resource = resource
+    end
+
+    def authenticate_as_badge_writer
+      token = request.params[:token]
+      reject_unauthorized_connection unless token.presence
+
+      resource = BadgeWriter.find_by(api_token: token)
       reject_unauthorized_connection unless resource
 
       self.client_resource = resource

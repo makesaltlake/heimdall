@@ -1,4 +1,7 @@
 class Api::BadgeWritersController < Api::ApiController
+  include Api::Ext::HasFirmware
+  include Api::Ext::HasWirelessCredentials
+
   authenticate_using BadgeWriter
 
   rescue_from BadgeWriter::DuplicateBadgeTokenError do
