@@ -48,6 +48,25 @@ class FirmwareBundle < ApplicationRecord
     DEVICE_TYPE_VALUES_TO_LABELS[device_type]
   end
 
+  def device_type_model
+    case device_type
+    when 'badge_reader'
+      BadgeReader
+    when 'badge_writer'
+      BadgeWriter
+    end
+  end
+
+  def device_type_channel
+    # TODO: probably move this to methods called on the individual models instead
+    case device_type
+    when 'badge_reader'
+      BadgeReaderChannel
+    when 'badge_writer'
+      BadgeWriterChannel
+    end
+  end
+
   def activate!
     return if active? # No need to activate if we're already the active firmware bundle
 
@@ -59,11 +78,8 @@ class FirmwareBundle < ApplicationRecord
       # block in case the call to `activate!` was wrapped in a parent transaction - we only want to run this after that
       # transaction has finished if so
       after_transaction_commit do
-        BadgeReader.all.find_each do |badge_reader|
-          BadgeReaderChannel.broadcast_to(badge_reader, { type: 'new_firmware' })
-        end
-        BadgeWriter.all.find_each do |badge_writer|
-          BadgeWriterChannel.broadcast_to(badge_writer, { type: 'new_firmware' })
+        device_type_model.all.find_each do |device|
+          device_type_channel.broadcast_to(device, { type: 'new_firmware' })
         end
       end
     end
