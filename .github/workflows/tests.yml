@@ -30,6 +30,12 @@ jobs:
           path: ./vendor/bundle
           key: build-${{ env.cache-name }}-${{ hashFiles('**/Gemfile.lock') }}
 
+      # GitHub Actions doesn't provide an easy way to access the short SHA of the current hash, so we have to compute
+      # it ourselves in this slightly roundabout way.
+      - name: Compute short SHA
+        id: sha8
+        run: echo "::set-output name=sha8::$(echo $GITHUB_SHA | cut -c1-8)"
+
       - uses: actions/setup-ruby@v1
         with:
           ruby-version: 3.0
@@ -38,3 +44,19 @@ jobs:
       - run: bundle install --jobs 4
       - run: bundle exec rake db:setup RAILS_ENV=test
       - run: bundle exec rspec
+
+      - name: 'Notify #rfid-strikeforce-notifications on build success'
+        uses: tokorom/action-slack-incoming-webhook@main
+        env:
+          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_BUILD_NOTIFICATION_WEBHOOK_URL }}
+        with:
+          text: ✅ tests on <https://github.com/makesaltlake/heimdall/commit/${{ github.sha }}|${{ steps.sha8.outputs.sha8 }}> passed
+
+      - name: 'Notify #rfid-strikeforce-notifications on build failure'
+        uses: tokorom/action-slack-incoming-webhook@main
+        if: '${{ failure() }}'
+        env:
+          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_BUILD_NOTIFICATION_WEBHOOK_URL }}
+        with:
+          text: :alert: tests on <https://github.com/makesaltlake/heimdall/commit/${{ github.sha }}|${{ steps.sha8.outputs.sha8 }}> failed
+
