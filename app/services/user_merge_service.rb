@@ -44,7 +44,7 @@ class UserMergeService
     raise "You can't merge a user with themselves" if source == target
 
     user = TransactionRetry.transaction do
-      PaperTrailUtils.with_metadata(merge_users: { source_id: source.id, target_id: target.id }) do
+      PaperTrailUtils.with_metadata({ merge_users: { source_id: source.id, target_id: target.id } }) do
         self.class.steps.each do |step|
           self.instance_exec(&step.block)
         rescue
