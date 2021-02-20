@@ -50,7 +50,7 @@ jobs:
         env:
           INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_BUILD_NOTIFICATION_WEBHOOK_URL }}
         with:
-          text: '✅ tests on <https://github.com/makesaltlake/heimdall/commit/${{ github.sha }}|${{ steps.sha8.outputs.sha8 }}> passed'
+          text: 'tests on <https://github.com/makesaltlake/heimdall/commit/${{ github.sha }}|${{ steps.sha8.outputs.sha8 }}> passed'
 
       - name: 'Notify #rfid-strikeforce-notifications on build failure'
         uses: tokorom/action-slack-incoming-webhook@main
