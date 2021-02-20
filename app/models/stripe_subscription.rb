@@ -43,6 +43,7 @@ class StripeSubscription < ApplicationRecord
   scope :most_recently_started_first, -> { order(started_at: :desc) }
   scope :active, -> { where(active: true) }
   scope :unpaid, -> { where(unpaid: true) }
+  scope :held_at_any_time_during, -> (start_date, end_date) { where('started_at < ? and (ended_at is null or ended_at > ?)', end_date, start_date) }
 
   after_save :regenerate_user
   after_destroy :regenerate_user
