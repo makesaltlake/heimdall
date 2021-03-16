@@ -11,9 +11,8 @@ Heimdall is [Make Salt Lake](https://makesaltlake.org)'s access control system. 
 First, clone Heimdall:
 
 ```shell
-git clone https://github.com/makesaltlake/heimdall.git
+git clone --recurse-submodules https://github.com/makesaltlake/heimdall.git
 cd heimdall
-git submodule update --init --recursive
 ```
 
 ## Web Interface Setup
@@ -87,7 +86,7 @@ Make Salt Lake uses [Stripe](http://stripe.com/) to process membership dues. Hei
 
 Head on over to https://dashboard.stripe.com/register, create yourself an account, then go to your dashboard, grab your test mode secret key, and set it into an environment variable named `STRIPE_SECRET_KEY`.
 
-Heimdall supports Stripe webhooks to proactively update membership information the moment something changes in Stripe. If you're making changes to the webhook code, you'll also want to [install the Stripe CLI and forward test webhook events](https://stripe.com/docs/webhooks/test) to your local Heimdall instance. When Stripe prints out your webhook signing secret (which will change every time you run `stripe listen`), you'll want to set it into an environment variable named `STRIPE_WEBHOOK_SECRET`.
+Heimdall supports Stripe webhooks to proactively update membership information the moment something changes in Stripe. If you're making changes to the webhook code, you'll also want to [install the Stripe CLI and forward test webhook events](https://stripe.com/docs/webhooks/test) to your local Heimdall instance. When Stripe prints out your webhook signing secret (which should remain constant across runs), you'll want to set it into an environment variable named `STRIPE_WEBHOOK_SECRET`.
 
 ### Ruby Dependencies
 
@@ -165,7 +164,7 @@ We've also got GitHub Actions set up to run tests on every push. You can view th
 
 ## Deployment
 
-TBD
+Make Salt Lake's Heimdall instance is deployed on Heroku. More details to come, but if Alex gets hit by a bus in the mean time, ask someone with admin access to Make Salt Lake's Google organization to reset the password to Alex's email account, then use it to reset the password to the Heroku account under his email address and have at it. (Probably we should have the main account be owned by a mailing list or something and stick the password into a 1Password shared vault...)
 
 ## Contact
 
