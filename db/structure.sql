@@ -319,13 +319,13 @@ CREATE TABLE public.users (
     updated_at timestamp(6) without time zone NOT NULL,
     name character varying,
     super_user boolean DEFAULT false NOT NULL,
-    badge_number character varying,
     household_id bigint NOT NULL,
     subscription_active boolean DEFAULT false NOT NULL,
     subscription_id character varying,
     subscription_created timestamp without time zone,
     badge_token character varying,
-    badge_token_set_at timestamp without time zone
+    badge_token_set_at timestamp without time zone,
+    badge_number integer
 );
 
 
@@ -1817,6 +1817,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210104033213'),
 ('20210115130932'),
 ('20210115130933'),
-('20210130012843');
+('20210130012843'),
+('20210318041100');
 
 

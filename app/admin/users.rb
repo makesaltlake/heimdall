@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 11
 
-  permit_params :name, :email, :super_user, :password, :password_confirmation, :profile_image, household_user_ids: []
+  permit_params :name, :email, :super_user, :password, :password_confirmation, :badge_number, :profile_image, household_user_ids: []
 
   config.sort_order = 'subscription_created_desc'
 
@@ -13,6 +13,7 @@ ActiveAdmin.register User do
   filter :subscription_created
   filter :has_a_badge, as: :boolean, filters: [:eq]
   filter :badge_token_set_at, label: 'Badge Programmed At'
+  filter :badge_number
   filter :has_signed_a_waiver, as: :boolean, filters: [:eq]
   filter :created_at
   filter :super_user
@@ -145,6 +146,7 @@ ActiveAdmin.register User do
       f.input(:password, hint: "Type a new password for this user here, or leave blank to #{password_blank_action}")
       f.input(:password_confirmation, hint: 'Retype the new password here')
       f.input(:household_user_ids, label: 'Household members', as: :selected_list, url: admin_users_path, display_name: 'dropdown_display_name', fields: User::DROPDOWN_SEARCH_FIELDS)
+      f.input(:badge_number, hint: "Work in progress, ignore this field for now")
 
       active_storage_input(f, :profile_image)
     end

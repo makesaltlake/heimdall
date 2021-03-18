@@ -28,6 +28,7 @@ Rails.application.routes.draw do
     end
     controller_namespace :badge_readers do
       get :access_list
+      get :binary_access_list
       get :firmware_blob
       get :wireless_credentials
       post :record_scans
@@ -50,8 +51,19 @@ end
 #                                        user_unlock GET        /admin/unlock(.:format)                                                                  active_admin/devise/unlocks#show
 #                                                    POST       /admin/unlock(.:format)                                                                  active_admin/devise/unlocks#create
 #                                         admin_root GET        /admin(.:format)                                                                         admin/dashboard#index
-#           admin_delayed_backend_active_record_jobs GET        /admin/delayed_backend_active_record_jobs(.:format)                                      admin/delayed_backend_active_record_jobs#index
-#            admin_delayed_backend_active_record_job GET        /admin/delayed_backend_active_record_jobs/:id(.:format)                                  admin/delayed_backend_active_record_jobs#show
+#            regenerate_api_token_admin_badge_reader POST       /admin/badge_readers/:id/regenerate_api_token(.:format)                                  admin/badge_readers#regenerate_api_token
+#                reveal_api_token_admin_badge_reader GET        /admin/badge_readers/:id/reveal_api_token(.:format)                                      admin/badge_readers#reveal_api_token
+#             request_manual_open_admin_badge_reader POST       /admin/badge_readers/:id/request_manual_open(.:format)                                   admin/badge_readers#request_manual_open
+#                                admin_badge_readers GET        /admin/badge_readers(.:format)                                                           admin/badge_readers#index
+#                                                    POST       /admin/badge_readers(.:format)                                                           admin/badge_readers#create
+#                             new_admin_badge_reader GET        /admin/badge_readers/new(.:format)                                                       admin/badge_readers#new
+#                            edit_admin_badge_reader GET        /admin/badge_readers/:id/edit(.:format)                                                  admin/badge_readers#edit
+#                                 admin_badge_reader GET        /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#show
+#                                                    PATCH      /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
+#                                                    PUT        /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
+#                                                    DELETE     /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#destroy
+#                                  admin_badge_scans GET        /admin/badge_scans(.:format)                                                             admin/badge_scans#index
+#                                   admin_badge_scan GET        /admin/badge_scans/:id(.:format)                                                         admin/badge_scans#show
 #            regenerate_api_token_admin_badge_writer POST       /admin/badge_writers/:id/regenerate_api_token(.:format)                                  admin/badge_writers#regenerate_api_token
 #                reveal_api_token_admin_badge_writer GET        /admin/badge_writers/:id/reveal_api_token(.:format)                                      admin/badge_writers#reveal_api_token
 #              cancel_programming_admin_badge_writer POST       /admin/badge_writers/:id/cancel_programming(.:format)                                    admin/badge_writers#cancel_programming
@@ -64,6 +76,50 @@ end
 #                                                    PATCH      /admin/badge_writers/:id(.:format)                                                       admin/badge_writers#update
 #                                                    PUT        /admin/badge_writers/:id(.:format)                                                       admin/badge_writers#update
 #                                                    DELETE     /admin/badge_writers/:id(.:format)                                                       admin/badge_writers#destroy
+#                revoke_admin_certification_issuance GET        /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
+#                                                    POST       /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
+#                      admin_certification_issuances GET        /admin/certification_issuances(.:format)                                                 admin/certification_issuances#index
+#                                                    POST       /admin/certification_issuances(.:format)                                                 admin/certification_issuances#create
+#                   new_admin_certification_issuance GET        /admin/certification_issuances/new(.:format)                                             admin/certification_issuances#new
+#                  edit_admin_certification_issuance GET        /admin/certification_issuances/:id/edit(.:format)                                        admin/certification_issuances#edit
+#                       admin_certification_issuance GET        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#show
+#                                                    PATCH      /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
+#                                                    PUT        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
+#                               admin_certifications GET        /admin/certifications(.:format)                                                          admin/certifications#index
+#                                                    POST       /admin/certifications(.:format)                                                          admin/certifications#create
+#                            new_admin_certification GET        /admin/certifications/new(.:format)                                                      admin/certifications#new
+#                           edit_admin_certification GET        /admin/certifications/:id/edit(.:format)                                                 admin/certifications#edit
+#                                admin_certification GET        /admin/certifications/:id(.:format)                                                      admin/certifications#show
+#                                                    PATCH      /admin/certifications/:id(.:format)                                                      admin/certifications#update
+#                                                    PUT        /admin/certifications/:id(.:format)                                                      admin/certifications#update
+#                                                    DELETE     /admin/certifications/:id(.:format)                                                      admin/certifications#destroy
+#                                    admin_dashboard GET        /admin/dashboard(.:format)                                                               admin/dashboard#index
+#           admin_delayed_backend_active_record_jobs GET        /admin/delayed_backend_active_record_jobs(.:format)                                      admin/delayed_backend_active_record_jobs#index
+#            admin_delayed_backend_active_record_job GET        /admin/delayed_backend_active_record_jobs/:id(.:format)                                  admin/delayed_backend_active_record_jobs#show
+#                     activate_admin_firmware_bundle POST       /admin/firmware_bundles/:id/activate(.:format)                                           admin/firmware_bundles#activate
+#                             admin_firmware_bundles GET        /admin/firmware_bundles(.:format)                                                        admin/firmware_bundles#index
+#                                                    POST       /admin/firmware_bundles(.:format)                                                        admin/firmware_bundles#create
+#                          new_admin_firmware_bundle GET        /admin/firmware_bundles/new(.:format)                                                    admin/firmware_bundles#new
+#                         edit_admin_firmware_bundle GET        /admin/firmware_bundles/:id/edit(.:format)                                               admin/firmware_bundles#edit
+#                              admin_firmware_bundle GET        /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#show
+#                                                    PATCH      /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#update
+#                                                    PUT        /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#update
+#                                                    DELETE     /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#destroy
+#                         admin_paper_trail_versions GET        /admin/paper_trail_versions(.:format)                                                    admin/paper_trail_versions#index
+#                          admin_paper_trail_version GET        /admin/paper_trail_versions/:id(.:format)                                                admin/paper_trail_versions#show
+#                            remove_badge_admin_user POST       /admin/users/:id/remove_badge(.:format)                                                  admin/users#remove_badge
+#                             begin_merge_admin_user GET        /admin/users/:id/begin_merge(.:format)                                                   admin/users#begin_merge
+#                            review_merge_admin_user GET        /admin/users/:id/review_merge(.:format)                                                  admin/users#review_merge
+#                                   merge_admin_user POST       /admin/users/:id/merge(.:format)                                                         admin/users#merge
+#                          merge_complete_admin_user GET        /admin/users/:id/merge_complete(.:format)                                                admin/users#merge_complete
+#                                        admin_users GET        /admin/users(.:format)                                                                   admin/users#index
+#                                                    POST       /admin/users(.:format)                                                                   admin/users#create
+#                                     new_admin_user GET        /admin/users/new(.:format)                                                               admin/users#new
+#                                    edit_admin_user GET        /admin/users/:id/edit(.:format)                                                          admin/users#edit
+#                                         admin_user GET        /admin/users/:id(.:format)                                                               admin/users#show
+#                                                    PATCH      /admin/users/:id(.:format)                                                               admin/users#update
+#                                                    PUT        /admin/users/:id(.:format)                                                               admin/users#update
+#                                                    DELETE     /admin/users/:id(.:format)                                                               admin/users#destroy
 #                                      admin_waivers GET        /admin/waivers(.:format)                                                                 admin/waivers#index
 #                                  edit_admin_waiver GET        /admin/waivers/:id/edit(.:format)                                                        admin/waivers#edit
 #                                       admin_waiver GET        /admin/waivers/:id(.:format)                                                             admin/waivers#show
@@ -78,61 +134,6 @@ end
 #                                                    PATCH      /admin/wireless_credential_sets/:id(.:format)                                            admin/wireless_credential_sets#update
 #                                                    PUT        /admin/wireless_credential_sets/:id(.:format)                                            admin/wireless_credential_sets#update
 #                                                    DELETE     /admin/wireless_credential_sets/:id(.:format)                                            admin/wireless_credential_sets#destroy
-#                     activate_admin_firmware_bundle POST       /admin/firmware_bundles/:id/activate(.:format)                                           admin/firmware_bundles#activate
-#                             admin_firmware_bundles GET        /admin/firmware_bundles(.:format)                                                        admin/firmware_bundles#index
-#                                                    POST       /admin/firmware_bundles(.:format)                                                        admin/firmware_bundles#create
-#                          new_admin_firmware_bundle GET        /admin/firmware_bundles/new(.:format)                                                    admin/firmware_bundles#new
-#                         edit_admin_firmware_bundle GET        /admin/firmware_bundles/:id/edit(.:format)                                               admin/firmware_bundles#edit
-#                              admin_firmware_bundle GET        /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#show
-#                                                    PATCH      /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#update
-#                                                    PUT        /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#update
-#                                                    DELETE     /admin/firmware_bundles/:id(.:format)                                                    admin/firmware_bundles#destroy
-#                               admin_certifications GET        /admin/certifications(.:format)                                                          admin/certifications#index
-#                                                    POST       /admin/certifications(.:format)                                                          admin/certifications#create
-#                            new_admin_certification GET        /admin/certifications/new(.:format)                                                      admin/certifications#new
-#                           edit_admin_certification GET        /admin/certifications/:id/edit(.:format)                                                 admin/certifications#edit
-#                                admin_certification GET        /admin/certifications/:id(.:format)                                                      admin/certifications#show
-#                                                    PATCH      /admin/certifications/:id(.:format)                                                      admin/certifications#update
-#                                                    PUT        /admin/certifications/:id(.:format)                                                      admin/certifications#update
-#                                                    DELETE     /admin/certifications/:id(.:format)                                                      admin/certifications#destroy
-#                                    admin_dashboard GET        /admin/dashboard(.:format)                                                               admin/dashboard#index
-#            regenerate_api_token_admin_badge_reader POST       /admin/badge_readers/:id/regenerate_api_token(.:format)                                  admin/badge_readers#regenerate_api_token
-#                reveal_api_token_admin_badge_reader GET        /admin/badge_readers/:id/reveal_api_token(.:format)                                      admin/badge_readers#reveal_api_token
-#             request_manual_open_admin_badge_reader POST       /admin/badge_readers/:id/request_manual_open(.:format)                                   admin/badge_readers#request_manual_open
-#                                admin_badge_readers GET        /admin/badge_readers(.:format)                                                           admin/badge_readers#index
-#                                                    POST       /admin/badge_readers(.:format)                                                           admin/badge_readers#create
-#                             new_admin_badge_reader GET        /admin/badge_readers/new(.:format)                                                       admin/badge_readers#new
-#                            edit_admin_badge_reader GET        /admin/badge_readers/:id/edit(.:format)                                                  admin/badge_readers#edit
-#                                 admin_badge_reader GET        /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#show
-#                                                    PATCH      /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
-#                                                    PUT        /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#update
-#                                                    DELETE     /admin/badge_readers/:id(.:format)                                                       admin/badge_readers#destroy
-#                                  admin_badge_scans GET        /admin/badge_scans(.:format)                                                             admin/badge_scans#index
-#                                   admin_badge_scan GET        /admin/badge_scans/:id(.:format)                                                         admin/badge_scans#show
-#                         admin_paper_trail_versions GET        /admin/paper_trail_versions(.:format)                                                    admin/paper_trail_versions#index
-#                          admin_paper_trail_version GET        /admin/paper_trail_versions/:id(.:format)                                                admin/paper_trail_versions#show
-#                revoke_admin_certification_issuance GET        /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
-#                                                    POST       /admin/certification_issuances/:id/revoke(.:format)                                      admin/certification_issuances#revoke
-#                      admin_certification_issuances GET        /admin/certification_issuances(.:format)                                                 admin/certification_issuances#index
-#                                                    POST       /admin/certification_issuances(.:format)                                                 admin/certification_issuances#create
-#                   new_admin_certification_issuance GET        /admin/certification_issuances/new(.:format)                                             admin/certification_issuances#new
-#                  edit_admin_certification_issuance GET        /admin/certification_issuances/:id/edit(.:format)                                        admin/certification_issuances#edit
-#                       admin_certification_issuance GET        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#show
-#                                                    PATCH      /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
-#                                                    PUT        /admin/certification_issuances/:id(.:format)                                             admin/certification_issuances#update
-#                            remove_badge_admin_user POST       /admin/users/:id/remove_badge(.:format)                                                  admin/users#remove_badge
-#                             begin_merge_admin_user GET        /admin/users/:id/begin_merge(.:format)                                                   admin/users#begin_merge
-#                            review_merge_admin_user GET        /admin/users/:id/review_merge(.:format)                                                  admin/users#review_merge
-#                                   merge_admin_user POST       /admin/users/:id/merge(.:format)                                                         admin/users#merge
-#                          merge_complete_admin_user GET        /admin/users/:id/merge_complete(.:format)                                                admin/users#merge_complete
-#                                        admin_users GET        /admin/users(.:format)                                                                   admin/users#index
-#                                                    POST       /admin/users(.:format)                                                                   admin/users#create
-#                                     new_admin_user GET        /admin/users/new(.:format)                                                               admin/users#new
-#                                    edit_admin_user GET        /admin/users/:id/edit(.:format)                                                          admin/users#edit
-#                                         admin_user GET        /admin/users/:id(.:format)                                                               admin/users#show
-#                                                    PATCH      /admin/users/:id(.:format)                                                               admin/users#update
-#                                                    PUT        /admin/users/:id(.:format)                                                               admin/users#update
-#                                                    DELETE     /admin/users/:id(.:format)                                                               admin/users#destroy
 #                                     admin_comments GET        /admin/comments(.:format)                                                                admin/comments#index
 #                                                    POST       /admin/comments(.:format)                                                                admin/comments#create
 #                                      admin_comment GET        /admin/comments/:id(.:format)                                                            admin/comments#show
@@ -145,6 +146,7 @@ end
 #             api_badge_writers_wireless_credentials GET        /api/badge_writers/wireless_credentials(.:format)                                        api/badge_writers#wireless_credentials
 #                          api_badge_writers_program POST       /api/badge_writers/program(.:format)                                                     api/badge_writers#program
 #                      api_badge_readers_access_list GET        /api/badge_readers/access_list(.:format)                                                 api/badge_readers#access_list
+#               api_badge_readers_binary_access_list GET        /api/badge_readers/binary_access_list(.:format)                                          api/badge_readers#binary_access_list
 #                    api_badge_readers_firmware_blob GET        /api/badge_readers/firmware_blob(.:format)                                               api/badge_readers#firmware_blob
 #             api_badge_readers_wireless_credentials GET        /api/badge_readers/wireless_credentials(.:format)                                        api/badge_readers#wireless_credentials
 #                     api_badge_readers_record_scans POST       /api/badge_readers/record_scans(.:format)                                                api/badge_readers#record_scans
