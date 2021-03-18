@@ -1,12 +1,12 @@
-[submodule "backend/python3-rpi-rc522/pi-rc522"]
-	path = backend/python3-rpi-rc522/pi-rc522
+[submodule "future/backend/python3-rpi-rc522/pi-rc522"]
+	path = future/backend/python3-rpi-rc522/pi-rc522
 	url = https://github.com/ondryaso/pi-rc522.git
-[submodule "backend/ESP32-NeoPixel-WS2812-RMT"]
-	path = backend/ESP32-NeoPixel-WS2812-RMT
+[submodule "future/backend/ESP32-NeoPixel-WS2812-RMT"]
+	path = future/backend/ESP32-NeoPixel-WS2812-RMT
 	url = https://github.com/JSchaenzle/ESP32-NeoPixel-WS2812-RMT
-[submodule "backend/esp32-uuid"]
-	path = backend/esp32-uuid
+[submodule "future/backend/esp32-uuid"]
+	path = future/backend/esp32-uuid
 	url = https://github.com/bcran/esp32-uuid.git
-[submodule "backend/writer/lv_port_esp32"]
-	path = backend/writer/lv_port_esp32
+[submodule "future/backend/writer/lv_port_esp32"]
+	path = future/backend/writer/lv_port_esp32
 	url = https://github.com/lvgl/lv_port_esp32
