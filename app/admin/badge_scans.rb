@@ -7,7 +7,7 @@ ActiveAdmin.register BadgeScan do
 
   filter :badge_reader
   filter :user_id, as: :search_select_filter, display_name: 'dropdown_display_name', fields: User::DROPDOWN_SEARCH_FIELDS
-  filter :badge_id, label: 'Badge ID'
+  filter :badge_number_equals, label: 'Badge Number'
   filter :scanned_at
 
   scope :authorized, default: true
@@ -26,8 +26,7 @@ ActiveAdmin.register BadgeScan do
     attributes_table do
       row(:badge_reader)
       row(:user)
-      row('Badge ID', &:badge_id)
-      row(:badge_token) { '[hidden]' if resource.badge_token }
+      row(:badge_number) { |badge_scan| reveal_link("Badge number: #{badge_scan.badge_number || "unknown"}") }
       row(:authorized)
       row(:scanned_at)
     end

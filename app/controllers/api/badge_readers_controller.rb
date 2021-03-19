@@ -43,4 +43,22 @@ class Api::BadgeReadersController < Api::ApiController
 
     render json: { status: :ok }
   end
+
+  def record_binary_scan
+    request_body = request.body.read
+    badge_number, success = request_body.unpack("L<C")
+    success = success == 1
+
+    TransactionRetry.transaction do
+      resource.badge_scans.create!(
+        badge_number: badge_number,
+        user: User.find_by(badge_number: badge_number),
+        authorized: success,
+        scanned_at: Time.now, # TODO: have the badge reader report the time the scan happened and include it here
+        submitted_at: Time.now
+      )
+    end
+
+    render plain: 'OK'
+  end
 end

@@ -32,6 +32,7 @@ Rails.application.routes.draw do
       get :firmware_blob
       get :wireless_credentials
       post :record_scans
+      post :record_binary_scan
     end
   end
 end
@@ -150,6 +151,7 @@ end
 #                    api_badge_readers_firmware_blob GET        /api/badge_readers/firmware_blob(.:format)                                               api/badge_readers#firmware_blob
 #             api_badge_readers_wireless_credentials GET        /api/badge_readers/wireless_credentials(.:format)                                        api/badge_readers#wireless_credentials
 #                     api_badge_readers_record_scans POST       /api/badge_readers/record_scans(.:format)                                                api/badge_readers#record_scans
+#               api_badge_readers_record_binary_scan POST       /api/badge_readers/record_binary_scan(.:format)                                          api/badge_readers#record_binary_scan
 #                      rails_postmark_inbound_emails POST       /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #                         rails_relay_inbound_emails POST       /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
 #                      rails_sendgrid_inbound_emails POST       /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                  action_mailbox/ingresses/sendgrid/inbound_emails#create

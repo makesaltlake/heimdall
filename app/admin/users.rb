@@ -11,9 +11,10 @@ ActiveAdmin.register User do
   filter :has_multiple_household_members, as: :boolean, filters: [:eq], label: 'Has Household Members'
   filter :current_sign_in_at, label: 'Last Signed In'
   filter :subscription_created
-  filter :has_a_badge, as: :boolean, filters: [:eq]
-  filter :badge_token_set_at, label: 'Badge Programmed At'
-  filter :badge_number
+  # commented out - badge tokens are not currently used
+  # filter :has_a_badge, as: :boolean, filters: [:eq]
+  # filter :badge_token_set_at, label: 'Badge Programmed At'
+  filter :badge_number_equals, label: 'Badge Number'
   filter :has_signed_a_waiver, as: :boolean, filters: [:eq]
   filter :created_at
   filter :super_user
@@ -45,6 +46,7 @@ ActiveAdmin.register User do
       row('Last Signed In', &:current_sign_in_at)
       row('Failed Sign In Attempts', &:failed_attempts)
       row('Household members') { |user| user.household_users.order(:name).map { |other_user| auto_link(other_user) }.join('<br/>').html_safe }
+      row(:badge_number) { |user| user.badge_number && reveal_link("Badge number: #{user.badge_number}") }
       row('Instructs these certifications') { |user| user.instructed_certifications.order(:name).map { |certification| auto_link(certification) }.join('<br/>').html_safe }
       row('Manual access to these badge readers') { |user| user.manual_user_badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join('<br/>').html_safe }
       active_storage_input_row(:profile_image)
@@ -84,33 +86,34 @@ ActiveAdmin.register User do
       column(:signed_at)
     end
 
-    panel 'Badge' do
-      attributes_table_for resource do
-        row(:has_a_badge) do
-          if user.badge_token
-            status_tag 'Yes'
-            text_node " - programmed on #{I18n.l(user.badge_token_set_at)}. "
-            text_node link_to('Remove', remove_badge_admin_user_path(resource), method: :post, data: { confirm: "Are you sure you want to remove #{resource.name}'s badge? You won't be able to undo this; their badge (or a new badge) will need to be re-programmed to their account in order to work again. (There is no need to do this for members whose subscriptions have lapsed as their access will be disabled automatically.)" })
-          else
-            status_tag 'No'
-          end
-        end
-      end
+    # commented out until new-style badge readers are in use
+    # panel 'Badge' do
+    #   attributes_table_for resource do
+    #     row(:has_a_badge) do
+    #       if user.badge_token
+    #         status_tag 'Yes'
+    #         text_node " - programmed on #{I18n.l(user.badge_token_set_at)}. "
+    #         text_node link_to('Remove', remove_badge_admin_user_path(resource), method: :post, data: { confirm: "Are you sure you want to remove #{resource.name}'s badge? You won't be able to undo this; their badge (or a new badge) will need to be re-programmed to their account in order to work again. (There is no need to do this for members whose subscriptions have lapsed as their access will be disabled automatically.)" })
+    #       else
+    #         status_tag 'No'
+    #       end
+    #     end
+    #   end
 
-      form method: :post, action: set_currently_programming_user_admin_badge_writers_path do
-        span 'Program a new badge for this user using the following badge writer:'
+    #   form method: :post, action: set_currently_programming_user_admin_badge_writers_path do
+    #     span 'Program a new badge for this user using the following badge writer:'
 
-        select name: 'badge_writer[id]' do
-          BadgeWriter.all.order(:name).each do |badge_writer|
-            option badge_writer.name, value: badge_writer.id
-          end
-        end
+    #     select name: 'badge_writer[id]' do
+    #       BadgeWriter.all.order(:name).each do |badge_writer|
+    #         option badge_writer.name, value: badge_writer.id
+    #       end
+    #     end
 
-        input type: :hidden, name: 'badge_writer[currently_programming_user_id]', value: resource.id
-        input type: :hidden, name: 'authenticity_token', value: form_authenticity_token
-        input type: :submit, value: 'Start Programming'
-      end
-    end
+    #     input type: :hidden, name: 'badge_writer[currently_programming_user_id]', value: resource.id
+    #     input type: :hidden, name: 'authenticity_token', value: form_authenticity_token
+    #     input type: :submit, value: 'Start Programming'
+    #   end
+    # end
 
     paginated_table_panel(
       resource.badge_access_grants.includes(:badge_reader).order('badge_readers.name'),

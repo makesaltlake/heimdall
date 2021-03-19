@@ -434,7 +434,8 @@ CREATE TABLE public.badge_scans (
     updated_at timestamp(6) without time zone NOT NULL,
     badge_token character varying,
     badge_id character varying,
-    authorized boolean DEFAULT true
+    authorized boolean DEFAULT true,
+    badge_number integer
 );
 
 
@@ -1494,6 +1495,13 @@ CREATE INDEX index_stripe_subscriptions_on_user_id ON public.stripe_subscription
 
 
 --
+-- Name: index_users_on_badge_number; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_users_on_badge_number ON public.users USING btree (badge_number);
+
+
+--
 -- Name: index_users_on_badge_token; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1818,6 +1826,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210115130932'),
 ('20210115130933'),
 ('20210130012843'),
-('20210318041100');
+('20210318041100'),
+('20210319104609');
 
 

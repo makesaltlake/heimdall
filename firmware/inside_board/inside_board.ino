@@ -35,6 +35,8 @@ const char* HEIMDALL_ACCESS_TOKEN = "89e18cda81d5727d06ccf6819f63c6da0fb5dc63";
 SemaphoreHandle_t serialSemaphore;
 SemaphoreHandle_t badgeAccessListSemaphore;
 
+QueueHandle_t badgeScanQueue;
+
 uint8_t globalBadgeAccessListData[GLOBAL_BADGE_ACCESS_LIST_SIZE_IN_BYTES];
 uint32_t* globalBadgeAccessListBadgeCount = (uint32_t*) globalBadgeAccessListData;
 uint32_t* globalBadgeAccessListBadges = (uint32_t*) globalBadgeAccessListData + 1;
@@ -79,6 +81,11 @@ class BinaryStream: public Stream {
     }
 };
 
+struct BadgeScanReport {
+  uint32_t badgeNumber;
+  uint8_t success;
+};
+
 void logToSerial(const char* data) {
   xSemaphoreTake(serialSemaphore, portMAX_DELAY);
   Serial.println(data);
@@ -88,8 +95,11 @@ void logToSerial(const char* data) {
 void setup() {
   serialSemaphore = xSemaphoreCreateBinary();
   xSemaphoreGive(serialSemaphore);
+  
   badgeAccessListSemaphore = xSemaphoreCreateBinary();
   xSemaphoreGive(badgeAccessListSemaphore);
+
+  badgeScanQueue = xQueueCreate(200, sizeof(BadgeScanReport));
 
   ((uint32_t*) globalBadgeAccessListData)[0] = 0;
   
@@ -110,6 +120,7 @@ void setup() {
 
   xTaskCreatePinnedToCore(wifiConnectTask, "wifiConnectTask", 4096, NULL, 1, NULL, 0);
   xTaskCreatePinnedToCore(badgeAccessListFetchTask, "badgeAccessListFetchTask", 4096, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(badgeScanReportTask, "badgeScanReportTask", 4096, NULL, 1, NULL, 0);
 }
 
 void wifiConnectTask(void* parameter) {
@@ -151,8 +162,44 @@ void badgeAccessListFetchTask(void* parameter) {
     } else {
       logToSerial("Nope, response code was not right.");
     }
-    
+
     vTaskDelay(BADGE_ACCESS_LIST_FETCH_INTERVAL / portTICK_PERIOD_MS);
+  }
+}
+
+void badgeScanReportTask(void* parameter) {
+  while (true) {
+    BadgeScanReport badgeScanReport;
+    
+    if (xQueuePeek(badgeScanQueue, &badgeScanReport, portMAX_DELAY) == pdFALSE) {
+      // shouldn't happen since we instruct xQueueReceive to wait forever, but just in case
+      Serial.println("Whoa, failed to retrieve a queued badge scan. WTF");
+      continue;
+    }
+
+    Serial.println("About to report a badge scan");
+
+    if (WiFi.status() != WL_CONNECTED) {
+      vTaskDelay(1000 / portTICK_PERIOD_MS);
+      continue;
+    }
+
+    HTTPClient client;
+    client.begin("http://10.0.2.184:5000/api/badge_readers/record_binary_scan");
+    client.addHeader("Authorization", "Bearer 89e18cda81d5727d06ccf6819f63c6da0fb5dc63");
+    client.addHeader("Content-Type", "application/octet-stream");
+
+    int responseCode = client.POST(((uint8_t*) &badgeScanReport), sizeof(badgeScanReport));
+
+    if (responseCode != 200) {
+      Serial.println("Couldn't record badge scan, trying again in a few moments");
+      vTaskDelay(5000 / portTICK_PERIOD_MS);
+      continue;
+    }
+
+    Serial.println("Badge scan reported.");
+
+    xQueueReceive(badgeScanQueue, &badgeScanReport, portMAX_DELAY);
   }
 }
 
@@ -199,6 +246,10 @@ void loop() {
 
         if (isAuthorized) {
           Serial.println("Authorized!");
+
+          BadgeScanReport badgeScanReport = {badgeNumber, true};
+          xQueueSend(badgeScanQueue, &badgeScanReport, 0);
+          
           digitalWrite(PIN_WIEGAND_LED, HIGH);
           digitalWrite(PIN_RELAY_1, HIGH);
 
@@ -208,6 +259,9 @@ void loop() {
           digitalWrite(PIN_RELAY_1, LOW);
         } else {
           Serial.println("Not authorized.");
+
+          BadgeScanReport badgeScanReport = {badgeNumber, false};
+          xQueueSend(badgeScanQueue, &badgeScanReport, 0);
 
           for (int i = 0; i < 3; i++) {
             digitalWrite(PIN_WIEGAND_LED, HIGH);

@@ -100,3 +100,10 @@ module ActiveAdminActiveStorageFormHelper
   end
 end
 ActiveAdmin::Views::ActiveAdminForm.include(ActiveAdminActiveStorageFormHelper)
+
+module ActiveAdminRevealLinks
+  def reveal_link(text, label = '[reveal]')
+    a label, onclick: "event.preventDefault(); alert(#{JSON.generate(text.to_s)})", href: '#'
+  end
+end
+ActiveAdmin::Views::Pages::Show.include(ActiveAdminRevealLinks)
