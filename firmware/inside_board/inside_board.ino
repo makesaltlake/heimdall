@@ -13,8 +13,10 @@ const char* HEIMDALL_ACCESS_TOKEN = "89e18cda81d5727d06ccf6819f63c6da0fb5dc63";
 
 #define WIFI_RECONNECT_INTERVAL 20000
 #define BADGE_ACCESS_LIST_FETCH_INTERVAL 10000
-// TODO: increase muchly
-#define GLOBAL_BADGE_ACCESS_LIST_SIZE_IN_BYTES 120
+#define DOOR_OPEN_TIME 10000
+
+// This will support ~8,000 active badges; it will need to be increased if we ever run above that limit.
+#define GLOBAL_BADGE_ACCESS_LIST_SIZE_IN_BYTES 40000
 
 #define WIEGAND_KEYPAD_BITS 4
 #define WIEGAND_ENTER_KEY 11
@@ -147,20 +149,14 @@ void badgeAccessListFetchTask(void* parameter) {
     client.addHeader("Authorization", "Bearer 89e18cda81d5727d06ccf6819f63c6da0fb5dc63");
     int responseCode = client.GET();
     if (responseCode == 200) {
-      logToSerial("Got a badge reader response!");
+      logToSerial("Badge access list reloaded");
 
       xSemaphoreTake(badgeAccessListSemaphore, portMAX_DELAY);
       BinaryStream responseStream(globalBadgeAccessListData, GLOBAL_BADGE_ACCESS_LIST_SIZE_IN_BYTES);
       client.writeToStream(&responseStream);
-      
-      Serial.println("Number of badges:");
-      Serial.println(*globalBadgeAccessListBadgeCount);
-      Serial.println("First badge:");
-      Serial.println((long long) globalBadgeAccessListBadges[0]);
-
       xSemaphoreGive(badgeAccessListSemaphore);
     } else {
-      logToSerial("Nope, response code was not right.");
+      logToSerial("Couldn't reload badge access list");
     }
 
     vTaskDelay(BADGE_ACCESS_LIST_FETCH_INTERVAL / portTICK_PERIOD_MS);
@@ -173,11 +169,11 @@ void badgeScanReportTask(void* parameter) {
     
     if (xQueuePeek(badgeScanQueue, &badgeScanReport, portMAX_DELAY) == pdFALSE) {
       // shouldn't happen since we instruct xQueueReceive to wait forever, but just in case
-      Serial.println("Whoa, failed to retrieve a queued badge scan. WTF");
+      logToSerial("Whoa, failed to retrieve a queued badge scan. WTF");
       continue;
     }
 
-    Serial.println("About to report a badge scan");
+    logToSerial("About to report a badge scan");
 
     if (WiFi.status() != WL_CONNECTED) {
       vTaskDelay(1000 / portTICK_PERIOD_MS);
@@ -192,12 +188,12 @@ void badgeScanReportTask(void* parameter) {
     int responseCode = client.POST(((uint8_t*) &badgeScanReport), sizeof(badgeScanReport));
 
     if (responseCode != 200) {
-      Serial.println("Couldn't record badge scan, trying again in a few moments");
+      logToSerial("Couldn't record badge scan, trying again in a few moments");
       vTaskDelay(5000 / portTICK_PERIOD_MS);
       continue;
     }
 
-    Serial.println("Badge scan reported.");
+    logToSerial("Badge scan reported");
 
     xQueueReceive(badgeScanQueue, &badgeScanReport, portMAX_DELAY);
   }
@@ -231,8 +227,6 @@ void loop() {
       if (currentlyReadingBadgeNumberBits == 26) {
         // Wiegand badge. We're ignoring the parity bits for now; that's probably fine, but it wouldn't hurt to check them in the future.
         uint32_t badgeNumber = (currentlyReadingBadgeNumber >> 1) & 0xFFFFFF;
-        Serial.println("Read badge number:");
-        Serial.println(badgeNumber);
 
         bool isAuthorized = false;
 
@@ -245,7 +239,7 @@ void loop() {
         xSemaphoreGive(badgeAccessListSemaphore);
 
         if (isAuthorized) {
-          Serial.println("Authorized!");
+          logToSerial("Authorized!");
 
           BadgeScanReport badgeScanReport = {badgeNumber, true};
           xQueueSend(badgeScanQueue, &badgeScanReport, 0);
@@ -253,12 +247,12 @@ void loop() {
           digitalWrite(PIN_WIEGAND_LED, HIGH);
           digitalWrite(PIN_RELAY_1, HIGH);
 
-          vTaskDelay(4000 / portTICK_PERIOD_MS);
+          vTaskDelay(DOOR_OPEN_TIME / portTICK_PERIOD_MS);
 
           digitalWrite(PIN_WIEGAND_LED, LOW);
           digitalWrite(PIN_RELAY_1, LOW);
         } else {
-          Serial.println("Not authorized.");
+          logToSerial("Not authorized.");
 
           BadgeScanReport badgeScanReport = {badgeNumber, false};
           xQueueSend(badgeScanQueue, &badgeScanReport, 0);
@@ -276,20 +270,13 @@ void loop() {
           }
         }
       } else if (currentlyReadingBadgeNumberBits == WIEGAND_KEYPAD_BITS) {
-        Serial.println("Read keypad press:");
-        Serial.println(currentlyReadingBadgeNumber);
+        // TODO: do something more useful with keypad presses
+        // Serial.println("Read keypad press:");
+        // Serial.println(currentlyReadingBadgeNumber);
       }
       
       currentlyReadingBadgeNumber = 0;
       currentlyReadingBadgeNumberBits = 0;
-
-//      digitalWrite(PIN_WIEGAND_LED, HIGH);
-//      digitalWrite(PIN_WIEGAND_BPR, HIGH);
-
-//      vTaskDelay(250 / portTICK_PERIOD_MS);
-
-//      digitalWrite(PIN_WIEGAND_LED, LOW);
-//      digitalWrite(PIN_WIEGAND_BPR, LOW);
     }
   }
 }
