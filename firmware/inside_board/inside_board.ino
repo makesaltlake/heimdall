@@ -4,10 +4,10 @@
 const char* WIFI_SSID = "Make Salt Lake";
 const char* WIFI_PASSWORD = "makerspace";
 
-const char* HEIMDALL_HOST = "10.0.2.184";
+const char* HEIMDALL_HOST = "10.0.2.184:5000";
 const bool HEIMDALL_SSL = false;
 
-const char* HEIMDALL_ACCESS_TOKEN = "89e18cda81d5727d06ccf6819f63c6da0fb5dc63";
+const char* HEIMDALL_BADGE_READER_API_TOKEN = "89e18cda81d5727d06ccf6819f63c6da0fb5dc63";
 
 // Constants and other fun stuff
 
@@ -88,6 +88,24 @@ struct BadgeScanReport {
   uint8_t success;
 };
 
+String generateUrl(const char* apiCall) {
+  String result = "http";
+  if (HEIMDALL_SSL) {
+    result += "s";
+  }
+  result += "://";
+  result += HEIMDALL_HOST;
+  result += "/api/badge_readers/";
+  result += apiCall;
+  return result;
+}
+
+String generateAuthorizationHeader() {
+  String result = "Bearer ";
+  result += HEIMDALL_BADGE_READER_API_TOKEN;
+  return result;
+}
+
 void logToSerial(const char* data) {
   xSemaphoreTake(serialSemaphore, portMAX_DELAY);
   Serial.println(data);
@@ -145,8 +163,8 @@ void badgeAccessListFetchTask(void* parameter) {
     }
 
     HTTPClient client;
-    client.begin("http://10.0.2.184:5000/api/badge_readers/binary_access_list");
-    client.addHeader("Authorization", "Bearer 89e18cda81d5727d06ccf6819f63c6da0fb5dc63");
+    client.begin(generateUrl("binary_access_list"));
+    client.addHeader("Authorization", generateAuthorizationHeader());
     int responseCode = client.GET();
     if (responseCode == 200) {
       logToSerial("Badge access list reloaded");
@@ -181,8 +199,8 @@ void badgeScanReportTask(void* parameter) {
     }
 
     HTTPClient client;
-    client.begin("http://10.0.2.184:5000/api/badge_readers/record_binary_scan");
-    client.addHeader("Authorization", "Bearer 89e18cda81d5727d06ccf6819f63c6da0fb5dc63");
+    client.begin(generateUrl("record_binary_scan"));
+    client.addHeader("Authorization", generateAuthorizationHeader());
     client.addHeader("Content-Type", "application/octet-stream");
 
     int responseCode = client.POST(((uint8_t*) &badgeScanReport), sizeof(badgeScanReport));
