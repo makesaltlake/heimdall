@@ -1,28 +1,42 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 
-const char* WIFI_SSID = "Make Salt Lake";
-const char* WIFI_PASSWORD = "makerspace";
+// ENTER THE BADGE READER'S API KEY BELOW:
+const char* HEIMDALL_BADGE_READER_API_TOKEN = "";
 
-const char* HEIMDALL_HOST = "10.0.2.184:5000";
-const bool HEIMDALL_SSL = false;
+// THEN ENTER THE WI-FI CREDENTIALS THE BADGE READER SHOULD USE TO CONNECT:
+const char* WIFI_SSID = "";
+const char* WIFI_PASSWORD = "";
 
-const char* HEIMDALL_BADGE_READER_API_TOKEN = "89e18cda81d5727d06ccf6819f63c6da0fb5dc63";
+// THEN ENTER THE HOST (AND PORT, IF NEEDED) HEIMDALL SHOULD CONNECT TO:
+const char* HEIMDALL_HOST = "";
+const bool HEIMDALL_SSL = true;
+
+// THEN PROGRAM THE BADGE READER. You shouldn't have to modify any of the rest of this file.
 
 // Constants and other fun stuff
 
+// The interval at which we should attempt to reconnect to the network if we get disconnected
 #define WIFI_RECONNECT_INTERVAL 20000
-#define BADGE_ACCESS_LIST_FETCH_INTERVAL 10000
+// The interval at which we should fetch the list of badges that should be authorized from the server
+#define BADGE_ACCESS_LIST_FETCH_INTERVAL 300000
+// How long the door strike should stay unlocked for when a badge has been accepted
 #define DOOR_OPEN_TIME 10000
-#define KEYPAD_TIMEOUT 5000
+// How long the keypad should wait for more digits to be pressed before timing out
+#define KEYPAD_TIMEOUT 10000
 
-// This will support 10,000 active badges and numeric codes; it will need to be increased if we ever run above that limit.
+// The number of allowed badge or keypad entries to support. 10,000 seems like enough for now; we will need to increase
+// this if we ever need to run above that limit.
 #define GLOBAL_ACCESS_LIST_SIZE 10000
 
+// The number of bits of data that the keypad hooked up to this badge reader board sends when keys are pressed
 #define WIEGAND_KEYPAD_BITS 4
+// The code sent by the badge reader when the "enter" key is pressed
 #define WIEGAND_ENTER_KEY 11
+// The code sent by the badge reader when the "escape" key is pressed
 #define WIEGAND_ESCAPE_KEY 10
 
+// Pin definitions; these correspond to the Heimdall inside board revisions from 2020 and 2021 (and possibly beyond)
 #define PIN_WIEGAND_LED 13
 #define PIN_WIEGAND_BPR 14
 #define PIN_WIEGAND_D1 39
@@ -32,19 +46,32 @@ const char* HEIMDALL_BADGE_READER_API_TOKEN = "89e18cda81d5727d06ccf6819f63c6da0
 #define PIN_RELAY_2 16
 #define PIN_RELAY_3 4
 
+// Access control record type constants. Used both when sending allowed access control records to the badge reader and
+// when sending back access reports to the server.
 #define ACCESS_RECORD_TYPE_BADGE 1
 #define ACCESS_RECORD_TYPE_KEYPAD 2
 #define ACCESS_RECORD_TYPE_KEYPAD_ESCAPE 3
 #define ACCESS_RECORD_TYPE_KEYPAD_TIMEOUT 4
 
 // Networking code runs on core 0 and Arduino code runs on core 1 by default.
-// So, we'll use core 0 for network fetching and pushing tasks (e.g. updating the access list and pushing "a user just badged in" messages to the backend) and core 1 to talk to the physical badge reader and relays.
+// So, we use core 0 for network fetching and pushing tasks (e.g. updating the access list and pushing "a user just
+// badged in" messages to the backend) and core 1 to talk to the physical badge reader and relays.
 
+// Semaphore that logToSerial synchronizes on before writing to the serial port, to avoid cores stepping on each
+// other's toes. TODO: Check to see if this is necessary or if Serial contains its own built-in synchronization
+// primitives
 SemaphoreHandle_t serialSemaphore;
+// Semaphore used to synchronize access to globalAccessListData so that the badge scanner task doesn't attempt to check
+// a badge for validity right as the badge update task is updating the list with new data
 SemaphoreHandle_t badgeAccessListSemaphore;
 
+// Queue used to push badge access attempts into the task that handles reporting them to the server
 QueueHandle_t badgeScanQueue;
 
+// The `pragma pack(push, 1)` bit causes the fields in the struct to be packed next to each other instead of having
+// extra memory left around its fields to pad them out to multiples of 4 bytes; this is needed since we send data back
+// and forth between the server by reading and writing the structs' underlying memory as if they were byte arrays, and
+// the padding introduced by the architecture would mess that up.
 #pragma pack(push, 1)
 struct AccessRecord {
   uint8_t type;
@@ -65,6 +92,11 @@ uint8_t globalAccessListData[GLOBAL_ACCESS_LIST_SIZE_IN_BYTES];
 uint32_t* globalAccessListRecordCount = (uint32_t*) globalAccessListData;
 AccessRecord* globalAccessListRecords = (AccessRecord*) (globalAccessListData + sizeof(uint32_t));
 
+// A hacky class to work around a hacky problem: HTTPClient's `getString()` method returns a String, but calling said
+// String's `getBytes` method to extract the data trims off everything after the first null character. We need to
+// preserve null characters, so our workaround is to have our own custom Stream implementation that we can pass to
+// HTTPClient's `writeToStream` method. The right way to solve this would be to submit BinaryStream upstream to the
+// arduino-esp32 core and flesh out its methods a bit more, then use the upstreamed version here.
 class BinaryStream: public Stream {
   size_t bufferSize;
 
@@ -160,6 +192,7 @@ void setup() {
   xTaskCreatePinnedToCore(badgeScanReportTask, "badgeScanReportTask", 16384, NULL, 1, NULL, 0);
 }
 
+// A task that continuously tries to reconnect to the network if we're disconnected.
 void wifiConnectTask(void* parameter) {
   while (true) {
     if (WiFi.status() != WL_CONNECTED) {
@@ -172,6 +205,8 @@ void wifiConnectTask(void* parameter) {
   }
 }
 
+// A task that fetches the badge access list from the server on a cadence, and updates globalAccessListData to contain
+// the newest copy of the data.
 void badgeAccessListFetchTask(void* parameter) {
   while (true) {
     // Wait until WiFi is connected before fetching badges
@@ -198,23 +233,28 @@ void badgeAccessListFetchTask(void* parameter) {
   }
 }
 
+// A task that pops scan reports off of `badgeScanQueue` and sends them to the server.
 void badgeScanReportTask(void* parameter) {
   while (true) {
     BadgeScanReport badgeScanReport;
 
+    // First, take a copy of the most recent scan from the queue, but leave it on the queue in case we fail to report
+    // it.
     if (xQueuePeek(badgeScanQueue, &badgeScanReport, portMAX_DELAY) == pdFALSE) {
       // shouldn't happen since we instruct xQueueReceive to wait forever, but just in case
       logToSerial("Whoa, failed to retrieve a queued badge scan. WTF");
       continue;
     }
 
-    logToSerial("About to report a badge scan");
-
+    // Then, wait if Wi-Fi hasn't started up yet.
     if (WiFi.status() != WL_CONNECTED) {
       vTaskDelay(1000 / portTICK_PERIOD_MS);
       continue;
     }
 
+    logToSerial("About to report a badge scan");
+
+    // Then attempt to report it.
     HTTPClient client;
     client.begin(generateUrl("record_binary_scan"));
     client.addHeader("Authorization", generateAuthorizationHeader());
@@ -222,14 +262,16 @@ void badgeScanReportTask(void* parameter) {
 
     int responseCode = client.POST(((uint8_t*) &badgeScanReport), sizeof(badgeScanReport));
 
+    // If we couldn't do it for some reason, keep the scan report on the queue and try again after a few seconds.
     if (responseCode != 200) {
       logToSerial("Couldn't record badge scan, trying again in a few moments");
-      vTaskDelay(5000 / portTICK_PERIOD_MS);
+      vTaskDelay(15000 / portTICK_PERIOD_MS);
       continue;
     }
 
     logToSerial("Badge scan reported");
 
+    // Finally, now that we successfully reported the scan, remove it from the queue.
     xQueueReceive(badgeScanQueue, &badgeScanReport, portMAX_DELAY);
   }
 }
