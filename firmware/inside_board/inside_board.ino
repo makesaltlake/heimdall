@@ -14,9 +14,10 @@ const char* HEIMDALL_BADGE_READER_API_TOKEN = "89e18cda81d5727d06ccf6819f63c6da0
 #define WIFI_RECONNECT_INTERVAL 20000
 #define BADGE_ACCESS_LIST_FETCH_INTERVAL 10000
 #define DOOR_OPEN_TIME 10000
+#define KEYPAD_TIMEOUT 5000
 
-// This will support ~8,000 active badges; it will need to be increased if we ever run above that limit.
-#define GLOBAL_BADGE_ACCESS_LIST_SIZE_IN_BYTES 40000
+// This will support 10,000 active badges and numeric codes; it will need to be increased if we ever run above that limit.
+#define GLOBAL_ACCESS_LIST_SIZE 10000
 
 #define WIEGAND_KEYPAD_BITS 4
 #define WIEGAND_ENTER_KEY 11
@@ -31,6 +32,11 @@ const char* HEIMDALL_BADGE_READER_API_TOKEN = "89e18cda81d5727d06ccf6819f63c6da0
 #define PIN_RELAY_2 16
 #define PIN_RELAY_3 4
 
+#define ACCESS_RECORD_TYPE_BADGE 1
+#define ACCESS_RECORD_TYPE_KEYPAD 2
+#define ACCESS_RECORD_TYPE_KEYPAD_ESCAPE 3
+#define ACCESS_RECORD_TYPE_KEYPAD_TIMEOUT 4
+
 // Networking code runs on core 0 and Arduino code runs on core 1 by default.
 // So, we'll use core 0 for network fetching and pushing tasks (e.g. updating the access list and pushing "a user just badged in" messages to the backend) and core 1 to talk to the physical badge reader and relays.
 
@@ -39,13 +45,29 @@ SemaphoreHandle_t badgeAccessListSemaphore;
 
 QueueHandle_t badgeScanQueue;
 
-uint8_t globalBadgeAccessListData[GLOBAL_BADGE_ACCESS_LIST_SIZE_IN_BYTES];
-uint32_t* globalBadgeAccessListBadgeCount = (uint32_t*) globalBadgeAccessListData;
-uint32_t* globalBadgeAccessListBadges = (uint32_t*) globalBadgeAccessListData + 1;
+#pragma pack(push, 1)
+struct AccessRecord {
+  uint8_t type;
+  uint8_t length;
+  uint32_t badgeNumber;
+};
+
+struct BadgeScanReport {
+  uint8_t type;
+  uint8_t length;
+  uint32_t badgeNumber;
+  uint8_t success;
+};
+#pragma pack(pop)
+
+#define GLOBAL_ACCESS_LIST_SIZE_IN_BYTES (sizeof(uint32_t) + (GLOBAL_ACCESS_LIST_SIZE * sizeof(AccessRecord)))
+uint8_t globalAccessListData[GLOBAL_ACCESS_LIST_SIZE_IN_BYTES];
+uint32_t* globalAccessListRecordCount = (uint32_t*) globalAccessListData;
+AccessRecord* globalAccessListRecords = (AccessRecord*) (globalAccessListData + sizeof(uint32_t));
 
 class BinaryStream: public Stream {
   size_t bufferSize;
-  
+
   public:
     uint8_t* buffer;
     size_t length;
@@ -55,7 +77,7 @@ class BinaryStream: public Stream {
       this->bufferSize = bufferSize;
       this->length = 0;
     }
-  
+
     size_t write(const uint8_t* buffer, size_t size) override {
       size_t amountToCopy = min(size, bufferSize - length);
       memcpy(this->buffer + this->length, buffer, amountToCopy);
@@ -81,11 +103,6 @@ class BinaryStream: public Stream {
 
     void flush() {
     }
-};
-
-struct BadgeScanReport {
-  uint32_t badgeNumber;
-  uint8_t success;
 };
 
 String generateUrl(const char* apiCall) {
@@ -115,14 +132,14 @@ void logToSerial(const char* data) {
 void setup() {
   serialSemaphore = xSemaphoreCreateBinary();
   xSemaphoreGive(serialSemaphore);
-  
+
   badgeAccessListSemaphore = xSemaphoreCreateBinary();
   xSemaphoreGive(badgeAccessListSemaphore);
 
   badgeScanQueue = xQueueCreate(200, sizeof(BadgeScanReport));
 
-  ((uint32_t*) globalBadgeAccessListData)[0] = 0;
-  
+  (*globalAccessListRecordCount) = 0;
+
   pinMode(2, OUTPUT);
   pinMode(PIN_WIEGAND_LED, OUTPUT);
   pinMode(PIN_WIEGAND_BPR, OUTPUT);
@@ -138,9 +155,9 @@ void setup() {
   digitalWrite(PIN_RELAY_3, LOW);
   Serial.begin(115200);
 
-  xTaskCreatePinnedToCore(wifiConnectTask, "wifiConnectTask", 4096, NULL, 1, NULL, 0);
-  xTaskCreatePinnedToCore(badgeAccessListFetchTask, "badgeAccessListFetchTask", 4096, NULL, 1, NULL, 0);
-  xTaskCreatePinnedToCore(badgeScanReportTask, "badgeScanReportTask", 4096, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(wifiConnectTask, "wifiConnectTask", 16384, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(badgeAccessListFetchTask, "badgeAccessListFetchTask", 16384, NULL, 1, NULL, 0);
+  xTaskCreatePinnedToCore(badgeScanReportTask, "badgeScanReportTask", 16384, NULL, 1, NULL, 0);
 }
 
 void wifiConnectTask(void* parameter) {
@@ -152,10 +169,10 @@ void wifiConnectTask(void* parameter) {
       logToSerial("Already connected to WiFi");
     }
     vTaskDelay(WIFI_RECONNECT_INTERVAL / portTICK_PERIOD_MS);
-  } 
+  }
 }
 
-void badgeAccessListFetchTask(void* parameter) {  
+void badgeAccessListFetchTask(void* parameter) {
   while (true) {
     // Wait until WiFi is connected before fetching badges
     while (WiFi.status() != WL_CONNECTED) {
@@ -170,7 +187,7 @@ void badgeAccessListFetchTask(void* parameter) {
       logToSerial("Badge access list reloaded");
 
       xSemaphoreTake(badgeAccessListSemaphore, portMAX_DELAY);
-      BinaryStream responseStream(globalBadgeAccessListData, GLOBAL_BADGE_ACCESS_LIST_SIZE_IN_BYTES);
+      BinaryStream responseStream(globalAccessListData, GLOBAL_ACCESS_LIST_SIZE_IN_BYTES);
       client.writeToStream(&responseStream);
       xSemaphoreGive(badgeAccessListSemaphore);
     } else {
@@ -184,7 +201,7 @@ void badgeAccessListFetchTask(void* parameter) {
 void badgeScanReportTask(void* parameter) {
   while (true) {
     BadgeScanReport badgeScanReport;
-    
+
     if (xQueuePeek(badgeScanQueue, &badgeScanReport, portMAX_DELAY) == pdFALSE) {
       // shouldn't happen since we instruct xQueueReceive to wait forever, but just in case
       logToSerial("Whoa, failed to retrieve a queued badge scan. WTF");
@@ -220,15 +237,37 @@ void badgeScanReportTask(void* parameter) {
 uint32_t currentlyReadingBadgeNumber = 0;
 uint8_t currentlyReadingBadgeNumberBits = 0;
 uint32_t currentlyReadingBadgeNumberLastBitAt = 0;
+
+uint32_t keypadEnteredCode = 0;
+uint8_t keypadEnteredDigits = 0;
+uint32_t keypadPressedAt = 0;
+bool keypadBeingPressed = false;
+
 boolean d0PreviouslyLow = false;
 boolean d1PreviouslyLow = false;
 
 #define WIEGAND_TIME_TO_FINALIZE 50
 
+void indicateAuthorizationFailure() {
+    for (int i = 0; i < 3; i++) {
+    if (i != 0) {
+      vTaskDelay(250 / portTICK_PERIOD_MS);
+    }
+
+    digitalWrite(PIN_WIEGAND_LED, HIGH);
+    digitalWrite(PIN_WIEGAND_BPR, HIGH);
+
+    vTaskDelay(250 / portTICK_PERIOD_MS);
+
+    digitalWrite(PIN_WIEGAND_LED, LOW);
+    digitalWrite(PIN_WIEGAND_BPR, LOW);
+  }
+}
+
 void loop() {
   while (true) {
     xSemaphoreTake(badgeAccessListSemaphore, portMAX_DELAY);
-    boolean hasLoadedBadgeList = *globalBadgeAccessListBadgeCount > 0;
+    boolean hasLoadedBadgeList = *globalAccessListRecordCount > 0;
     xSemaphoreGive(badgeAccessListSemaphore);
 
     if (hasLoadedBadgeList) {
@@ -258,14 +297,20 @@ void loop() {
     if (millis() - currentlyReadingBadgeNumberLastBitAt > 50 && currentlyReadingBadgeNumberBits > 0) {
       // Successfully read a badge scan or keypad press.
       if (currentlyReadingBadgeNumberBits == 26) {
+        // Cancel any key code currently being entered
+        keypadBeingPressed = false;
+        keypadEnteredCode = 0;
+        keypadEnteredDigits = 0;
+        keypadPressedAt = 0;
+
         // Wiegand badge. We're ignoring the parity bits for now; that's probably fine, but it wouldn't hurt to check them in the future.
         uint32_t badgeNumber = (currentlyReadingBadgeNumber >> 1) & 0xFFFFFF;
 
         bool isAuthorized = false;
 
         xSemaphoreTake(badgeAccessListSemaphore, portMAX_DELAY);
-        for(size_t i = 0; i < *globalBadgeAccessListBadgeCount; i++) {
-          if (globalBadgeAccessListBadges[i] == badgeNumber) {
+        for(size_t i = 0; i < *globalAccessListRecordCount; i++) {
+          if (globalAccessListRecords[i].type == ACCESS_RECORD_TYPE_BADGE && globalAccessListRecords[i].badgeNumber == badgeNumber) {
             isAuthorized = true;
           }
         }
@@ -274,9 +319,9 @@ void loop() {
         if (isAuthorized) {
           logToSerial("Authorized!");
 
-          BadgeScanReport badgeScanReport = {badgeNumber, true};
+          BadgeScanReport badgeScanReport = {ACCESS_RECORD_TYPE_BADGE, 0, badgeNumber, true};
           xQueueSend(badgeScanQueue, &badgeScanReport, 0);
-          
+
           digitalWrite(PIN_WIEGAND_LED, HIGH);
           digitalWrite(PIN_RELAY_1, HIGH);
 
@@ -287,29 +332,82 @@ void loop() {
         } else {
           logToSerial("Not authorized.");
 
-          BadgeScanReport badgeScanReport = {badgeNumber, false};
+          BadgeScanReport badgeScanReport = {ACCESS_RECORD_TYPE_BADGE, 0, badgeNumber, false};
           xQueueSend(badgeScanQueue, &badgeScanReport, 0);
 
-          for (int i = 0; i < 3; i++) {
-            digitalWrite(PIN_WIEGAND_LED, HIGH);
-            digitalWrite(PIN_WIEGAND_BPR, HIGH);
-
-            vTaskDelay(250 / portTICK_PERIOD_MS);
-
-            digitalWrite(PIN_WIEGAND_LED, LOW);
-            digitalWrite(PIN_WIEGAND_BPR, LOW);
-
-            vTaskDelay(250 / portTICK_PERIOD_MS);
-          }
+          indicateAuthorizationFailure();
         }
       } else if (currentlyReadingBadgeNumberBits == WIEGAND_KEYPAD_BITS) {
-        // TODO: do something more useful with keypad presses
-        // Serial.println("Read keypad press:");
-        // Serial.println(currentlyReadingBadgeNumber);
+        if (currentlyReadingBadgeNumber == WIEGAND_ESCAPE_KEY) {
+          BadgeScanReport badgeScanReport = {ACCESS_RECORD_TYPE_KEYPAD_ESCAPE, keypadEnteredDigits, keypadEnteredCode, false};
+          xQueueSend(badgeScanQueue, &badgeScanReport, 0);
+
+          keypadBeingPressed = false;
+          keypadEnteredCode = 0;
+          keypadEnteredDigits = 0;
+          keypadPressedAt = 0;
+        } else if (currentlyReadingBadgeNumber == WIEGAND_ENTER_KEY) {
+          bool isAuthorized = false;
+
+          xSemaphoreTake(badgeAccessListSemaphore, portMAX_DELAY);
+          for(size_t i = 0; i < *globalAccessListRecordCount; i++) {
+            if (globalAccessListRecords[i].type == ACCESS_RECORD_TYPE_KEYPAD && globalAccessListRecords[i].badgeNumber == keypadEnteredCode && globalAccessListRecords[i].length == keypadEnteredDigits) {
+              isAuthorized = true;
+            }
+          }
+          xSemaphoreGive(badgeAccessListSemaphore);
+
+          if (isAuthorized) {
+            logToSerial("Authorized via keypad!");
+
+            BadgeScanReport badgeScanReport = {ACCESS_RECORD_TYPE_KEYPAD, keypadEnteredDigits, keypadEnteredCode, true};
+            xQueueSend(badgeScanQueue, &badgeScanReport, 0);
+
+            digitalWrite(PIN_WIEGAND_LED, HIGH);
+            digitalWrite(PIN_RELAY_1, HIGH);
+            digitalWrite(PIN_WIEGAND_BPR, HIGH);
+
+            vTaskDelay(400 / portTICK_PERIOD_MS);
+
+            digitalWrite(PIN_WIEGAND_BPR, LOW);
+
+            vTaskDelay(DOOR_OPEN_TIME / portTICK_PERIOD_MS);
+
+            digitalWrite(PIN_WIEGAND_LED, LOW);
+            digitalWrite(PIN_RELAY_1, LOW);
+          } else {
+            logToSerial("Not authorized via keypad.");
+
+            BadgeScanReport badgeScanReport = {ACCESS_RECORD_TYPE_KEYPAD, keypadEnteredDigits, keypadEnteredCode, false};
+            xQueueSend(badgeScanQueue, &badgeScanReport, 0);
+
+            indicateAuthorizationFailure();
+          }
+
+          keypadBeingPressed = false;
+          keypadEnteredCode = 0;
+          keypadEnteredDigits = 0;
+          keypadPressedAt = 0;
+        } else {
+          keypadBeingPressed = true;
+          keypadEnteredCode = (keypadEnteredCode * 10) + currentlyReadingBadgeNumber;
+          keypadEnteredDigits += 1;
+          keypadPressedAt = millis();
+        }
       }
-      
+
       currentlyReadingBadgeNumber = 0;
       currentlyReadingBadgeNumberBits = 0;
+    } else if (keypadBeingPressed && millis() - keypadPressedAt > KEYPAD_TIMEOUT) {
+      BadgeScanReport badgeScanReport = {ACCESS_RECORD_TYPE_KEYPAD_TIMEOUT, keypadEnteredDigits, keypadEnteredCode, false};
+      xQueueSend(badgeScanQueue, &badgeScanReport, 0);
+
+      keypadBeingPressed = false;
+      keypadEnteredCode = 0;
+      keypadEnteredDigits = 0;
+      keypadPressedAt = 0;
+
+      indicateAuthorizationFailure();
     }
   }
 }

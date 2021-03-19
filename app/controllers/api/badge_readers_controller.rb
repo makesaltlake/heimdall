@@ -4,6 +4,11 @@ class Api::BadgeReadersController < Api::ApiController
 
   authenticate_using BadgeReader
 
+  ACCESS_RECORD_TYPE_BADGE = 1
+  ACCESS_RECORD_TYPE_KEYPAD = 2
+  ACCESS_RECORD_TYPE_KEYPAD_ESCAPE = 3
+  ACCESS_RECORD_TYPE_KEYPAD_TIMEOUT = 4
+
   def access_list
     allowed_badge_tokens = resource.badge_access_grant_users.where.not(badge_token: nil).pluck(:badge_token)
 
@@ -20,7 +25,7 @@ class Api::BadgeReadersController < Api::ApiController
     # beginning is so that we can later add additional data onto the response that badge readers with old firmware will
     # know to ignore.
     binary_length = [allowed_badge_numbers.length].pack("L<")
-    binary_badge_numbers = allowed_badge_numbers.map { |badge_number| [badge_number].pack("L<") }.join
+    binary_badge_numbers = allowed_badge_numbers.map { |badge_number| [ACCESS_RECORD_TYPE_BADGE, 0, badge_number].pack("CCL<") }.join
 
     render plain: "#{binary_length}#{binary_badge_numbers}"
   end
@@ -46,17 +51,19 @@ class Api::BadgeReadersController < Api::ApiController
 
   def record_binary_scan
     request_body = request.body.read
-    badge_number, success = request_body.unpack("L<C")
+    type, length, badge_number, success = request_body.unpack("CCL<C")
     success = success == 1
 
-    TransactionRetry.transaction do
-      resource.badge_scans.create!(
-        badge_number: badge_number,
-        user: User.find_by(badge_number: badge_number),
-        authorized: success,
-        scanned_at: Time.now, # TODO: have the badge reader report the time the scan happened and include it here
-        submitted_at: Time.now
-      )
+    if type == ACCESS_RECORD_TYPE_BADGE
+      TransactionRetry.transaction do
+        resource.badge_scans.create!(
+          badge_number: badge_number,
+          user: User.find_by(badge_number: badge_number),
+          authorized: success,
+          scanned_at: Time.now, # TODO: have the badge reader report the time the scan happened and include it here
+          submitted_at: Time.now
+        )
+      end
     end
 
     render plain: 'OK'
