@@ -226,6 +226,21 @@ boolean d1PreviouslyLow = false;
 #define WIEGAND_TIME_TO_FINALIZE 50
 
 void loop() {
+  while (true) {
+    xSemaphoreTake(badgeAccessListSemaphore, portMAX_DELAY);
+    boolean hasLoadedBadgeList = *globalBadgeAccessListBadgeCount > 0;
+    xSemaphoreGive(badgeAccessListSemaphore);
+
+    if (hasLoadedBadgeList) {
+      break;
+    } else {
+      vTaskDelay(500 / portTICK_PERIOD_MS);
+      digitalWrite(PIN_WIEGAND_LED, HIGH);
+      vTaskDelay(500 / portTICK_PERIOD_MS);
+      digitalWrite(PIN_WIEGAND_LED, LOW);
+    }
+  }
+
   if (digitalRead(PIN_WIEGAND_D0) == LOW && !d0PreviouslyLow) {
     d0PreviouslyLow = true;
     currentlyReadingBadgeNumber = currentlyReadingBadgeNumber << 1;
