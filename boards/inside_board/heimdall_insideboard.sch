@@ -120,7 +120,7 @@ F 3 "~" H 3850 1300 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 $Comp
-L Javawizard_Common_Schematic_Symbols:ESP32_Dev_Board_30Pin U3
+L heimdall_insideboard-rescue:ESP32_Dev_Board_30Pin-Javawizard_Common_Schematic_Symbols U3
 U 1 1 5F0E43E4
 P 5200 3000
 F 0 "U3" H 5200 3115 50  0000 C CNN
@@ -165,7 +165,7 @@ Wire Wire Line
 Wire Wire Line
 	4350 4550 4400 4550
 $Comp
-L Javawizard_Common_Schematic_Symbols:Relay_HJR-3FF-S-Z-5VDC K1
+L heimdall_insideboard-rescue:Relay_HJR-3FF-S-Z-5VDC-Javawizard_Common_Schematic_Symbols K1
 U 1 1 5F0E96C1
 P 8800 650
 F 0 "K1" H 9180 146 50  0000 L CNN
@@ -192,7 +192,7 @@ U 1 1 5F0F233F
 P 8450 1800
 F 0 "Q1" H 8640 1846 50  0000 L CNN
 F 1 "2N3904" H 8640 1755 50  0000 L CNN
-F 2 "Package_TO_SOT_THT:TO-92_Inline" H 8650 1725 50  0001 L CIN
+F 2 "Package_TO_SOT_THT:TO-92_Inline_Wide" H 8650 1725 50  0001 L CIN
 F 3 "https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf" H 8450 1800 50  0001 L CNN
 	1    8450 1800
 	1    0    0    -1  
@@ -265,13 +265,13 @@ Wire Wire Line
 $Comp
 L Connector:Screw_Terminal_01x04 J2
 U 1 1 5F123CCA
-P 10200 1900
-F 0 "J2" H 10280 1892 50  0000 L CNN
-F 1 "Screw_Terminal_01x04" H 10280 1801 50  0000 L CNN
-F 2 "Javawizard_Common_Footprints:PinHeader_JW_1x04_P5.00mm_Vertical" H 10200 1900 50  0001 C CNN
-F 3 "~" H 10200 1900 50  0001 C CNN
-	1    10200 1900
-	1    0    0    -1  
+P 10200 2000
+F 0 "J2" H 10280 1992 50  0000 L CNN
+F 1 "Screw_Terminal_01x04" H 10280 1901 50  0000 L CNN
+F 2 "Javawizard_Common_Footprints:PinHeader_JW_1x04_P5.00mm_Vertical" H 10200 2000 50  0001 C CNN
+F 3 "~" H 10200 2000 50  0001 C CNN
+	1    10200 2000
+	1    0    0    1   
 $EndComp
 Wire Wire Line
 	10000 1800 9900 1800
@@ -346,7 +346,7 @@ Wire Wire Line
 Wire Wire Line
 	7450 4050 7450 3700
 $Comp
-L Javawizard_Common_Schematic_Symbols:Relay_HJR-3FF-S-Z-5VDC K2
+L heimdall_insideboard-rescue:Relay_HJR-3FF-S-Z-5VDC-Javawizard_Common_Schematic_Symbols K2
 U 1 1 5F14E304
 P 8800 2550
 F 0 "K2" H 9180 2046 50  0000 L CNN
@@ -373,7 +373,7 @@ U 1 1 5F14E310
 P 8450 3700
 F 0 "Q2" H 8640 3746 50  0000 L CNN
 F 1 "2N3904" H 8640 3655 50  0000 L CNN
-F 2 "Package_TO_SOT_THT:TO-92_Inline" H 8650 3625 50  0001 L CIN
+F 2 "Package_TO_SOT_THT:TO-92_Inline_Wide" H 8650 3625 50  0001 L CIN
 F 3 "https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf" H 8450 3700 50  0001 L CNN
 	1    8450 3700
 	1    0    0    -1  
@@ -436,13 +436,13 @@ Wire Wire Line
 $Comp
 L Connector:Screw_Terminal_01x04 J4
 U 1 1 5F14E335
-P 10200 3800
-F 0 "J4" H 10280 3792 50  0000 L CNN
-F 1 "Screw_Terminal_01x04" H 10280 3701 50  0000 L CNN
-F 2 "Javawizard_Common_Footprints:PinHeader_JW_1x04_P5.00mm_Vertical" H 10200 3800 50  0001 C CNN
-F 3 "~" H 10200 3800 50  0001 C CNN
-	1    10200 3800
-	1    0    0    -1  
+P 10200 3900
+F 0 "J4" H 10280 3892 50  0000 L CNN
+F 1 "Screw_Terminal_01x04" H 10280 3801 50  0000 L CNN
+F 2 "Javawizard_Common_Footprints:PinHeader_JW_1x04_P5.00mm_Vertical" H 10200 3900 50  0001 C CNN
+F 3 "~" H 10200 3900 50  0001 C CNN
+	1    10200 3900
+	1    0    0    1   
 $EndComp
 Wire Wire Line
 	10000 3700 9900 3700
@@ -513,7 +513,7 @@ $EndComp
 Wire Wire Line
 	10500 2750 10500 2850
 $Comp
-L Javawizard_Common_Schematic_Symbols:Relay_HJR-3FF-S-Z-5VDC K3
+L heimdall_insideboard-rescue:Relay_HJR-3FF-S-Z-5VDC-Javawizard_Common_Schematic_Symbols K3
 U 1 1 5F1565E6
 P 8800 4450
 F 0 "K3" H 9180 3946 50  0000 L CNN
@@ -540,7 +540,7 @@ U 1 1 5F1565F2
 P 8450 5600
 F 0 "Q3" H 8640 5646 50  0000 L CNN
 F 1 "2N3904" H 8640 5555 50  0000 L CNN
-F 2 "Package_TO_SOT_THT:TO-92_Inline" H 8650 5525 50  0001 L CIN
+F 2 "Package_TO_SOT_THT:TO-92_Inline_Wide" H 8650 5525 50  0001 L CIN
 F 3 "https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf" H 8450 5600 50  0001 L CNN
 	1    8450 5600
 	1    0    0    -1  
@@ -603,13 +603,13 @@ Wire Wire Line
 $Comp
 L Connector:Screw_Terminal_01x04 J6
 U 1 1 5F156617
-P 10200 5700
-F 0 "J6" H 10280 5692 50  0000 L CNN
-F 1 "Screw_Terminal_01x04" H 10280 5601 50  0000 L CNN
-F 2 "Javawizard_Common_Footprints:PinHeader_JW_1x04_P5.00mm_Vertical" H 10200 5700 50  0001 C CNN
-F 3 "~" H 10200 5700 50  0001 C CNN
-	1    10200 5700
-	1    0    0    -1  
+P 10200 5800
+F 0 "J6" H 10280 5792 50  0000 L CNN
+F 1 "Screw_Terminal_01x04" H 10280 5701 50  0000 L CNN
+F 2 "Javawizard_Common_Footprints:PinHeader_JW_1x04_P5.00mm_Vertical" H 10200 5800 50  0001 C CNN
+F 3 "~" H 10200 5800 50  0001 C CNN
+	1    10200 5800
+	1    0    0    1   
 $EndComp
 Wire Wire Line
 	10000 5600 9900 5600
@@ -869,44 +869,42 @@ Wire Wire Line
 Wire Wire Line
 	4100 3650 4400 3650
 $Comp
-L Connector:Screw_Terminal_01x06 J7
+L Connector:Screw_Terminal_01x07 J7
 U 1 1 5F2A191F
-P 1250 6150
-F 0 "J7" H 1168 5625 50  0000 C CNN
-F 1 "Screw_Terminal_01x06" H 1168 5716 50  0000 C CNN
-F 2 "Javawizard_Common_Footprints:PinHeader_JW_1x06_P5.00mm_Vertical" H 1250 6150 50  0001 C CNN
-F 3 "~" H 1250 6150 50  0001 C CNN
-	1    1250 6150
+P 1250 6050
+F 0 "J7" H 1168 5525 50  0000 C CNN
+F 1 "Screw_Terminal_01x06" H 1168 5616 50  0000 C CNN
+F 2 "Javawizard_Common_Footprints:PinHeader_JW_1x07_P5.00mm_Vertical" H 1250 6050 50  0001 C CNN
+F 3 "~" H 1250 6050 50  0001 C CNN
+	1    1250 6050
 	-1   0    0    1   
 $EndComp
 $Comp
 L power:+12V #PWR022
 U 1 1 5F2A5516
-P 2000 5650
-F 0 "#PWR022" H 2000 5500 50  0001 C CNN
-F 1 "+12V" H 2015 5823 50  0000 C CNN
-F 2 "" H 2000 5650 50  0001 C CNN
-F 3 "" H 2000 5650 50  0001 C CNN
-	1    2000 5650
+P 2000 5550
+F 0 "#PWR022" H 2000 5400 50  0001 C CNN
+F 1 "+12V" H 2015 5723 50  0000 C CNN
+F 2 "" H 2000 5550 50  0001 C CNN
+F 3 "" H 2000 5550 50  0001 C CNN
+	1    2000 5550
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	2000 5750 1450 5750
+$Comp
+L power:GND #PWR028
+U 1 1 5F2ADB21
+P 2000 7200
+F 0 "#PWR028" H 2000 6950 50  0001 C CNN
+F 1 "GND" H 2005 7027 50  0000 C CNN
+F 2 "" H 2000 7200 50  0001 C CNN
+F 3 "" H 2000 7200 50  0001 C CNN
+	1    2000 7200
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
 	2000 5850 1450 5850
-$Comp
-L power:GND #PWR028
-U 1 1 5F2ADB21
-P 2000 6650
-F 0 "#PWR028" H 2000 6400 50  0001 C CNN
-F 1 "GND" H 2005 6477 50  0000 C CNN
-F 2 "" H 2000 6650 50  0001 C CNN
-F 3 "" H 2000 6650 50  0001 C CNN
-	1    2000 6650
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	2000 6650 2000 5950
-Wire Wire Line
-	2000 5950 1450 5950
 $Comp
 L Device:R_Small_US R16
 U 1 1 5F2B5EE1
@@ -919,7 +917,7 @@ F 3 "~" H 2450 6550 50  0001 C CNN
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	2000 5850 2000 5650
+	2000 5750 2000 5550
 $Comp
 L Device:R_Small_US R22
 U 1 1 5F2E53B6
@@ -1027,7 +1025,7 @@ U 1 1 5F32B841
 P 3950 7050
 F 0 "Q4" H 4140 7096 50  0000 L CNN
 F 1 "2N3904" H 4140 7005 50  0000 L CNN
-F 2 "Package_TO_SOT_THT:TO-92_Inline" H 4150 6975 50  0001 L CIN
+F 2 "Package_TO_SOT_THT:TO-92_Inline_Wide" H 4150 6975 50  0001 L CIN
 F 3 "https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf" H 3950 7050 50  0001 L CNN
 	1    3950 7050
 	1    0    0    -1  
@@ -1070,7 +1068,7 @@ U 1 1 5F3BFD3A
 P 4800 7050
 F 0 "Q5" H 4990 7096 50  0000 L CNN
 F 1 "2N3904" H 4990 7005 50  0000 L CNN
-F 2 "Package_TO_SOT_THT:TO-92_Inline" H 5000 6975 50  0001 L CIN
+F 2 "Package_TO_SOT_THT:TO-92_Inline_Wide" H 5000 6975 50  0001 L CIN
 F 3 "https://www.fairchildsemi.com/datasheets/2N/2N3904.pdf" H 4800 7050 50  0001 L CNN
 	1    4800 7050
 	1    0    0    -1  
@@ -1594,4 +1592,73 @@ Wire Wire Line
 	7000 5600 7000 3750
 Wire Wire Line
 	7000 3750 6000 3750
+$Comp
+L LED:NeoPixel_THT D4
+U 1 1 6058485B
+P 5350 5450
+F 0 "D4" H 5694 5496 50  0000 L CNN
+F 1 "NeoPixel_THT" H 5694 5405 50  0000 L CNN
+F 2 "LED_THT:LED_D5.0mm-4_RGB_Wide_Pins" H 5400 5150 50  0001 L TNN
+F 3 "https://www.adafruit.com/product/1938" H 5450 5075 50  0001 L TNN
+	1    5350 5450
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:+5V #PWR0104
+U 1 1 605868AC
+P 5350 5050
+F 0 "#PWR0104" H 5350 4900 50  0001 C CNN
+F 1 "+5V" H 5365 5223 50  0000 C CNN
+F 2 "" H 5350 5050 50  0001 C CNN
+F 3 "" H 5350 5050 50  0001 C CNN
+	1    5350 5050
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR0105
+U 1 1 605DA8FD
+P 5350 5950
+F 0 "#PWR0105" H 5350 5700 50  0001 C CNN
+F 1 "GND" H 5355 5777 50  0000 C CNN
+F 2 "" H 5350 5950 50  0001 C CNN
+F 3 "" H 5350 5950 50  0001 C CNN
+	1    5350 5950
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5350 5050 5350 5150
+Wire Wire Line
+	5350 5750 5350 5950
+Wire Wire Line
+	6000 4350 6500 4350
+Wire Wire Line
+	6500 4350 6500 4800
+Wire Wire Line
+	6500 4800 4750 4800
+Wire Wire Line
+	4750 4800 4750 5450
+Wire Wire Line
+	4750 5450 5050 5450
+$Comp
+L Jumper:Jumper_2_Open JP4
+U 1 1 60618C40
+P 1600 6800
+F 0 "JP4" V 1646 6712 50  0000 R CNN
+F 1 "Jumper" V 1555 6712 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical" H 1600 6800 50  0001 C CNN
+F 3 "~" H 1600 6800 50  0001 C CNN
+	1    1600 6800
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	2000 5850 2000 7000
+Wire Wire Line
+	1600 6600 1600 5950
+Wire Wire Line
+	1600 5950 1450 5950
+Wire Wire Line
+	1600 7000 2000 7000
+Connection ~ 2000 7000
+Wire Wire Line
+	2000 7000 2000 7200
 $EndSCHEMATC
