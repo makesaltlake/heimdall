@@ -1,7 +1,7 @@
 ActiveAdmin.register InventoryItem do
   menu parent: 'Inventory', priority: 3
 
-  permit_params :name, :part_number, :description, :inventory_area_id, inventory_bin_ids: []
+  permit_params :name, :part_number, :description, :inventory_area_id, :target_amount, :in_stock, inventory_bin_ids: []
 
   filter :name
   filter :description
@@ -27,6 +27,13 @@ ActiveAdmin.register InventoryItem do
         row(:inventory_bin, &:inventory_bins)
       end
     end
+
+    panel 'Stock' do
+      attributes_table_for resource do
+        row(:target_amount)
+        row(:in_stock)
+      end
+    end
   end
 
   form do |f|
@@ -36,9 +43,17 @@ ActiveAdmin.register InventoryItem do
       f.input(:name)
       f.input(:part_number)
       f.input(:description)
+    end
 
+    f.inputs do
       f.input(:inventory_bin_ids, as: :selected_list, label: 'Inventory bin', display_name: 'display_name', fields: ['id'])
     end
+
+    f.inputs do
+      f.input(:target_amount)
+      f.input(:in_stock)
+    end
+
     f.actions
   end
 
