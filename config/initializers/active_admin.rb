@@ -344,6 +344,7 @@ ActiveAdmin.setup do |config|
       menu.add label: 'Certifications', priority: 12
       menu.add label: 'Badges', priority: 13
       menu.add label: 'Waivers', priority: 14
+      menu.add label: 'Inventory', priority: 15
       menu.add label: 'Developer Stuff', priority: 20
     end
   end

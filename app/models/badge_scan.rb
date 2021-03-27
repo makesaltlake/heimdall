@@ -4,6 +4,7 @@
 #
 #  id              :bigint           not null, primary key
 #  authorized      :boolean          default(TRUE)
+#  badge_number    :integer
 #  badge_token     :string
 #  scanned_at      :datetime
 #  submitted_at    :datetime

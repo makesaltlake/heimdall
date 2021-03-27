@@ -8,7 +8,7 @@ module TransactionRetry
   # retries will be made.
   def self.transaction
     run do
-      ActiveRecord::Base.transaction do
+      ActiveRecord::Base.transaction(requires_new: true) do
         yield
       end
     end
@@ -33,6 +33,14 @@ module TransactionRetry
   # two steps. You should probably use that unless you have a good reason to
   # need fine-grained control over how the transaction gets kicked off.)
   def self.run
+    # If we're currently running in a transaction, then that means the user is
+    # using nested transactions and they're about to start a nested one from
+    # within the block given to us - so no use catching exceptions and
+    # retrying here since the entire transaction will have been aborted.
+    if ActiveRecord::Base.connection.transaction_open?
+      return yield
+    end
+
     attempts_remaining = MAX_ATTEMPTS
     begin
       yield

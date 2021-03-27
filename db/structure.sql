@@ -580,6 +580,38 @@ ALTER SEQUENCE public.certifications_id_seq OWNED BY public.certifications.id;
 
 
 --
+-- Name: counters; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.counters (
+    id bigint NOT NULL,
+    name character varying,
+    value bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: counters_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.counters_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: counters_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.counters_id_seq OWNED BY public.counters.id;
+
+
+--
 -- Name: delayed_jobs; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -733,6 +765,206 @@ CREATE SEQUENCE public.households_id_seq
 --
 
 ALTER SEQUENCE public.households_id_seq OWNED BY public.households.id;
+
+
+--
+-- Name: inventory_areas; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.inventory_areas (
+    id bigint NOT NULL,
+    name character varying NOT NULL,
+    description text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: inventory_areas_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.inventory_areas_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: inventory_areas_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.inventory_areas_id_seq OWNED BY public.inventory_areas.id;
+
+
+--
+-- Name: inventory_bins; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.inventory_bins (
+    id bigint NOT NULL,
+    inventory_area_id bigint,
+    notes text,
+    inventory_item_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: inventory_bins_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.inventory_bins_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: inventory_bins_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.inventory_bins_id_seq OWNED BY public.inventory_bins.id;
+
+
+--
+-- Name: inventory_categories; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.inventory_categories (
+    id bigint NOT NULL,
+    inventory_area_id bigint NOT NULL,
+    name character varying NOT NULL,
+    description text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: inventory_categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.inventory_categories_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: inventory_categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.inventory_categories_id_seq OWNED BY public.inventory_categories.id;
+
+
+--
+-- Name: inventory_category_categorizations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.inventory_category_categorizations (
+    id bigint NOT NULL,
+    parent_inventory_category_id bigint NOT NULL,
+    child_inventory_category_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: inventory_category_categorizations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.inventory_category_categorizations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: inventory_category_categorizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.inventory_category_categorizations_id_seq OWNED BY public.inventory_category_categorizations.id;
+
+
+--
+-- Name: inventory_item_categorizations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.inventory_item_categorizations (
+    id bigint NOT NULL,
+    inventory_category_id bigint NOT NULL,
+    inventory_item_id bigint NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: inventory_item_categorizations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.inventory_item_categorizations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: inventory_item_categorizations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.inventory_item_categorizations_id_seq OWNED BY public.inventory_item_categorizations.id;
+
+
+--
+-- Name: inventory_items; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.inventory_items (
+    id bigint NOT NULL,
+    inventory_area_id bigint NOT NULL,
+    name character varying NOT NULL,
+    part_number character varying,
+    description text,
+    in_stock integer,
+    target_amount integer,
+    procurement_url text,
+    procurement_instructions text,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: inventory_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.inventory_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: inventory_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.inventory_items_id_seq OWNED BY public.inventory_items.id;
 
 
 --
@@ -990,6 +1222,13 @@ ALTER TABLE ONLY public.certifications ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: counters id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.counters ALTER COLUMN id SET DEFAULT nextval('public.counters_id_seq'::regclass);
+
+
+--
 -- Name: delayed_jobs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1015,6 +1254,48 @@ ALTER TABLE ONLY public.firmware_bundles ALTER COLUMN id SET DEFAULT nextval('pu
 --
 
 ALTER TABLE ONLY public.households ALTER COLUMN id SET DEFAULT nextval('public.households_id_seq'::regclass);
+
+
+--
+-- Name: inventory_areas id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_areas ALTER COLUMN id SET DEFAULT nextval('public.inventory_areas_id_seq'::regclass);
+
+
+--
+-- Name: inventory_bins id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_bins ALTER COLUMN id SET DEFAULT nextval('public.inventory_bins_id_seq'::regclass);
+
+
+--
+-- Name: inventory_categories id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_categories ALTER COLUMN id SET DEFAULT nextval('public.inventory_categories_id_seq'::regclass);
+
+
+--
+-- Name: inventory_category_categorizations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_category_categorizations ALTER COLUMN id SET DEFAULT nextval('public.inventory_category_categorizations_id_seq'::regclass);
+
+
+--
+-- Name: inventory_item_categorizations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_item_categorizations ALTER COLUMN id SET DEFAULT nextval('public.inventory_item_categorizations_id_seq'::regclass);
+
+
+--
+-- Name: inventory_items id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_items ALTER COLUMN id SET DEFAULT nextval('public.inventory_items_id_seq'::regclass);
 
 
 --
@@ -1149,6 +1430,14 @@ ALTER TABLE ONLY public.certifications
 
 
 --
+-- Name: counters counters_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.counters
+    ADD CONSTRAINT counters_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: delayed_jobs delayed_jobs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1178,6 +1467,54 @@ ALTER TABLE ONLY public.firmware_bundles
 
 ALTER TABLE ONLY public.households
     ADD CONSTRAINT households_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_areas inventory_areas_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_areas
+    ADD CONSTRAINT inventory_areas_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_bins inventory_bins_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_bins
+    ADD CONSTRAINT inventory_bins_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_categories inventory_categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_categories
+    ADD CONSTRAINT inventory_categories_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_category_categorizations inventory_category_categorizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_category_categorizations
+    ADD CONSTRAINT inventory_category_categorizations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_item_categorizations inventory_item_categorizations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_item_categorizations
+    ADD CONSTRAINT inventory_item_categorizations_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: inventory_items inventory_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_items
+    ADD CONSTRAINT inventory_items_pkey PRIMARY KEY (id);
 
 
 --
@@ -1418,6 +1755,13 @@ CREATE INDEX index_certification_issuances_on_user_id ON public.certification_is
 
 
 --
+-- Name: index_counters_on_name; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_counters_on_name ON public.counters USING btree (name);
+
+
+--
 -- Name: index_delayed_jobs_on_locked_by; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1464,6 +1808,76 @@ CREATE INDEX index_firmware_bundles_on_device_type ON public.firmware_bundles US
 --
 
 CREATE INDEX index_firmware_bundles_only_one_active_for_device_type ON public.firmware_bundles USING btree (device_type) WHERE active;
+
+
+--
+-- Name: index_inventory_bins_on_inventory_area_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inventory_bins_on_inventory_area_id ON public.inventory_bins USING btree (inventory_area_id);
+
+
+--
+-- Name: index_inventory_bins_on_inventory_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inventory_bins_on_inventory_item_id ON public.inventory_bins USING btree (inventory_item_id);
+
+
+--
+-- Name: index_inventory_categories_on_inventory_area_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inventory_categories_on_inventory_area_id ON public.inventory_categories USING btree (inventory_area_id);
+
+
+--
+-- Name: index_inventory_category_categorizations_child; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inventory_category_categorizations_child ON public.inventory_category_categorizations USING btree (child_inventory_category_id);
+
+
+--
+-- Name: index_inventory_category_categorizations_parent; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inventory_category_categorizations_parent ON public.inventory_category_categorizations USING btree (parent_inventory_category_id);
+
+
+--
+-- Name: index_inventory_category_categorizations_uniquely; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_inventory_category_categorizations_uniquely ON public.inventory_category_categorizations USING btree (parent_inventory_category_id, child_inventory_category_id);
+
+
+--
+-- Name: index_inventory_item_categorizations_on_inventory_category_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inventory_item_categorizations_on_inventory_category_id ON public.inventory_item_categorizations USING btree (inventory_category_id);
+
+
+--
+-- Name: index_inventory_item_categorizations_on_inventory_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inventory_item_categorizations_on_inventory_item_id ON public.inventory_item_categorizations USING btree (inventory_item_id);
+
+
+--
+-- Name: index_inventory_item_categorizations_uniquely; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_inventory_item_categorizations_uniquely ON public.inventory_item_categorizations USING btree (inventory_category_id, inventory_item_id);
+
+
+--
+-- Name: index_inventory_items_on_inventory_area_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_inventory_items_on_inventory_area_id ON public.inventory_items USING btree (inventory_area_id);
 
 
 --
@@ -1668,6 +2082,14 @@ ALTER TABLE ONLY public.badge_reader_manual_users
 
 
 --
+-- Name: inventory_category_categorizations fk_rails_4b6a1f06e8; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_category_categorizations
+    ADD CONSTRAINT fk_rails_4b6a1f06e8 FOREIGN KEY (parent_inventory_category_id) REFERENCES public.inventory_categories(id);
+
+
+--
 -- Name: certification_issuances fk_rails_4e734beac3; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1697,6 +2119,14 @@ ALTER TABLE ONLY public.stripe_subscriptions
 
 ALTER TABLE ONLY public.certification_issuances
     ADD CONSTRAINT fk_rails_68f52511ca FOREIGN KEY (certification_id) REFERENCES public.certifications(id);
+
+
+--
+-- Name: inventory_category_categorizations fk_rails_7299d9697e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.inventory_category_categorizations
+    ADD CONSTRAINT fk_rails_7299d9697e FOREIGN KEY (child_inventory_category_id) REFERENCES public.inventory_categories(id);
 
 
 --
@@ -1827,6 +2257,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210115130933'),
 ('20210130012843'),
 ('20210318041100'),
-('20210319104609');
+('20210319104609'),
+('20210327054950'),
+('20210327062036');
 
 

@@ -1,0 +1,12 @@
+active_admin_form_for Forms::BulkCreateInventoryBins.new, url: bulk_create_admin_inventory_bins_path, method: :post do |f|
+  f.inputs do
+    f.input :inventory_area, as: :select, collection: InventoryArea.order(:name), required: true
+    f.input :bin_count, as: :string, required: true, hint: 'How many bins to create. Can be anywhere from 1 to 100.'
+    f.input :notes, as: :text, hint: 'Notes to add to all of the bins, if desired'
+  end
+
+  f.actions do
+    f.action :submit, label: 'Create Bins'
+    f.cancel_link admin_inventory_bins_path
+  end
+end
