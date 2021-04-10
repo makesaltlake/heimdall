@@ -3,15 +3,19 @@ ActiveAdmin.register InventoryItem do
 
   permit_params :name, :part_number, :description, :inventory_area_id, :target_amount, :in_stock, inventory_bin_ids: [], inventory_category_ids: []
 
+  filter :inventory_area
   filter :name
   filter :description
+  filter :inventory_categories
   filter :inventory_bins_id, as: :search_select_filter, display_name: 'display_name', fields: ['id'], label: 'Inventory Bin'
 
   index do
-    column(:name) { |inventory_item| auto_link(inventory_item) }
+    column(:inventory_item) { |inventory_item| auto_link(inventory_item) }
+    column(:name)
     column(:part_number_or_value, &:part_number)
     column(:description) { |inventory_item| truncate(inventory_item.description, length: 100, separator: ' ') }
     column(:inventory_area)
+    column(:inventory_categories)
   end
 
   show do

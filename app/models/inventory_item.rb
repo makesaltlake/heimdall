@@ -40,4 +40,8 @@ class InventoryItem < ApplicationRecord
 
   validates :name, presence: true
   validates_associated :inventory_item_categorizations
+
+  def display_name
+    [part_number, name].compact.join(" ")
+  end
 end

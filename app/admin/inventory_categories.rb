@@ -6,6 +6,7 @@ ActiveAdmin.register InventoryCategory do
   filter :inventory_area
   filter :name
   filter :description
+  filter :parent_inventory_categories
 
   index do
     column(:name) { |inventory_category| auto_link(inventory_category) }

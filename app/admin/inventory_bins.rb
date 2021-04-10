@@ -3,8 +3,8 @@ ActiveAdmin.register InventoryBin do
 
   permit_params :inventory_area_id, :notes
 
-  filter :id
   filter :inventory_area
+  filter :id
   filter :notes
 
   index do
