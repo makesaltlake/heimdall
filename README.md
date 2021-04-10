@@ -1,10 +1,10 @@
 # Heimdall
 
-Heimdall is [Make Salt Lake](https://makesaltlake.org)'s access control system. It consists of a few different parts:
+Heimdall is [Make Salt Lake](https://makesaltlake.org)'s member management and access control system. It consists of a few different parts:
 
-  - A web interface, written in Ruby on Rails. The rest of this README deals with the web interface.
-  - A backend [component](backend) intended to run on an [ESP32](https://en.wikipedia.org/wiki/ESP32), one per door or other device that needs access control. See the separate [backend/README.md](backend/README.md) file for further details.
-  - A set of [printed circuit board designs](boards) that can be used to make the physical badge readers.
+  - A web interface, written in Ruby on Rails. **The rest of this README deals with the web interface.**
+  - [Firmware](firmware) intended to run on an [ESP32](https://en.wikipedia.org/wiki/ESP32), one per door or other device that needs access control.
+  - [PCB designs](hardware) that can be used to make the physical badge readers.
 
 ## Local Environment Setup
 
