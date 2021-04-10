@@ -19,8 +19,19 @@ ActiveAdmin.register InventoryCategory do
       row(:name)
       row(:description) { |inventory_category| format_multi_line_text(inventory_category.description) }
       row(:inventory_area)
+      row(:toplevel_display_mode) { |inventory_category| InventoryCategory::TOPLEVEL_DISPLAY_MODE_LABELS[inventory_category.toplevel_display_mode] }
       row(:parent_categories, &:parent_inventory_categories)
       row(:child_categories, &:child_inventory_categories)
+    end
+
+    paginated_table_panel(
+      resource.inventory_items,
+      title: 'Inventory Items',
+      param_name: :items_page
+    ) do
+      column(:name) { |inventory_item| auto_link(inventory_item) }
+      column(:part_number_or_value, &:part_number)
+      column(:description) { |inventory_item| truncate(inventory_item.description, length: 100, separator: ' ') }
     end
   end
 
@@ -30,6 +41,7 @@ ActiveAdmin.register InventoryCategory do
 
       f.input(:name)
       f.input(:description)
+      f.input(:toplevel_display_mode, as: :select, include_blank: false, collection: InventoryCategory::TOPLEVEL_DISPLAY_MODE_LABELS.invert)
     end
 
     f.inputs do

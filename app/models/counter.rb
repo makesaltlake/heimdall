@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: counters
+#
+#  id         :bigint           not null, primary key
+#  name       :string
+#  value      :bigint
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+# Indexes
+#
+#  index_counters_on_name  (name) UNIQUE
+#
+
 class Counter < ApplicationRecord
   # A method that can be used to generate sequential values. Like database
   # sequences, but unlike sequences as implemented by Postgres, this method

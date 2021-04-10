@@ -31,7 +31,8 @@ class InventoryBin < ApplicationRecord
   end
 
   def display_name
-    "Bin ##{id} - [#{inventory_area.name}]"
+    contents = "(#{inventory_item.name}) - " if inventory_item
+    "Bin ##{id} - #{contents}[#{inventory_area.name}]"
   end
 
   def as_json(options = {})

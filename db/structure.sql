@@ -842,7 +842,8 @@ CREATE TABLE public.inventory_categories (
     name character varying NOT NULL,
     description text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    toplevel_display_mode character varying DEFAULT 'show_when_orphaned'::character varying NOT NULL
 );
 
 
@@ -944,7 +945,8 @@ CREATE TABLE public.inventory_items (
     procurement_url text,
     procurement_instructions text,
     created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    updated_at timestamp(6) without time zone NOT NULL,
+    toplevel_display_mode character varying DEFAULT 'show_when_orphaned'::character varying NOT NULL
 );
 
 
@@ -2259,6 +2261,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210318041100'),
 ('20210319104609'),
 ('20210327054950'),
-('20210327062036');
+('20210327062036'),
+('20210402032205');
 
 

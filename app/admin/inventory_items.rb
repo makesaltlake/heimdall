@@ -1,7 +1,7 @@
 ActiveAdmin.register InventoryItem do
   menu parent: 'Inventory', priority: 3
 
-  permit_params :name, :part_number, :description, :inventory_area_id, :target_amount, :in_stock, inventory_bin_ids: []
+  permit_params :name, :part_number, :description, :inventory_area_id, :target_amount, :in_stock, inventory_bin_ids: [], inventory_category_ids: []
 
   filter :name
   filter :description
@@ -9,7 +9,7 @@ ActiveAdmin.register InventoryItem do
 
   index do
     column(:name) { |inventory_item| auto_link(inventory_item) }
-    column(:part_number)
+    column(:part_number_or_value, &:part_number)
     column(:description) { |inventory_item| truncate(inventory_item.description, length: 100, separator: ' ') }
     column(:inventory_area)
   end
@@ -17,9 +17,11 @@ ActiveAdmin.register InventoryItem do
   show do
     attributes_table do
       row(:name)
-      row(:part_number)
-      row(:description) { |inventory_area| format_multi_line_text(inventory_area.description) }
+      row(:part_number_or_value, &:part_number)
+      row(:description) { |inventory_item| format_multi_line_text(inventory_item.description) }
       row(:inventory_area)
+      row(:inventory_categories)
+      row(:toplevel_display_mode) { |inventory_item| InventoryItem::TOPLEVEL_DISPLAY_MODE_LABELS[inventory_item.toplevel_display_mode] }
     end
 
     panel 'Location' do
@@ -41,12 +43,17 @@ ActiveAdmin.register InventoryItem do
       f.input(:inventory_area) if resource.new_record?
 
       f.input(:name)
-      f.input(:part_number)
+      f.input(:part_number, label: 'Part number or value')
       f.input(:description)
+      f.input(:toplevel_display_mode, as: :select, include_blank: false, collection: InventoryItem::TOPLEVEL_DISPLAY_MODE_LABELS.invert)
     end
 
     f.inputs do
       f.input(:inventory_bin_ids, as: :selected_list, label: 'Inventory bin', display_name: 'display_name', fields: ['id'])
+    end
+
+    f.inputs do
+      f.input(:inventory_category_ids, label: 'Categories', as: :selected_list, url: admin_inventory_categories_path)
     end
 
     f.inputs do
@@ -57,4 +64,13 @@ ActiveAdmin.register InventoryItem do
     f.actions
   end
 
+  action_item :duplicate, only: :show do
+    link_to("Duplicate", duplicate_admin_inventory_item_path(id: resource.id))
+  end
+
+  member_action :duplicate, method: :get do
+    @resource = resource.dup
+    @resource.inventory_categories = resource.inventory_categories
+    render :new, layout: false
+  end
 end

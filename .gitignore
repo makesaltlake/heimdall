@@ -36,3 +36,10 @@
 node_modules
 
 /public/frontend/dist
+
+# Ignore Gerber files generated from board definitions. At some point we may
+# want to commit those so that others can order the boards without having to
+# export the definitions from KiCad themselves, but today is not that day.
+/boards/**/*.g*
+/boards/**/*.zip
+/boards/**/*.drl

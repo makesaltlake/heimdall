@@ -104,6 +104,9 @@ end
 #                                          PATCH      /admin/inventory_areas/:id(.:format)                                                     admin/inventory_areas#update
 #                                          PUT        /admin/inventory_areas/:id(.:format)                                                     admin/inventory_areas#update
 #                                          DELETE     /admin/inventory_areas/:id(.:format)                                                     admin/inventory_areas#destroy
+#         bulk_create_admin_inventory_bins GET        /admin/inventory_bins/bulk_create(.:format)                                              admin/inventory_bins#bulk_create
+#                                          POST       /admin/inventory_bins/bulk_create(.:format)                                              admin/inventory_bins#bulk_create
+#  finish_bulk_create_admin_inventory_bins GET        /admin/inventory_bins/finish_bulk_create(.:format)                                       admin/inventory_bins#finish_bulk_create
 #                     admin_inventory_bins GET        /admin/inventory_bins(.:format)                                                          admin/inventory_bins#index
 #                                          POST       /admin/inventory_bins(.:format)                                                          admin/inventory_bins#create
 #                  new_admin_inventory_bin GET        /admin/inventory_bins/new(.:format)                                                      admin/inventory_bins#new
@@ -120,6 +123,7 @@ end
 #                                          PATCH      /admin/inventory_categories/:id(.:format)                                                admin/inventory_categories#update
 #                                          PUT        /admin/inventory_categories/:id(.:format)                                                admin/inventory_categories#update
 #                                          DELETE     /admin/inventory_categories/:id(.:format)                                                admin/inventory_categories#destroy
+#           duplicate_admin_inventory_item GET        /admin/inventory_items/:id/duplicate(.:format)                                           admin/inventory_items#duplicate
 #                    admin_inventory_items GET        /admin/inventory_items(.:format)                                                         admin/inventory_items#index
 #                                          POST       /admin/inventory_items(.:format)                                                         admin/inventory_items#create
 #                 new_admin_inventory_item GET        /admin/inventory_items/new(.:format)                                                     admin/inventory_items#new
