@@ -27,8 +27,8 @@
 
 # Ignore board backup and rescue files (the symbols will be present in the
 # cache files which are *not* ignored)
-/boards/**/*-bak
-/boards/**/*-rescue.*
+hardware/**/*-bak
+hardware/**/*-rescue.*
 
 # Ignore Visual Studio Code IDE artifacts
 .vscode
@@ -40,6 +40,6 @@ node_modules
 # Ignore Gerber files generated from board definitions. At some point we may
 # want to commit those so that others can order the boards without having to
 # export the definitions from KiCad themselves, but today is not that day.
-/boards/**/*.g*
-/boards/**/*.zip
-/boards/**/*.drl
+hardware/**/*.g*
+hardware/**/*.zip
+hardware/**/*.drl
