@@ -13,12 +13,8 @@ Rails.application.routes.draw do
   devise_for :users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
 
-  root to: 'home#home'
-
   post '/webhooks/stripe', to: 'webhooks/stripe#webhook'
   post '/webhooks/waiverforever', to: 'webhooks/waiver_forever#webhook'
-
-  get 'frontend-demo', to: 'frontend#frontend'
 
   get '/nfc/bins/:id', to: 'nfc#bin', as: :nfc_bin
 
@@ -37,6 +33,10 @@ Rails.application.routes.draw do
       post :record_binary_scan
     end
   end
+
+  # Fallback route: direct all other routes to the frontend app
+  get '*path', to: 'frontend#frontend'
+  root to: 'frontend#frontend'
 end
 
 # == Route Map
