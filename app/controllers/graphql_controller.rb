@@ -1,8 +1,7 @@
 class GraphqlController < ApplicationController
-  # If accessing from outside this domain, nullify the session
-  # This allows for outside API access while preventing CSRF attacks,
-  # but you'll have to authenticate your user separately
-  # protect_from_forgery with: :null_session
+  # NOTE: Heimdall in its entirety doesn't allow cross-origin requests at the
+  # moment; if that ever changes, we'll need to make sure this controller
+  # still prohibits cross-origin requests.
 
   def execute
     variables = prepare_variables(params[:variables])
