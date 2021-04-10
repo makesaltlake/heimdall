@@ -1,4 +1,4 @@
-class Types::QueryType < Types::BaseObject
+class Types::QueryType < Types::Base::BaseObject
   # Add `node(id: ID!) and `nodes(ids: [ID!]!)`
   # include GraphQL::Types::Relay::HasNodeField
   # include GraphQL::Types::Relay::HasNodesField

@@ -1,4 +1,4 @@
-class Types::MutationType < Types::BaseObject
+class Types::MutationType < Types::Base::BaseObject
   # TODO: remove me
   field :test_field, String, null: false,
     description: "An example field added by the generator"
