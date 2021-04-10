@@ -31,7 +31,7 @@ class InventoryBin < ApplicationRecord
   end
 
   def display_name
-    contents = "(#{inventory_item.name}) - " if inventory_item
+    contents = "(#{inventory_item.display_name}) - " if inventory_item
     "Bin ##{id} - #{contents}[#{inventory_area.name}]"
   end
 
