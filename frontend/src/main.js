@@ -13,6 +13,8 @@ const App = () => {
         <Route path="/frontend-demo">
           <Demo />
         </Route>
+
+        {/* Redirect all requests that don't match another route to /admin */}
         <ExternalRedirect to="/admin" />
       </Switch>
     </Router>
