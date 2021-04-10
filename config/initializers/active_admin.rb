@@ -321,7 +321,7 @@ ActiveAdmin.setup do |config|
   # By default, the footer shows the current Active Admin version. You can
   # override the content of the footer here.
   #
-  # config.footer = 'my custom footer text'
+  config.footer = '<a href="https://github.com/makesaltlake/heimdall">Heimdall</a> is brought to you by volunteers from Make Salt Lake'.html_safe
 
   # == Sorting
   #

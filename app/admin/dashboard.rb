@@ -3,8 +3,8 @@ ActiveAdmin.register_page "Dashboard" do
 
   content title: proc { I18n.t("active_admin.dashboard") } do
     columns do
-      column do
-        if authorized?(:read, CertificationIssuance)
+      if authorized?(:read, CertificationIssuance)
+        column do
           paginated_table_panel(
             CertificationIssuance.accessible_by(current_ability).order(created_at: :desc),
             title: 'Recently issued certifications',
@@ -18,8 +18,8 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
 
-      column do
-        if authorized?(:read_newest_users, User)
+      if authorized?(:read_newest_users, User)
+        column do
           paginated_table_panel(
             User.accessible_by(current_ability).includes(:waivers).most_recently_subscribed_first,
             title: 'Recent member signups',

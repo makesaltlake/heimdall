@@ -325,7 +325,8 @@ CREATE TABLE public.users (
     subscription_created timestamp without time zone,
     badge_token character varying,
     badge_token_set_at timestamp without time zone,
-    badge_number integer
+    badge_number integer,
+    inventory_user boolean DEFAULT false NOT NULL
 );
 
 
@@ -2262,6 +2263,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210319104609'),
 ('20210327054950'),
 ('20210327062036'),
-('20210402032205');
+('20210402032205'),
+('20210410071743');
 
 

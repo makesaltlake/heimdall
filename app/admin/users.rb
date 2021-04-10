@@ -1,7 +1,7 @@
 ActiveAdmin.register User do
   menu priority: 11
 
-  permit_params :name, :email, :super_user, :password, :password_confirmation, :badge_number, :profile_image, household_user_ids: []
+  permit_params :name, :email, :super_user, :inventory_user, :password, :password_confirmation, :badge_number, :profile_image, household_user_ids: []
 
   config.sort_order = 'subscription_created_desc'
 
@@ -42,7 +42,6 @@ ActiveAdmin.register User do
       row(:email)
       row(:household_has_membership, &:has_household_membership)
       row(:individual_has_membership, &:subscription_active)
-      row(:super_user) { |user| status_tag user.super_user, class: user.super_user ? :red : nil }
       row('Last Signed In', &:current_sign_in_at)
       row('Failed Sign In Attempts', &:failed_attempts)
       row('Household members') { |user| user.household_users.order(:name).map { |other_user| auto_link(other_user) }.join('<br/>').html_safe }
@@ -50,6 +49,13 @@ ActiveAdmin.register User do
       row('Instructs these certifications') { |user| user.instructed_certifications.order(:name).map { |certification| auto_link(certification) }.join('<br/>').html_safe }
       row('Manual access to these badge readers') { |user| user.manual_user_badge_readers.order(:name).map { |badge_reader| auto_link(badge_reader) }.join('<br/>').html_safe }
       active_storage_input_row(:profile_image)
+    end
+
+    panel 'Permissions' do
+      attributes_table_for resource do
+        row(:super_user) { |user| status_tag user.super_user, class: user.super_user ? :red : nil }
+        row(:inventory_user)
+      end
     end
 
     paginated_table_panel(
@@ -138,13 +144,6 @@ ActiveAdmin.register User do
     f.inputs do
       f.input(:name)
       f.input(:email)
-      if user == current_user
-        # Users can't change their own super user status (so a super user doesn't
-        # accidentally demote themselves)
-        f.input(:super_user, input_html: { disabled: true }, hint: "You can't change your own super user status.")
-      else
-        f.input(:super_user, hint: 'ADMIN ACCESS - If this is checked, the user will have full administrative access to Heimdall')
-      end
       password_blank_action = f.object.new_record? ? "leave their password unset (they'll have to reset it before they can log in)" : 'leave their password unchanged'
       f.input(:password, hint: "Type a new password for this user here, or leave blank to #{password_blank_action}")
       f.input(:password_confirmation, hint: 'Retype the new password here')
@@ -153,6 +152,18 @@ ActiveAdmin.register User do
 
       active_storage_input(f, :profile_image)
     end
+
+    f.inputs name: 'Permissions' do
+      if user == current_user
+        # Users can't change their own super user status (so a super user doesn't
+        # accidentally demote themselves)
+        f.input(:super_user, input_html: { disabled: true }, hint: "You can't change your own super user status.")
+      else
+        f.input(:super_user, hint: 'ADMIN ACCESS - If this is checked, the user will have full administrative access to Heimdall')
+      end
+      f.input(:inventory_user, hint: "Check this box to allow this user to manage inventory. (Super users will be able to manage inventory automatically, so no need to check this box for them.)")
+    end
+
     f.actions
   end
 

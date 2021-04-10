@@ -16,6 +16,7 @@ class ApplicationController < ActionController::Base
 
   def admin_access_denied(exception)
     # TODO: pretty this up, maybe tell them to email MSL for help
+    puts "exception: #{exception.inspect}\naction:#{exception.action}\nsubject:#{exception.subject}\nuser:#{exception.user}\n#{exception.backtrace}"
     render plain: "Sorry, you're not allowed to do that: #{exception.message}", status: :forbidden
   end
 

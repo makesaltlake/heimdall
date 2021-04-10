@@ -11,6 +11,7 @@ ActiveAdmin.register InventoryBin do
     column(:id) { |inventory_bin| auto_link(inventory_bin) }
     column(:inventory_area)
     column(:notes) { |inventory_bin| truncate(inventory_bin.notes, length: 100, separator: ' ') }
+    column(:inventory_item)
   end
 
   show do
