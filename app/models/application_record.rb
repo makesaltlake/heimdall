@@ -23,4 +23,26 @@ class ApplicationRecord < ActiveRecord::Base
       Arel::Nodes::NamedFunction.new('CAST', [subclass.arel_table[:id].as('VARCHAR')])
     end
   end
+
+  # Helper method to fetch all objects of a given model type which have the
+  # specified IDs and return them in exactly the order given, ignoring IDs
+  # which don't exist. For example:
+  #
+  # User.by_ids_in_exact_order([1, 2, 3])
+  #
+  # is the same as (but executes only one query instead of three):
+  #
+  # [User.find_by(id: 1), User.find_by(id: 2), User.find_by(id: 3)].compact
+  #
+  # whereas:
+  #
+  # User.where(id: [1, 2, 3])
+  #
+  # might return them in a completely different order than the one given - say
+  # 2, 3, 1.
+  def self.by_ids_in_exact_order(ids)
+    ids = ids&.map(&:to_i)
+    by_ids = where(id: ids).to_a.index_by(&:id)
+    ids.map { |id| by_ids[id] }.compact
+  end
 end

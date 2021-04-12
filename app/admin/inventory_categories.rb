@@ -1,7 +1,7 @@
 ActiveAdmin.register InventoryCategory do
   menu parent: 'Inventory', priority: 2
 
-  permit_params :name, :description, :inventory_area_id, parent_inventory_category_ids: [], child_inventory_category_ids: []
+  permit_params :name, :description, :inventory_area_id, :toplevel_display_mode, parent_inventory_category_ids: [], child_inventory_category_ids: []
 
   filter :inventory_area
   filter :name

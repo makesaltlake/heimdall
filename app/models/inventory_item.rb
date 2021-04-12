@@ -38,6 +38,8 @@ class InventoryItem < ApplicationRecord
 
   enum toplevel_display_mode: { always_show: 'always_show', show_when_orphaned: 'show_when_orphaned', never_show: 'never_show' }
 
+  scope :toplevel_visible, -> { where("#{table_name}.toplevel_display_mode = 'always_show' OR (#{table_name}.toplevel_display_mode = 'show_when_orphaned' AND NOT EXISTS(SELECT 1 FROM inventory_item_categorizations WHERE inventory_item_categorizations.inventory_item_id = #{table_name}.id))") }
+
   validates :name, presence: true
   validates_associated :inventory_item_categorizations
 
