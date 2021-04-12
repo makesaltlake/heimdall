@@ -16,12 +16,20 @@ ActiveAdmin.register_page "Statistics" do
       column_chart join_and_loss_counts.transform_values(&:cancel_count), colors: [ChartColors::RED], height: "40vw"
     end
 
+    panel "Change in membership during each month (absolute number of members)" do
+      column_chart join_and_loss_counts.transform_values(&:delta_count), height: "40vw"
+    end
+
     panel "New member signups during each month (percentage of existing membership base)" do
       column_chart join_and_loss_counts.transform_values(&:join_percentage), colors: [ChartColors::GREEN], height: "40vw", suffix: "%"
     end
 
     panel "Membership cancellations during each month (percentage of existing membership base)" do
       column_chart join_and_loss_counts.transform_values(&:cancel_percentage), colors: [ChartColors::RED], height: "40vw", suffix: "%"
+    end
+
+    panel "Change in membership during each month (percentage of existing membership base)" do
+      column_chart join_and_loss_counts.transform_values(&:delta_percentage), height: "40vw"
     end
   end
 end
