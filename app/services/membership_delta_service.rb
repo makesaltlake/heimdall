@@ -47,4 +47,15 @@ module MembershipDeltaService
   def self.last_by(granularity)
     group_by(granularity).transform_values(&:last)
   end
+
+  def self.last_with_join_and_loss_counts(granularity)
+    group_by(granularity).transform_values do |events|
+      last_event = events.last
+      last_event.join_count = events.select { |e| e.type == :join }.count
+      last_event.cancel_count = events.select { |e| e.type == :cancel }.count
+      last_event.join_percentage = ((last_event.join_count.to_f / last_event.total_members) * 100).round(1)
+      last_event.cancel_percentage = ((last_event.cancel_count.to_f / (last_event.cancel_count + last_event.total_members)) * 100).round(1)
+      last_event
+    end
+  end
 end
