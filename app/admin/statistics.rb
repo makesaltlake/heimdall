@@ -7,31 +7,49 @@ ActiveAdmin.register_page "Statistics" do
 
     charts = {
       total_members: {
-        title: "Total members at the end of each month",
+        title: "Total members",
         chart: -> () { column_chart MembershipDeltaService.last_by(:month).transform_keys(&:to_date).transform_values(&:total_members), height: "75vh" }
       },
+      join_and_cancel_count: {
+        title: "Total signups and cancellations (absolute number of members)",
+        chart: -> () do
+          column_chart [
+            { name: 'Signups', data: join_and_loss_counts.transform_values(&:join_count) },
+            { name: 'Cancellations', data: join_and_loss_counts.transform_values(&:cancel_count) }
+          ], colors: [ChartColors::GREEN, ChartColors::RED], height: "75vh"
+        end
+      },
       join_count: {
-        title: "Total signups during each month (absolute number of members)",
+        title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Signups only".html_safe,
         chart: -> () { column_chart join_and_loss_counts.transform_values(&:join_count), colors: [ChartColors::GREEN], height: "75vh" }
       },
       cancel_count: {
-        title: "Total cancellations during each month (absolute number of members)",
+        title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cancellations only".html_safe,
         chart: -> () { column_chart join_and_loss_counts.transform_values(&:cancel_count), colors: [ChartColors::RED], height: "75vh" }
       },
       delta_count: {
-        title: "Change in membership during each month (absolute number of members)",
+        title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change in membership".html_safe,
         chart: -> () { column_chart join_and_loss_counts.transform_values(&:delta_count), height: "75vh" }
       },
+      join_and_cancel_percentage: {
+        title: "Total signups and cancellations (percentage of existing membership base, not including the first 12 months)",
+        chart: -> () do
+          column_chart [
+            { name: 'Signups', data: join_and_loss_counts_sans_first_year.transform_values(&:join_percentage) },
+            { name: 'Cancellations', data: join_and_loss_counts_sans_first_year.transform_values(&:cancel_percentage) }
+          ], colors: [ChartColors::GREEN, ChartColors::RED], height: "75vh"
+        end
+      },
       join_percentage: {
-        title: "Total signups during each month (percentage of existing membership base, not including the first 12 months)",
+        title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Signups only".html_safe,
         chart: -> () { column_chart join_and_loss_counts_sans_first_year.transform_values(&:join_percentage), colors: [ChartColors::GREEN], height: "75vh", suffix: "%" }
       },
       cancel_percentage: {
-        title: "Total cancellations during each month (percentage of existing membership base, not including the first 12 months)",
+        title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cancellations only".html_safe,
         chart: -> () { column_chart join_and_loss_counts_sans_first_year.transform_values(&:cancel_percentage), colors: [ChartColors::RED], height: "75vh", suffix: "%" }
       },
       delta_percentage: {
-        title: "Change in membership during each month (percentage of existing membership base, not including the first 12 months)",
+        title: "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Change in membership".html_safe,
         chart: -> () { column_chart join_and_loss_counts_sans_first_year.transform_values(&:delta_percentage), height: "75vh" }
       }
     }.with_indifferent_access
