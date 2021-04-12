@@ -46,6 +46,8 @@ GEM
       rails-dom-testing (~> 2.0)
       rails-html-sanitizer (~> 1.1, >= 1.2.0)
     active_material (1.4.2)
+    active_median (0.3.1)
+      activesupport (>= 5.2)
     activeadmin (2.9.0)
       arbre (~> 1.2, >= 1.2.1)
       formtastic (>= 3.1, < 5.0)
@@ -119,6 +121,7 @@ GEM
       rack-test (>= 0.6.3)
       regexp_parser (~> 1.5)
       xpath (~> 3.2)
+    chartkick (4.0.3)
     childprocess (3.0.0)
     concurrent-ruby (1.1.8)
     crass (1.0.6)
@@ -153,10 +156,14 @@ GEM
       railties
       sprockets-rails
     graphql (1.12.7)
+    groupdate (5.2.2)
+      activesupport (>= 5)
     has_scope (0.8.0)
       actionpack (>= 5.2)
       activesupport (>= 5.2)
     hashie (4.1.0)
+    hightop (0.2.4)
+      activesupport (>= 5)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     image_processing (1.12.1)
@@ -364,6 +371,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_median
   activeadmin
   activeadmin_addons
   after_transaction_commit
@@ -373,11 +381,14 @@ DEPENDENCIES
   byebug
   cancancan
   capybara
+  chartkick
   devise
   faker
   faraday
   graphiql-rails
   graphql
+  groupdate
+  hightop
   image_processing
   inst-jobs
   jbuilder (~> 2.7)
