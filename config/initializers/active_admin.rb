@@ -345,6 +345,9 @@ ActiveAdmin.setup do |config|
       menu.add label: 'Badges', priority: 13
       menu.add label: 'Waivers', priority: 14
       menu.add label: 'Inventory', priority: 15
+      # This one's currently a standalone page - uncomment if/when we need
+      # multiple statistics pages
+      # menu.add label: 'Statistics', priority: 16
       menu.add label: 'Developer Stuff', priority: 20
     end
   end
