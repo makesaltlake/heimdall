@@ -39,7 +39,7 @@ module MembershipDeltaService
   # Returns events grouped by the specified granularity, which can be one of
   # :year, :month, :day, :hour, or :minute
   def self.group_by(granularity)
-    events.group_by { |event| event.date.send(:"end_of_#{granularity}") + 1.second }
+    events.group_by { |event| event.date.send(:"end_of_#{granularity}") }
   end
 
   # Returns a hash whose keys are dates of the given granularity and whose

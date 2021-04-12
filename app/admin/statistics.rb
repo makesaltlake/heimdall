@@ -7,11 +7,11 @@ ActiveAdmin.register_page "Statistics" do
     end
 
     panel "New member signups during each month" do
-      column_chart StripeSubscription.group_by_month(:started_at).count, colors: [ChartColors::GREEN], height: "40vw"
+      column_chart StripeSubscription.group_by_month(:started_at).count.transform_keys(&:end_of_month), colors: [ChartColors::GREEN], height: "40vw"
     end
 
     panel "Membership cancellations during each month" do
-      column_chart StripeSubscription.where.not(ended_at: nil).group_by_month(:ended_at).count, colors: [ChartColors::RED], height: "40vw"
+      column_chart StripeSubscription.where.not(ended_at: nil).group_by_month(:ended_at).count.transform_keys(&:end_of_month), colors: [ChartColors::RED], height: "40vw"
     end
   end
 end
