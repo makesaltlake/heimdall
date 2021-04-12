@@ -11,11 +11,11 @@ ActiveAdmin.register_page "Statistics" do
         chart: -> () { column_chart MembershipDeltaService.last_by(:month).transform_keys(&:to_date).transform_values(&:total_members), height: "75vh" }
       },
       join_count: {
-        title: "New member signups during each month (absolute number of members)",
+        title: "Total signups during each month (absolute number of members)",
         chart: -> () { column_chart join_and_loss_counts.transform_values(&:join_count), colors: [ChartColors::GREEN], height: "75vh" }
       },
       cancel_count: {
-        title: "Membership cancellations during each month (absolute number of members)",
+        title: "Total cancellations during each month (absolute number of members)",
         chart: -> () { column_chart join_and_loss_counts.transform_values(&:cancel_count), colors: [ChartColors::RED], height: "75vh" }
       },
       delta_count: {
@@ -23,11 +23,11 @@ ActiveAdmin.register_page "Statistics" do
         chart: -> () { column_chart join_and_loss_counts.transform_values(&:delta_count), height: "75vh" }
       },
       join_percentage: {
-        title: "New member signups during each month (percentage of existing membership base, not including the first 12 months)",
+        title: "Total signups during each month (percentage of existing membership base, not including the first 12 months)",
         chart: -> () { column_chart join_and_loss_counts_sans_first_year.transform_values(&:join_percentage), colors: [ChartColors::GREEN], height: "75vh", suffix: "%" }
       },
       cancel_percentage: {
-        title: "Membership cancellations during each month (percentage of existing membership base, not including the first 12 months)",
+        title: "Total cancellations during each month (percentage of existing membership base, not including the first 12 months)",
         chart: -> () { column_chart join_and_loss_counts_sans_first_year.transform_values(&:cancel_percentage), colors: [ChartColors::RED], height: "75vh", suffix: "%" }
       },
       delta_percentage: {
