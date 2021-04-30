@@ -3,6 +3,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(EXTRA_COMPONENT_DIRS ../common ../esp32-uuid
+	../ESP32-NeoPixel-WS2812-RMT
 	lv_port_esp32/components/lvgl
 	lv_port_esp32/components/lvgl_esp32_drivers
 	lv_port_esp32/components/lvgl_esp32_drivers/lvgl_touch

@@ -22,7 +22,7 @@
 #include <esp_vfs.h>
 
 /* Littlevgl specific */
-#include "lvgl/lvgl.h"
+#include "lvgl.h"
 #include "lvgl_helpers.h"
 
 #include "clrc663.h"
