@@ -36,10 +36,9 @@ jobs:
         id: sha8
         run: echo "::set-output name=sha8::$(echo $GITHUB_SHA | cut -c1-8)"
 
-      - uses: actions/setup-ruby@v1
-      - run: gem install bundler
-      - run: bundle config path vendor/bundle
-      - run: bundle install --jobs 4
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
       - run: bundle exec rake db:setup RAILS_ENV=test
       - run: bundle exec rspec
 
