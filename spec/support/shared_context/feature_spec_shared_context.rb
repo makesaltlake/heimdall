@@ -1,10 +1,10 @@
 RSpec.shared_context 'feature spec shared context' do
   def login(user: admin_user, password: admin_user_password)
     # TODO: This could be sped up by using Warden::Test::Helpers which manipulates the session instead of actually
-    # visitng the login page. It would be interesting to change this to use that and benchmark how much that speeds up
+    # visiting the login page. It would be interesting to change this to use that and benchmark how much that speeds up
     # tests. Note that if we do that, we should probably add a test that actually runs through the login page to make
     # sure it has coverage.
-    visit '/'
+    visit '/admin/login'
 
     fill_in 'Email', with: user.email
     fill_in 'Password', with: password
