@@ -62,16 +62,27 @@ class Api::BadgeReadersController < Api::ApiController
     type, length, badge_number, success = request_body.unpack("CCL<C")
     success = success == 1
 
-    if type == ACCESS_RECORD_TYPE_BADGE
-      TransactionRetry.transaction do
-        resource.badge_scans.create!(
-          badge_number: badge_number,
-          user: User.find_by(badge_number: badge_number),
-          authorized: success,
-          scanned_at: Time.now, # TODO: have the badge reader report the time the scan happened and include it here
-          submitted_at: Time.now
-        )
+    TransactionRetry.transaction do
+      badge_scan = resource.badge_scans.build(
+        authorized: success,
+        scanned_at: Time.now, # TODO: have the badge reader report the time the scan happened and include it here
+        submitted_at: Time.now
+      )
+
+      if type == ACCESS_RECORD_TYPE_BADGE
+        badge_scan.badge_scan_type = 'badge'
+        badge_scan.badge_number = badge_number
+        badge_scan.user = User.find_by(badge_number: badge_number)
+      elsif type == ACCESS_RECORD_TYPE_KEYPAD
+        badge_scan.badge_scan_type = 'keypad'
+        badge_scan.keypad_code = badge_number.to_s.rjust(length, '0')
+      elsif type == ACCESS_RECORD_TYPE_KEYPAD_ESCAPE
+        badge_scan.badge_scan_type = 'keypad_escape'
+      elsif type == ACCESS_RECORD_TYPE_KEYPAD_TIMEOUT
+        badge_scan.badge_scan_type = 'keypad_timeout'
       end
+
+      badge_scan.save!
     end
 
     render plain: 'OK'
