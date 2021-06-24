@@ -24,10 +24,18 @@ class Api::BadgeReadersController < Api::ApiController
     # allowed and the remainder of which are the allowed badge numbers themselves. That number of badges field at the
     # beginning is so that we can later add additional data onto the response that badge readers with old firmware will
     # know to ignore.
-    binary_length = [allowed_badge_numbers.length].pack("L<")
-    binary_badge_numbers = allowed_badge_numbers.map { |badge_number| [ACCESS_RECORD_TYPE_BADGE, 0, badge_number].pack("CCL<") }.join
 
-    render plain: "#{binary_length}#{binary_badge_numbers}"
+    allowed_badge_number_records = allowed_badge_numbers.map { |badge_number| [ACCESS_RECORD_TYPE_BADGE, 0, badge_number].pack("CCL<") }
+
+    global_keypad_code = ENV['HEIMDALL_GLOBAL_KEYPAD_CODE']
+    if global_keypad_code
+      Integer(global_keypad_code) # Make sure it's a number
+      allowed_badge_number_records << [ACCESS_RECORD_TYPE_KEYPAD, global_keypad_code.length, global_keypad_code.to_i].pack("CCL<")
+    end
+
+    binary_length = [allowed_badge_number_records.length].pack("L<")
+
+    render plain: "#{binary_length}#{allowed_badge_number_records.join}"
   end
 
   def record_scans
