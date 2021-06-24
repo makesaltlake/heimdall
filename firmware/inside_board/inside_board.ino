@@ -19,7 +19,7 @@ const bool HEIMDALL_SSL = true;
 // The interval at which we should attempt to reconnect to the network if we get disconnected
 #define WIFI_RECONNECT_INTERVAL 20000
 // The interval at which we should fetch the list of badges that should be authorized from the server
-#define BADGE_ACCESS_LIST_FETCH_INTERVAL 300000
+#define BADGE_ACCESS_LIST_FETCH_INTERVAL 30000
 // How long the door strike should stay unlocked for when a badge has been accepted
 #define DOOR_OPEN_TIME 10000
 // How long the keypad should wait for more digits to be pressed before timing out
@@ -29,8 +29,6 @@ const bool HEIMDALL_SSL = true;
 // this if we ever need to run above that limit.
 #define GLOBAL_ACCESS_LIST_SIZE 10000
 
-// The number of bits of data that the keypad hooked up to this badge reader board sends when keys are pressed
-#define WIEGAND_KEYPAD_BITS 4
 // The code sent by the badge reader when the "enter" key is pressed
 #define WIEGAND_ENTER_KEY 11
 // The code sent by the badge reader when the "escape" key is pressed
@@ -379,8 +377,14 @@ void loop() {
 
           indicateAuthorizationFailure();
         }
-      } else if (currentlyReadingBadgeNumberBits == WIEGAND_KEYPAD_BITS) {
+      } else if (currentlyReadingBadgeNumberBits == 4 || currentlyReadingBadgeNumberBits == 8) {
+        // Some of the Wiegand badge readers we bought for Make Salt Lake's RFID project send 8 bits of data instead of the
+        // usual 4, with the upper 4 bits being an inverted copy of the lower 4 bits. We mask those bits out below.
+        currentlyReadingBadgeNumber = currentlyReadingBadgeNumber & 0b1111;
+
         if (currentlyReadingBadgeNumber == WIEGAND_ESCAPE_KEY) {
+          logToSerial("Escape key pressed. Cancelling keypad code entry.");
+
           BadgeScanReport badgeScanReport = {ACCESS_RECORD_TYPE_KEYPAD_ESCAPE, keypadEnteredDigits, keypadEnteredCode, false};
           xQueueSend(badgeScanQueue, &badgeScanReport, 0);
 
@@ -389,6 +393,8 @@ void loop() {
           keypadEnteredDigits = 0;
           keypadPressedAt = 0;
         } else if (currentlyReadingBadgeNumber == WIEGAND_ENTER_KEY) {
+          logToSerial("Enter key pressed. Checking the entered keypad code for access...");
+
           bool isAuthorized = false;
 
           xSemaphoreTake(badgeAccessListSemaphore, portMAX_DELAY);
@@ -431,11 +437,24 @@ void loop() {
           keypadEnteredDigits = 0;
           keypadPressedAt = 0;
         } else {
+          xSemaphoreTake(serialSemaphore, portMAX_DELAY);
+          Serial.print("Keypad key pressed: ");
+          Serial.println(currentlyReadingBadgeNumber);
+          xSemaphoreGive(serialSemaphore);
+
           keypadBeingPressed = true;
           keypadEnteredCode = (keypadEnteredCode * 10) + currentlyReadingBadgeNumber;
           keypadEnteredDigits += 1;
           keypadPressedAt = millis();
         }
+      } else {
+        // Log when an unexpected number of Wiegand bits were received
+        xSemaphoreTake(serialSemaphore, portMAX_DELAY);
+        Serial.print("Unexpected number of Wiegand bits received: ");
+        Serial.print(currentlyReadingBadgeNumberBits);
+        Serial.print(" with value: ");
+        Serial.println(currentlyReadingBadgeNumber);
+        xSemaphoreGive(serialSemaphore);
       }
 
       currentlyReadingBadgeNumber = 0;
