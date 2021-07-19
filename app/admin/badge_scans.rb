@@ -26,7 +26,9 @@ ActiveAdmin.register BadgeScan do
     attributes_table do
       row(:badge_reader)
       row(:user)
-      row(:badge_number) { |badge_scan| reveal_link("Badge number: #{badge_scan.badge_number || "unknown"}") }
+      row(:badge_scan_type)
+      row(:badge_number) { |badge_scan| badge_scan.badge_number && reveal_link("Badge number: #{badge_scan.badge_number}") }
+      row(:keypad_code) { |badge_scan| badge_scan.keypad_code && reveal_link("Keypad code: #{badge_scan.keypad_code}") }
       row(:authorized)
       row(:scanned_at)
     end
