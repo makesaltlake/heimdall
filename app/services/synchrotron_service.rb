@@ -43,11 +43,11 @@ module SynchrotronService
       next unless StripeSynchronizationService.is_membership_subscription?(subscription)
       next unless subscription.customer&.email
 
-      report.total_count += 1
-
       if ['active', 'trialing'].include?(subscription.status)
-        if subscription.plan.interval != 'month'
-          raise 'wtf'
+        if subscription.plan&.interval != 'month'
+          Rails.logger.warn("WARNING: Non-monthly subscription or subscription without a plan detected. Investigation is needed. Subscription ID: #{subscription.id}")
+          Raven.capture_message("WARNING: Non-monthly subscription or subscription without a plan detected.", extra: { subscription_id: subscription.id })
+          next
         end
 
         if subscription.cancel_at_period_end
@@ -67,6 +67,8 @@ module SynchrotronService
       else
         report.past_due_members << summarize_subscription(subscription: subscription)
       end
+
+      report.total_count += 1
     end
 
     Rails.logger.info("Subscription report created.")
