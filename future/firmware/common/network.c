@@ -17,13 +17,25 @@
 #include <esp_event.h>
 #include <esp_http_client.h>
 
+
+#include <esp_ota_ops.h>
+#include <esp_https_ota.h>
+
 #include <esp_log.h>
 #include <esp_wifi.h>
+#include <esp_netif.h>
 
 #include <lwip/err.h>
 #include <lwip/sys.h>
 
 #include <esp_websocket_client.h>
+
+
+extern const char heimdall_ota_cert_start[] asm("_binary_ca_cert_pem_start");
+extern const char heimdall_ota_cert_end[] asm("_binary_ca_cert_pem_end");
+
+extern const char heimdall_cert_start[] asm("_binary_heimdall_dev_pem_start");
+extern const char heimdall_cert_end[] asm("_binary_heimdall_dev_pem_end");
 
 static const char* TAG = "heimdall-net";
 
@@ -79,10 +91,15 @@ static bool netif_initted = false;
 // https://github.com/espressif/esp-idf/tree/release/v4.1/examples/wifi/getting_started/station/main
 void heimdall_setup_wifi(char *wifi_ssid, char *wifi_password)
 {
+    static esp_netif_t *netif;
+    uint8_t mac[6];
+    char hostname[32];
+    esp_err_t ret;
+
     if (!netif_initted) {
         ESP_ERROR_CHECK(esp_netif_init());
         ESP_ERROR_CHECK(esp_event_loop_create_default());
-        esp_netif_create_default_wifi_sta();
+        netif = esp_netif_create_default_wifi_sta();
         netif_initted = true;
     }
 
@@ -112,6 +129,20 @@ void heimdall_setup_wifi(char *wifi_ssid, char *wifi_password)
     s_wifi_event_group = xEventGroupCreate();
 
     ESP_ERROR_CHECK(esp_wifi_start());
+
+    ret = esp_netif_get_mac(netif, mac);
+    if (ret == ESP_OK) {
+        sprintf(hostname, "heimdall-esp32-%x%x%x%x%x%x", mac[0],
+        mac[1], mac[2], mac[3], mac[4], mac[5]);
+        ESP_LOGI(TAG, "Setting hostname to %s", hostname);
+        ret = esp_netif_set_hostname(netif, hostname);
+
+        if (ret != ESP_OK){
+            ESP_LOGE(TAG, "Failed to set hostname: %d", ret);
+        }
+    } else {
+        ESP_LOGE(TAG, "Failed to get MAC address - not setting hostname");
+    }
 
     esp_wifi_set_ps(WIFI_PS_NONE);
 
@@ -271,12 +302,14 @@ void heimdall_setup_websocket(void)
 
     const esp_websocket_client_config_t wscfg = {
         .uri = wsurl,
-         .subprotocol = "chat, superchat",
-         .headers = origin_header
+        .subprotocol = "chat, superchat",
+        .headers = origin_header,
+        .cert_pem = heimdall_cert_start,
+        .cert_len = heimdall_cert_end - heimdall_cert_start,
     };
 
     wsclient = esp_websocket_client_init(&wscfg);
-    ESP_LOGV(TAG, "Connecting to WebSocket URL %s", wsurl);
+    ESP_LOGI(TAG, "Connecting to WebSocket URL %s", wsurl);
     esp_websocket_register_events(wsclient, WEBSOCKET_EVENT_ANY, websocket_event_handler, (void*)wsclient);
 
     esp_websocket_client_start(wsclient);
@@ -442,7 +475,6 @@ void send_badge_scan(char *badge_id, uint8_t tag_length, char *badge_token, bool
     esp_http_client_cleanup(client);
 }
 
-
 void access_list_fetcher_thread(__attribute__((unused)) void *param)
 {
     int http_status_code;
@@ -461,7 +493,8 @@ void access_list_fetcher_thread(__attribute__((unused)) void *param)
 
     esp_http_client_config_t config = {
      .event_handler = NULL,
-     .timeout_ms = 60000
+     .timeout_ms = 60000,
+     .cert_pem = heimdall_cert_start
   };
 
     url = malloc(strlen("https://") + strlen(heimdall_host) + strlen(url_path) + 1);
