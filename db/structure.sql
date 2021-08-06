@@ -436,7 +436,9 @@ CREATE TABLE public.badge_scans (
     badge_token character varying,
     badge_id character varying,
     authorized boolean DEFAULT true,
-    badge_number integer
+    badge_number integer,
+    keypad_code character varying,
+    badge_scan_type character varying
 );
 
 
@@ -2264,6 +2266,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210327054950'),
 ('20210327062036'),
 ('20210402032205'),
-('20210410071743');
+('20210410071743'),
+('20210624090022');
 
 

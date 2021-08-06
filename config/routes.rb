@@ -46,6 +46,8 @@ end
 # == Route Map
 #
 #                                   Prefix Verb       URI Pattern                                                                              Controller#Action
+#                           graphiql_rails            /graphiql                                                                                GraphiQL::Rails::Engine {:graphql_path=>"/graphql"}
+#                                  graphql POST       /graphql(.:format)                                                                       graphql#execute
 #                         new_user_session GET        /admin/login(.:format)                                                                   active_admin/devise/sessions#new
 #                             user_session POST       /admin/login(.:format)                                                                   active_admin/devise/sessions#create
 #                     destroy_user_session DELETE|GET /admin/logout(.:format)                                                                  active_admin/devise/sessions#destroy
@@ -138,6 +140,7 @@ end
 #                                          DELETE     /admin/inventory_items/:id(.:format)                                                     admin/inventory_items#destroy
 #               admin_paper_trail_versions GET        /admin/paper_trail_versions(.:format)                                                    admin/paper_trail_versions#index
 #                admin_paper_trail_version GET        /admin/paper_trail_versions/:id(.:format)                                                admin/paper_trail_versions#show
+#                         admin_statistics GET        /admin/statistics(.:format)                                                              admin/statistics#index
 #                  remove_badge_admin_user POST       /admin/users/:id/remove_badge(.:format)                                                  admin/users#remove_badge
 #                   begin_merge_admin_user GET        /admin/users/:id/begin_merge(.:format)                                                   admin/users#begin_merge
 #                  review_merge_admin_user GET        /admin/users/:id/review_merge(.:format)                                                  admin/users#review_merge
@@ -169,10 +172,8 @@ end
 #                                          POST       /admin/comments(.:format)                                                                admin/comments#create
 #                            admin_comment GET        /admin/comments/:id(.:format)                                                            admin/comments#show
 #                                          DELETE     /admin/comments/:id(.:format)                                                            admin/comments#destroy
-#                                     root GET        /                                                                                        home#home
 #                          webhooks_stripe POST       /webhooks/stripe(.:format)                                                               webhooks/stripe#webhook
 #                   webhooks_waiverforever POST       /webhooks/waiverforever(.:format)                                                        webhooks/waiver_forever#webhook
-#                            frontend_demo GET        /frontend-demo(.:format)                                                                 frontend#frontend
 #                                  nfc_bin GET        /nfc/bins/:id(.:format)                                                                  nfc#bin
 #          api_badge_writers_firmware_blob GET        /api/badge_writers/firmware_blob(.:format)                                               api/badge_writers#firmware_blob
 #   api_badge_writers_wireless_credentials GET        /api/badge_writers/wireless_credentials(.:format)                                        api/badge_writers#wireless_credentials
@@ -183,6 +184,8 @@ end
 #   api_badge_readers_wireless_credentials GET        /api/badge_readers/wireless_credentials(.:format)                                        api/badge_readers#wireless_credentials
 #           api_badge_readers_record_scans POST       /api/badge_readers/record_scans(.:format)                                                api/badge_readers#record_scans
 #     api_badge_readers_record_binary_scan POST       /api/badge_readers/record_binary_scan(.:format)                                          api/badge_readers#record_binary_scan
+#                                          GET        /*path(.:format)                                                                         frontend#frontend
+#                                     root GET        /                                                                                        frontend#frontend
 #            rails_postmark_inbound_emails POST       /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #               rails_relay_inbound_emails POST       /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
 #            rails_sendgrid_inbound_emails POST       /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                  action_mailbox/ingresses/sendgrid/inbound_emails#create
@@ -203,3 +206,6 @@ end
 #                       rails_disk_service GET        /rails/active_storage/disk/:encoded_key/*filename(.:format)                              active_storage/disk#show
 #                update_rails_disk_service PUT        /rails/active_storage/disk/:encoded_token(.:format)                                      active_storage/disk#update
 #                     rails_direct_uploads POST       /rails/active_storage/direct_uploads(.:format)                                           active_storage/direct_uploads#create
+# 
+# Routes for GraphiQL::Rails::Engine:
+#        GET  /           graphiql/rails/editors#show
