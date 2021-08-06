@@ -220,8 +220,9 @@ void app_main(void)
 
     nvs_close(nvs);
 
-    heimdall_setup_badge_scans_file();
     heimdall_setup_wifi(wifi_ssid, wifi_password);
+
+    heimdall_setup_badge_scans_file();
     heimdall_setup_ui_gpio();
 
     httpEventGroup = xEventGroupCreate();
@@ -242,3 +243,4 @@ void app_main(void)
         assert(0);
     }
 }
+
