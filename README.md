@@ -95,6 +95,7 @@ Install Heimdall's Ruby dependencies using Bundler. You'll want to do this every
 ```shell
 bundle install
 ```
+If you get an error saying `pg` failed to compile/install, you may need to install postgresql to supply libpq-fe.h.
 
 ### Other Dependencies
 
