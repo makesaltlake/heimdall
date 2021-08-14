@@ -36,6 +36,11 @@ extern char *tag_key;
 
 void print_card_uid(uint8_t *uid, int uid_len);
 
+void update_uuid_lbl(const char *new_uuid);
+void update_status_lbl(const char *txt);
+void update_name_lbl(const char *txt, bool success);
+void welcome_text(void);
+
 extern cJSON *access_list;
 
 enum MIFARE_CARD_TYPE
@@ -107,11 +112,6 @@ enum MIFARE_CARD_TYPE wait_for_tag(spi_device_handle_t spi, uint8_t *uid, uint8_
     return type;
 }
 
-void update_uuid_lbl(const char *new_uuid);
-void update_status_lbl(const char *txt);
-void update_name_lbl(const char *txt, bool success);
-void welcome_text(void);
-
 void tag_writer(void *param)
 {
     spi_device_handle_t spi;
@@ -175,12 +175,12 @@ void tag_writer(void *param)
                 }
             }
 
-                        ESP_LOGI(TAG, "Writing new user UUID %02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
-                    badge_uuid[0], badge_uuid[1], badge_uuid[2], badge_uuid[3],
-                    badge_uuid[4], badge_uuid[5],
-                    badge_uuid[6], badge_uuid[7],
-                    badge_uuid[8], badge_uuid[9],
-                    badge_uuid[10], badge_uuid[11], badge_uuid[12], badge_uuid[13], badge_uuid[14], badge_uuid[15]);
+            ESP_LOGI(TAG, "Writing new user UUID %02x%02x%02x%02x-%02x%02x-%02x%02x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+                badge_uuid[0], badge_uuid[1], badge_uuid[2], badge_uuid[3],
+                badge_uuid[4], badge_uuid[5],
+                badge_uuid[6], badge_uuid[7],
+                badge_uuid[8], badge_uuid[9],
+                badge_uuid[10], badge_uuid[11], badge_uuid[12], badge_uuid[13], badge_uuid[14], badge_uuid[15]);
             success = heimdall_rfid_write(spi, 1, badge_uuid);
             if (!success) {
                 ESP_LOGW(TAG, "Failed to write new badge UUID");
