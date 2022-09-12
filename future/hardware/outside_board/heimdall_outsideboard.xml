@@ -1,40 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<export version="D">
+<export version="E">
   <design>
-    <source>/home/bcran/src/heimdall/boards/outside_board/heimdall_outsideboard.sch</source>
-    <date>Sat 07 Nov 2020 05:22:50 PM MST</date>
-    <tool>Eeschema 5.1.8-db9833491~87~ubuntu20.04.1</tool>
+    <source>C:\Users\rebecca\Documents\src\heimdall\future\hardware\outside_board_aisler\heimdall_outsideboard.kicad_sch</source>
+    <date>8/6/2022 6:38:50 PM</date>
+    <tool>Eeschema (6.0.7)</tool>
     <sheet number="1" name="/" tstamps="/">
       <title_block>
         <title>Heimdall Outside Board</title>
         <company/>
-        <rev>02</rev>
-        <date>2020-11-07</date>
-        <source>heimdall_outsideboard.sch</source>
+        <rev>03</rev>
+        <date>2022-08-06</date>
+        <source>heimdall_outsideboard.kicad_sch</source>
         <comment number="1" value="https://opensource.org/licenses/MIT"/>
         <comment number="2" value="License: MIT"/>
         <comment number="3" value="https://github.com/makesaltlake/heimdall"/>
         <comment number="4" value="Author: Rebecca Cran &lt;rebecca@bsdio.com&gt;"/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
       </title_block>
     </sheet>
   </design>
   <components>
-    <comp ref="J1">
-      <value>Conn_01x09</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical</footprint>
-      <datasheet>~</datasheet>
-      <libsource lib="Connector_Generic" part="Conn_01x09" description="Generic connector, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F14F04E</tstamp>
-    </comp>
-    <comp ref="J2">
-      <value>Conn_01x06</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical</footprint>
-      <datasheet>~</datasheet>
-      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F170A36</tstamp>
-    </comp>
     <comp ref="BZ1">
       <value>PS1240P02BT</value>
       <footprint>digikey-footprints:Piezo_Transducer_THT_PS1240P02BT</footprint>
@@ -50,37 +39,58 @@
         <field name="Manufacturer">TDK Corporation</field>
         <field name="Status">Active</field>
       </fields>
-      <libsource lib="dk_Alarms-Buzzers-and-Sirens" part="PS1240P02BT" description="AUDIO PIEZO TRANSDUCER 30V TH"/>
+      <libsource lib="heimdall_outsideboard-rescue" part="PS1240P02BT-dk_Alarms-Buzzers-and-Sirens" description=""/>
+      <property name="Digi-Key_PN" value="445-2525-1-ND"/>
+      <property name="MPN" value="PS1240P02BT"/>
+      <property name="Category" value="Audio Products"/>
+      <property name="Family" value="Alarms, Buzzers, and Sirens"/>
+      <property name="DK_Datasheet_Link" value="https://product.tdk.com/info/en/catalog/datasheets/piezoelectronic_buzzer_ps_en.pdf"/>
+      <property name="DK_Detail_Page" value="/product-detail/en/tdk-corporation/PS1240P02BT/445-2525-1-ND/935930"/>
+      <property name="Description" value="AUDIO PIEZO TRANSDUCER 30V TH"/>
+      <property name="Manufacturer" value="TDK Corporation"/>
+      <property name="Status" value="Active"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F1935B3</tstamp>
-    </comp>
-    <comp ref="R3">
-      <value>1K</value>
-      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
-      <fields>
-        <field name="Field4">RES-07856</field>
-      </fields>
-      <libsource lib="SparkFun-Resistors" part="1KOHM-0603-1_10W-1%" description="1k  resistor A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F1960FF</tstamp>
+      <tstamps>00000000-0000-0000-0000-00005f1935b3</tstamps>
     </comp>
     <comp ref="D1">
       <value>NeoPixel_THT</value>
       <footprint>LED_THT:LED_D5.0mm-4_RGB</footprint>
       <datasheet>https://www.adafruit.com/product/1938</datasheet>
       <libsource lib="LED" part="NeoPixel_THT" description="RGB LED with integrated controller, 5mm/8mm LED package"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F17E8A3</tstamp>
+      <tstamps>00000000-0000-0000-0000-00005f17e8a3</tstamps>
     </comp>
-    <comp ref="R1">
-      <value>10K</value>
-      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
-      <fields>
-        <field name="Field4">RES-12183</field>
-      </fields>
-      <libsource lib="SparkFun-Resistors" part="10KOHM-HORIZ-1_4W-1%" description="10k  resistor A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia"/>
+    <comp ref="J1">
+      <value>Conn_01x09</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x09" description="Generic connector, single row, 01x09, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F1AD489</tstamp>
+      <tstamps>00000000-0000-0000-0000-00005f14f04e</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>Conn_01x06</value>
+      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x06_P2.54mm_Vertical</footprint>
+      <libsource lib="Connector_Generic" part="Conn_01x06" description="Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00005f170a36</tstamps>
+    </comp>
+    <comp ref="Q1">
+      <value>2N3904</value>
+      <footprint>Package_TO_SOT_THT:TO-92_Inline</footprint>
+      <datasheet>https://www.onsemi.com/pub/Collateral/2N3903-D.PDF</datasheet>
+      <libsource lib="Transistor_BJT" part="2N3904" description="0.2A Ic, 40V Vce, Small Signal NPN Transistor, TO-92"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>00000000-0000-0000-0000-00005fa8fea8</tstamps>
     </comp>
     <comp ref="Q2">
       <value>2N7000</value>
@@ -97,19 +107,33 @@
         <field name="Manufacturer">ON Semiconductor</field>
         <field name="Status">Active</field>
       </fields>
-      <libsource lib="dk_Transistors-FETs-MOSFETs-Single" part="2N7000" description="MOSFET N-CH 60V 200MA TO-92"/>
+      <libsource lib="heimdall_outsideboard-rescue" part="2N7000-dk_Transistors-FETs-MOSFETs-Single" description=""/>
+      <property name="Digi-Key_PN" value="2N7000FS-ND"/>
+      <property name="MPN" value="2N7000"/>
+      <property name="Category" value="Discrete Semiconductor Products"/>
+      <property name="Family" value="Transistors - FETs, MOSFETs - Single"/>
+      <property name="DK_Datasheet_Link" value="https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF"/>
+      <property name="DK_Detail_Page" value="/product-detail/en/on-semiconductor/2N7000/2N7000FS-ND/244278"/>
+      <property name="Description" value="MOSFET N-CH 60V 200MA TO-92"/>
+      <property name="Manufacturer" value="ON Semiconductor"/>
+      <property name="Status" value="Active"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F1B8AC7</tstamp>
+      <tstamps>00000000-0000-0000-0000-00005f1b8ac7</tstamps>
     </comp>
-    <comp ref="R4">
+    <comp ref="R1">
       <value>10K</value>
       <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
       <fields>
         <field name="Field4">RES-12183</field>
       </fields>
-      <libsource lib="SparkFun-Resistors" part="10KOHM-HORIZ-1_4W-1%" description="10k  resistor A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia"/>
+      <libsource lib="heimdall_outsideboard-rescue" part="10KOHM-HORIZ-1_4W-1%-SparkFun-Resistors" description=""/>
+      <property name="Field4" value="RES-12183"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F1AE5EE</tstamp>
+      <tstamps>00000000-0000-0000-0000-00005f1ad489</tstamps>
     </comp>
     <comp ref="R2">
       <value>1K</value>
@@ -117,49 +141,38 @@
       <fields>
         <field name="Field4">RES-07856</field>
       </fields>
-      <libsource lib="SparkFun-Resistors" part="1KOHM-0603-1_10W-1%" description="1k  resistor A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia"/>
+      <libsource lib="heimdall_outsideboard-rescue" part="1KOHM-0603-1_10W-1%-SparkFun-Resistors" description=""/>
+      <property name="Field4" value="RES-07856"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F241B2F</tstamp>
+      <tstamps>00000000-0000-0000-0000-00005f241b2f</tstamps>
     </comp>
-    <comp ref="J3">
-      <value>Conn_01x01_Male</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical</footprint>
-      <datasheet>~</datasheet>
-      <libsource lib="Connector" part="Conn_01x01_Male" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+    <comp ref="R3">
+      <value>1K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <fields>
+        <field name="Field4">RES-07856</field>
+      </fields>
+      <libsource lib="heimdall_outsideboard-rescue" part="1KOHM-0603-1_10W-1%-SparkFun-Resistors" description=""/>
+      <property name="Field4" value="RES-07856"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamp>5FA614DC</tstamp>
+      <tstamps>00000000-0000-0000-0000-00005f1960ff</tstamps>
     </comp>
-    <comp ref="J4">
-      <value>Conn_01x01_Male</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical</footprint>
-      <datasheet>~</datasheet>
-      <libsource lib="Connector" part="Conn_01x01_Male" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
+    <comp ref="R4">
+      <value>10K</value>
+      <footprint>Resistor_THT:R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal</footprint>
+      <fields>
+        <field name="Field4">RES-12183</field>
+      </fields>
+      <libsource lib="heimdall_outsideboard-rescue" part="10KOHM-HORIZ-1_4W-1%-SparkFun-Resistors" description=""/>
+      <property name="Field4" value="RES-12183"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamp>5FA62088</tstamp>
-    </comp>
-    <comp ref="J5">
-      <value>Conn_01x01_Male</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical</footprint>
-      <datasheet>~</datasheet>
-      <libsource lib="Connector" part="Conn_01x01_Male" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>5FA690EE</tstamp>
-    </comp>
-    <comp ref="J6">
-      <value>Conn_01x01_Male</value>
-      <footprint>Connector_PinHeader_2.54mm:PinHeader_1x01_P2.54mm_Vertical</footprint>
-      <datasheet>~</datasheet>
-      <libsource lib="Connector" part="Conn_01x01_Male" description="Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>5FA69F83</tstamp>
-    </comp>
-    <comp ref="Q1">
-      <value>2N3904</value>
-      <footprint>Package_TO_SOT_THT:TO-92_Inline</footprint>
-      <datasheet>https://www.onsemi.com/pub/Collateral/2N3903-D.PDF</datasheet>
-      <libsource lib="Transistor_BJT" part="2N3904" description="0.2A Ic, 40V Vce, Small Signal NPN Transistor, TO-92"/>
-      <sheetpath names="/" tstamps="/"/>
-      <tstamp>5FA8FEA8</tstamp>
+      <tstamps>00000000-0000-0000-0000-00005f1ae5ee</tstamps>
     </comp>
     <comp ref="R5">
       <value>500</value>
@@ -167,26 +180,15 @@
       <fields>
         <field name="Field4">RES-07869</field>
       </fields>
-      <libsource lib="SparkFun-Resistors" part="470OHM-0603-1_10W-1%" description="470  resistor A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia"/>
+      <libsource lib="heimdall_outsideboard-rescue" part="470OHM-0603-1_10W-1%-SparkFun-Resistors" description=""/>
+      <property name="Field4" value="RES-07869"/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="heimdall_outsideboard.kicad_sch"/>
       <sheetpath names="/" tstamps="/"/>
-      <tstamp>5F209E6B</tstamp>
+      <tstamps>00000000-0000-0000-0000-00005f209e6b</tstamps>
     </comp>
   </components>
   <libparts>
-    <libpart lib="Connector" part="Conn_01x01_Male">
-      <description>Generic connector, single row, 01x01, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
-      <docs>~</docs>
-      <footprints>
-        <fp>Connector*:*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">J</field>
-        <field name="Value">Conn_01x01_Male</field>
-      </fields>
-      <pins>
-        <pin num="1" name="Pin_1" type="passive"/>
-      </pins>
-    </libpart>
     <libpart lib="Connector_Generic" part="Conn_01x06">
       <description>Generic connector, single row, 01x06, script generated (kicad-library-utils/schlib/autogen/connector/)</description>
       <docs>~</docs>
@@ -196,6 +198,7 @@
       <fields>
         <field name="Reference">J</field>
         <field name="Value">Conn_01x06</field>
+        <field name="Datasheet">~</field>
       </fields>
       <pins>
         <pin num="1" name="Pin_1" type="passive"/>
@@ -215,6 +218,7 @@
       <fields>
         <field name="Reference">J</field>
         <field name="Value">Conn_01x09</field>
+        <field name="Datasheet">~</field>
       </fields>
       <pins>
         <pin num="1" name="Pin_1" type="passive"/>
@@ -238,71 +242,13 @@
       <fields>
         <field name="Reference">D</field>
         <field name="Value">NeoPixel_THT</field>
+        <field name="Datasheet">https://www.adafruit.com/product/1938</field>
       </fields>
       <pins>
         <pin num="1" name="DOUT" type="output"/>
         <pin num="2" name="GND" type="power_in"/>
         <pin num="3" name="VDD" type="power_in"/>
         <pin num="4" name="DIN" type="input"/>
-      </pins>
-    </libpart>
-    <libpart lib="SparkFun-Resistors" part="10KOHM-HORIZ-1_4W-1%">
-      <description>10k  resistor A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia</description>
-      <footprints>
-        <fp>*AXIAL-0.3*</fp>
-        <fp>*AXIAL-0.3*</fp>
-        <fp>*AXIAL-0.3*</fp>
-        <fp>*AXIAL-0.3-KIT*</fp>
-        <fp>*AXIAL-0.3-KIT*</fp>
-        <fp>*AXIAL-0.3-KIT*</fp>
-        <fp>*AXIAL-0.1*</fp>
-        <fp>*AXIAL-0.1*</fp>
-        <fp>*AXIAL-0.1*</fp>
-        <fp>*AXIAL-0.1-KIT*</fp>
-        <fp>*AXIAL-0.1-KIT*</fp>
-        <fp>*AXIAL-0.1-KIT*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">R</field>
-        <field name="Value">10KOHM-HORIZ-1_4W-1%</field>
-        <field name="Footprint">AXIAL-0.3</field>
-        <field name="Field4">RES-12183</field>
-      </fields>
-      <pins>
-        <pin num="1" name="1" type="passive"/>
-        <pin num="2" name="2" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="SparkFun-Resistors" part="1KOHM-0603-1_10W-1%">
-      <description>1k  resistor A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia</description>
-      <footprints>
-        <fp>*0603*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">R</field>
-        <field name="Value">1KOHM-0603-1_10W-1%</field>
-        <field name="Footprint">0603</field>
-        <field name="Field4">RES-07856</field>
-      </fields>
-      <pins>
-        <pin num="1" name="1" type="passive"/>
-        <pin num="2" name="2" type="passive"/>
-      </pins>
-    </libpart>
-    <libpart lib="SparkFun-Resistors" part="470OHM-0603-1_10W-1%">
-      <description>470  resistor A resistor is a passive two-terminal electrical component that implements electrical resistance as a circuit element. Resistors act to reduce current flow, and, at the same time, act to lower voltage levels within circuits. - Wikipedia</description>
-      <footprints>
-        <fp>*0603*</fp>
-      </footprints>
-      <fields>
-        <field name="Reference">R</field>
-        <field name="Value">470OHM-0603-1_10W-1%</field>
-        <field name="Footprint">0603</field>
-        <field name="Field4">RES-07869</field>
-      </fields>
-      <pins>
-        <pin num="1" name="1" type="passive"/>
-        <pin num="2" name="2" type="passive"/>
       </pins>
     </libpart>
     <libpart lib="Transistor_BJT" part="2N3904">
@@ -315,6 +261,7 @@
         <field name="Reference">Q</field>
         <field name="Value">2N3904</field>
         <field name="Footprint">Package_TO_SOT_THT:TO-92_Inline</field>
+        <field name="Datasheet">https://www.onsemi.com/pub/Collateral/2N3903-D.PDF</field>
       </fields>
       <pins>
         <pin num="1" name="E" type="passive"/>
@@ -322,35 +269,52 @@
         <pin num="3" name="C" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="dk_Alarms-Buzzers-and-Sirens" part="PS1240P02BT">
-      <description>AUDIO PIEZO TRANSDUCER 30V TH</description>
-      <docs>https://product.tdk.com/info/en/catalog/datasheets/piezoelectronic_buzzer_ps_en.pdf</docs>
+    <libpart lib="heimdall_outsideboard-rescue" part="10KOHM-HORIZ-1_4W-1%-SparkFun-Resistors">
+      <footprints>
+        <fp>*AXIAL-0.3*</fp>
+        <fp>*AXIAL-0.3*</fp>
+        <fp>*AXIAL-0.3*</fp>
+        <fp>*AXIAL-0.3-KIT*</fp>
+        <fp>*AXIAL-0.3-KIT*</fp>
+        <fp>*AXIAL-0.3-KIT*</fp>
+        <fp>*AXIAL-0.1*</fp>
+        <fp>*AXIAL-0.1*</fp>
+        <fp>*AXIAL-0.1*</fp>
+        <fp>*AXIAL-0.1-KIT*</fp>
+        <fp>*AXIAL-0.1-KIT*</fp>
+        <fp>*AXIAL-0.1-KIT*</fp>
+      </footprints>
       <fields>
-        <field name="Reference">BZ</field>
-        <field name="Value">PS1240P02BT</field>
-        <field name="Footprint">digikey-footprints:Piezo_Transducer_THT_PS1240P02BT</field>
-        <field name="Datasheet">https://product.tdk.com/info/en/catalog/datasheets/piezoelectronic_buzzer_ps_en.pdf</field>
-        <field name="Digi-Key_PN">445-2525-1-ND</field>
-        <field name="MPN">PS1240P02BT</field>
-        <field name="Category">Audio Products</field>
-        <field name="Family">Alarms, Buzzers, and Sirens</field>
-        <field name="DK_Datasheet_Link">https://product.tdk.com/info/en/catalog/datasheets/piezoelectronic_buzzer_ps_en.pdf</field>
-        <field name="DK_Detail_Page">/product-detail/en/tdk-corporation/PS1240P02BT/445-2525-1-ND/935930</field>
-        <field name="Description">AUDIO PIEZO TRANSDUCER 30V TH</field>
-        <field name="Manufacturer">TDK Corporation</field>
-        <field name="Status">Active</field>
+        <field name="Reference">R</field>
+        <field name="Value">10KOHM-HORIZ-1_4W-1%-SparkFun-Resistors</field>
+        <field name="Footprint">AXIAL-0.3</field>
+        <field name="Field4">RES-12183</field>
       </fields>
       <pins>
-        <pin num="1" name="~" type="input"/>
-        <pin num="2" name="~" type="input"/>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
       </pins>
     </libpart>
-    <libpart lib="dk_Transistors-FETs-MOSFETs-Single" part="2N7000">
-      <description>MOSFET N-CH 60V 200MA TO-92</description>
+    <libpart lib="heimdall_outsideboard-rescue" part="1KOHM-0603-1_10W-1%-SparkFun-Resistors">
+      <footprints>
+        <fp>*0603*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">1KOHM-0603-1_10W-1%-SparkFun-Resistors</field>
+        <field name="Footprint">0603</field>
+        <field name="Field4">RES-07856</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="heimdall_outsideboard-rescue" part="2N7000-dk_Transistors-FETs-MOSFETs-Single">
       <docs>https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF</docs>
       <fields>
         <field name="Reference">Q</field>
-        <field name="Value">2N7000</field>
+        <field name="Value">2N7000-dk_Transistors-FETs-MOSFETs-Single</field>
         <field name="Footprint">digikey-footprints:TO-92-3</field>
         <field name="Datasheet">https://www.onsemi.com/pub/Collateral/NDS7002A-D.PDF</field>
         <field name="Digi-Key_PN">2N7000FS-ND</field>
@@ -364,104 +328,128 @@
         <field name="Status">Active</field>
       </fields>
       <pins>
-        <pin num="1" name="S" type="BiDi"/>
-        <pin num="2" name="G" type="BiDi"/>
-        <pin num="3" name="D" type="BiDi"/>
+        <pin num="1" name="S" type="bidirectional"/>
+        <pin num="2" name="G" type="bidirectional"/>
+        <pin num="3" name="D" type="bidirectional"/>
+      </pins>
+    </libpart>
+    <libpart lib="heimdall_outsideboard-rescue" part="470OHM-0603-1_10W-1%-SparkFun-Resistors">
+      <footprints>
+        <fp>*0603*</fp>
+      </footprints>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">470OHM-0603-1_10W-1%-SparkFun-Resistors</field>
+        <field name="Footprint">0603</field>
+        <field name="Field4">RES-07869</field>
+      </fields>
+      <pins>
+        <pin num="1" name="1" type="passive"/>
+        <pin num="2" name="2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="heimdall_outsideboard-rescue" part="PS1240P02BT-dk_Alarms-Buzzers-and-Sirens">
+      <docs>https://product.tdk.com/info/en/catalog/datasheets/piezoelectronic_buzzer_ps_en.pdf</docs>
+      <fields>
+        <field name="Reference">BZ</field>
+        <field name="Value">PS1240P02BT-dk_Alarms-Buzzers-and-Sirens</field>
+        <field name="Footprint">digikey-footprints:Piezo_Transducer_THT_PS1240P02BT</field>
+        <field name="Datasheet">https://product.tdk.com/info/en/catalog/datasheets/piezoelectronic_buzzer_ps_en.pdf</field>
+        <field name="Digi-Key_PN">445-2525-1-ND</field>
+        <field name="MPN">PS1240P02BT</field>
+        <field name="Category">Audio Products</field>
+        <field name="Family">Alarms, Buzzers, and Sirens</field>
+        <field name="DK_Datasheet_Link">https://product.tdk.com/info/en/catalog/datasheets/piezoelectronic_buzzer_ps_en.pdf</field>
+        <field name="DK_Detail_Page">/product-detail/en/tdk-corporation/PS1240P02BT/445-2525-1-ND/935930</field>
+        <field name="Description">AUDIO PIEZO TRANSDUCER 30V TH</field>
+        <field name="Manufacturer">TDK Corporation</field>
+        <field name="Status">Active</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="input"/>
+        <pin num="2" name="" type="input"/>
       </pins>
     </libpart>
   </libparts>
   <libraries>
-    <library logical="Connector">
-      <uri>/usr/share/kicad/library/Connector.lib</uri>
-    </library>
     <library logical="Connector_Generic">
-      <uri>/usr/share/kicad/library/Connector_Generic.lib</uri>
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Connector_Generic.kicad_sym</uri>
     </library>
     <library logical="LED">
-      <uri>/usr/share/kicad/library/LED.lib</uri>
-    </library>
-    <library logical="SparkFun-Resistors">
-      <uri>/home/bcran/src/SparkFun-KiCad-Libraries/Libraries/SparkFun-Resistors.lib</uri>
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/LED.kicad_sym</uri>
     </library>
     <library logical="Transistor_BJT">
-      <uri>/usr/share/kicad/library/Transistor_BJT.lib</uri>
+      <uri>C:\Program Files\KiCad\6.0\share\kicad\symbols\/Transistor_BJT.kicad_sym</uri>
     </library>
-    <library logical="dk_Alarms-Buzzers-and-Sirens">
-      <uri>/home/bcran/src/digikey-kicad-library/digikey-symbols/dk_Alarms-Buzzers-and-Sirens.lib</uri>
-    </library>
-    <library logical="dk_Transistors-FETs-MOSFETs-Single">
-      <uri>/home/bcran/src/digikey-kicad-library/digikey-symbols/dk_Transistors-FETs-MOSFETs-Single.lib</uri>
+    <library logical="heimdall_outsideboard-rescue">
+      <uri>C:\Users\rebecca\Documents\src\heimdall\future\hardware\outside_board_aisler/heimdall_outsideboard-rescue.lib</uri>
     </library>
   </libraries>
   <nets>
     <net code="1" name="+3V3">
-      <node ref="R3" pin="2"/>
-      <node ref="BZ1" pin="1"/>
-      <node ref="J2" pin="1"/>
-      <node ref="J1" pin="2"/>
-      <node ref="R1" pin="2"/>
-      <node ref="Q2" pin="2"/>
-      <node ref="J3" pin="1"/>
+      <node ref="BZ1" pin="1" pintype="input"/>
+      <node ref="J1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="Q2" pin="2" pinfunction="G" pintype="bidirectional"/>
+      <node ref="R1" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="R3" pin="2" pinfunction="2" pintype="passive"/>
     </net>
     <net code="2" name="+5V">
-      <node ref="J1" pin="1"/>
-      <node ref="R4" pin="1"/>
-      <node ref="J6" pin="1"/>
-      <node ref="D1" pin="3"/>
+      <node ref="D1" pin="3" pinfunction="VDD" pintype="power_in"/>
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R4" pin="1" pinfunction="1" pintype="passive"/>
     </net>
-    <net code="3" name="Net-(Q1-Pad2)">
-      <node ref="Q1" pin="2"/>
-      <node ref="R2" pin="2"/>
+    <net code="3" name="/Buzzer">
+      <node ref="J1" pin="9" pinfunction="Pin_9" pintype="passive"/>
+      <node ref="R2" pin="1" pinfunction="1" pintype="passive"/>
     </net>
-    <net code="4" name="GND">
-      <node ref="D1" pin="2"/>
-      <node ref="Q1" pin="1"/>
-      <node ref="J1" pin="3"/>
-      <node ref="J2" pin="2"/>
+    <net code="4" name="/CS">
+      <node ref="J1" pin="4" pinfunction="Pin_4" pintype="passive"/>
+      <node ref="J2" pin="3" pinfunction="Pin_3" pintype="passive"/>
     </net>
-    <net code="5" name="/Buzzer">
-      <node ref="J1" pin="9"/>
-      <node ref="R2" pin="1"/>
+    <net code="5" name="/LED">
+      <node ref="J1" pin="8" pinfunction="Pin_8" pintype="passive"/>
+      <node ref="Q2" pin="1" pinfunction="S" pintype="bidirectional"/>
+      <node ref="R1" pin="1" pinfunction="1" pintype="passive"/>
     </net>
-    <net code="7" name="Net-(Q2-Pad3)">
-      <node ref="R4" pin="2"/>
-      <node ref="R5" pin="1"/>
-      <node ref="Q2" pin="3"/>
+    <net code="6" name="/MISO">
+      <node ref="J1" pin="7" pinfunction="Pin_7" pintype="passive"/>
+      <node ref="J2" pin="6" pinfunction="Pin_6" pintype="passive"/>
     </net>
-    <net code="8" name="Net-(D1-Pad4)">
-      <node ref="R5" pin="2"/>
-      <node ref="J5" pin="1"/>
-      <node ref="D1" pin="4"/>
+    <net code="7" name="/MOSI">
+      <node ref="J1" pin="6" pinfunction="Pin_6" pintype="passive"/>
+      <node ref="J2" pin="5" pinfunction="Pin_5" pintype="passive"/>
     </net>
-    <net code="9" name="Net-(BZ1-Pad2)">
-      <node ref="J4" pin="1"/>
-      <node ref="Q1" pin="3"/>
-      <node ref="BZ1" pin="2"/>
-      <node ref="R3" pin="1"/>
+    <net code="8" name="/SCK">
+      <node ref="J1" pin="5" pinfunction="Pin_5" pintype="passive"/>
+      <node ref="J2" pin="4" pinfunction="Pin_4" pintype="passive"/>
     </net>
-    <net code="10" name="Net-(D1-Pad1)">
-      <node ref="D1" pin="1"/>
+    <net code="9" name="GND">
+      <node ref="D1" pin="2" pinfunction="GND" pintype="power_in"/>
+      <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="J2" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="Q1" pin="1" pinfunction="E" pintype="passive"/>
     </net>
-    <net code="11" name="/LED">
-      <node ref="Q2" pin="1"/>
-      <node ref="R1" pin="1"/>
-      <node ref="J1" pin="8"/>
+    <net code="10" name="Net-(BZ1-Pad2)">
+      <node ref="BZ1" pin="2" pintype="input"/>
+      <node ref="Q1" pin="3" pinfunction="C" pintype="passive"/>
+      <node ref="R3" pin="1" pinfunction="1" pintype="passive"/>
     </net>
-    <net code="12" name="/MISO">
-      <node ref="J2" pin="6"/>
-      <node ref="J1" pin="7"/>
+    <net code="11" name="Net-(D1-Pad4)">
+      <node ref="D1" pin="4" pinfunction="DIN" pintype="input"/>
+      <node ref="R5" pin="2" pinfunction="2" pintype="passive"/>
     </net>
-    <net code="13" name="/MOSI">
-      <node ref="J2" pin="5"/>
-      <node ref="J1" pin="6"/>
+    <net code="12" name="Net-(Q1-Pad2)">
+      <node ref="Q1" pin="2" pinfunction="B" pintype="passive"/>
+      <node ref="R2" pin="2" pinfunction="2" pintype="passive"/>
     </net>
-    <net code="14" name="/SCK">
-      <node ref="J2" pin="4"/>
-      <node ref="J1" pin="5"/>
+    <net code="13" name="Net-(Q2-Pad3)">
+      <node ref="Q2" pin="3" pinfunction="D" pintype="bidirectional"/>
+      <node ref="R4" pin="2" pinfunction="2" pintype="passive"/>
+      <node ref="R5" pin="1" pinfunction="1" pintype="passive"/>
     </net>
-    <net code="15" name="/CS">
-      <node ref="J2" pin="3"/>
-      <node ref="J1" pin="4"/>
+    <net code="14" name="unconnected-(D1-Pad1)">
+      <node ref="D1" pin="1" pinfunction="DOUT" pintype="output"/>
     </net>
   </nets>
 </export>
