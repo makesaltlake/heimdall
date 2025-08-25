@@ -6175,7 +6175,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x09_P2.54mm_Vertical"
 			(at 22.86 161.29 0)
 			(effects
 				(font
@@ -6385,7 +6385,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "a01ffd35-21ce-41a1-a44e-57648b415d2f")
-		(property "Reference" "C10pf"
+		(property "Reference" "C14"
 			(at 198.1137 157.48 90)
 			(effects
 				(font
@@ -6393,7 +6393,7 @@
 				)
 			)
 		)
-		(property "Value" "C_Small"
+		(property "Value" "10pf"
 			(at 198.1137 154.94 90)
 			(effects
 				(font
@@ -6437,7 +6437,7 @@
 		(instances
 			(project "heimdall_outsideboards"
 				(path "/5c087b52-dc4f-4954-b9fe-1d3bf0424550"
-					(reference "C10pf")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -7295,7 +7295,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "TestPoint:TestPoint_Pad_D1.5mm"
 			(at 233.68 86.36 0)
 			(effects
 				(font
@@ -8254,7 +8254,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
 			(at 22.86 186.69 0)
 			(effects
 				(font
