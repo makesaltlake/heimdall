@@ -450,7 +450,8 @@
       "CLRC663"
     ],
     "pinned_symbol_libs": [
-      "heimdall_symbols"
+      "heimdall_symbols",
+      "CMT-1075-SMT-TR"
     ]
   },
   "meta": {

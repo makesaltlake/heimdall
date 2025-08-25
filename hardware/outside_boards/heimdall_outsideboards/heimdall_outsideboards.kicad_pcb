@@ -1896,6 +1896,294 @@
 			)
 		)
 	)
+	(footprint "CLRC663:CMT1075SMTTR"
+		(layer "F.Cu")
+		(uuid "4693f7c1-9b48-4ec0-9ed1-584742a357c4")
+		(at 144 97)
+		(descr "CMT-1075-SMT-TR-1")
+		(tags "Loudspeaker or Buzzer")
+		(property "Reference" "LS1"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(uuid "ab444997-f338-4b66-81f4-98b42c583d51")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Value" "CMT-1075-SMT-TR"
+			(at 0 0 0)
+			(layer "F.SilkS")
+			(hide yes)
+			(uuid "1b17d8f0-6578-4509-aa08-355a33a99dfa")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(property "Datasheet" "https://www.sameskydevices.com/product/resource/cmt-1075-smt-tr.pdf"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "27b38414-6cb8-4936-ae94-a3c7a736ff19")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Description" "10 mm, 25 V, 75 dB, Surface Mount (SMT), Piezo Audio Transducer Buzzer"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "5c68a507-da45-4b37-967f-d8d857172628")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Height" "3.6"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "0adea1d1-82d1-457c-8e45-c1f9533df92a")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Mouser Part Number" "490-CMT-1075-SMT-TR"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "7e0bf714-0a84-4d81-9b7e-7c3309b51d09")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Mouser Price/Stock" "https://www.mouser.co.uk/ProductDetail/Same-Sky/CMT-1075-SMT-TR?qs=WyjlAZoYn50V549TUJy5UQ%3D%3D"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "2e67d772-b72f-4421-85a1-8232c838a9ac")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer_Name" "Same Sky"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "14db8a77-3ef9-43d2-a86a-8c05ad6a9fbf")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(property "Manufacturer_Part_Number" "CMT-1075-SMT-TR"
+			(at 0 0 0)
+			(unlocked yes)
+			(layer "F.Fab")
+			(hide yes)
+			(uuid "8809a170-6cd0-4119-85ef-33e05ec391ba")
+			(effects
+				(font
+					(size 1 1)
+					(thickness 0.15)
+				)
+			)
+		)
+		(path "/58f22710-b7b2-4d63-be76-065d40a7219c")
+		(sheetname "/")
+		(sheetfile "heimdall_outsideboards.kicad_sch")
+		(attr smd)
+		(fp_line
+			(start 0 6.5)
+			(end 0 6.5)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "4f06d431-451c-4b1f-93d3-13ad73d45fce")
+		)
+		(fp_line
+			(start 0 6.6)
+			(end 0 6.6)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "7bfa3e85-f45d-45d7-b231-b30bbe77c221")
+		)
+		(fp_arc
+			(start 0 6.5)
+			(mid 0.05 6.55)
+			(end 0 6.6)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "085032d7-1375-4aa7-a54f-8138874e63da")
+		)
+		(fp_arc
+			(start 0 6.6)
+			(mid -0.05 6.55)
+			(end 0 6.5)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.SilkS")
+			(uuid "346fe277-41d9-4e77-9a67-410d343d3db9")
+		)
+		(fp_line
+			(start -6 -7)
+			(end 6 -7)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "6572748c-8bf5-4caa-a17b-d9faea03e649")
+		)
+		(fp_line
+			(start -6 7)
+			(end -6 -7)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "e4ec7751-4745-4b69-8606-8abe2807dd1d")
+		)
+		(fp_line
+			(start 6 -7)
+			(end 6 7)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "1d42d2f4-2eec-4985-8605-5e9f3ad5faa1")
+		)
+		(fp_line
+			(start 6 7)
+			(end -6 7)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.CrtYd")
+			(uuid "c2c3a39a-f3bf-448f-bfc8-2f40a074083a")
+		)
+		(fp_line
+			(start -5 0)
+			(end -5 0)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "16a94cfb-b6ee-4ebc-abe5-04e483066efe")
+		)
+		(fp_line
+			(start 5 0)
+			(end 5 0)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "28e21596-7bde-4d18-b6aa-a76462dffe7a")
+		)
+		(fp_arc
+			(start -5 0)
+			(mid 0 -5)
+			(end 5 0)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "fccbd029-0807-4043-8b6a-4a84d6d83d22")
+		)
+		(fp_arc
+			(start 5 0)
+			(mid 0 5)
+			(end -5 0)
+			(stroke
+				(width 0.1)
+				(type solid)
+			)
+			(layer "F.Fab")
+			(uuid "ecb46102-de82-4846-8ea6-9449d661d045")
+		)
+		(fp_text user "${REFERENCE}"
+			(at 0 0 0)
+			(layer "F.Fab")
+			(uuid "11926245-bf5e-4c32-a20a-b4cec0892232")
+			(effects
+				(font
+					(size 1.27 1.27)
+					(thickness 0.254)
+				)
+			)
+		)
+		(pad "1" smd rect
+			(at 0 3.5)
+			(size 2.6 5)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 41 "Beeper")
+			(pinfunction "+")
+			(pintype "passive")
+			(uuid "836f9ffe-59cf-43d1-b2d3-95a712cacc3e")
+		)
+		(pad "2" smd rect
+			(at 0 -3.5)
+			(size 2.6 5)
+			(layers "F.Cu" "F.Mask" "F.Paste")
+			(net 16 "GND")
+			(pinfunction "-")
+			(pintype "passive")
+			(uuid "bc34bf00-f292-44eb-b4af-1033065aa6ef")
+		)
+		(embedded_fonts no)
+		(model "CMT-1075-SMT-TR.stp"
+			(offset
+				(xyz 0 0 0.09999999999)
+			)
+			(scale
+				(xyz 1 1 1)
+			)
+			(rotate
+				(xyz -90 0 0)
+			)
+		)
+	)
 	(footprint "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 		(layer "F.Cu")
 		(uuid "533713e3-1e16-4ac4-9295-5b1b276c042b")
@@ -6788,7 +7076,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "e766bd31-dfd2-4993-9a75-3fb1aa7198c3")
+			(uuid "99640ab6-fccf-400e-88fc-7c37d0a21102")
 			(effects
 				(font
 					(size 1 1)
@@ -6801,7 +7089,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "812eea33-093b-43e7-91cc-5308450ef9fc")
+			(uuid "ef138e6b-2a39-47c0-b503-4e017c3130bd")
 			(effects
 				(font
 					(size 1 1)
@@ -6814,7 +7102,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "cefc9f1b-b152-496b-abf7-736581c783a5")
+			(uuid "59f640af-f0f6-4653-8908-6f49e6b42123")
 			(effects
 				(font
 					(size 1 1)
@@ -6827,7 +7115,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "08372171-f6c4-42ea-b9f1-8adcd3be7dcc")
+			(uuid "87d589c0-e6b1-4908-bcbe-274179f86613")
 			(effects
 				(font
 					(size 1 1)
@@ -6840,7 +7128,7 @@
 			(unlocked yes)
 			(layer "F.Fab")
 			(hide yes)
-			(uuid "a98ebc24-0b36-4bab-b378-02f6d7eafe2a")
+			(uuid "4d037fa7-8a36-4842-92b6-ecf8793070ee")
 			(effects
 				(font
 					(size 1 1)
@@ -6861,7 +7149,7 @@
 			)
 			(fill no)
 			(layer "F.SilkS")
-			(uuid "734d986b-2adc-4fbe-b7ae-dbfa2ea80905")
+			(uuid "2615de47-2886-440f-9152-936718eef6da")
 		)
 		(fp_line
 			(start -3.125 -3.125)
@@ -6871,7 +7159,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "a2e6dd6f-ee74-4757-baad-3e5930720eeb")
+			(uuid "62b024da-7ec2-4689-84b8-cbdba0d074c9")
 		)
 		(fp_line
 			(start -3.125 3.125)
@@ -6881,7 +7169,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "fe8956fb-d1e7-4fcb-8d85-069d64af2dcf")
+			(uuid "6a5cd8e5-b4d1-4fa5-a3f9-b3a150b34991")
 		)
 		(fp_line
 			(start 3.125 -3.125)
@@ -6891,7 +7179,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "b3d51832-64d2-4546-9614-34270930311a")
+			(uuid "512fecbc-0549-46dc-b01d-8021589cc055")
 		)
 		(fp_line
 			(start 3.125 3.125)
@@ -6901,7 +7189,7 @@
 				(type solid)
 			)
 			(layer "F.CrtYd")
-			(uuid "7e01647a-d524-4270-b91e-6c4e6d8be4e3")
+			(uuid "7817cae2-4161-4131-af7c-7dd9464a9ab7")
 		)
 		(fp_line
 			(start -2.5 -2.5)
@@ -6911,7 +7199,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "a455275a-ad17-4717-8faa-6d6f0c789125")
+			(uuid "98e71b52-be34-4a2b-8d9d-f32ef2d9e1ce")
 		)
 		(fp_line
 			(start -2.5 -2)
@@ -6921,7 +7209,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "c798b770-b946-47df-8e24-d63c035feb93")
+			(uuid "a68449c7-584f-4265-a1ae-a60070652aa3")
 		)
 		(fp_line
 			(start -2.5 2.5)
@@ -6931,7 +7219,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "4819bd98-bd79-404a-827e-a9108764eca3")
+			(uuid "ee4bf3cc-bdc9-4551-b178-7c008fe9d8b2")
 		)
 		(fp_line
 			(start 2.5 -2.5)
@@ -6941,7 +7229,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "6f06d257-91e0-42fe-bf01-ff804f591d21")
+			(uuid "6655cf74-bd60-47be-a2d3-03718eda3597")
 		)
 		(fp_line
 			(start 2.5 2.5)
@@ -6951,7 +7239,7 @@
 				(type solid)
 			)
 			(layer "F.Fab")
-			(uuid "d8dbd477-9d89-4aee-a053-520fc6919a1f")
+			(uuid "aba09147-0efd-483a-9c43-a3024344b241")
 		)
 		(fp_text user "${REFERENCE}"
 			(at 0 0 0)
