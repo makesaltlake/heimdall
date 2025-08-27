@@ -7985,7 +7985,7 @@
 	)
 	(symbol
 		(lib_id "Device:Crystal_Small")
-		(at 187.96 146.05 270)
+		(at 187.96 146.05 90)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -7999,7 +7999,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Value" "27.12MHz"
@@ -8008,7 +8008,7 @@
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 			)
 		)
 		(property "Footprint" "Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm_HandSoldering"
