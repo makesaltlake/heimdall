@@ -106,6 +106,7 @@ void mfrc630_MF_example_dump_arduino() {
           Serial.println();
         }
         mfrc630_MF_deauth();  // be sure to call this after an authentication!
+        tone(33, 2000, 50);
       } else {
         Serial.print("Could not authenticate :(\n");
       }
@@ -119,6 +120,7 @@ void mfrc630_MF_example_dump_arduino() {
 }
 
 void setup(){
+  pinMode(33, OUTPUT);
   Serial.begin(9600);
   delay(1000);
   
@@ -131,9 +133,6 @@ void setup(){
   Serial.print("Version register: 0x");
   Serial.println(version, HEX);
   
-  // Load protocol
-  mfrc630_AN1102_recommended_registers(MFRC630_PROTO_ISO14443A_106_MILLER_MANCHESTER);
-  
   // Check key registers after protocol load
   Serial.print("DrvMode (0x28): 0x");
   Serial.println(mfrc630_read_reg(0x28), HEX);
@@ -143,26 +142,18 @@ void setup(){
   Serial.println(mfrc630_read_reg(0x2A), HEX);
   Serial.print("TxL (0x2B): 0x");
   Serial.println(mfrc630_read_reg(0x2B), HEX);
-  
-  // ADD THESE NEW LINES - Improve receiver sensitivity
-  mfrc630_write_reg(MFRC630_REG_RXANA, 0x03);      // Maximum receiver gain
-  mfrc630_write_reg(MFRC630_REG_RXTHRESHOLD, 0x00); // Minimum threshold for detection
-  // In setup(), after the other register settings:
-  // Ensure stable transmission
-  mfrc630_write_reg(0x29, 0x10);  // Slightly higher TxAmp for stability
-  mfrc630_write_reg(0x2A, 0x21);  // Ensure proper driver configuration
-  
-  Serial.println("Enhanced receiver settings applied");
+
+  complete_clrc663_reset();
 }
 
 void debug_reqa_internals() {
-  // Serial.println("=== REQA Debug ===");
+  Serial.println("=== REQA Debug ===");
   
   // Check initial state
-  // Serial.print("Initial IRQ0: 0x");
-  // Serial.println(mfrc630_irq0(), HEX);
-  // Serial.print("Initial IRQ1: 0x");
-  // Serial.println(mfrc630_irq1(), HEX);
+  Serial.print("Initial IRQ0: 0x");
+  Serial.println(mfrc630_irq0(), HEX);
+  Serial.print("Initial IRQ1: 0x");
+  Serial.println(mfrc630_irq1(), HEX);
   
   // Reset state
   mfrc630_cmd_idle();
@@ -175,70 +166,43 @@ void debug_reqa_internals() {
   
   Serial.print("REQA result: 0x");
   Serial.println(atqa, HEX);
-  // Serial.print("Final IRQ0: 0x");
-  // Serial.println(mfrc630_irq0(), HEX);
-  // Serial.print("Final IRQ1: 0x");
-  // Serial.println(mfrc630_irq1(), HEX);
-  
-  // // Check for specific errors
-  // uint8_t error_reg = mfrc630_read_reg(MFRC630_REG_ERROR);
-  // Serial.print("Error register: 0x");
-  // Serial.println(error_reg, HEX);
-  
-  // Serial.print("Final FIFO length: ");
-  // Serial.println(mfrc630_fifo_length());
-}
-
-void proper_clrc663_reset() {
-  // Stop any active command
-  mfrc630_cmd_idle();
-  
-  // Clear FIFO and interrupts
-  mfrc630_flush_fifo();
-  mfrc630_clear_irq0();
-  mfrc630_clear_irq1();
-  
-  // **CRITICAL: Clear collision state register**
-  mfrc630_write_reg(MFRC630_REG_RXCOLL, 0x00);  // This is the key!
-  
-  // Reset Timer 0 completely
-  mfrc630_write_reg(MFRC630_REG_TCONTROL, 0x00);
-  mfrc630_timer_set_control(0, 0x00);
-  mfrc630_timer_set_value(0, 0x00);
-  mfrc630_timer_set_reload(0, 0x00);
-  
-  // Clear status register to reset any internal state
-  mfrc630_write_reg(MFRC630_REG_STATUS, 0x00);
-  
-  delay(5);
-  
-  // Final interrupt clear
-  mfrc630_clear_irq1();
-  
-  Serial.print("Reset complete, IRQ1: 0x");
+  Serial.print("Final IRQ0: 0x");
+  Serial.println(mfrc630_irq0(), HEX);
+  Serial.print("Final IRQ1: 0x");
   Serial.println(mfrc630_irq1(), HEX);
+  
+  // Check for specific errors
+  uint8_t error_reg = mfrc630_read_reg(MFRC630_REG_ERROR);
+  Serial.print("Error register: 0x");
+  Serial.println(error_reg, HEX);
+  
+  Serial.print("Final FIFO length: ");
+  Serial.println(mfrc630_fifo_length());
 }
 
 void complete_clrc663_reset() {
   // Perform a soft reset of the chip
   mfrc630_write_reg(MFRC630_REG_COMMAND, MFRC630_CMD_SOFTRESET);
-  delay(50);  // Allow reset to complete
+  delayMicroseconds(500);  // Allow reset to complete
   
   // Reload the protocol configuration after reset
   mfrc630_AN1102_recommended_registers(MFRC630_PROTO_ISO14443A_106_MILLER_MANCHESTER);
   
   // Reapply receiver sensitivity settings
-  mfrc630_write_reg(MFRC630_REG_RXANA, 0x03);
-  mfrc630_write_reg(MFRC630_REG_RXTHRESHOLD, 0x00);
-  mfrc630_write_reg(0x29, 0x10);
-  mfrc630_write_reg(0x2A, 0x21);
+  mfrc630_write_reg(MFRC630_REG_RXANA, 0x03); //0x39 RxAna
+  mfrc630_write_reg(MFRC630_REG_RXTHRESHOLD, 0x00); // 0x37 RxThreshold
+  // mfrc630_write_reg(0x28, 0b10001111);  // Enhanced DrvMode for 5V
+  mfrc630_write_reg(0x29, 0b11000000); //TxAmp register/
+  mfrc630_write_reg(0x2A, 0b00100001); //TxCon register
+
+  // ADD THESE NEW LINES - Improve receiver sensitivity
+  mfrc630_write_reg(MFRC630_REG_RXANA, 0b00000011); // 0x39 address
+  mfrc630_write_reg(MFRC630_REG_RXTHRESHOLD, 0b00000000); //0x37 address
   
   // Clear all interrupts after reconfiguration
   mfrc630_clear_irq0();
   mfrc630_clear_irq1();
   
-  // Serial.print("Complete reset done, IRQ1: 0x");
-  // Serial.println(mfrc630_irq1(), HEX);
 }
 
 void loop(){
@@ -247,7 +211,10 @@ void loop(){
   // Reset for next read  
   complete_clrc663_reset();
   
-  debug_reqa_internals();
-  delay(100);
+  // debug_reqa_internals();
+
+  mfrc630_MF_example_dump_arduino();
+  // test_authentication_with_5v();
+  // delay(1000);
 }
 

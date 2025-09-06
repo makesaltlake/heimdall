@@ -3742,12 +3742,6 @@
 		(uuid "7a9750de-8f1b-4bc9-91e4-510693a9c457")
 	)
 	(junction
-		(at 222.25 125.73)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "7f6e98fa-359b-45c7-ab58-e3687fe47937")
-	)
-	(junction
 		(at 138.43 115.57)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -3818,12 +3812,6 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "cd48bfec-f616-417a-9c7b-832924956549")
-	)
-	(junction
-		(at 222.25 151.13)
-		(diameter 0)
-		(color 0 0 0 0)
-		(uuid "cf309c83-f739-4d19-a117-cf836538b19c")
 	)
 	(junction
 		(at 147.32 115.57)
@@ -4063,7 +4051,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 151.13) (xy 245.11 151.13)
+			(xy 218.44 151.13) (xy 245.11 151.13)
 		)
 		(stroke
 			(width 0)
@@ -4190,16 +4178,6 @@
 			(type default)
 		)
 		(uuid "26a16257-879f-47c5-8020-e4da346ebae5")
-	)
-	(wire
-		(pts
-			(xy 222.25 140.97) (xy 222.25 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "26f63f65-7f6a-4d09-93ec-a8e9187005d4")
 	)
 	(wire
 		(pts
@@ -4363,7 +4341,7 @@
 	)
 	(wire
 		(pts
-			(xy 167.64 138.43) (xy 171.45 138.43)
+			(xy 114.3 138.43) (xy 171.45 138.43)
 		)
 		(stroke
 			(width 0)
@@ -4453,7 +4431,7 @@
 	)
 	(wire
 		(pts
-			(xy 167.64 138.43) (xy 167.64 143.51)
+			(xy 114.3 138.43) (xy 114.3 143.51)
 		)
 		(stroke
 			(width 0)
@@ -4793,16 +4771,6 @@
 	)
 	(wire
 		(pts
-			(xy 245.11 125.73) (xy 240.03 125.73)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "79236b03-795e-4702-a149-6c35e2eec8b1")
-	)
-	(wire
-		(pts
 			(xy 107.95 48.26) (xy 109.22 48.26)
 		)
 		(stroke
@@ -5133,16 +5101,6 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 125.73) (xy 222.25 135.89)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "af028752-52a9-451a-b386-ffe2a3ec6dcd")
-	)
-	(wire
-		(pts
 			(xy 64.77 123.19) (xy 64.77 124.46)
 		)
 		(stroke
@@ -5423,7 +5381,7 @@
 	)
 	(wire
 		(pts
-			(xy 110.49 143.51) (xy 167.64 143.51)
+			(xy 110.49 143.51) (xy 114.3 143.51)
 		)
 		(stroke
 			(width 0)
@@ -5493,7 +5451,7 @@
 	)
 	(wire
 		(pts
-			(xy 222.25 125.73) (xy 234.95 125.73)
+			(xy 218.44 125.73) (xy 245.11 125.73)
 		)
 		(stroke
 			(width 0)
@@ -5550,16 +5508,6 @@
 			(type default)
 		)
 		(uuid "e7179a0d-1e5b-4c1d-b6ae-4d54456ef032")
-	)
-	(wire
-		(pts
-			(xy 218.44 151.13) (xy 222.25 151.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "e888a6a8-2976-497b-bc1c-3237e978b8cf")
 	)
 	(wire
 		(pts
@@ -5680,16 +5628,6 @@
 			(type default)
 		)
 		(uuid "f71bebe9-3e80-4142-9a8d-81b9c962744d")
-	)
-	(wire
-		(pts
-			(xy 218.44 125.73) (xy 222.25 125.73)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "fa12c283-c584-4d27-9cce-06f39168be6e")
 	)
 	(wire
 		(pts
@@ -7133,76 +7071,6 @@
 			(project ""
 				(path "/5c087b52-dc4f-4954-b9fe-1d3bf0424550"
 					(reference "C10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:C_Small")
-		(at 222.25 138.43 180)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "31f82461-814a-4c18-b3e3-12fdfe0815e4")
-		(property "Reference" "C7"
-			(at 224.79 137.1535 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Value" "2.1pf"
-			(at 224.79 139.6935 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-			)
-		)
-		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric_Pad1.18x1.45mm_HandSolder"
-			(at 222.25 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/KYOCERA-AVX/08055C2R7KAT2A?qs=u4fy%2FsgLU9OCNE0ypH9Owg%3D%3D"
-			(at 222.25 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Unpolarized capacitor, small symbol"
-			(at 222.25 138.43 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "f007e447-0a85-4e3a-aa30-ac942aad97f0")
-		)
-		(pin "2"
-			(uuid "ae7d0a6f-5ec9-4211-9be0-5e080e815e02")
-		)
-		(instances
-			(project "heimdall_outsideboards"
-				(path "/5c087b52-dc4f-4954-b9fe-1d3bf0424550"
-					(reference "C7")
 					(unit 1)
 				)
 			)
@@ -10155,74 +10023,6 @@
 			(project "heimdall_outsideboards"
 				(path "/5c087b52-dc4f-4954-b9fe-1d3bf0424550"
 					(reference "C4")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Device:R_Small")
-		(at 237.49 125.73 90)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "c46b4bbf-b9c9-4f0e-b914-16c3b9fd58d6")
-		(property "Reference" "R3"
-			(at 237.49 120.65 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "2.224"
-			(at 237.49 123.19 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
-			(at 237.49 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/Vishay-Thin-Film/PCAN0805K2R00FST5?qs=YCa%2FAAYMW00Wdm%252BSetug7g%3D%3D"
-			(at 237.49 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor, small symbol"
-			(at 237.49 125.73 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "007ad3be-810a-47e3-bfda-c9c75e78bb39")
-		)
-		(pin "2"
-			(uuid "5157aad1-350e-4f0d-9311-6f5931142a56")
-		)
-		(instances
-			(project "heimdall_outsideboards"
-				(path "/5c087b52-dc4f-4954-b9fe-1d3bf0424550"
-					(reference "R3")
 					(unit 1)
 				)
 			)
