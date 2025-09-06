@@ -28,6 +28,12 @@
 #include <SPI.h>
 #include "mfrc630.h"
 
+long int reads = 0;
+long int no_reads = 0;
+long int total_no = 0;
+long int bad_reads = 0;
+long int total_bad = 0;
+
 // Pin to select the hardware, the NSS pin.
 #define CHIP_SELECT 10
 // Pins MOSI, MISO and SCK are connected to the default pins, and are manipulated through the SPI object.
@@ -43,7 +49,7 @@ void mfrc630_SPI_transfer(const uint8_t* tx, uint8_t* rx, uint16_t len) {
 // Select the chip and start an SPI transaction.
 void mfrc630_SPI_select() {
   // SPI.beginTransaction(SPISettings(10000000, MSBFIRST, SPI_MODE0));  // gain control of SPI bus
-  SPI.beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE0));  // gain control of SPI bus
+  SPI.beginTransaction(SPISettings(1000000, MSBFIRST, SPI_MODE0));  // Set up SPI bus
   digitalWrite(CHIP_SELECT, LOW);
 }
 
@@ -77,13 +83,13 @@ void mfrc630_MF_example_dump_arduino() {
     uint8_t uid_len = mfrc630_iso14443a_select(uid, &sak);
 
     if (uid_len != 0) {  // did we get an UID?
-      Serial.print("UID of ");
-      Serial.print(uid_len);
-      Serial.print(" bytes (SAK: ");
-      Serial.print(sak);
-      Serial.print("): ");
-      print_block(uid, uid_len);
-      Serial.print("\n");
+      // Serial.print("UID of ");
+      // Serial.print(uid_len);
+      // Serial.print(" bytes (SAK: ");
+      // Serial.print(sak);
+      // Serial.print("): ");
+      // print_block(uid, uid_len);
+      // Serial.print("\n");
 
       // Use the manufacturer default key...
       uint8_t FFkey[6] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
@@ -92,7 +98,7 @@ void mfrc630_MF_example_dump_arduino() {
 
       // Try to athenticate block 0.
       if (mfrc630_MF_auth(uid, MFRC630_MF_AUTH_KEY_A, 0)) {
-        Serial.println("Yay! We are authenticated!");
+        // Serial.println("Yay! We are authenticated!");
 
         // Attempt to read the first 4 blocks.
         uint8_t readbuf[16] = {0};
@@ -106,16 +112,25 @@ void mfrc630_MF_example_dump_arduino() {
           Serial.println();
         }
         mfrc630_MF_deauth();  // be sure to call this after an authentication!
+        total_bad += bad_reads;
+        total_no += no_reads;
+        reads++;
+        Serial.printf("%d in %d bad in %d missed %f\n",1, bad_reads, no_reads, (double)1 / ((double)bad_reads + (double)no_reads));
         tone(33, 2000, 50);
+        bad_reads = 0;
+        no_reads = 0;
       } else {
-        Serial.print("Could not authenticate :(\n");
+        bad_reads ++;
+        // Serial.print("Could not authenticate :(\n");
       }
     } else {
-      Serial.print("Could not determine UID, perhaps some cards don't play");
-      Serial.print(" well with the other cards? Or too many collisions?\n");
+      // Serial.print("Could not determine UID, perhaps some cards don't play");
+      // Serial.print(" well with the other cards? Or too many collisions?\n");
+      bad_reads++;
     }
   } else {
-    Serial.print("No answer to REQA, no cards?\n");
+    // Serial.print("No answer to REQA, no cards?\n");
+    no_reads++;
   }
 }
 
@@ -133,6 +148,8 @@ void setup(){
   Serial.print("Version register: 0x");
   Serial.println(version, HEX);
   
+  complete_clrc663_reset();
+
   // Check key registers after protocol load
   Serial.print("DrvMode (0x28): 0x");
   Serial.println(mfrc630_read_reg(0x28), HEX);
@@ -143,41 +160,6 @@ void setup(){
   Serial.print("TxL (0x2B): 0x");
   Serial.println(mfrc630_read_reg(0x2B), HEX);
 
-  complete_clrc663_reset();
-}
-
-void debug_reqa_internals() {
-  Serial.println("=== REQA Debug ===");
-  
-  // Check initial state
-  Serial.print("Initial IRQ0: 0x");
-  Serial.println(mfrc630_irq0(), HEX);
-  Serial.print("Initial IRQ1: 0x");
-  Serial.println(mfrc630_irq1(), HEX);
-  
-  // Reset state
-  mfrc630_cmd_idle();
-  mfrc630_flush_fifo();
-  mfrc630_clear_irq0();
-  mfrc630_clear_irq1();
-  
-  // Now try REQA
-  uint16_t atqa = mfrc630_iso14443a_REQA();
-  
-  Serial.print("REQA result: 0x");
-  Serial.println(atqa, HEX);
-  Serial.print("Final IRQ0: 0x");
-  Serial.println(mfrc630_irq0(), HEX);
-  Serial.print("Final IRQ1: 0x");
-  Serial.println(mfrc630_irq1(), HEX);
-  
-  // Check for specific errors
-  uint8_t error_reg = mfrc630_read_reg(MFRC630_REG_ERROR);
-  Serial.print("Error register: 0x");
-  Serial.println(error_reg, HEX);
-  
-  Serial.print("Final FIFO length: ");
-  Serial.println(mfrc630_fifo_length());
 }
 
 void complete_clrc663_reset() {
@@ -189,15 +171,15 @@ void complete_clrc663_reset() {
   mfrc630_AN1102_recommended_registers(MFRC630_PROTO_ISO14443A_106_MILLER_MANCHESTER);
   
   // Reapply receiver sensitivity settings
-  mfrc630_write_reg(MFRC630_REG_RXANA, 0x03); //0x39 RxAna
+  mfrc630_write_reg(MFRC630_REG_RXANA, 0b00000000); //0x39 RxAna, 0x3 is maxes TX gain
   mfrc630_write_reg(MFRC630_REG_RXTHRESHOLD, 0x00); // 0x37 RxThreshold
   // mfrc630_write_reg(0x28, 0b10001111);  // Enhanced DrvMode for 5V
   mfrc630_write_reg(0x29, 0b11000000); //TxAmp register/
-  mfrc630_write_reg(0x2A, 0b00100001); //TxCon register
+  mfrc630_write_reg(0x2A, 0b00000001); //TxCon register
 
   // ADD THESE NEW LINES - Improve receiver sensitivity
-  mfrc630_write_reg(MFRC630_REG_RXANA, 0b00000011); // 0x39 address
-  mfrc630_write_reg(MFRC630_REG_RXTHRESHOLD, 0b00000000); //0x37 address
+  mfrc630_write_reg(MFRC630_REG_RXANA, 0b00000001); // 0x39 address, 0x3 maxes RX gain
+  mfrc630_write_reg(MFRC630_REG_RXTHRESHOLD, 0b00110000); //0x37 address
   
   // Clear all interrupts after reconfiguration
   mfrc630_clear_irq0();
@@ -206,15 +188,9 @@ void complete_clrc663_reset() {
 }
 
 void loop(){
-  // MFRC630_PRINTF("Starting card detection cycle\n");
-
-  // Reset for next read  
+  // Reset for next read
   complete_clrc663_reset();
   
-  // debug_reqa_internals();
-
   mfrc630_MF_example_dump_arduino();
-  // test_authentication_with_5v();
-  // delay(1000);
 }
 
