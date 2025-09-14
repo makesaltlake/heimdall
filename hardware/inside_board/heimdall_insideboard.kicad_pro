@@ -451,7 +451,10 @@
   },
   "libraries": {
     "pinned_footprint_libs": [],
-    "pinned_symbol_libs": []
+    "pinned_symbol_libs": [
+      "Heimdall",
+      "heimdall_insideboard-rescue"
+    ]
   },
   "meta": {
     "filename": "heimdall_insideboard.kicad_pro",
