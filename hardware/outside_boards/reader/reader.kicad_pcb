@@ -109,7 +109,6 @@
 			(psnegative no)
 			(psa4output no)
 			(plot_black_and_white yes)
-			(plotinvisibletext no)
 			(sketchpadsonfab no)
 			(plotpadnumbers no)
 			(hidednponfab no)
@@ -12088,7 +12087,7 @@
 	(footprint "Symbol:OSHW-Symbol_6.7x6mm_SilkScreen"
 		(layer "B.Cu")
 		(uuid "520f5da5-ac88-46e3-a48a-aa48b900e32d")
-		(at 126 100 180)
+		(at 113 94 180)
 		(descr "Open Source Hardware Symbol")
 		(tags "Logo Symbol OSHW")
 		(property "Reference" "REF**"
@@ -13229,7 +13228,7 @@
 	(footprint "Symbol:WEEE-Logo_4.2x6mm_SilkScreen"
 		(layer "B.Cu")
 		(uuid "d4098350-a4f4-4da3-bc61-923da292adc8")
-		(at 135 100 180)
+		(at 130 129.75 180)
 		(descr "Waste Electrical and Electronic Equipment Directive https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32012L0019#page=29")
 		(tags "Logo WEEE")
 		(property "Reference" "REF**"
@@ -13694,7 +13693,7 @@
 			(justify top)
 		)
 	)
-	(gr_text "Heimdall: Reader\nMake Salt Lake September 2025\nhttps://github.com/makesaltlake/heimdall\nReader V0.1"
+	(gr_text "Heimdall: Reader V0.1\nMake Salt Lake\nSeptember 2025\ngithub.com/makesaltlake/heimdall"
 		(at 87.63 102.87 0)
 		(layer "F.SilkS")
 		(uuid "b89eee3b-22d3-4aae-8fb1-8edc2195ff3c")
