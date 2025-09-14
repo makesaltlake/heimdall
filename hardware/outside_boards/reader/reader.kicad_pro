@@ -482,7 +482,8 @@
   "libraries": {
     "pinned_footprint_libs": [
       "Heimdall",
-      "CLRC663"
+      "CLRC663",
+      "Heimdall COTS"
     ],
     "pinned_symbol_libs": [
       "heimdall_symbols",

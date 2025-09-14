@@ -8717,7 +8717,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "CMT1075SMTTR"
+		(property "Footprint" "Heimdall COTS:CMT1075SMTTR"
 			(at 273.05 126.67 0)
 			(effects
 				(font
@@ -11444,7 +11444,7 @@
 				)
 			)
 		)
-		(property "Footprint" "QFN50P500X500X100-33N"
+		(property "Footprint" "Heimdall COTS:QFN50P500X500X100-33N"
 			(at 127 186.36 0)
 			(effects
 				(font
