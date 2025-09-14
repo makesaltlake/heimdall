@@ -110,6 +110,7 @@
 			(psnegative no)
 			(psa4output no)
 			(plot_black_and_white yes)
+			(plotinvisibletext no)
 			(sketchpadsonfab no)
 			(plotpadnumbers no)
 			(hidednponfab no)
@@ -2942,7 +2943,7 @@
 			(uuid "f7263963-62d2-4e7e-8a35-e0daae928cd4")
 		)
 		(embedded_fonts no)
-		(model "${KIPRJMOD}/../cots/43045-1019.stp"
+		(model "${KIPRJMOD}/../../shared/cots/43045-1019.stp"
 			(offset
 				(xyz 0 0 5)
 			)
