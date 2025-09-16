@@ -487,7 +487,8 @@
     ],
     "pinned_symbol_libs": [
       "heimdall_symbols",
-      "CMT-1075-SMT-TR"
+      "CMT-1075-SMT-TR",
+      "Molex PicoBlade 53398-1071"
     ]
   },
   "meta": {
