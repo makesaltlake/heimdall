@@ -1,0 +1,5 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "Heimdall COTS")(type "KiCad")(uri "${KIPRJMOD}/../../shared/cots")(options "")(descr ""))
+  (lib (name "Heimdall")(type "KiCad")(uri "${KIPRJMOD}/../../shared")(options "")(descr ""))
+)

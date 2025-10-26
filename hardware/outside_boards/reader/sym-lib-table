@@ -1,0 +1,7 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "CLRC663")(type "KiCad")(uri "${KIPRJMOD}/../../shared/cots/CLRC66303HNY.kicad_sym")(options "")(descr ""))
+  (lib (name "heimdall_symbols")(type "KiCad")(uri "${KIPRJMOD}/../../shared/heimdall_symbols.kicad_sym")(options "")(descr ""))
+  (lib (name "CMT-1075-SMT-TR")(type "KiCad")(uri "${KIPRJMOD}/../../shared/cots/CMT-1075-SMT-TR.kicad_sym")(options "")(descr ""))
+  (lib (name "Molex PicoBlade 53398-1071")(type "KiCad")(uri "${KIPRJMOD}/../../shared/cots/53398-1071.kicad_sym")(options "")(descr ""))
+)

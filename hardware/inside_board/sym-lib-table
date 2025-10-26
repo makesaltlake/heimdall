@@ -1,3 +1,5 @@
 (sym_lib_table
-  (lib (name heimdall_insideboard-rescue)(type Legacy)(uri ${KIPRJMOD}/heimdall_insideboard-rescue.lib)(options "")(descr ""))
+  (version 7)
+  (lib (name "heimdall_insideboard-rescue")(type "KiCad")(uri "${KIPRJMOD}/heimdall_insideboard-rescue.kicad_sym")(options "")(descr ""))
+  (lib (name "Heimdall")(type "KiCad")(uri "${KIPRJMOD}/../shared/heimdall_symbols.kicad_sym")(options "")(descr ""))
 )
