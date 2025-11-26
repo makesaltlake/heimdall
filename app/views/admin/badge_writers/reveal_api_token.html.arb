@@ -1,6 +1,0 @@
-panel "API token for #{resource.name}" do
-  attributes_table_for resource do
-    row('API token', &:api_token)
-    row('Last regenerated at', &:api_token_regenerated_at)
-  end
-end
