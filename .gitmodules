@@ -1,6 +1,3 @@
-[submodule "future/firmware/python3-rpi-rc522/pi-rc522"]
-	path = firmware/python3-rpi-rc522/pi-rc522
-	url = https://github.com/ondryaso/pi-rc522.git
 [submodule "future/firmware/ESP32-NeoPixel-WS2812-RMT"]
 	path = firmware/ESP32-NeoPixel-WS2812-RMT
 	url = https://github.com/JSchaenzle/ESP32-NeoPixel-WS2812-RMT
