@@ -1,6 +1,0 @@
-panel "Newly created bins" do
-  table_for bins do
-    column(:bin) { |bin| puts "BIN IS: #{bin.inspect}"; auto_link(bin) }
-    column(:bin_number, &:id)
-  end
-end
