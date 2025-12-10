@@ -5240,6 +5240,7 @@
 		)
 	)
 	(footprint "Heimdall COTS:CRJ0241TH"
+		(locked yes)
 		(layer "F.Cu")
 		(uuid "6bb496e7-d053-4ea2-b468-8a116d212088")
 		(at 115.443 131.318 180)
@@ -9368,6 +9369,7 @@
 		)
 	)
 	(footprint "Heimdall COTS:1991095"
+		(locked yes)
 		(layer "F.Cu")
 		(uuid "ae75057c-05db-4cfe-bc59-5a613e94b4db")
 		(at 112.1024 114.6012 90)

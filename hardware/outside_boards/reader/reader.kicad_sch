@@ -7781,7 +7781,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/KYOCERA-AVX/KGM21AR71H105JU?qs=Jm2GQyTW%2Fbh7inVabJLI%2Fg%3D%3D"
+		(property "Datasheet" "https://mou.sr/4iKfl4I"
 			(at 41.91 36.83 0)
 			(effects
 				(font
@@ -9795,7 +9795,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://mou.sr/4iKfl4I"
 			(at 68.58 36.83 0)
 			(effects
 				(font
@@ -10077,7 +10077,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://mou.sr/4iKfl4I"
 			(at 76.2 36.83 0)
 			(effects
 				(font
@@ -12851,7 +12851,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/KYOCERA-AVX/KGM21AR71H105JU?qs=Jm2GQyTW%2Fbh7inVabJLI%2Fg%3D%3D"
+		(property "Datasheet" "https://mou.sr/4iKfl4I"
 			(at 102.87 105.41 0)
 			(effects
 				(font
