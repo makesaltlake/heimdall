@@ -19,42 +19,40 @@
 static const char* TAG = "heimdall-mifare-classic";
 
 
-bool heimdall_rfid_personalize(spi_device_handle_t spi)
+bool heimdall_rfid_personalize(uart_port_t uart_num)
 {
     const int MIFARE_PERSONALIZE_CMD = 0x40;
     const int MIFARE_PERSONALIZE_UIDF0 = 0x00;
 
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, MIFARE_PERSONALIZE_CMD);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, MIFARE_PERSONALIZE_UIDF0);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, MIFARE_PERSONALIZE_CMD);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, MIFARE_PERSONALIZE_UIDF0);
 
-    heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
+    heimdall_rc663_cmd(uart_num, RC663_CMD_TRANSCEIVE);
 
-    heimdall_rfid_set_timer(spi, 100);
-    heimdall_wait(spi);
+    heimdall_rfid_set_timer(uart_num, 100);
+    heimdall_wait(uart_num);
 
     return true;
 }
 
-bool heimdall_rfid_read(spi_device_handle_t spi, uint8_t block, uint8_t data[16])
+bool heimdall_rfid_read(uart_port_t uart_num, uint8_t block, uint8_t data[16])
 {
     bool success = false;
     uint8_t error;
 
     const int MIFARE_READ_CMD = 0x30;
 
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, MIFARE_READ_CMD);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, block);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, MIFARE_READ_CMD);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, block);
 
-    clear_irq(spi, 0);
-    clear_irq(spi, 1);
+    clear_irq(uart_num, 0);
+    clear_irq(uart_num, 1);
+    heimdall_rfid_set_timer(uart_num, 200);
 
-    heimdall_rfid_set_timer(spi, 200);
+    heimdall_rc663_cmd(uart_num, RC663_CMD_TRANSCEIVE);
 
-    heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
-
-    heimdall_wait(spi);
-
-    error = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
+    heimdall_wait(uart_num);
+    error = heimdall_rc663_read_reg(uart_num, RC663_REG_ERROR);
     if (!error) {
         success = true;
     } else {
@@ -63,7 +61,7 @@ bool heimdall_rfid_read(spi_device_handle_t spi, uint8_t block, uint8_t data[16]
 
     for (int i = 0; i < 16; i++)
     {
-        data[i] = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
+        data[i] = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA);
     }
 
     return success;
@@ -72,69 +70,66 @@ bool heimdall_rfid_read(spi_device_handle_t spi, uint8_t block, uint8_t data[16]
 const int MIFARE_ACK = 0x0A;
 const int MIFARE_NACK_INVALID_OP = 0x01;
 
-bool heimdall_rfid_write(spi_device_handle_t spi, uint8_t block, uint8_t data[16])
+bool heimdall_rfid_write(uart_port_t uart_num, uint8_t block, uint8_t data[16])
 {
     const int MIFARE_WRITE_CMD = 0xA0;
     uint8_t i;
     uint8_t val;
 
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, MIFARE_WRITE_CMD);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, block);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, MIFARE_WRITE_CMD);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, block);
 
-    heimdall_rc663_write_reg(spi, RC663_REG_TX_CRC_PRESET, 0x18 | 1);
-    heimdall_rc663_write_reg(spi, RC663_REG_RX_CRC_PRESET, 0x18 | 0);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_TX_CRC_PRESET, 0x18 | 1);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_RX_CRC_PRESET, 0x18 | 0);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_IRQ0, 0x7F);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_IRQ1, 0x7F);
 
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ0, 0x7F);
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ1, 0x7F);
+    heimdall_rc663_cmd(uart_num, RC663_CMD_TRANSCEIVE);
 
-    heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
+    heimdall_rfid_set_timer(uart_num, 300);
+    heimdall_wait(uart_num);
 
-    heimdall_rfid_set_timer(spi, 300);
-    heimdall_wait(spi);
-
-    val = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH);
+    val = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_LENGTH);
     if (val != 1) {
         return false;
     }
 
-    val = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
+    val = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA);
     if (val != 0x0A) {
         return false;
     }
 
     for (i = 0; i < 16; i++)
     {
-        heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, data[i]);
+        heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, data[i]);
     }
 
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ0, 0x7F);
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ1, 0x7F);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_IRQ0, 0x7F);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_IRQ1, 0x7F);
+    heimdall_rc663_cmd(uart_num, RC663_CMD_TRANSCEIVE);
 
-    heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
-
-    heimdall_rfid_set_timer(spi, 300);
-    heimdall_wait(spi);
-
-    val = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH);
+    heimdall_rfid_set_timer(uart_num, 300);
+    heimdall_wait(uart_num);
+    val = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_LENGTH);
     if (val != 1) {
         return false;
     }
 
-    val = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
+    val = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA);
     if (val != 0x0A) {
         return false;
     }
 
-    uint8_t err = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
+    uint8_t err = heimdall_rc663_read_reg(uart_num, RC663_REG_ERROR);
 
-    heimdall_rc663_write_reg(spi, RC663_REG_TX_CRC_PRESET, 0x18 | 1);
-    heimdall_rc663_write_reg(spi, RC663_REG_RX_CRC_PRESET, 0x18 | 1);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_TX_CRC_PRESET, 0x18 | 1);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_RX_CRC_PRESET, 0x18 | 1);
 
     return true;
 
 }
 
-bool heimdall_rfid_authenticate(spi_device_handle_t spi, uint8_t *serial, char *key)
+bool heimdall_rfid_authenticate(uart_port_t uart_num, uint8_t *serial, char *key)
 {
     uint8_t status;
     bool success = false;
@@ -143,29 +138,28 @@ bool heimdall_rfid_authenticate(spi_device_handle_t spi, uint8_t *serial, char *
 //                    key[0], key[1], key[2], key[3], key[4], key[5],
 //                    serial[0], serial[1], serial[2], serial[3]);
 
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, key[0]);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, key[1]);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, key[2]);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, key[3]);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, key[4]);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, key[5]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, key[0]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, key[1]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, key[2]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, key[3]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, key[4]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, key[5]);
 
-    heimdall_rc663_cmd(spi, RC663_CMD_LOAD_KEY);
+    heimdall_rc663_cmd(uart_num, RC663_CMD_LOAD_KEY);
 
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, 0x60);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, 0x03); // Block address
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, serial[0]);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, serial[1]);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, serial[2]);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, serial[3]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, 0x60);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, 0x03); // Block address
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, serial[0]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, serial[1]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, serial[2]);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, serial[3]);
 
-    heimdall_rc663_cmd(spi, RC663_CMD_MF_AUTHENT);
-
+    heimdall_rc663_cmd(uart_num, RC663_CMD_MF_AUTHENT);
     int retries = 0;
 
     while (retries++ < 10)
     {
-        status = heimdall_rc663_read_reg(spi, RC663_REG_STATUS);
+        status = heimdall_rc663_read_reg(uart_num, RC663_REG_STATUS);
         if (status & 0x20) {
             ESP_LOGV(TAG, "Authentication succeeded");
             success = true;
@@ -185,8 +179,8 @@ bool heimdall_rfid_authenticate(spi_device_handle_t spi, uint8_t *serial, char *
     return success;
 }
 
-void heimdall_rfid_deauthenticate(spi_device_handle_t spi)
+void heimdall_rfid_deauthenticate(uart_port_t uart_num)
 {
     // Turn off MIFARE Classic Crypto
-    heimdall_rc663_write_reg(spi, RC663_REG_STATUS, 0);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_STATUS, 0);
 }
