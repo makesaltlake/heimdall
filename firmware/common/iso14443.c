@@ -13,13 +13,16 @@
 #include <driver/gpio.h>
 #include <string.h>
 
+#include <hal/uart_types.h>
+#include <driver/uart.h>
+
 
 #include "clrc663.h"
 
 static const char* TAG = "heimdall-iso14443";
 
 
-bool heimdall_rfid_reqa(spi_device_handle_t spi, uint8_t *proprietary_coding)
+bool heimdall_rfid_reqa(uart_port_t uart_num, uint8_t *proprietary_coding)
 {
     uint8_t b1_b8;
     uint8_t b9_b16;
@@ -30,38 +33,37 @@ bool heimdall_rfid_reqa(spi_device_handle_t spi, uint8_t *proprietary_coding)
     uint8_t val;
 
 
-    uint8_t cmd = heimdall_rc663_read_reg(spi, RC663_REG_COMMAND);
+    uint8_t cmd = heimdall_rc663_read_reg(uart_num, RC663_REG_COMMAND);
 
-    clear_irq(spi, 0);
-    clear_irq(spi, 1);
+    clear_irq(uart_num, 0);
+    clear_irq(uart_num, 1);
 
     // Switch CRC extension OFF for Tx
-    heimdall_rc663_write_reg(spi, RC663_REG_TX_CRC_PRESET, 0x18);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_TX_CRC_PRESET, 0x18);
     // Switch CRC extension OFF for Rx
-    heimdall_rc663_write_reg(spi, RC663_REG_RX_CRC_PRESET, 0x18);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_RX_CRC_PRESET, 0x18);
     // Only last 7 bits will be sent
-    heimdall_rc663_write_reg(spi, RC663_REG_TX_DATA_NUM, 0x0F);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_TX_DATA_NUM, 0x0F);
 
-    heimdall_rfid_set_timer(spi, 200);
-
+    heimdall_rfid_set_timer(uart_num, 200);
     // Fill FIFO with 0x26 (REQA)
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, 0x26);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, 0x26);
     // Exec Transceive command
-    heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
+    heimdall_rc663_cmd(uart_num, RC663_CMD_TRANSCEIVE);
     // Wait until a card responds by checking IRQ0 register
 
-    if (!heimdall_wait(spi)) {
-        heimdall_rc663_cmd(spi, RC663_CMD_IDLE);
+    if (!heimdall_wait(uart_num)) {
+        heimdall_rc663_cmd(uart_num, RC663_CMD_IDLE);
         return false;
     }
 
-    error = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
+    error = heimdall_rc663_read_reg(uart_num, RC663_REG_ERROR);
     if (error & 0x10) {
         ESP_LOGW(TAG, "REQA: failed to read tag - bad Start Of Frame");
         return false;
     }
 
-    val = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH);
+    val = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_LENGTH);
 
     if (val == 0) {
         ESP_LOGV(TAG, "FIFO is empty");
@@ -73,8 +75,8 @@ bool heimdall_rfid_reqa(spi_device_handle_t spi, uint8_t *proprietary_coding)
     assert(val == 2);
 
 
-    b1_b8 = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
-    b9_b16 = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
+    b1_b8 = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA);
+    b9_b16 = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA);
 
     if (proprietary_coding != NULL)
         *proprietary_coding = b9_b16 & 0x0F;
@@ -107,7 +109,7 @@ bool heimdall_rfid_reqa(spi_device_handle_t spi, uint8_t *proprietary_coding)
     return true;
 }
 
-int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **uid, uint8_t *len, uint8_t *bcc)
+int heimdall_rfid_anticollision(uart_port_t uart_num, int level, uint8_t **uid, uint8_t *len, uint8_t *bcc)
 {
     uint8_t sel = 0;
     uint8_t irq1;
@@ -148,8 +150,8 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
     }
 
     // Disable CRC
-    heimdall_rc663_write_reg(spi, RC663_REG_TX_CRC_PRESET, 0x18 | 0);
-    heimdall_rc663_write_reg(spi, RC663_REG_RX_CRC_PRESET, 0x18 | 0);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_TX_CRC_PRESET, 0x18 | 0);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_RX_CRC_PRESET, 0x18 | 0);
 
     if (*uid != NULL)
         (*uid)[uid_start] = 0;
@@ -159,35 +161,34 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
     for (i = 0; i < 32; i++)
     {
         // Fill FIFO with [ SEL - NVB ]
-        heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, sel);
-        heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, ((num_valid_bits / 8) << 4) + (num_valid_bits % 8));
+        heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, sel);
+        heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, ((num_valid_bits / 8) << 4) + (num_valid_bits % 8));
 
         p = *uid;
 
         for (j = 0; j < ((num_valid_bits - 9) / 8); j++) {
-            heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, p[uid_start + j]);
+            heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, p[uid_start + j]);
         }
 
         // Only last `num_valid_bits` bits will be sent to the PICC
-        heimdall_rc663_write_reg(spi, RC663_REG_TX_DATA_NUM, 0x08 | (num_valid_bits % 8));
+        heimdall_rc663_write_reg(uart_num, RC663_REG_TX_DATA_NUM, 0x08 | (num_valid_bits % 8));
+        heimdall_rc663_write_reg(uart_num, RC663_REG_RX_BIT_CTRL, (num_valid_bits % 8) << 4);
 
-        heimdall_rc663_write_reg(spi, RC663_REG_RX_BIT_CTRL, (num_valid_bits % 8) << 4);
-
-        clear_irq(spi, 0);
-        clear_irq(spi, 1);
+        clear_irq(uart_num, 0);
+        clear_irq(uart_num, 1);
 
         // Exec Transceive command
-        heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
+        heimdall_rc663_cmd(uart_num, RC663_CMD_TRANSCEIVE);
 
         while (1) {
-            irq1 = heimdall_rc663_read_reg(spi, RC663_REG_IRQ1);
+            irq1 = heimdall_rc663_read_reg(uart_num, RC663_REG_IRQ1);
 
             if ((irq1 & 0x40) != 0) {
                 break;
             }
         }
 
-        error = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
+        error = heimdall_rc663_read_reg(uart_num, RC663_REG_ERROR);
         if (error & 0x10)
             ESP_LOGW(TAG, "CL%x: Failed to read tag: got bad Start Of Frame", level);
 
@@ -196,17 +197,17 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
             return 1;
         }
 
-        collision = heimdall_rc663_read_reg(spi, RC663_REG_RX_COLL) & 0x80;
+        collision = heimdall_rc663_read_reg(uart_num, RC663_REG_RX_COLL) & 0x80;
 
         if (collision) {
-            collision_bit = heimdall_rc663_read_reg(spi, RC663_REG_RX_COLL) & 0x7F;
+            collision_bit = heimdall_rc663_read_reg(uart_num, RC663_REG_RX_COLL) & 0x7F;
             ESP_LOGI(TAG, "Collision detected at bit position %d", collision_bit);
-            uint8_t irq0 = heimdall_rc663_read_reg(spi, RC663_REG_IRQ0);
+            uint8_t irq0 = heimdall_rc663_read_reg(uart_num, RC663_REG_IRQ0);
             if (irq0 & 2)
                 ESP_LOGW(TAG, "IRQ0 reports an error");
         }
 
-        fifo_length = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH);
+        fifo_length = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_LENGTH);
 
         assert(*uid != NULL);
 
@@ -216,7 +217,7 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
         uint8_t val;
 
         for (j = 0; j < fifo_length; j++) {
-            val = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
+            val = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA);
             if ((i > 0 && j == 0) || (collision && (collision_bit / 8) == j)) {
                 p[byte_start + j] |= val;
                 shift = collision_bit % 8;
@@ -262,8 +263,8 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
     *len += (num_valid_bits / 8) - 1;
 
     // Only last `num_valid_bits` bits will be sent to the PICC
-    heimdall_rc663_write_reg(spi, RC663_REG_TX_DATA_NUM, 0x08);
-    heimdall_rc663_write_reg(spi, RC663_REG_RX_BIT_CTRL, 0);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_TX_DATA_NUM, 0x08);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_RX_BIT_CTRL, 0);
 
     if (bcc_val != bcc_calc)
     {
@@ -277,7 +278,7 @@ int heimdall_rfid_anticollision(spi_device_handle_t spi, int level, uint8_t **ui
 
 
 // Sends a Request for Answer To Select (RATS)
-void heimdall_rfid_send_rats(spi_device_handle_t spi)
+void heimdall_rfid_send_rats(uart_port_t uart_num)
 {
     int max_picc_frame;
     
@@ -287,24 +288,23 @@ void heimdall_rfid_send_rats(spi_device_handle_t spi)
 
     const uint8_t ISO14443_CMD_RATS = 0xE0;
 
-    heimdall_rfid_set_timer(spi, 100);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, ISO14443_CMD_RATS);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, param);
+    heimdall_rfid_set_timer(uart_num, 100);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, ISO14443_CMD_RATS);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, param);
 
-    heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
-
-    if (heimdall_wait(spi)) {
+    heimdall_rc663_cmd(uart_num, RC663_CMD_TRANSCEIVE);
+    if (heimdall_wait(uart_num)) {
 
         vTaskDelay(500 / portTICK_PERIOD_MS);
 
-        uint8_t len = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH);
-        if (heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA) != len)
+        uint8_t len = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_LENGTH);
+        if (heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA) != len)
             ESP_LOGW(TAG, "ATS Length and FIFO length disagree");
 
         ESP_LOGV(TAG, "FIFO LEN is %d", len);
 
         if (len > 1) {
-                uint8_t format_t0 = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
+                uint8_t format_t0 = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA);
                 bool ta = (format_t0 & 0x10);
                 bool tb = (format_t0 & 0x20);
                 bool tc = (format_t0 & 0x40);
@@ -359,21 +359,20 @@ void heimdall_rfid_send_rats(spi_device_handle_t spi)
                 ESP_LOGV(TAG, "PICC frame size: %d", max_picc_frame);
 
                 if (ta)
-                    ESP_LOGV(TAG, "TA: %x", heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA));
+                    ESP_LOGV(TAG, "TA: %x", heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA));
                 if (tb)
-                    ESP_LOGV(TAG, "TB: %x", heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA));
+                    ESP_LOGV(TAG, "TB: %x", heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA));
                 if (tc)
-                    ESP_LOGV(TAG, "TC: %x", heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA));
-
-                for (int i = 0; i < heimdall_rc663_read_reg(spi, RC663_REG_FIFO_LENGTH); i++)
+                    ESP_LOGV(TAG, "TC: %x", heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA));
+                for (int i = 0; i < heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_LENGTH); i++)
                 {
-                    ESP_LOGV(TAG, "ATS Historical byte: %x", heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA));
+                    ESP_LOGV(TAG, "ATS Historical byte: %x", heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA));
                 }
         }
     }
 }
 
-uint8_t heimdall_rfid_check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t uid_len, uint8_t bcc)
+uint8_t heimdall_rfid_check_sak(uart_port_t uart_num, uint8_t *uid, uint8_t uid_len, uint8_t bcc)
 {
     uint8_t irq1;
     uint8_t sak;
@@ -394,34 +393,32 @@ uint8_t heimdall_rfid_check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t u
         uid_start = 8;
     }
 
-    heimdall_rc663_cmd(spi, RC663_CMD_IDLE);
+    heimdall_rc663_cmd(uart_num, RC663_CMD_IDLE);
 
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ0, 0x7F);
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ1, 0x7F);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_IRQ0, 0x7F);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_IRQ1, 0x7F);
 
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, sel);
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, 0x70);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, sel);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, 0x70);
 
     for (i = uid_start; i < uid_len; i++) 
     {
-        heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, uid[i]);
+        heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, uid[i]);
     }
 
     // Add the Block Check Character
-    heimdall_rc663_write_reg(spi, RC663_REG_FIFO_DATA, bcc);
-
+    heimdall_rc663_write_reg(uart_num, RC663_REG_FIFO_DATA, bcc);
     // Enable CRCs
-    heimdall_rc663_write_reg(spi, RC663_REG_TX_CRC_PRESET, 0x18 | 1);
-    heimdall_rc663_write_reg(spi, RC663_REG_RX_CRC_PRESET, 0x18 | 1);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_TX_CRC_PRESET, 0x18 | 1);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_RX_CRC_PRESET, 0x18 | 1);
 
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ0, 0x7F);
-    heimdall_rc663_write_reg(spi, RC663_REG_IRQ1, 0x7F);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_IRQ0, 0x7F);
+    heimdall_rc663_write_reg(uart_num, RC663_REG_IRQ1, 0x7F);
 
     // Exec Transceive command
-    heimdall_rc663_cmd(spi, RC663_CMD_TRANSCEIVE);
-
+    heimdall_rc663_cmd(uart_num, RC663_CMD_TRANSCEIVE);
     while (1) {
-        irq1 = heimdall_rc663_read_reg(spi, RC663_REG_IRQ1);
+        irq1 = heimdall_rc663_read_reg(uart_num, RC663_REG_IRQ1);
 
         if ((irq1 & 0x40) != 0) {
             break;
@@ -430,7 +427,7 @@ uint8_t heimdall_rfid_check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t u
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 
-    error = heimdall_rc663_read_reg(spi, RC663_REG_ERROR);
+    error = heimdall_rc663_read_reg(uart_num, RC663_REG_ERROR);
 
     if (error & 0x10)
         ESP_LOGW(TAG, "SAK: Failed to read tag: got bad Start Of Frame");
@@ -440,7 +437,7 @@ uint8_t heimdall_rfid_check_sak(spi_device_handle_t spi, uint8_t *uid, uint8_t u
         return 0xFF;
     }
 
-    sak = heimdall_rc663_read_reg(spi, RC663_REG_FIFO_DATA);
+    sak = heimdall_rc663_read_reg(uart_num, RC663_REG_FIFO_DATA);
 
     return sak;
 }

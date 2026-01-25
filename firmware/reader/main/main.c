@@ -19,6 +19,7 @@
 
 #include <driver/ledc.h>
 #include <soc/ledc_reg.h>
+#include <hal/ledc_types.h>
 
 #include <esp_vfs_fat.h>
 #include <diskio_wl.h>
@@ -57,24 +58,24 @@ extern char *wifi_password;
 
 static void set_buzzer_duty(uint32_t duty)
 {
-    ledc_set_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_0, duty);
-    ledc_update_duty(LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_0);
+    ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, duty);
+    ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
 }
 
 static void heimdall_setup_buzzer(void)
 {
     // Configure the buzzer
-    const ledc_timer_config_t buzzer_timer = {LEDC_HIGH_SPEED_MODE, {LEDC_TIMER_10_BIT}, LEDC_TIMER_0, 2670, LEDC_AUTO_CLK};
-    const ledc_channel_config_t channel = {BUZZER_GPIO_PIN, LEDC_HIGH_SPEED_MODE, LEDC_CHANNEL_0, LEDC_INTR_DISABLE, LEDC_TIMER_0, 0, LEDC_HPOINT_HSCH1_S};
+//    const ledc_timer_config_t buzzer_timer = {LEDC_LOW_SPEED_MODE, {LEDC_TIMER_10_BIT}, LEDC_TIMER_0, 2670, LEDC_AUTO_CLK};
+//    const ledc_channel_config_t channel = {BUZZER_GPIO_PIN, LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, LEDC_INTR_DISABLE, LEDC_TIMER_0, 0, LEDC_HPOINT_HSCH1_S};
 
-    ESP_ERROR_CHECK(ledc_timer_config(&buzzer_timer));
-    ESP_ERROR_CHECK(ledc_channel_config(&channel));
+//    ESP_ERROR_CHECK(ledc_timer_config(&buzzer_timer));
+//    ESP_ERROR_CHECK(ledc_channel_config(&channel));
 
     // Test the buzzer.
-    ESP_LOGI(TAG, "Testing the buzzer");
-    set_buzzer_duty(512);
-    sleep(1);
-    set_buzzer_duty(0);
+//    ESP_LOGI(TAG, "Testing the buzzer");
+//    set_buzzer_duty(512);
+//    sleep(1);
+//    set_buzzer_duty(0);
 }
 
 static void heimdall_setup_led(void)
@@ -113,7 +114,7 @@ static void heimdall_setup_ui_gpio(void)
     esp_err_t err;
 
     // Set up output GPIOs
-    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
+    io_conf.intr_type = GPIO_INTR_DISABLE;
     io_conf.mode = GPIO_MODE_OUTPUT;
 
     io_conf.pin_bit_mask =  (1ULL << RELAY1_GPIO_PIN) |
@@ -126,7 +127,7 @@ static void heimdall_setup_ui_gpio(void)
     ESP_ERROR_CHECK(gpio_config(&io_conf));
 
     // And set up input GPIOs
-    io_conf.intr_type = GPIO_PIN_INTR_DISABLE;
+    io_conf.intr_type = GPIO_INTR_DISABLE;
     io_conf.mode = GPIO_MODE_INPUT;
 
     io_conf.pin_bit_mask =  (1ULL << TAMPER_SWITCH_GPIO_PIN);
@@ -220,21 +221,21 @@ void app_main(void)
 
     nvs_close(nvs);
 
-    heimdall_setup_wifi(wifi_ssid, wifi_password);
+  //  heimdall_setup_wifi(wifi_ssid, wifi_password);
 
     heimdall_setup_badge_scans_file();
     heimdall_setup_ui_gpio();
 
     httpEventGroup = xEventGroupCreate();
 
-    heimdall_setup_websocket();
+ //   heimdall_setup_websocket();
 
     BaseType_t rtret;
-    rtret = xTaskCreate(&access_list_fetcher_thread, "access_list_fetcher", 4096, NULL, 5, NULL);
-    if (rtret != pdPASS) {
-        ESP_LOGE(TAG, "Failed to create access list fetcher thread: %d", rtret);
-        assert(0);
-    }
+//    rtret = xTaskCreate(&access_list_fetcher_thread, "access_list_fetcher", 4096, NULL, 5, NULL);
+//    if (rtret != pdPASS) {
+//        ESP_LOGE(TAG, "Failed to create access list fetcher thread: %d", rtret);
+//        assert(0);
+//    }
 
     rtret = xTaskCreate(&tag_reader, "tag_reader", 4096, NULL, 5, NULL);
     if (rtret != pdPASS)

@@ -11,14 +11,15 @@
 #include <freertos/task.h>
 #include <freertos/event_groups.h>
 
+#include <esp_random.h>
 #include <esp_system.h>
 #include <esp_event.h>
 #include <driver/gpio.h>
-#include <driver/adc.h>
-#include <driver/i2c.h>
-#include <driver/spi_master.h>
 #include <esp_log.h>
 #include <cJSON.h>
+
+#include <hal/uart_types.h>
+#include <driver/uart.h>
 
 #include "clrc663.h"
 #include "iso14443.h"
@@ -52,7 +53,7 @@ enum MIFARE_CARD_TYPE
     UNKNOWN_CARD_TYPE
 };
 
-enum MIFARE_CARD_TYPE wait_for_tag(spi_device_handle_t spi, uint8_t *uid, uint8_t *uid_len)
+enum MIFARE_CARD_TYPE wait_for_tag(uart_port_t uart_num, uint8_t *uid, uint8_t *uid_len)
 {
     bool got_card = false;
     uint8_t bcc = 0;
@@ -62,24 +63,24 @@ enum MIFARE_CARD_TYPE wait_for_tag(spi_device_handle_t spi, uint8_t *uid, uint8_
 
     while (!got_card)
     {
-        got_card = heimdall_rfid_reqa(spi, &proprietary_coding);
+        got_card = heimdall_rfid_reqa(uart_num, &proprietary_coding);
         if (!got_card)
         {
             vTaskDelay(100 / portTICK_PERIOD_MS);
             continue;
         }
 
-        heimdall_rfid_anticollision(spi, 1, &uid, uid_len, &bcc);
-        sak = heimdall_rfid_check_sak(spi, uid, *uid_len, bcc);
+        heimdall_rfid_anticollision(uart_num, 1, &uid, uid_len, &bcc);
+        sak = heimdall_rfid_check_sak(uart_num, uid, *uid_len, bcc);
 
         if (sak & 0x04) {
-            heimdall_rfid_anticollision(spi, 2, &uid, uid_len, &bcc);
-            sak = heimdall_rfid_check_sak(spi, uid, *uid_len, bcc);
+            heimdall_rfid_anticollision(uart_num, 2, &uid, uid_len, &bcc);
+            sak = heimdall_rfid_check_sak(uart_num, uid, *uid_len, bcc);
         }
 
         if (sak & 0x04) {
-            heimdall_rfid_anticollision(spi, 3, &uid, uid_len, &bcc);
-            sak = heimdall_rfid_check_sak(spi, uid, *uid_len, bcc);
+            heimdall_rfid_anticollision(uart_num, 3, &uid, uid_len, &bcc);
+            sak = heimdall_rfid_check_sak(uart_num, uid, *uid_len, bcc);
         }
 
         printf("UID: ");
@@ -114,14 +115,14 @@ enum MIFARE_CARD_TYPE wait_for_tag(spi_device_handle_t spi, uint8_t *uid, uint8_
 
 void tag_writer(void *param)
 {
-    spi_device_handle_t spi;
+    uart_port_t uart_num;
     uint8_t *uid = NULL;
     uint8_t uid_len;
     char mfg_default_key[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
 
     uint8_t badge_uuid[16];
 
-    spi = heimdall_rfid_init(false);
+    uart_num = heimdall_rfid_init(false);
 
     uid = malloc(MAX_UID_LEN);
 
@@ -131,7 +132,7 @@ void tag_writer(void *param)
         vTaskDelay(10000 / portTICK_PERIOD_MS);
         welcome_text();
 
-        enum MIFARE_CARD_TYPE card = wait_for_tag(spi, uid, &uid_len);
+        enum MIFARE_CARD_TYPE card = wait_for_tag(uart_num, uid, &uid_len);
         ESP_LOGI(TAG, "Got card %d, with UID %02X%02X%02X%02X", card, uid[0], uid[1], uid[2], uid[3]);
 
         print_card_uid(uid, uid_len);
@@ -162,13 +163,13 @@ void tag_writer(void *param)
 
         if (success) {
             // Actually program the badge
-            if (!heimdall_rfid_authenticate(spi, uid, mfg_default_key)) {
+            if (!heimdall_rfid_authenticate(uart_num, uid, mfg_default_key)) {
 
                 ESP_LOGI(TAG, "Failed to authenticate with default manufacturer key: retrying with TAG_KEY");
 
-                wait_for_tag(spi, uid, &uid_len);
+                wait_for_tag(uart_num, uid, &uid_len);
                 // Retry with the TAG_KEY
-                if (!heimdall_rfid_authenticate(spi, uid, tag_key)) {
+                if (!heimdall_rfid_authenticate(uart_num, uid, tag_key)) {
                     ESP_LOGI(TAG, "Failed to authenticate tag");
                     vTaskDelay(100 / portTICK_PERIOD_MS);
                     continue;
@@ -181,7 +182,7 @@ void tag_writer(void *param)
                 badge_uuid[6], badge_uuid[7],
                 badge_uuid[8], badge_uuid[9],
                 badge_uuid[10], badge_uuid[11], badge_uuid[12], badge_uuid[13], badge_uuid[14], badge_uuid[15]);
-            success = heimdall_rfid_write(spi, 1, badge_uuid);
+            success = heimdall_rfid_write(uart_num, 1, badge_uuid);
             if (!success) {
                 ESP_LOGW(TAG, "Failed to write new badge UUID");
                 update_status_lbl("Program card: UUID write error");
@@ -190,7 +191,7 @@ void tag_writer(void *param)
 
             uint8_t data[16] = {0};
             ESP_LOGI(TAG, "Reading sector trailer");
-            success = heimdall_rfid_read(spi, 3, data);
+            success = heimdall_rfid_read(uart_num, 3, data);
             if (!success) {
                 ESP_LOGW(TAG, "Failed to read existing sector trailer");
 
@@ -218,15 +219,15 @@ void tag_writer(void *param)
 
             ESP_LOGI(TAG, "Writing new sector trailer");
 
-            success = heimdall_rfid_write(spi, 3, data);
+            success = heimdall_rfid_write(uart_num, 3, data);
             if (!success) {
                 ESP_LOGW(TAG, "Failed to write new sector trailer");
                 update_status_lbl("Program card: write error");
                 continue;
             }
 
-            heimdall_rc663_cmd(spi, RC663_CMD_IDLE);
-            heimdall_rfid_deauthenticate(spi);
+            heimdall_rc663_cmd(uart_num, RC663_CMD_IDLE);
+            heimdall_rfid_deauthenticate(uart_num);
 
             update_status_lbl("Program card: success");
             printf("Programmed card for %s\n", name);
@@ -248,13 +249,13 @@ void print_card_uid(uint8_t *uid, int uid_len)
 
 void tag_reader(void *param)
 {
-    spi_device_handle_t spi;
+    uart_port_t uart_num;
     uint8_t *uid = NULL;
     uint8_t uid_len;
     const int UUID_LEN = 37;
     uint8_t badge_uuid[UUID_LEN];
 
-    spi = heimdall_rfid_init(true);
+    uart_num = heimdall_rfid_init(true);
 
     uid = malloc(MAX_UID_LEN);
 
@@ -263,7 +264,7 @@ void tag_reader(void *param)
         memset(uid, 0, MAX_UID_LEN);
         memset(badge_uuid, 0, UUID_LEN);
 
-        enum MIFARE_CARD_TYPE card = wait_for_tag(spi, uid, &uid_len);
+        enum MIFARE_CARD_TYPE card = wait_for_tag(uart_num, uid, &uid_len);
 
         if (card == MIFARE_CLASSIC_1K || card == MIFARE_CLASSIC_4K)
         {
@@ -276,7 +277,7 @@ void tag_reader(void *param)
 
             print_card_uid(uid, uid_len);
 
-            if (!heimdall_rfid_authenticate(spi, uid, tag_key)) {
+            if (!heimdall_rfid_authenticate(uart_num, uid, tag_key)) {
                 ESP_LOGW(TAG, "Failed to authenticate tag with key %02x%02x%02x%02x%02x%02x",
                     tag_key[0],tag_key[1],tag_key[2],tag_key[3],tag_key[4],tag_key[5]);
                 heimdall_access_error();
@@ -284,7 +285,7 @@ void tag_reader(void *param)
                 continue;
             }
 
-            if (heimdall_rfid_read(spi, 1, badge_uuid))
+            if (heimdall_rfid_read(uart_num, 1, badge_uuid))
             {
                 const cJSON *valid_token, *tokens;
                 bool access_allowed = false;
@@ -325,13 +326,13 @@ void tag_reader(void *param)
                 heimdall_access_error();
             }
 
-            heimdall_rfid_deauthenticate(spi);
-            heimdall_rc663_cmd(spi, RC663_CMD_IDLE);
+            heimdall_rfid_deauthenticate(uart_num);
+            heimdall_rc663_cmd(uart_num, RC663_CMD_IDLE);
         }
         else if (card == MIFARE_DESFIRE_LIGHT)
         {
             ESP_LOGI(TAG, "Found MIFARE DESFire Light card");
-            heimdall_rfid_send_rats(spi);
+            heimdall_rfid_send_rats(uart_num);
         }
         else if (card == MIFARE_PLUS_X)
         {

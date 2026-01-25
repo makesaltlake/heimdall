@@ -120,8 +120,11 @@ void heimdall_setup_wifi(char *wifi_ssid, char *wifi_password)
 
     strncpy((char*)wifi_config.sta.ssid, wifi_ssid, sizeof(wifi_config.sta.ssid));
     strncpy((char*)wifi_config.sta.password, wifi_password, sizeof(wifi_config.sta.password));
-    wifi_config.sta.pmf_cfg.capable = true;
-    wifi_config.sta.pmf_cfg.required = false;
+    wifi_config.sta.threshold.authmode = WIFI_AUTH_WPA2_WPA3_PSK;
+    wifi_config.sta.sae_pwe_h2e = WPA3_SAE_PWE_BOTH;
+ //   wifi_config.sta.sae_h2e_identifier = "heimdall-esp32";
+
+    ESP_LOGI(TAG, "Connecting to WiFi SSID %s (password %s)", wifi_config.sta.ssid, wifi_config.sta.password);
 
     ESP_ERROR_CHECK(esp_wifi_set_mode(WIFI_MODE_STA));
     ESP_ERROR_CHECK(esp_wifi_set_config(ESP_IF_WIFI_STA, &wifi_config));
@@ -193,6 +196,7 @@ static esp_err_t _http_event_handle(esp_http_client_event_t *evt)
         case HTTP_EVENT_ON_CONNECTED:
         case HTTP_EVENT_HEADER_SENT:
         case HTTP_EVENT_ON_HEADER:
+        case HTTP_EVENT_REDIRECT:
             break;
         case HTTP_EVENT_ON_DATA:
             if (!esp_http_client_is_chunked_response(evt->client)) {

@@ -2,11 +2,9 @@
 #define __CLRC533_H__
 
 /*
- * Copyright (C) 2020 Rebecca Cran <rebecca@bsdio.com>.
+ * Copyright (C) 2020-2026 Rebecca Cran <rebecca@bsdio.com>.
  *
  */
-
-#include <driver/spi_master.h>
 
 // Registers, commands and interaction taken from the following document,
 // which can (as of 2020-06-19) be found
@@ -18,9 +16,8 @@
 // Rev 4.8 -- 28 October 2019
 // 171148
 
-
-
-#define SPI_BUS_SPEED_HZ 100000
+#include <hal/uart_types.h>
+#include <driver/uart.h>
 
 enum RC663_REG {
 
@@ -145,16 +142,15 @@ enum RC522_CMD
 };
 
 
-spi_device_handle_t heimdall_rfid_init(bool rfid_reader);
-uint8_t heimdall_rc663_get_version(spi_device_handle_t spi);
-bool heimdall_rfid_read(spi_device_handle_t spi, uint8_t block, uint8_t data[16]);
+uart_port_t heimdall_rfid_init(bool rfid_reader);
+uint8_t heimdall_rc663_get_version(uart_port_t uart_num);
+bool heimdall_rfid_read(uart_port_t uart_num, uint8_t block, uint8_t data[16]);
 
-void heimdall_rc663_write_reg(spi_device_handle_t spi, uint8_t reg, uint8_t value);
-void heimdall_rc663_cmd(spi_device_handle_t spi, uint8_t cmd);
-uint8_t heimdall_rc663_read_reg(spi_device_handle_t spi, uint8_t reg);
-void clear_irq(spi_device_handle_t spi, int irq);
-void heimdall_rfid_set_timer(spi_device_handle_t spi, int milliseconds);
-bool heimdall_wait(spi_device_handle_t spi);
-
+void heimdall_rc663_write_reg(uart_port_t uart_num, uint8_t reg, uint8_t value);
+void heimdall_rc663_cmd(uart_port_t uart_num, uint8_t cmd);
+uint8_t heimdall_rc663_read_reg(uart_port_t uart_num, uint8_t reg);
+void clear_irq(uart_port_t uart_num, int irq);
+void heimdall_rfid_set_timer(uart_port_t uart_num, int milliseconds);
+bool heimdall_wait(uart_port_t uart_num);
 
 #endif /* CLRC663 */
