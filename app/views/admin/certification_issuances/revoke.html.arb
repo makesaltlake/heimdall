@@ -1,9 +1,0 @@
-active_admin_form_for resource, url: revoke_admin_certification_issuance_path(resource), method: :post do |f|
-  f.inputs do
-    f.input :revocation_reason, as: :text, hint: 'The reason why this certification is being revoked. This will be visible to the area certifiers and staff.'
-  end
-  f.actions do
-    f.action :submit, label: 'Revoke'
-    f.cancel_link resource_path(resource)
-  end
-end
