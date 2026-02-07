@@ -459,7 +459,8 @@
     "pinned_symbol_libs": [
       "Heimdall",
       "heimdall_insideboard-rescue",
-      "Molex PicoBlade"
+      "Molex PicoBlade",
+      "PhoenixContact"
     ]
   },
   "meta": {
