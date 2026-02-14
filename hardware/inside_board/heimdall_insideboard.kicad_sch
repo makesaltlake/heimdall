@@ -7695,6 +7695,16 @@
 	)
 	(wire
 		(pts
+			(xy 81.28 246.38) (xy 80.01 246.38)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3f5be003-1cdf-4354-93e8-e6ed021d837b")
+	)
+	(wire
+		(pts
 			(xy 176.53 81.28) (xy 176.53 73.66)
 		)
 		(stroke
@@ -9075,6 +9085,16 @@
 	)
 	(wire
 		(pts
+			(xy 80.01 246.38) (xy 80.01 247.65)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b30df128-ee67-417a-9ea2-f0cba46e644e")
+	)
+	(wire
+		(pts
 			(xy 149.86 25.4) (xy 149.86 26.67)
 		)
 		(stroke
@@ -9915,6 +9935,16 @@
 	)
 	(wire
 		(pts
+			(xy 80.01 252.73) (xy 80.01 254)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f75b31df-92a1-4ba7-bb18-07887e94eaf0")
+	)
+	(wire
+		(pts
 			(xy 200.66 166.37) (xy 209.55 166.37)
 		)
 		(stroke
@@ -10302,6 +10332,28 @@
 		(uuid "58a7fb3a-4157-4801-b77c-0bed698d8550")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 232.3823 186.69 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "TamperSW-"
+		(shape input)
+		(at 81.28 246.38 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "5a8eec6a-a6b7-4680-8eff-453d4ebcac4f")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 94.678 246.38 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -12391,7 +12443,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board yes)
+		(on_board no)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00006058485b")
 		(property "Reference" "D4"
@@ -12755,7 +12807,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
 			(at 53.34 250.19 90)
 			(effects
 				(font
@@ -12764,7 +12816,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/3MrtB6q"
 			(at 53.34 250.19 90)
 			(effects
 				(font
@@ -12960,7 +13012,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 24.13 243.84 0)
 			(effects
 				(font
@@ -13068,6 +13120,71 @@
 		)
 	)
 	(symbol
+		(lib_id "power:GND")
+		(at 80.01 254 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "18427b86-1e11-4f3b-bb64-950a516f1c73")
+		(property "Reference" "#PWR05"
+			(at 80.01 260.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "GND"
+			(at 79.883 258.3942 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 80.01 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 80.01 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 80.01 254 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(pin "1"
+			(uuid "2fa87ef7-794d-4fe4-a1da-f548c7a1c066")
+		)
+		(instances
+			(project "heimdall_insideboard"
+				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
+					(reference "#PWR05")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C_Small")
 		(at 149.86 69.85 0)
 		(unit 1)
@@ -13095,7 +13212,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 149.86 69.85 0)
 			(effects
 				(font
@@ -13104,7 +13221,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 149.86 69.85 0)
 			(effects
 				(font
@@ -13233,7 +13350,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 143.51 189.23 0)
 			(effects
 				(font
@@ -13242,7 +13359,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kA17Vb"
 			(at 143.51 189.23 0)
 			(effects
 				(font
@@ -13497,7 +13614,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 138.43 184.15 0)
 			(effects
 				(font
@@ -13506,7 +13623,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kA17Vb"
 			(at 138.43 184.15 0)
 			(effects
 				(font
@@ -13962,7 +14079,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 161.29 69.85 0)
 			(effects
 				(font
@@ -13971,7 +14088,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "~https://mou.sr/4qDKLMq"
 			(at 161.29 69.85 0)
 			(effects
 				(font
@@ -14144,7 +14261,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 120.65 240.03 0)
 			(effects
 				(font
@@ -14153,7 +14270,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4tE0qht"
 			(at 120.65 240.03 0)
 			(effects
 				(font
@@ -14215,7 +14332,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder"
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
 			(at 63.5 35.56 90)
 			(effects
 				(font
@@ -14224,7 +14341,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/Kingbright/APT2012PGW?qs=sGAEpiMZZMvVL5Kk7ZYykdz0UeQSxyTlrYah0Y9rf3M%3D"
+		(property "Datasheet" "https://mou.sr/3MrtB6q"
 			(at 63.5 35.56 90)
 			(effects
 				(font
@@ -14363,7 +14480,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 187.96 238.76 0)
 			(effects
 				(font
@@ -14372,7 +14489,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4tE0qht"
 			(at 187.96 238.76 0)
 			(effects
 				(font
@@ -14432,7 +14549,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 184.15 69.85 0)
 			(effects
 				(font
@@ -14441,7 +14558,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4qNLWt2"
 			(at 184.15 69.85 0)
 			(effects
 				(font
@@ -14587,7 +14704,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 83.82 69.85 0)
 			(effects
 				(font
@@ -14596,7 +14713,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4axbjcl"
 			(at 83.82 69.85 0)
 			(effects
 				(font
@@ -14957,7 +15074,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 171.45 69.85 0)
 			(effects
 				(font
@@ -14966,7 +15083,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "~https://mou.sr/4qDKLMq"
 			(at 171.45 69.85 0)
 			(effects
 				(font
@@ -15027,7 +15144,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
 			(at 26.67 250.19 90)
 			(effects
 				(font
@@ -15036,7 +15153,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/3MrtB6q"
 			(at 26.67 250.19 90)
 			(effects
 				(font
@@ -15073,6 +15190,85 @@
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
 					(reference "D6")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:LED_Small")
+		(at 80.01 250.19 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "4246a2d1-15f4-4f07-a546-6869197da807")
+		(property "Reference" "D11"
+			(at 82.55 248.8564 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Value" "Tamper"
+			(at 82.55 251.3964 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+			)
+		)
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
+			(at 80.01 250.19 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://mou.sr/3MrtB6q"
+			(at 80.01 250.19 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Light emitting diode, small symbol"
+			(at 80.01 250.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Sim.Pin" "1=K 2=A"
+			(at 80.01 250.19 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "823c81e7-a143-4cb0-9647-e081a1b0789c")
+		)
+		(pin "1"
+			(uuid "8cb4dd89-c64c-4940-b115-81b52e66e91d")
+		)
+		(instances
+			(project "heimdall_insideboard"
+				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
+					(reference "D11")
 					(unit 1)
 				)
 			)
@@ -15175,7 +15371,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 149.86 29.21 0)
 			(effects
 				(font
@@ -15184,7 +15380,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 149.86 29.21 0)
 			(effects
 				(font
@@ -15522,7 +15718,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 195.58 34.29 0)
 			(effects
 				(font
@@ -15531,7 +15727,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/Panasonic/ERA-6AEB101V?qs=1VWA5LkbEao8sH84VneDFA%3D%3D"
+		(property "Datasheet" "https://mou.sr/4bRlYAX"
 			(at 195.58 34.29 0)
 			(effects
 				(font
@@ -15592,7 +15788,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 93.98 69.85 0)
 			(effects
 				(font
@@ -15601,7 +15797,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4axbjcl"
 			(at 93.98 69.85 0)
 			(effects
 				(font
@@ -15854,7 +16050,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 118.11 30.48 0)
 			(effects
 				(font
@@ -15863,7 +16059,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4azrqWK"
 			(at 118.11 30.48 0)
 			(effects
 				(font
@@ -15922,7 +16118,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 212.09 168.91 0)
 			(effects
 				(font
@@ -15931,7 +16127,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kA17Vb"
 			(at 212.09 168.91 0)
 			(effects
 				(font
@@ -16328,7 +16524,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 50.8 243.84 0)
 			(effects
 				(font
@@ -16397,7 +16593,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 184.15 29.21 0)
 			(effects
 				(font
@@ -16406,7 +16602,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4qBBuVe"
 			(at 184.15 29.21 0)
 			(effects
 				(font
@@ -16655,7 +16851,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "R_Small"
+		(property "Value" "510"
 			(at 48.006 36.576 0)
 			(effects
 				(font
@@ -16664,7 +16860,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 45.72 35.56 0)
 			(effects
 				(font
@@ -16673,7 +16869,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4qCYX8E"
 			(at 45.72 35.56 0)
 			(effects
 				(font
@@ -16724,7 +16920,7 @@
 				)
 			)
 		)
-		(property "Value" "2.2K"
+		(property "Value" "2K"
 			(at 176.53 246.38 90)
 			(effects
 				(font
@@ -16732,7 +16928,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 176.53 248.92 0)
 			(effects
 				(font
@@ -16741,7 +16937,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/40gREIJ"
 			(at 176.53 248.92 0)
 			(effects
 				(font
@@ -16864,7 +17060,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 292.1 48.26 0)
 			(effects
 				(font
@@ -16873,7 +17069,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4riM4S3"
 			(at 292.1 48.26 0)
 			(effects
 				(font
@@ -16932,7 +17128,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 118.11 71.12 0)
 			(effects
 				(font
@@ -16941,7 +17137,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4azrqWK"
 			(at 118.11 71.12 0)
 			(effects
 				(font
@@ -17201,7 +17397,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder"
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
 			(at 195.58 39.37 90)
 			(effects
 				(font
@@ -17210,7 +17406,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/Kingbright/APT2012PGW?qs=sGAEpiMZZMvVL5Kk7ZYykdz0UeQSxyTlrYah0Y9rf3M%3D"
+		(property "Datasheet" "https://mou.sr/3MrtB6q"
 			(at 195.58 39.37 90)
 			(effects
 				(font
@@ -17429,7 +17625,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 93.98 29.21 0)
 			(effects
 				(font
@@ -17438,7 +17634,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4axbjcl"
 			(at 93.98 29.21 0)
 			(effects
 				(font
@@ -17637,7 +17833,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 143.51 179.07 0)
 			(effects
 				(font
@@ -17646,7 +17842,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kA17Vb"
 			(at 143.51 179.07 0)
 			(effects
 				(font
@@ -17706,7 +17902,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 184.15 36.83 0)
 			(effects
 				(font
@@ -17715,7 +17911,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/3OJFu8I"
 			(at 184.15 36.83 0)
 			(effects
 				(font
@@ -17908,7 +18104,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 83.82 29.21 0)
 			(effects
 				(font
@@ -17917,7 +18113,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4axbjcl"
 			(at 83.82 29.21 0)
 			(effects
 				(font
@@ -17978,7 +18174,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder"
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
 			(at 45.72 29.21 90)
 			(effects
 				(font
@@ -17987,7 +18183,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/3MrtB6q"
 			(at 45.72 29.21 90)
 			(effects
 				(font
@@ -18267,7 +18463,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 212.09 166.37 0)
 			(effects
 				(font
@@ -18276,7 +18472,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kA17Vb"
 			(at 212.09 166.37 0)
 			(effects
 				(font
@@ -18401,7 +18597,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 171.45 29.21 0)
 			(effects
 				(font
@@ -18410,7 +18606,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "~https://mou.sr/4qDKLMq"
 			(at 171.45 29.21 0)
 			(effects
 				(font
@@ -18535,7 +18731,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 104.14 69.85 0)
 			(effects
 				(font
@@ -18544,7 +18740,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 104.14 69.85 0)
 			(effects
 				(font
@@ -18806,7 +19002,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 195.58 29.21 0)
 			(effects
 				(font
@@ -18815,7 +19011,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/Panasonic/ERA-6AEB101V?qs=1VWA5LkbEao8sH84VneDFA%3D%3D"
+		(property "Datasheet" "https://mou.sr/4bRlYAX"
 			(at 195.58 29.21 0)
 			(effects
 				(font
@@ -18874,7 +19070,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 292.1 96.52 0)
 			(effects
 				(font
@@ -18883,7 +19079,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4riM4S3"
 			(at 292.1 96.52 0)
 			(effects
 				(font
@@ -19034,7 +19230,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 161.29 29.21 0)
 			(effects
 				(font
@@ -19043,7 +19239,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "~https://mou.sr/4qDKLMq"
 			(at 161.29 29.21 0)
 			(effects
 				(font
@@ -19104,7 +19300,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 104.14 29.21 0)
 			(effects
 				(font
@@ -19113,7 +19309,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 104.14 29.21 0)
 			(effects
 				(font
@@ -19172,7 +19368,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 77.47 243.84 0)
 			(effects
 				(font
@@ -19181,7 +19377,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kA17Vb"
 			(at 77.47 243.84 0)
 			(effects
 				(font
@@ -19242,7 +19438,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 63.5 29.21 0)
 			(effects
 				(font
@@ -19251,7 +19447,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4qCYX8E"
 			(at 63.5 29.21 0)
 			(effects
 				(font
@@ -19313,7 +19509,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "LED_SMD:LED_0805_2012Metric_Pad1.15x1.40mm_HandSolder"
+		(property "Footprint" "LED_SMD:LED_0805_2012Metric"
 			(at 195.58 77.47 90)
 			(effects
 				(font
@@ -19322,7 +19518,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/Kingbright/APT2012PGW?qs=sGAEpiMZZMvVL5Kk7ZYykdz0UeQSxyTlrYah0Y9rf3M%3D"
+		(property "Datasheet" "https://mou.sr/3MrtB6q"
 			(at 195.58 77.47 90)
 			(effects
 				(font
@@ -19382,7 +19578,7 @@
 				)
 			)
 		)
-		(property "Value" "2.2K"
+		(property "Value" "2K"
 			(at 109.22 247.65 90)
 			(effects
 				(font
@@ -19390,7 +19586,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 109.22 250.19 0)
 			(effects
 				(font
@@ -19399,7 +19595,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/40gREIJ"
 			(at 109.22 250.19 0)
 			(effects
 				(font
@@ -19458,7 +19654,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 133.35 186.69 0)
 			(effects
 				(font
@@ -19467,7 +19663,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kA17Vb"
 			(at 133.35 186.69 0)
 			(effects
 				(font
@@ -19527,7 +19723,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 184.15 77.47 0)
 			(effects
 				(font
@@ -19536,7 +19732,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/40gREIJ"
 			(at 184.15 77.47 0)
 			(effects
 				(font
@@ -19874,7 +20070,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 195.58 69.85 0)
 			(effects
 				(font
@@ -19883,7 +20079,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.mouser.com/ProductDetail/Panasonic/ERA-6AEB101V?qs=1VWA5LkbEao8sH84VneDFA%3D%3D"
+		(property "Datasheet" "https://mou.sr/4bRlYAX"
 			(at 195.58 69.85 0)
 			(effects
 				(font
