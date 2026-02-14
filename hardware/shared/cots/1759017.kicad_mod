@@ -1,0 +1,205 @@
+(footprint "1759017"
+	(version 20241229)
+	(generator "pcbnew")
+	(generator_version "9.0")
+	(layer "F.Cu")
+	(descr "Pluggable Terminal Blocks 2 Pos 5.08mm pitch Through Hole Header")
+	(tags "Connector")
+	(property "Reference" "J**"
+		(at -2.54 -2.54 0)
+		(layer "F.SilkS")
+		(uuid "605f86e1-c750-49c6-8bc0-c8bf78bcf1d0")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Value" "1759017"
+		(at 0 0 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "c8551918-a910-4406-a3aa-c5f69071f6a8")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(property "Datasheet" "https://mou.sr/4r3vvtg"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "3ff60f95-61a6-4bdc-87ca-147126d31396")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" "Pluggable Terminal Blocks 2 Pos 5.08mm pitch Through Hole Header"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1518076f-3f60-4fb5-b74b-7a8e4ff36fa2")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr through_hole)
+	(fp_line
+		(start -7.67 -10.15)
+		(end -7.67 2)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "88562f64-6cbf-41ec-912b-9da034b6d5bc")
+	)
+	(fp_line
+		(start 2.64 -10.15)
+		(end -7.67 -10.15)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "47e3d0f6-51a2-4e4c-963a-9ca673f041a4")
+	)
+	(fp_line
+		(start 2.64 0)
+		(end 2.64 -10.15)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "baf41e2e-2f86-4432-a395-8fa45c4955ff")
+	)
+	(fp_line
+		(start -7.92 -10.4)
+		(end 2.89 -10.4)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "18976035-82fd-43b0-8591-9ae43b14e098")
+	)
+	(fp_line
+		(start -7.92 2.25)
+		(end -7.92 -10.4)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e5ff8f5b-5aa2-45f6-8bf6-2ecfa6765e90")
+	)
+	(fp_line
+		(start 2.89 -10.4)
+		(end 2.89 2.25)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "9c8c2125-1859-462f-a00d-5a58031b1311")
+	)
+	(fp_line
+		(start 2.89 2.25)
+		(end -7.92 2.25)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e3d7a5b4-05d2-41cc-bbc3-88b471e7988b")
+	)
+	(fp_line
+		(start -7.67 -10.15)
+		(end 2.64 -10.15)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "94111da3-daf4-457a-9e28-139fc0710cc1")
+	)
+	(fp_line
+		(start -7.67 2)
+		(end -7.67 -10.15)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "1e3ac294-2472-483d-aa54-93884885145e")
+	)
+	(fp_line
+		(start 2.64 -10.15)
+		(end 2.64 2)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "aebb09f5-f107-46d6-8f47-16ba6ef5d7b5")
+	)
+	(fp_line
+		(start 2.64 2)
+		(end -7.67 2)
+		(stroke
+			(width 0.1)
+			(type solid)
+		)
+		(layer "F.Fab")
+		(uuid "8c643848-e008-4012-8db4-a3888fbc49a4")
+	)
+	(fp_text user "${REFERENCE}"
+		(at -2.54 -5.08 0)
+		(layer "F.Fab")
+		(uuid "7d47c05d-5156-49fb-9a97-881601b7fff9")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.254)
+			)
+		)
+	)
+	(pad "1" thru_hole rect
+		(at 0 0)
+		(size 2.475 2.475)
+		(drill 1.65)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "1b04c3c6-fa59-4ec7-98ed-eeb4435388d8")
+	)
+	(pad "2" thru_hole circle
+		(at -5.08 0)
+		(size 2.475 2.475)
+		(drill 1.65)
+		(layers "*.Cu" "*.Mask")
+		(remove_unused_layers no)
+		(uuid "02e62632-897e-472e-a5c2-92867f4d285d")
+	)
+	(embedded_fonts no)
+	(model "1759017.stp"
+		(offset
+			(xyz 2.559999904 -1.919999928 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -90 0 -90)
+		)
+	)
+)

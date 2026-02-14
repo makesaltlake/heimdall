@@ -22,7 +22,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Heimdall COTS:1759017"
 			(at 0 0 0)
 			(effects
 				(font
@@ -192,7 +192,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Heimdall COTS:1759033"
 			(at 0 0 0)
 			(effects
 				(font
@@ -446,7 +446,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Heimdall COTS:1759059"
 			(at 0 0 0)
 			(effects
 				(font
