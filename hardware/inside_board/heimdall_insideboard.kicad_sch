@@ -5,9 +5,9 @@
 	(uuid "b71a4c50-f01b-4584-9790-07fd993db6c1")
 	(paper "B")
 	(title_block
-		(title "Heimdall Reader")
-		(date "2025-10-09")
-		(rev "E")
+		(title "Heimdall Relay Board")
+		(date "2026-02-22")
+		(rev "~")
 		(company "Make Salt Lake")
 		(comment 1 "https://github.com/makesaltlake/heimdall")
 	)
