@@ -532,7 +532,7 @@
 		(uuid "3c027a25-9b61-4e78-ba5a-97d6b29db1a3")
 	)
 	(embedded_fonts no)
-	(model "ESP32-S3-WROOM-1-N8R8.stp"
+	(model "${KIPRJMOD}/../shared/cots/ESP32-S3-WROOM-1-N8R8.stp"
 		(offset
 			(xyz 0 -0.2499999962 0)
 		)
