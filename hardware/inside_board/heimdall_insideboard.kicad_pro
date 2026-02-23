@@ -974,6 +974,12 @@
           "label": "Impedance",
           "name": "Impedance",
           "show": false
+        },
+        {
+          "group_by": false,
+          "label": "Sim.Type",
+          "name": "Sim.Type",
+          "show": false
         }
       ],
       "filter_string": "",
