@@ -8947,6 +8947,18 @@
 		(uuid abdd8cb5-5297-427a-a145-c2bc65b76a21)
 	)
 	(rectangle
+		(start 199.39 78.74)
+		(end 257.81 139.7)
+		(stroke
+			(width 0)
+			(type dash)
+		)
+		(fill
+			(type none)
+		)
+		(uuid ac687936-c55c-4ef1-bd30-41b8cd6508c7)
+	)
+	(rectangle
 		(start 106.68 182.88)
 		(end 154.94 223.52)
 		(stroke
@@ -9037,6 +9049,17 @@
 			)
 		)
 		(uuid "02f1bf9a-d617-4613-8d27-354fbe30ced6")
+	)
+	(text "Relay Shift Register"
+		(exclude_from_sim no)
+		(at 200.66 80.772 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "2627b444-dd02-4662-b0df-69688d930d43")
 	)
 	(text "Automatic"
 		(exclude_from_sim no)
@@ -9244,7 +9267,7 @@
 		(uuid "1b161ad0-fdce-437f-a759-9acee117157f")
 	)
 	(junction
-		(at 227.33 91.44)
+		(at 228.6 88.9)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "20c7885d-9afc-49da-b7ab-aa7e80c07999")
@@ -9260,6 +9283,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "222f5bd5-17f7-4ad9-adca-3d43dfed2882")
+	)
+	(junction
+		(at 208.28 107.95)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "234b0393-3db9-4ef8-9157-61ecceffe191")
 	)
 	(junction
 		(at 116.84 109.22)
@@ -9508,7 +9537,7 @@
 		(uuid "b2d5ee74-939b-416d-9662-47d225652ec8")
 	)
 	(junction
-		(at 227.33 133.35)
+		(at 228.6 130.81)
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "b4989243-3e36-49c3-9121-b912d76754d6")
@@ -9686,10 +9715,6 @@
 		(uuid "021b372e-91e4-447d-8330-c5479e0cbc79")
 	)
 	(no_connect
-		(at 127 132.08)
-		(uuid "03e93ace-72c7-4172-b7c3-5e111be892ba")
-	)
-	(no_connect
 		(at 220.98 228.6)
 		(uuid "086b47f5-effa-4674-bb7c-998d0ae68094")
 	)
@@ -9714,10 +9739,6 @@
 		(uuid "2839718e-9645-4380-a4db-454b44551457")
 	)
 	(no_connect
-		(at 217.17 111.76)
-		(uuid "2b7735f7-80d4-44e3-a205-56c5e72ea6c5")
-	)
-	(no_connect
 		(at 152.4 127)
 		(uuid "2b8ced8d-2bd5-439a-be4e-f18f2b128b7d")
 	)
@@ -9728,6 +9749,10 @@
 	(no_connect
 		(at 127 149.86)
 		(uuid "2e816df9-68c6-400d-a943-e8800093563f")
+	)
+	(no_connect
+		(at 152.4 142.24)
+		(uuid "31a2737a-3799-4fb1-bc09-33f93763ff45")
 	)
 	(no_connect
 		(at 220.98 243.84)
@@ -9742,10 +9767,6 @@
 		(uuid "39de5034-17b1-46cf-b50c-5d4e07532533")
 	)
 	(no_connect
-		(at 127 144.78)
-		(uuid "39e2989c-2a57-465b-939f-f8bde76c63ae")
-	)
-	(no_connect
 		(at 152.4 132.08)
 		(uuid "44cf1e67-0d12-486c-b5eb-a8c75b8d0001")
 	)
@@ -9758,16 +9779,28 @@
 		(uuid "4b8fe458-ed3c-47b5-afc7-8ecf2af40409")
 	)
 	(no_connect
+		(at 238.76 116.84)
+		(uuid "4bb82933-c221-487c-9f36-e27c48cd2389")
+	)
+	(no_connect
 		(at 220.98 210.82)
 		(uuid "4cb656bf-24d5-4439-927b-b7ca5e9b7dbf")
+	)
+	(no_connect
+		(at 238.76 106.68)
+		(uuid "4cff18e9-c3f4-47b7-a325-8c1badc79fce")
 	)
 	(no_connect
 		(at 127 142.24)
 		(uuid "513d8d46-2287-47a0-a103-2658a2914c41")
 	)
 	(no_connect
-		(at 127 147.32)
-		(uuid "7a1fa70c-1ef1-414c-9bac-0dd08982f207")
+		(at 238.76 119.38)
+		(uuid "68888046-9805-4819-81fd-535ba32c1804")
+	)
+	(no_connect
+		(at 238.76 109.22)
+		(uuid "6c0f48e0-b665-4a80-a6f5-855a2bb0cdcd")
 	)
 	(no_connect
 		(at 127 119.38)
@@ -9788,6 +9821,10 @@
 	(no_connect
 		(at 125.73 243.84)
 		(uuid "a3e727aa-1073-4c67-b4d6-578760b8ff14")
+	)
+	(no_connect
+		(at 238.76 114.3)
+		(uuid "a4dd3181-53c8-49c6-a335-ac23e6933934")
 	)
 	(no_connect
 		(at 220.98 215.9)
@@ -9850,6 +9887,10 @@
 		(uuid "ed7f4975-f7e2-433e-a9d6-cd73bb113451")
 	)
 	(no_connect
+		(at 238.76 111.76)
+		(uuid "f5917fcc-da5c-4791-a8cf-73498031ebab")
+	)
+	(no_connect
 		(at 127 152.4)
 		(uuid "f81d2c75-848a-4bfe-abdd-8ef620e98999")
 	)
@@ -9865,7 +9906,7 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 119.38) (xy 215.9 133.35)
+			(xy 217.17 116.84) (xy 217.17 130.81)
 		)
 		(stroke
 			(width 0)
@@ -10065,7 +10106,17 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 91.44) (xy 227.33 99.06)
+			(xy 217.17 106.68) (xy 218.44 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0cadef48-c493-4072-a487-ed6227cb10d8")
+	)
+	(wire
+		(pts
+			(xy 228.6 88.9) (xy 228.6 96.52)
 		)
 		(stroke
 			(width 0)
@@ -10182,6 +10233,16 @@
 			(type default)
 		)
 		(uuid "113d759a-1e08-4bb5-a8f1-a58689d593aa")
+	)
+	(wire
+		(pts
+			(xy 212.09 106.68) (xy 208.28 106.68)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1158d23a-5830-42e5-9d58-128045412a41")
 	)
 	(wire
 		(pts
@@ -10305,6 +10366,16 @@
 	)
 	(wire
 		(pts
+			(xy 207.01 107.95) (xy 208.28 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "17fdc66f-cbd1-4862-822e-82284a835f04")
+	)
+	(wire
+		(pts
 			(xy 353.06 198.12) (xy 353.06 203.2)
 		)
 		(stroke
@@ -10372,6 +10443,16 @@
 			(type default)
 		)
 		(uuid "1c74b37f-e90e-45fc-aad4-355e09a6d104")
+	)
+	(wire
+		(pts
+			(xy 208.28 109.22) (xy 208.28 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1ce36960-5f5c-4635-bb9b-24478687dcca")
 	)
 	(wire
 		(pts
@@ -10995,7 +11076,7 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 133.35) (xy 227.33 132.08)
+			(xy 228.6 130.81) (xy 228.6 129.54)
 		)
 		(stroke
 			(width 0)
@@ -11385,7 +11466,7 @@
 	)
 	(wire
 		(pts
-			(xy 224.79 91.44) (xy 227.33 91.44)
+			(xy 226.06 88.9) (xy 228.6 88.9)
 		)
 		(stroke
 			(width 0)
@@ -11715,7 +11796,7 @@
 	)
 	(wire
 		(pts
-			(xy 238.76 127) (xy 237.49 127)
+			(xy 240.03 124.46) (xy 238.76 124.46)
 		)
 		(stroke
 			(width 0)
@@ -11825,7 +11906,7 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 133.35) (xy 227.33 133.35)
+			(xy 217.17 130.81) (xy 228.6 130.81)
 		)
 		(stroke
 			(width 0)
@@ -11845,7 +11926,7 @@
 	)
 	(wire
 		(pts
-			(xy 219.71 91.44) (xy 215.9 91.44)
+			(xy 220.98 88.9) (xy 217.17 88.9)
 		)
 		(stroke
 			(width 0)
@@ -11925,7 +12006,7 @@
 	)
 	(wire
 		(pts
-			(xy 217.17 119.38) (xy 215.9 119.38)
+			(xy 218.44 116.84) (xy 217.17 116.84)
 		)
 		(stroke
 			(width 0)
@@ -12505,6 +12586,16 @@
 	)
 	(wire
 		(pts
+			(xy 217.17 109.22) (xy 218.44 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "98762c79-e738-428d-a1bf-e25c4d5178a0")
+	)
+	(wire
+		(pts
 			(xy 378.46 124.46) (xy 378.46 133.35)
 		)
 		(stroke
@@ -12825,6 +12916,16 @@
 	)
 	(wire
 		(pts
+			(xy 212.09 109.22) (xy 208.28 109.22)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a9415da1-f421-4fc8-920b-ffb69a1eb84c")
+	)
+	(wire
+		(pts
 			(xy 215.9 26.67) (xy 215.9 27.94)
 		)
 		(stroke
@@ -12962,6 +13063,16 @@
 			(type default)
 		)
 		(uuid "b3acda4e-fbc9-4b48-98cc-d383cb27bbe5")
+	)
+	(wire
+		(pts
+			(xy 208.28 106.68) (xy 208.28 107.95)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b46e88e0-de8a-467c-b27d-94f05f5cd68e")
 	)
 	(wire
 		(pts
@@ -13695,7 +13806,7 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 134.62) (xy 227.33 133.35)
+			(xy 228.6 132.08) (xy 228.6 130.81)
 		)
 		(stroke
 			(width 0)
@@ -13915,7 +14026,7 @@
 	)
 	(wire
 		(pts
-			(xy 227.33 90.17) (xy 227.33 91.44)
+			(xy 228.6 87.63) (xy 228.6 88.9)
 		)
 		(stroke
 			(width 0)
@@ -13985,7 +14096,7 @@
 	)
 	(wire
 		(pts
-			(xy 215.9 91.44) (xy 215.9 92.71)
+			(xy 217.17 88.9) (xy 217.17 90.17)
 		)
 		(stroke
 			(width 0)
@@ -14295,6 +14406,28 @@
 			)
 		)
 	)
+	(global_label "uC RS232 TX"
+		(shape input)
+		(at 127 144.78 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "014048ad-b8ee-4a80-94e1-290bc8857819")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 112.0297 144.78 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "LED 5v"
 		(shape input)
 		(at 238.76 55.88 0)
@@ -14335,28 +14468,6 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "uC RS232 RX"
-		(shape input)
-		(at 127 129.54 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "0b47b99d-c817-4341-9921-57f940a3e202")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 111.7273 129.54 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
 				(hide yes)
 			)
 		)
@@ -14493,28 +14604,6 @@
 			)
 		)
 	)
-	(global_label "SCK"
-		(shape input)
-		(at 184.15 130.81 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "214ee3e1-f8f8-48b4-bdf2-a1804383de71")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 190.2305 130.81 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "TamperSW+"
 		(shape input)
 		(at 81.28 243.84 0)
@@ -14537,9 +14626,9 @@
 			)
 		)
 	)
-	(global_label "CS"
+	(global_label "RelayCS"
 		(shape input)
-		(at 217.17 116.84 180)
+		(at 218.44 114.3 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -14549,7 +14638,7 @@
 		)
 		(uuid "2ad2aa56-ee78-470c-908c-977054fbd409")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 212.3595 116.84 0)
+			(at 208.4891 114.3 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14649,7 +14738,7 @@
 	)
 	(global_label "Relay1Trigger"
 		(shape input)
-		(at 237.49 104.14 0)
+		(at 238.76 101.6 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -14659,7 +14748,7 @@
 		)
 		(uuid "35720251-00fb-4db9-a9f2-f9a4a594ff3c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 252.7023 104.14 0)
+			(at 253.9723 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14682,28 +14771,6 @@
 		(uuid "3fa18035-5a81-4714-873a-6788001f0ad2")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 166.161 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "MOSI"
-		(shape input)
-		(at 184.15 125.73 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "421b2cac-382c-40e4-ac49-f53ab26ef637")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 191.0772 125.73 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14867,28 +14934,6 @@
 			)
 		)
 	)
-	(global_label "uC RS232 TX"
-		(shape input)
-		(at 127 127 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "5d80229d-ed63-4c01-8240-d367d5aeb59a")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 112.0297 127 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "DoorSW2-"
 		(shape input)
 		(at 54.61 246.38 0)
@@ -14973,6 +15018,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "SCK"
+		(shape input)
+		(at 127 132.08 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "6f2dbf59-7ef5-4ceb-ae4c-aa464bf3eac2")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 120.9195 132.08 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -15175,9 +15242,31 @@
 			)
 		)
 	)
+	(global_label "SCK"
+		(shape input)
+		(at 207.01 107.95 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "86cc8998-835a-42a1-92c9-5808a82c7cb0")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 200.9295 107.95 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "MOSI"
 		(shape input)
-		(at 217.17 104.14 180)
+		(at 218.44 101.6 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -15187,7 +15276,7 @@
 		)
 		(uuid "880e8781-891c-4fba-b585-bf061b15a999")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 210.2428 104.14 0)
+			(at 211.5128 101.6 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15219,24 +15308,24 @@
 			)
 		)
 	)
-	(global_label "CS"
+	(global_label "uC RS232 RX"
 		(shape input)
-		(at 184.15 138.43 0)
+		(at 127 147.32 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
 				(size 1.27 1.27)
 			)
-			(justify left)
+			(justify right)
 		)
-		(uuid "8be9cc0d-ad8d-42de-a3b9-5c10caba2191")
+		(uuid "89b8d689-fe68-41df-a436-ea500be7b027")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 188.9605 138.43 0)
+			(at 111.7273 147.32 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
-				(justify left)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -15281,28 +15370,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "Relay2Trigger"
-		(shape input)
-		(at 152.4 142.24 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "988cba2b-4cdc-4e3d-988f-855cdb18e133")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 167.6123 142.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
@@ -15551,7 +15618,7 @@
 	)
 	(global_label "MOSI_Out"
 		(shape input)
-		(at 238.76 127 0)
+		(at 240.03 124.46 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -15561,7 +15628,7 @@
 		)
 		(uuid "c1490cf9-7d1a-408d-b0aa-5f9578ba118b")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 249.86 127 0)
+			(at 251.13 124.46 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15681,6 +15748,28 @@
 			)
 		)
 	)
+	(global_label "MOSI"
+		(shape input)
+		(at 127 129.54 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "e5d3ee7f-a718-4a2c-9c9c-a09a46fbf3b7")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 120.0728 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "Reader Beeper 3.3v"
 		(shape input)
 		(at 218.44 40.64 180)
@@ -15743,6 +15832,28 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "RelayCS"
+		(shape input)
+		(at 127 127 180)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify right)
+		)
+		(uuid "f0e8f205-84ee-49cf-8479-38e12eddd7b4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 117.0491 127 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify right)
 				(hide yes)
 			)
 		)
@@ -15813,28 +15924,6 @@
 			)
 		)
 	)
-	(global_label "SCK"
-		(shape input)
-		(at 217.17 109.22 180)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "fe30b568-b046-4a96-bbf7-84ba6a8d30db")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 211.0895 109.22 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "Relay2_NO"
 		(shape input)
 		(at 337.82 92.71 0)
@@ -15859,7 +15948,7 @@
 	)
 	(global_label "Relay2Trigger"
 		(shape input)
-		(at 237.49 106.68 0)
+		(at 238.76 104.14 0)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -15869,7 +15958,7 @@
 		)
 		(uuid "ffe7f14e-42a8-4111-96a4-e5970432509c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 252.7023 106.68 0)
+			(at 253.9723 104.14 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -15957,7 +16046,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f0b3cc3")
-		(property "Reference" "#PWR08"
+		(property "Reference" "#PWR04"
 			(at 36.83 48.26 0)
 			(effects
 				(font
@@ -16006,7 +16095,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR08")
+					(reference "#PWR04")
 					(unit 1)
 				)
 			)
@@ -16022,7 +16111,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f0ec031")
-		(property "Reference" "D1"
+		(property "Reference" "D15"
 			(at 287.528 33.1216 90)
 			(effects
 				(font
@@ -16075,7 +16164,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D1")
+					(reference "D15")
 					(unit 1)
 				)
 			)
@@ -16090,7 +16179,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f0f233f")
-		(property "Reference" "Q1"
+		(property "Reference" "Q3"
 			(at 300.736 47.0916 0)
 			(effects
 				(font
@@ -16149,7 +16238,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "Q1")
+					(reference "Q3")
 					(unit 1)
 				)
 			)
@@ -16164,7 +16253,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f0f281c")
-		(property "Reference" "#PWR01"
+		(property "Reference" "#PWR048"
 			(at 298.45 26.67 0)
 			(effects
 				(font
@@ -16213,7 +16302,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR01")
+					(reference "#PWR048")
 					(unit 1)
 				)
 			)
@@ -16228,7 +16317,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f0f6e80")
-		(property "Reference" "#PWR09"
+		(property "Reference" "#PWR049"
 			(at 298.45 62.23 0)
 			(effects
 				(font
@@ -16277,7 +16366,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR09")
+					(reference "#PWR049")
 					(unit 1)
 				)
 			)
@@ -16292,7 +16381,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f129bc4")
-		(property "Reference" "#PWR010"
+		(property "Reference" "#PWR063"
 			(at 398.78 53.34 0)
 			(effects
 				(font
@@ -16341,7 +16430,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR010")
+					(reference "#PWR063")
 					(unit 1)
 				)
 			)
@@ -16426,7 +16515,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f134b2a")
-		(property "Reference" "#PWR02"
+		(property "Reference" "#PWR053"
 			(at 342.9 31.75 0)
 			(effects
 				(font
@@ -16475,7 +16564,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR02")
+					(reference "#PWR053")
 					(unit 1)
 				)
 			)
@@ -16490,7 +16579,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f14e310")
-		(property "Reference" "Q2"
+		(property "Reference" "Q4"
 			(at 300.736 95.3516 0)
 			(effects
 				(font
@@ -16549,7 +16638,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "Q2")
+					(reference "Q4")
 					(unit 1)
 				)
 			)
@@ -16564,7 +16653,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f14e316")
-		(property "Reference" "#PWR011"
+		(property "Reference" "#PWR050"
 			(at 298.45 74.93 0)
 			(effects
 				(font
@@ -16613,7 +16702,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR011")
+					(reference "#PWR050")
 					(unit 1)
 				)
 			)
@@ -16628,7 +16717,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f14e326")
-		(property "Reference" "#PWR015"
+		(property "Reference" "#PWR051"
 			(at 298.45 110.49 0)
 			(effects
 				(font
@@ -16677,7 +16766,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR015")
+					(reference "#PWR051")
 					(unit 1)
 				)
 			)
@@ -16692,7 +16781,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f14e343")
-		(property "Reference" "#PWR016"
+		(property "Reference" "#PWR064"
 			(at 398.78 71.12 0)
 			(effects
 				(font
@@ -16741,7 +16830,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR016")
+					(reference "#PWR064")
 					(unit 1)
 				)
 			)
@@ -16826,7 +16915,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00005f14e358")
-		(property "Reference" "#PWR012"
+		(property "Reference" "#PWR054"
 			(at 342.9 80.01 0)
 			(effects
 				(font
@@ -16875,7 +16964,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR012")
+					(reference "#PWR054")
 					(unit 1)
 				)
 			)
@@ -17022,7 +17111,7 @@
 		(on_board no)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00006058485b")
-		(property "Reference" "D4"
+		(property "Reference" "D6"
 			(at 126.8476 242.6716 0)
 			(effects
 				(font
@@ -17083,7 +17172,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D4")
+					(reference "D6")
 					(unit 1)
 				)
 			)
@@ -17098,7 +17187,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-0000605868ac")
-		(property "Reference" "#PWR0104"
+		(property "Reference" "#PWR020"
 			(at 118.11 238.76 0)
 			(effects
 				(font
@@ -17147,7 +17236,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR0104")
+					(reference "#PWR020")
 					(unit 1)
 				)
 			)
@@ -17162,7 +17251,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-0000605da8fd")
-		(property "Reference" "#PWR0105"
+		(property "Reference" "#PWR021"
 			(at 118.11 264.16 0)
 			(effects
 				(font
@@ -17211,7 +17300,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR0105")
+					(reference "#PWR021")
 					(unit 1)
 				)
 			)
@@ -17226,7 +17315,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-000061bdb374")
-		(property "Reference" "#PWR0106"
+		(property "Reference" "#PWR031"
 			(at 170.18 66.04 0)
 			(effects
 				(font
@@ -17275,7 +17364,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR0106")
+					(reference "#PWR031")
 					(unit 1)
 				)
 			)
@@ -17291,7 +17380,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "01494932-a969-4fa6-821a-6217f4bafba8")
-		(property "Reference" "D13"
+		(property "Reference" "D3"
 			(at 55.88 248.8564 90)
 			(effects
 				(font
@@ -17354,7 +17443,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D13")
+					(reference "D3")
 					(unit 1)
 				)
 			)
@@ -17369,7 +17458,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "039cb043-313e-46d8-aac1-384902382cee")
-		(property "Reference" "#PWR045"
+		(property "Reference" "#PWR029"
 			(at 165.1 88.9 0)
 			(effects
 				(font
@@ -17418,7 +17507,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR045")
+					(reference "#PWR029")
 					(unit 1)
 				)
 			)
@@ -17433,7 +17522,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "04726428-16ff-4502-ae87-17ed9dac2a67")
-		(property "Reference" "#PWR053"
+		(property "Reference" "#PWR043"
 			(at 250.19 176.53 0)
 			(effects
 				(font
@@ -17483,7 +17572,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR053")
+					(reference "#PWR043")
 					(unit 1)
 				)
 			)
@@ -17498,7 +17587,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "05a3f281-abfe-40f7-b193-385916119ac6")
-		(property "Reference" "#PWR046"
+		(property "Reference" "#PWR047"
 			(at 293.37 243.84 0)
 			(effects
 				(font
@@ -17547,7 +17636,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR046")
+					(reference "#PWR047")
 					(unit 1)
 				)
 			)
@@ -17563,7 +17652,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "07aec391-ae00-40af-b46d-a13378e3fb32")
-		(property "Reference" "#PWR019"
+		(property "Reference" "#PWR058"
 			(at 381 53.34 0)
 			(effects
 				(font
@@ -17612,7 +17701,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR019")
+					(reference "#PWR058")
 					(unit 1)
 				)
 			)
@@ -17627,7 +17716,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "08ea84d0-cd66-4006-b470-99d09e717fb1")
-		(property "Reference" "#PWR058"
+		(property "Reference" "#PWR026"
 			(at 148.59 207.01 0)
 			(effects
 				(font
@@ -17676,7 +17765,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR058")
+					(reference "#PWR026")
 					(unit 1)
 				)
 			)
@@ -17684,7 +17773,7 @@
 	)
 	(symbol
 		(lib_id "Device:C_Small")
-		(at 222.25 91.44 270)
+		(at 223.52 88.9 270)
 		(mirror x)
 		(unit 1)
 		(exclude_from_sim no)
@@ -17692,8 +17781,8 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "094f2464-1f13-42ab-8b4f-f530ffedc259")
-		(property "Reference" "C26"
-			(at 223.5138 93.98 0)
+		(property "Reference" "C18"
+			(at 224.7838 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17702,7 +17791,7 @@
 			)
 		)
 		(property "Value" "0.1uF"
-			(at 220.9738 93.98 0)
+			(at 222.2438 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17711,7 +17800,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 222.25 91.44 0)
+			(at 223.52 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17720,7 +17809,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 222.25 91.44 0)
+			(at 223.52 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17729,7 +17818,7 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, small symbol"
-			(at 222.25 91.44 0)
+			(at 223.52 88.9 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -17746,7 +17835,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C26")
+					(reference "C18")
 					(unit 1)
 				)
 			)
@@ -17762,7 +17851,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "154d77b9-7545-4db8-b9ff-897ebda108e8")
-		(property "Reference" "R16"
+		(property "Reference" "R1"
 			(at 23.368 240.284 0)
 			(effects
 				(font
@@ -17814,7 +17903,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R16")
+					(reference "R1")
 					(unit 1)
 				)
 			)
@@ -17830,7 +17919,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "15f1e99e-5b8f-4ccf-b5d7-de1aa3d25e24")
-		(property "Reference" "R25"
+		(property "Reference" "R27"
 			(at 262.89 200.66 90)
 			(effects
 				(font
@@ -17882,7 +17971,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R25")
+					(reference "R27")
 					(unit 1)
 				)
 			)
@@ -17898,7 +17987,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1727a133-e94d-4f7a-8c56-3bb51c381bb0")
-		(property "Reference" "#PWR04"
+		(property "Reference" "#PWR02"
 			(at 26.67 260.35 0)
 			(effects
 				(font
@@ -17947,7 +18036,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR04")
+					(reference "#PWR02")
 					(unit 1)
 				)
 			)
@@ -17963,7 +18052,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "18427b86-1e11-4f3b-bb64-950a516f1c73")
-		(property "Reference" "#PWR05"
+		(property "Reference" "#PWR013"
 			(at 80.01 260.35 0)
 			(effects
 				(font
@@ -18012,7 +18101,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR05")
+					(reference "#PWR013")
 					(unit 1)
 				)
 			)
@@ -18028,7 +18117,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "199d7992-ecbe-4ba1-870a-5aa3ed4119b3")
-		(property "Reference" "C14"
+		(property "Reference" "C11"
 			(at 128.27 68.5862 0)
 			(effects
 				(font
@@ -18082,7 +18171,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C14")
+					(reference "C11")
 					(unit 1)
 				)
 			)
@@ -18098,7 +18187,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "1a497deb-ab4f-4666-816b-76145af88ee9")
-		(property "Reference" "J14"
+		(property "Reference" "J2"
 			(at 406.4 19.0499 0)
 			(effects
 				(font
@@ -18152,7 +18241,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "J14")
+					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -18167,7 +18256,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "1a70a625-b6ce-47c1-80c2-1f5dc86c486c")
-		(property "Reference" "#PWR059"
+		(property "Reference" "#PWR022"
 			(at 128.27 223.52 0)
 			(effects
 				(font
@@ -18216,7 +18305,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR059")
+					(reference "#PWR022")
 					(unit 1)
 				)
 			)
@@ -18462,7 +18551,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "216a380e-d99c-4f01-b793-962777339e55")
-		(property "Reference" "#PWR057"
+		(property "Reference" "#PWR019"
 			(at 115.57 207.01 0)
 			(effects
 				(font
@@ -18512,7 +18601,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR057")
+					(reference "#PWR019")
 					(unit 1)
 				)
 			)
@@ -18527,7 +18616,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "24f19d41-2396-45c5-b4d0-c0599b0067c9")
-		(property "Reference" "D12"
+		(property "Reference" "D21"
 			(at 374.65 39.3699 0)
 			(effects
 				(font
@@ -18588,7 +18677,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D12")
+					(reference "D21")
 					(unit 1)
 				)
 			)
@@ -18603,7 +18692,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "25585829-d05c-4087-a0dc-7cbff6b63dec")
-		(property "Reference" "#PWR049"
+		(property "Reference" "#PWR044"
 			(at 254 195.58 0)
 			(effects
 				(font
@@ -18652,7 +18741,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR049")
+					(reference "#PWR044")
 					(unit 1)
 				)
 			)
@@ -18667,7 +18756,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "25db5af4-03b6-48e7-ac4f-a5c2958a27a7")
-		(property "Reference" "R31"
+		(property "Reference" "R20"
 			(at 207.518 187.96 90)
 			(effects
 				(font
@@ -18719,7 +18808,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R31")
+					(reference "R20")
 					(unit 1)
 				)
 			)
@@ -18734,7 +18823,7 @@
 		(on_board yes)
 		(dnp yes)
 		(uuid "25fd53c9-709e-41da-9715-6e443d97b929")
-		(property "Reference" "R30"
+		(property "Reference" "R19"
 			(at 207.518 185.42 90)
 			(effects
 				(font
@@ -18786,7 +18875,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R30")
+					(reference "R19")
 					(unit 1)
 				)
 			)
@@ -18932,7 +19021,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "2b40ffa7-0863-42e0-824e-f59c61442f98")
-		(property "Reference" "#PWR027"
+		(property "Reference" "#PWR016"
 			(at 107.95 41.91 0)
 			(effects
 				(font
@@ -18981,7 +19070,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR027")
+					(reference "#PWR016")
 					(unit 1)
 				)
 			)
@@ -18997,7 +19086,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "2b7dcf77-aa4b-4e8c-94ff-359d48256e58")
-		(property "Reference" "J12"
+		(property "Reference" "J4"
 			(at 406.4 31.7499 0)
 			(effects
 				(font
@@ -19051,7 +19140,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "J12")
+					(reference "J4")
 					(unit 1)
 				)
 			)
@@ -19067,7 +19156,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "2fa5ec3c-617d-4992-a755-31e150f91b9b")
-		(property "Reference" "#PWR021"
+		(property "Reference" "#PWR06"
 			(at 53.34 260.35 0)
 			(effects
 				(font
@@ -19116,7 +19205,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR021")
+					(reference "#PWR06")
 					(unit 1)
 				)
 			)
@@ -19132,7 +19221,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3298f9e5-3ed9-494e-9125-5ea088d6e518")
-		(property "Reference" "C15"
+		(property "Reference" "C13"
 			(at 139.7 68.5862 0)
 			(effects
 				(font
@@ -19186,7 +19275,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C15")
+					(reference "C13")
 					(unit 1)
 				)
 			)
@@ -19201,7 +19290,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "33af7233-d4f1-46d5-b659-d93a2fa2a48c")
-		(property "Reference" "D16"
+		(property "Reference" "D14"
 			(at 262.89 228.5999 0)
 			(effects
 				(font
@@ -19262,7 +19351,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D16")
+					(reference "D14")
 					(unit 1)
 				)
 			)
@@ -19278,7 +19367,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "33b96c8d-78d7-4807-957b-d078b7c9da4d")
-		(property "Reference" "U5"
+		(property "Reference" "U7"
 			(at 381.8733 163.83 0)
 			(effects
 				(font
@@ -19374,7 +19463,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "U5")
+					(reference "U7")
 					(unit 1)
 				)
 			)
@@ -19391,7 +19480,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "371231c0-470d-4c43-86ff-fa387f34d219")
-		(property "Reference" "D10"
+		(property "Reference" "D4"
 			(at 63.5 30.4164 90)
 			(effects
 				(font
@@ -19454,7 +19543,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D10")
+					(reference "D4")
 					(unit 1)
 				)
 			)
@@ -19462,15 +19551,15 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 227.33 90.17 0)
+		(at 228.6 87.63 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "386c1e8c-2566-4175-b195-307ca4800b87")
-		(property "Reference" "#PWR060"
-			(at 227.33 93.98 0)
+		(property "Reference" "#PWR038"
+			(at 228.6 91.44 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19479,7 +19568,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 227.711 85.7758 0)
+			(at 228.981 83.2358 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19487,7 +19576,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 227.33 90.17 0)
+			(at 228.6 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19496,7 +19585,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 227.33 90.17 0)
+			(at 228.6 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19505,7 +19594,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 227.33 90.17 0)
+			(at 228.6 87.63 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -19518,7 +19607,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR060")
+					(reference "#PWR038")
 					(unit 1)
 				)
 			)
@@ -19534,7 +19623,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "38e28bfd-12ea-4db0-bbdb-121c30cb27a6")
-		(property "Reference" "D7"
+		(property "Reference" "D19"
 			(at 334.01 27.6226 90)
 			(effects
 				(font
@@ -19588,7 +19677,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D7")
+					(reference "D19")
 					(unit 1)
 				)
 			)
@@ -19603,7 +19692,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3a0ee9aa-57d3-4cbf-be04-d2ff2bb60bd1")
-		(property "Reference" "R27"
+		(property "Reference" "R14"
 			(at 162.56 68.5799 0)
 			(effects
 				(font
@@ -19657,7 +19746,74 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R27")
+					(reference "R14")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Small")
+		(at 214.63 106.68 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "3c40cdd9-b1c0-48c4-9609-99986076a2e6")
+		(property "Reference" "R24"
+			(at 211.328 105.41 90)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "0"
+			(at 217.678 105.41 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+			(at 214.63 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://mou.sr/3jdaz50"
+			(at 214.63 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 214.63 106.68 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "964ff777-c624-476c-a5f7-93ec2e6bed0c")
+		)
+		(pin "2"
+			(uuid "57fb0df4-aff3-419d-8d97-524148ce41b7")
+		)
+		(instances
+			(project "heimdall_insideboard"
+				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
+					(reference "R24")
 					(unit 1)
 				)
 			)
@@ -19672,7 +19828,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3c4b5152-6dd3-4f16-b536-2f8f96078cc8")
-		(property "Reference" "C7"
+		(property "Reference" "C24"
 			(at 354.33 173.99 0)
 			(effects
 				(font
@@ -19742,7 +19898,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C7")
+					(reference "C24")
 					(unit 1)
 				)
 			)
@@ -19758,7 +19914,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3d20ca24-6631-4d0f-9fbc-d2db4dc554b3")
-		(property "Reference" "R3"
+		(property "Reference" "R2"
 			(at 31.75 196.85 90)
 			(effects
 				(font
@@ -19810,7 +19966,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R3")
+					(reference "R2")
 					(unit 1)
 				)
 			)
@@ -19827,7 +19983,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "3e88638f-b408-4adc-bf38-7df1e4d3ec72")
-		(property "Reference" "J7"
+		(property "Reference" "J8"
 			(at 408.94 119.3799 0)
 			(effects
 				(font
@@ -19896,7 +20052,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "J7")
+					(reference "J8")
 					(unit 1)
 				)
 			)
@@ -19911,7 +20067,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3e94b71b-55f4-4409-8d34-a6017e37de20")
-		(property "Reference" "#PWR013"
+		(property "Reference" "#PWR056"
 			(at 379.73 161.29 0)
 			(effects
 				(font
@@ -19961,7 +20117,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR013")
+					(reference "#PWR056")
 					(unit 1)
 				)
 			)
@@ -19976,7 +20132,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3f095457-e97b-42c3-8f3f-7fbc3abda065")
-		(property "Reference" "C18"
+		(property "Reference" "C26"
 			(at 405.13 187.96 0)
 			(effects
 				(font
@@ -20046,7 +20202,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C18")
+					(reference "C26")
 					(unit 1)
 				)
 			)
@@ -20061,7 +20217,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "3f3e2e80-3af3-4c30-8683-cfe97c34bd29")
-		(property "Reference" "#PWR038"
+		(property "Reference" "#PWR030"
 			(at 170.18 25.4 0)
 			(effects
 				(font
@@ -20110,7 +20266,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR038")
+					(reference "#PWR030")
 					(unit 1)
 				)
 			)
@@ -20196,7 +20352,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "40201633-a79a-43f1-b4ca-d1d59cda2a4f")
-		(property "Reference" "D6"
+		(property "Reference" "D1"
 			(at 29.21 248.8564 90)
 			(effects
 				(font
@@ -20259,7 +20415,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D6")
+					(reference "D1")
 					(unit 1)
 				)
 			)
@@ -20275,7 +20431,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "4246a2d1-15f4-4f07-a546-6869197da807")
-		(property "Reference" "D11"
+		(property "Reference" "D5"
 			(at 82.55 248.8564 90)
 			(effects
 				(font
@@ -20338,7 +20494,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D11")
+					(reference "D5")
 					(unit 1)
 				)
 			)
@@ -20354,7 +20510,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "45c6dde8-0eda-40fe-b856-6addb082aaa7")
-		(property "Reference" "D5"
+		(property "Reference" "D17"
 			(at 327.66 40.3226 90)
 			(effects
 				(font
@@ -20408,7 +20564,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D5")
+					(reference "D17")
 					(unit 1)
 				)
 			)
@@ -20424,7 +20580,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "465b6af7-4045-4176-8760-7e3b4d8bea26")
-		(property "Reference" "C8"
+		(property "Reference" "C10"
 			(at 128.27 27.9462 0)
 			(effects
 				(font
@@ -20487,7 +20643,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C8")
+					(reference "C10")
 					(unit 1)
 				)
 			)
@@ -20502,7 +20658,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "494cf1f9-0caf-44c4-99ce-ea6dad7e573d")
-		(property "Reference" "C17"
+		(property "Reference" "C25"
 			(at 377.19 157.48 0)
 			(effects
 				(font
@@ -20572,7 +20728,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C17")
+					(reference "C25")
 					(unit 1)
 				)
 			)
@@ -20587,7 +20743,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "4c318a22-4fc5-4573-bf7b-116df38890fa")
-		(property "Reference" "R35"
+		(property "Reference" "R32"
 			(at 344.678 199.39 90)
 			(effects
 				(font
@@ -20639,7 +20795,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R35")
+					(reference "R32")
 					(unit 1)
 				)
 			)
@@ -20654,7 +20810,7 @@
 		(on_board yes)
 		(dnp yes)
 		(uuid "4e3a0631-62ce-47f3-bdc3-260adfd9630d")
-		(property "Reference" "R37"
+		(property "Reference" "R34"
 			(at 344.678 204.47 90)
 			(effects
 				(font
@@ -20706,7 +20862,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R37")
+					(reference "R34")
 					(unit 1)
 				)
 			)
@@ -20723,7 +20879,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5049cb2d-cec2-48ea-9733-51b456c1c8bf")
-		(property "Reference" "D17"
+		(property "Reference" "D8"
 			(at 142.5575 198.12 0)
 			(effects
 				(font
@@ -20775,7 +20931,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D17")
+					(reference "D8")
 					(unit 1)
 				)
 			)
@@ -20790,7 +20946,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "522486e0-a765-4159-bd51-d2c4e6b5071d")
-		(property "Reference" "#PWR052"
+		(property "Reference" "#PWR042"
 			(at 242.57 34.29 0)
 			(effects
 				(font
@@ -20839,7 +20995,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR052")
+					(reference "#PWR042")
 					(unit 1)
 				)
 			)
@@ -20855,7 +21011,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5276f8eb-3f3a-4875-b2fd-0ebf922f747c")
-		(property "Reference" "#PWR028"
+		(property "Reference" "#PWR08"
 			(at 72.39 246.38 0)
 			(effects
 				(font
@@ -20904,7 +21060,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR028")
+					(reference "#PWR08")
 					(unit 1)
 				)
 			)
@@ -20919,7 +21075,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "56f77335-a3fd-4713-bbc1-23fa954c3ec3")
-		(property "Reference" "#PWR043"
+		(property "Reference" "#PWR025"
 			(at 142.24 81.28 0)
 			(effects
 				(font
@@ -20968,7 +21124,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR043")
+					(reference "#PWR025")
 					(unit 1)
 				)
 			)
@@ -20983,7 +21139,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "577e1d71-8e8b-468a-8541-167aa5d17934")
-		(property "Reference" "R14"
+		(property "Reference" "R17"
 			(at 173.736 33.274 0)
 			(effects
 				(font
@@ -21037,7 +21193,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R14")
+					(reference "R17")
 					(unit 1)
 				)
 			)
@@ -21052,7 +21208,7 @@
 		(on_board yes)
 		(dnp yes)
 		(uuid "57b3e700-66cf-4570-bd53-dd83aeae88d8")
-		(property "Reference" "R34"
+		(property "Reference" "R31"
 			(at 344.678 196.85 90)
 			(effects
 				(font
@@ -21104,7 +21260,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R34")
+					(reference "R31")
 					(unit 1)
 				)
 			)
@@ -21120,7 +21276,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5966b8a7-2bc6-45aa-8f1e-f42eaefcd0ac")
-		(property "Reference" "C12"
+		(property "Reference" "C2"
 			(at 78.74 68.5862 0)
 			(effects
 				(font
@@ -21174,7 +21330,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C12")
+					(reference "C2")
 					(unit 1)
 				)
 			)
@@ -21189,7 +21345,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5975a3d9-1948-4c8e-80b1-eeb8d8c149f9")
-		(property "Reference" "#PWR035"
+		(property "Reference" "#PWR062"
 			(at 393.7 83.82 0)
 			(effects
 				(font
@@ -21238,7 +21394,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR035")
+					(reference "#PWR062")
 					(unit 1)
 				)
 			)
@@ -21254,7 +21410,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "59813c08-1c0a-4745-a67b-946201651b9b")
-		(property "Reference" "#PWR024"
+		(property "Reference" "#PWR052"
 			(at 330.2 199.39 0)
 			(effects
 				(font
@@ -21304,7 +21460,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR024")
+					(reference "#PWR052")
 					(unit 1)
 				)
 			)
@@ -21320,7 +21476,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "5b6b55e6-7749-4b9e-ba8c-f60ac56d5a6e")
-		(property "Reference" "C24"
+		(property "Reference" "C9"
 			(at 113.03 210.8138 0)
 			(effects
 				(font
@@ -21374,7 +21530,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C24")
+					(reference "C9")
 					(unit 1)
 				)
 			)
@@ -21390,7 +21546,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "5ccdc884-2bd0-4599-b240-f0b9dd28b9c0")
-		(property "Reference" "C22"
+		(property "Reference" "C21"
 			(at 238.7663 20.32 90)
 			(effects
 				(font
@@ -21442,7 +21598,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C22")
+					(reference "C21")
 					(unit 1)
 				)
 			)
@@ -21457,7 +21613,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "625bbacb-fbe1-400b-95d6-7bbba23dd181")
-		(property "Reference" "#PWR037"
+		(property "Reference" "#PWR024"
 			(at 140.97 40.64 0)
 			(effects
 				(font
@@ -21506,7 +21662,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR037")
+					(reference "#PWR024")
 					(unit 1)
 				)
 			)
@@ -21522,7 +21678,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "63766a2a-c9f8-4817-9caa-5a356094c4b3")
-		(property "Reference" "C2"
+		(property "Reference" "C15"
 			(at 148.59 27.9462 0)
 			(effects
 				(font
@@ -21576,7 +21732,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C2")
+					(reference "C15")
 					(unit 1)
 				)
 			)
@@ -21593,7 +21749,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "6377926c-e112-4851-ae1f-eada72b94d4f")
-		(property "Reference" "D21"
+		(property "Reference" "D7"
 			(at 127.9525 187.96 0)
 			(effects
 				(font
@@ -21645,7 +21801,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D21")
+					(reference "D7")
 					(unit 1)
 				)
 			)
@@ -21835,7 +21991,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6799531a-5563-45b8-aa4c-7c1f645357d0")
-		(property "Reference" "C20"
+		(property "Reference" "C22"
 			(at 274.3138 173.99 0)
 			(effects
 				(font
@@ -21889,7 +22045,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C20")
+					(reference "C22")
 					(unit 1)
 				)
 			)
@@ -21897,15 +22053,15 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 215.9 92.71 0)
+		(at 217.17 90.17 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "68f801f0-6efb-4996-aa4d-47995f3424d4")
-		(property "Reference" "#PWR061"
-			(at 215.9 99.06 0)
+		(property "Reference" "#PWR034"
+			(at 217.17 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -21914,7 +22070,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 216.027 97.1042 0)
+			(at 217.297 94.5642 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -21922,7 +22078,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 215.9 92.71 0)
+			(at 217.17 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -21931,7 +22087,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 215.9 92.71 0)
+			(at 217.17 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -21940,7 +22096,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 215.9 92.71 0)
+			(at 217.17 90.17 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -21953,7 +22109,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR061")
+					(reference "#PWR034")
 					(unit 1)
 				)
 			)
@@ -21968,7 +22124,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6bd7d0fd-1cca-454e-a142-4fc9abfc83cd")
-		(property "Reference" "Q4"
+		(property "Reference" "Q1"
 			(at 44.45 190.4999 0)
 			(effects
 				(font
@@ -22052,7 +22208,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "Q4")
+					(reference "Q1")
 					(unit 1)
 				)
 			)
@@ -22067,7 +22223,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "6e38495b-a7e0-405f-aaf3-0263234b9de4")
-		(property "Reference" "#PWR036"
+		(property "Reference" "#PWR060"
 			(at 387.35 101.6 0)
 			(effects
 				(font
@@ -22116,7 +22272,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR036")
+					(reference "#PWR060")
 					(unit 1)
 				)
 			)
@@ -22254,7 +22410,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7121e563-77a4-45b4-9401-c07c4a574309")
-		(property "Reference" "R9"
+		(property "Reference" "R7"
 			(at 50.038 240.284 0)
 			(effects
 				(font
@@ -22306,7 +22462,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R9")
+					(reference "R7")
 					(unit 1)
 				)
 			)
@@ -22321,7 +22477,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "729d0a0a-72d7-4ff4-97b3-6a0d88c65e23")
-		(property "Reference" "R11"
+		(property "Reference" "R12"
 			(at 162.56 27.9399 0)
 			(effects
 				(font
@@ -22375,7 +22531,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R11")
+					(reference "R12")
 					(unit 1)
 				)
 			)
@@ -22391,7 +22547,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "752e6a88-1838-47da-b0e9-12eb50fb7782")
-		(property "Reference" "J13"
+		(property "Reference" "J3"
 			(at 406.4 25.3999 0)
 			(effects
 				(font
@@ -22445,7 +22601,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "J13")
+					(reference "J3")
 					(unit 1)
 				)
 			)
@@ -22460,7 +22616,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "784b43af-98b3-4128-8cc0-17c08d332496")
-		(property "Reference" "#PWR026"
+		(property "Reference" "#PWR010"
 			(at 76.2 40.64 0)
 			(effects
 				(font
@@ -22509,7 +22665,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR026")
+					(reference "#PWR010")
 					(unit 1)
 				)
 			)
@@ -22524,7 +22680,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7b32224c-b42b-4223-9a1b-a4480129ce4b")
-		(property "Reference" "#PWR034"
+		(property "Reference" "#PWR061"
 			(at 388.62 140.97 0)
 			(effects
 				(font
@@ -22573,7 +22729,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR034")
+					(reference "#PWR061")
 					(unit 1)
 				)
 			)
@@ -22588,7 +22744,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7cdadbda-df82-480e-b55f-74f5f1698115")
-		(property "Reference" "R15"
+		(property "Reference" "R6"
 			(at 49.276 30.734 0)
 			(effects
 				(font
@@ -22642,7 +22798,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R15")
+					(reference "R6")
 					(unit 1)
 				)
 			)
@@ -22657,7 +22813,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "7e266b58-cabe-411e-bded-e5dd08124bb2")
-		(property "Reference" "C25"
+		(property "Reference" "C14"
 			(at 139.7 213.3538 0)
 			(effects
 				(font
@@ -22711,7 +22867,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C25")
+					(reference "C14")
 					(unit 1)
 				)
 			)
@@ -22726,7 +22882,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "817cfcf9-1ddc-4870-9e12-f7a61c7806d9")
-		(property "Reference" "#PWR042"
+		(property "Reference" "#PWR017"
 			(at 107.95 82.55 0)
 			(effects
 				(font
@@ -22775,7 +22931,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR042")
+					(reference "#PWR017")
 					(unit 1)
 				)
 			)
@@ -22791,7 +22947,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "820f341f-1a28-4608-94f0-47738ae1b98e")
-		(property "Reference" "R8"
+		(property "Reference" "R35"
 			(at 383.54 111.76 90)
 			(effects
 				(font
@@ -22843,7 +22999,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R8")
+					(reference "R35")
 					(unit 1)
 				)
 			)
@@ -22859,7 +23015,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "82fcd3c8-858a-4189-9245-8439c579368d")
-		(property "Reference" "R1"
+		(property "Reference" "R29"
 			(at 287.02 53.34 90)
 			(effects
 				(font
@@ -22911,7 +23067,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R1")
+					(reference "R29")
 					(unit 1)
 				)
 			)
@@ -22927,7 +23083,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "831d4325-7b7b-4974-8966-06fcbe827354")
-		(property "Reference" "#PWR017"
+		(property "Reference" "#PWR027"
 			(at 157.48 252.73 0)
 			(effects
 				(font
@@ -22976,7 +23132,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR017")
+					(reference "#PWR027")
 					(unit 1)
 				)
 			)
@@ -22992,7 +23148,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "875d25d8-e7fb-40e6-8aa2-2b36ca4323e8")
-		(property "Reference" "D9"
+		(property "Reference" "D20"
 			(at 334.01 75.8826 90)
 			(effects
 				(font
@@ -23046,7 +23202,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D9")
+					(reference "D20")
 					(unit 1)
 				)
 			)
@@ -23061,7 +23217,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "89530ac8-9b25-48e7-ac91-64863328930e")
-		(property "Reference" "#PWR041"
+		(property "Reference" "#PWR012"
 			(at 76.2 81.28 0)
 			(effects
 				(font
@@ -23110,7 +23266,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR041")
+					(reference "#PWR012")
 					(unit 1)
 				)
 			)
@@ -23127,7 +23283,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "89943457-79fe-4158-886f-c299bb5d8e3b")
-		(property "Reference" "D14"
+		(property "Reference" "D11"
 			(at 173.99 38.0364 90)
 			(effects
 				(font
@@ -23190,7 +23346,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D14")
+					(reference "D11")
 					(unit 1)
 				)
 			)
@@ -23206,7 +23362,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8b821f3f-431d-4dc5-a93c-247fa72b9ea2")
-		(property "Reference" "U6"
+		(property "Reference" "U1"
 			(at 107.95 17.78 0)
 			(effects
 				(font
@@ -23271,7 +23427,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "U6")
+					(reference "U1")
 					(unit 1)
 				)
 			)
@@ -23286,7 +23442,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8bd89a37-7c78-417c-8dde-374be0786cca")
-		(property "Reference" "R32"
+		(property "Reference" "R21"
 			(at 207.518 190.5 90)
 			(effects
 				(font
@@ -23338,7 +23494,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R32")
+					(reference "R21")
 					(unit 1)
 				)
 			)
@@ -23422,7 +23578,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8c555e00-6732-4412-9bf7-70803b3b719b")
-		(property "Reference" "C5"
+		(property "Reference" "C4"
 			(at 88.9 27.9462 0)
 			(effects
 				(font
@@ -23476,7 +23632,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C5")
+					(reference "C4")
 					(unit 1)
 				)
 			)
@@ -23491,7 +23647,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "8c919f39-35b0-4d15-94bd-fa5e6933503a")
-		(property "Reference" "#PWR040"
+		(property "Reference" "#PWR011"
 			(at 76.2 68.58 0)
 			(effects
 				(font
@@ -23540,7 +23696,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR040")
+					(reference "#PWR011")
 					(unit 1)
 				)
 			)
@@ -23556,7 +23712,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "8d0d0677-a1da-46a8-859f-2fba3165069d")
-		(property "Reference" "U1"
+		(property "Reference" "U3"
 			(at 128.27 198.12 0)
 			(effects
 				(font
@@ -23618,7 +23774,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "U1")
+					(reference "U3")
 					(unit 1)
 				)
 			)
@@ -23634,7 +23790,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "91ac342b-dfab-4bf8-9e8f-09e26fcbbba5")
-		(property "Reference" "J10"
+		(property "Reference" "J6"
 			(at 406.4 58.4199 0)
 			(effects
 				(font
@@ -23694,7 +23850,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "J10")
+					(reference "J6")
 					(unit 1)
 				)
 			)
@@ -23702,7 +23858,7 @@
 	)
 	(symbol
 		(lib_id "74xx:74HC595")
-		(at 227.33 114.3 0)
+		(at 228.6 111.76 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -23710,8 +23866,8 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "92301e68-740a-4645-a43e-fb7b29fc0ca8")
-		(property "Reference" "U4"
-			(at 229.4733 96.52 0)
+		(property "Reference" "U5"
+			(at 230.7433 93.98 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23720,7 +23876,7 @@
 			)
 		)
 		(property "Value" "74HC595"
-			(at 229.4733 99.06 0)
+			(at 230.7433 96.52 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23729,7 +23885,7 @@
 			)
 		)
 		(property "Footprint" "Package_SO:SOIC-16W_7.5x10.3mm_P1.27mm"
-			(at 227.33 114.3 0)
+			(at 228.6 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23738,7 +23894,7 @@
 			)
 		)
 		(property "Datasheet" "https://mou.sr/4rAbURZ"
-			(at 227.33 114.3 0)
+			(at 228.6 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23747,7 +23903,7 @@
 			)
 		)
 		(property "Description" "8-bit serial in/out Shift Register 3-State Outputs"
-			(at 227.33 114.3 0)
+			(at 228.6 111.76 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23806,7 +23962,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "U4")
+					(reference "U5")
 					(unit 1)
 				)
 			)
@@ -23821,7 +23977,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9379f008-a44c-40ec-a481-01245af9f8a2")
-		(property "Reference" "C19"
+		(property "Reference" "C20"
 			(at 223.5262 184.15 0)
 			(effects
 				(font
@@ -23875,7 +24031,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C19")
+					(reference "C20")
 					(unit 1)
 				)
 			)
@@ -23890,7 +24046,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9491d78e-f2e4-421e-afd6-e0383b026e11")
-		(property "Reference" "#PWR056"
+		(property "Reference" "#PWR040"
 			(at 231.14 27.94 0)
 			(effects
 				(font
@@ -23939,7 +24095,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR056")
+					(reference "#PWR040")
 					(unit 1)
 				)
 			)
@@ -23954,7 +24110,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "94de6dcc-bd71-43ff-8f14-5f92c9d684fe")
-		(property "Reference" "C11"
+		(property "Reference" "C19"
 			(at 223.5262 172.72 0)
 			(effects
 				(font
@@ -24008,7 +24164,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C11")
+					(reference "C19")
 					(unit 1)
 				)
 			)
@@ -24023,7 +24179,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "95ba9927-9bf7-43ee-ae69-0777577e54cb")
-		(property "Reference" "R12"
+		(property "Reference" "R13"
 			(at 162.56 35.5599 0)
 			(effects
 				(font
@@ -24086,7 +24242,74 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R12")
+					(reference "R13")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:R_Small")
+		(at 214.63 109.22 90)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp yes)
+		(uuid "98d32340-e8fe-43c6-be66-4d1c94f353cf")
+		(property "Reference" "R25"
+			(at 211.328 107.95 90)
+			(effects
+				(font
+					(size 1.016 1.016)
+				)
+			)
+		)
+		(property "Value" "0"
+			(at 217.678 107.95 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
+			(at 214.63 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://mou.sr/3jdaz50"
+			(at 214.63 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Resistor, small symbol"
+			(at 214.63 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "6c4a4dc5-01c9-4a20-942c-be41636fea05")
+		)
+		(pin "2"
+			(uuid "d231e487-a5fb-4c71-8c43-5fd812228516")
+		)
+		(instances
+			(project "heimdall_insideboard"
+				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
+					(reference "R25")
 					(unit 1)
 				)
 			)
@@ -24101,7 +24324,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "99741ca2-06df-4aea-909b-6ad5adf260d2")
-		(property "Reference" "C10"
+		(property "Reference" "C8"
 			(at 111.7662 120.65 0)
 			(effects
 				(font
@@ -24155,7 +24378,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C10")
+					(reference "C8")
 					(unit 1)
 				)
 			)
@@ -24170,7 +24393,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9a05d0c6-0631-42d4-a2f6-214d3264eaea")
-		(property "Reference" "C3"
+		(property "Reference" "C7"
 			(at 102.87 109.2262 0)
 			(effects
 				(font
@@ -24224,7 +24447,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C3")
+					(reference "C7")
 					(unit 1)
 				)
 			)
@@ -24240,7 +24463,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9b899eeb-e785-42e1-b770-e31b9a17b468")
-		(property "Reference" "R5"
+		(property "Reference" "R4"
 			(at 45.72 180.34 90)
 			(effects
 				(font
@@ -24292,7 +24515,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R5")
+					(reference "R4")
 					(unit 1)
 				)
 			)
@@ -24307,7 +24530,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "9db41724-d6b3-4560-9ed0-76a440146dbf")
-		(property "Reference" "R36"
+		(property "Reference" "R33"
 			(at 344.678 201.93 90)
 			(effects
 				(font
@@ -24359,7 +24582,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R36")
+					(reference "R33")
 					(unit 1)
 				)
 			)
@@ -24375,7 +24598,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9e87f729-30ce-466f-b587-30e209b54c6b")
-		(property "Reference" "#PWR023"
+		(property "Reference" "#PWR066"
 			(at 412.75 199.39 0)
 			(effects
 				(font
@@ -24425,7 +24648,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR023")
+					(reference "#PWR066")
 					(unit 1)
 				)
 			)
@@ -24441,7 +24664,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "9ef028c9-c8db-43d5-8060-d2bdcac75ba3")
-		(property "Reference" "#PWR013"
+		(property "Reference" "#PWR057"
 			(at 379.73 232.41 0)
 			(effects
 				(font
@@ -24491,7 +24714,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR013")
+					(reference "#PWR057")
 					(unit 1)
 				)
 			)
@@ -24508,7 +24731,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "a088829c-dfc7-4027-a595-40934465eb79")
-		(property "Reference" "D19"
+		(property "Reference" "D9"
 			(at 165.4175 16.51 0)
 			(effects
 				(font
@@ -24560,7 +24783,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D19")
+					(reference "D9")
 					(unit 1)
 				)
 			)
@@ -24576,7 +24799,7 @@
 		(on_board yes)
 		(dnp yes)
 		(uuid "a9070f6c-7237-45e3-807d-6306dd2a9f48")
-		(property "Reference" "R2"
+		(property "Reference" "R23"
 			(at 213.36 223.52 90)
 			(effects
 				(font
@@ -24628,7 +24851,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R2")
+					(reference "R23")
 					(unit 1)
 				)
 			)
@@ -24643,7 +24866,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ab809759-4170-49b8-9e4d-9b3a3126d59e")
-		(property "Reference" "#PWR031"
+		(property "Reference" "#PWR033"
 			(at 215.9 34.29 0)
 			(effects
 				(font
@@ -24692,7 +24915,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR031")
+					(reference "#PWR033")
 					(unit 1)
 				)
 			)
@@ -24708,7 +24931,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "ab8a9713-357d-4cff-b259-1241f1ef1337")
-		(property "Reference" "D3"
+		(property "Reference" "D2"
 			(at 49.53 24.1934 90)
 			(effects
 				(font
@@ -24771,7 +24994,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D3")
+					(reference "D2")
 					(unit 1)
 				)
 			)
@@ -24786,7 +25009,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ac3cc714-6f4f-4e72-ab88-a000a76f22dc")
-		(property "Reference" "J11"
+		(property "Reference" "J5"
 			(at 406.4 40.6399 0)
 			(effects
 				(font
@@ -24846,7 +25069,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "J11")
+					(reference "J5")
 					(unit 1)
 				)
 			)
@@ -24861,7 +25084,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "af6733d2-6dda-4023-912a-5ea564ae9eb4")
-		(property "Reference" "#PWR032"
+		(property "Reference" "#PWR015"
 			(at 93.98 121.92 0)
 			(effects
 				(font
@@ -24910,7 +25133,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR032")
+					(reference "#PWR015")
 					(unit 1)
 				)
 			)
@@ -24925,7 +25148,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b093dcf0-0979-4b1e-8d5b-8fb7bb5b0aeb")
-		(property "Reference" "C4"
+		(property "Reference" "C6"
 			(at 91.44 109.2262 0)
 			(effects
 				(font
@@ -24979,7 +25202,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C4")
+					(reference "C6")
 					(unit 1)
 				)
 			)
@@ -25071,7 +25294,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b18c0b5c-fa42-4d03-955f-5b64e86e4935")
-		(property "Reference" "#PWR044"
+		(property "Reference" "#PWR018"
 			(at 107.95 125.73 0)
 			(effects
 				(font
@@ -25120,7 +25343,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR044")
+					(reference "#PWR018")
 					(unit 1)
 				)
 			)
@@ -25135,7 +25358,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b44757f2-627f-4945-b3f2-3d2dfad3ee7e")
-		(property "Reference" "C6"
+		(property "Reference" "C3"
 			(at 76.2062 207.01 0)
 			(effects
 				(font
@@ -25189,7 +25412,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C6")
+					(reference "C3")
 					(unit 1)
 				)
 			)
@@ -25206,7 +25429,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "b56c1ff7-b605-47c4-b03e-bf3b83b469d1")
-		(property "Reference" "D18"
+		(property "Reference" "D10"
 			(at 165.4175 57.15 0)
 			(effects
 				(font
@@ -25258,7 +25481,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D18")
+					(reference "D10")
 					(unit 1)
 				)
 			)
@@ -25274,7 +25497,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b6112772-74fb-432c-8f61-592c29b32a62")
-		(property "Reference" "D8"
+		(property "Reference" "D18"
 			(at 327.66 88.5826 90)
 			(effects
 				(font
@@ -25328,7 +25551,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D8")
+					(reference "D18")
 					(unit 1)
 				)
 			)
@@ -25343,7 +25566,7 @@
 		(on_board yes)
 		(dnp yes)
 		(uuid "b6e33fa3-1047-4cc4-9521-dd783bb49a4b")
-		(property "Reference" "R33"
+		(property "Reference" "R22"
 			(at 207.518 193.04 90)
 			(effects
 				(font
@@ -25395,7 +25618,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R33")
+					(reference "R22")
 					(unit 1)
 				)
 			)
@@ -25410,7 +25633,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "b905985b-ace7-41bc-b383-acfcb051273a")
-		(property "Reference" "#PWR055"
+		(property "Reference" "#PWR036"
 			(at 226.06 27.94 0)
 			(effects
 				(font
@@ -25459,7 +25682,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR055")
+					(reference "#PWR036")
 					(unit 1)
 				)
 			)
@@ -25475,7 +25698,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bb2d3dc9-d0c4-4801-9a77-3eddb8d2ee1d")
-		(property "Reference" "C21"
+		(property "Reference" "C23"
 			(at 274.3138 185.42 0)
 			(effects
 				(font
@@ -25529,7 +25752,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C21")
+					(reference "C23")
 					(unit 1)
 				)
 			)
@@ -25544,7 +25767,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "bb2de0c2-a1f8-4104-9549-380620e279c9")
-		(property "Reference" "#PWR039"
+		(property "Reference" "#PWR028"
 			(at 165.1 50.8 0)
 			(effects
 				(font
@@ -25593,7 +25816,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR039")
+					(reference "#PWR028")
 					(unit 1)
 				)
 			)
@@ -25608,7 +25831,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "c0a6af57-20b0-4b75-9af6-d3822248dca5")
-		(property "Reference" "#PWR030"
+		(property "Reference" "#PWR059"
 			(at 387.35 83.82 0)
 			(effects
 				(font
@@ -25657,7 +25880,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR030")
+					(reference "#PWR059")
 					(unit 1)
 				)
 			)
@@ -25673,7 +25896,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c2f82d05-7525-4bba-9072-eeb1b99526fb")
-		(property "Reference" "C13"
+		(property "Reference" "C5"
 			(at 88.9 68.5862 0)
 			(effects
 				(font
@@ -25727,7 +25950,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C13")
+					(reference "C5")
 					(unit 1)
 				)
 			)
@@ -25743,7 +25966,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "c8ca755f-4fa0-4c6d-a60d-8c55e9044fda")
-		(property "Reference" "C23"
+		(property "Reference" "C17"
 			(at 219.7163 20.32 90)
 			(effects
 				(font
@@ -25795,7 +26018,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C23")
+					(reference "C17")
 					(unit 1)
 				)
 			)
@@ -25810,7 +26033,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ca862c27-081f-4b50-9cbc-760150a74f66")
-		(property "Reference" "#PWR029"
+		(property "Reference" "#PWR065"
 			(at 398.78 83.82 0)
 			(effects
 				(font
@@ -25859,7 +26082,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR029")
+					(reference "#PWR065")
 					(unit 1)
 				)
 			)
@@ -25874,7 +26097,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "cb3b6e56-ff82-4165-96a3-99f752f679b5")
-		(property "Reference" "#PWR025"
+		(property "Reference" "#PWR09"
 			(at 76.2 27.94 0)
 			(effects
 				(font
@@ -25923,7 +26146,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR025")
+					(reference "#PWR09")
 					(unit 1)
 				)
 			)
@@ -25938,7 +26161,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ce922748-5570-4650-b4fa-6f2037048128")
-		(property "Reference" "R13"
+		(property "Reference" "R16"
 			(at 173.736 28.194 0)
 			(effects
 				(font
@@ -25992,7 +26215,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R13")
+					(reference "R16")
 					(unit 1)
 				)
 			)
@@ -26009,7 +26232,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "cf7add8f-c07b-42cf-be0c-e0dd2b534227")
-		(property "Reference" "U3"
+		(property "Reference" "U6"
 			(at 236.7981 254 0)
 			(effects
 				(font
@@ -26144,7 +26367,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "U3")
+					(reference "U6")
 					(unit 1)
 				)
 			)
@@ -26152,15 +26375,15 @@
 	)
 	(symbol
 		(lib_id "power:GND")
-		(at 227.33 134.62 0)
+		(at 228.6 132.08 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(uuid "d0c274ff-e285-476e-a377-fd721a51f606")
-		(property "Reference" "#PWR062"
-			(at 227.33 140.97 0)
+		(property "Reference" "#PWR039"
+			(at 228.6 138.43 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -26169,7 +26392,7 @@
 			)
 		)
 		(property "Value" "GND"
-			(at 227.457 139.0142 0)
+			(at 228.727 136.4742 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -26177,7 +26400,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 227.33 134.62 0)
+			(at 228.6 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -26186,7 +26409,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 227.33 134.62 0)
+			(at 228.6 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -26195,7 +26418,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 227.33 134.62 0)
+			(at 228.6 132.08 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -26208,7 +26431,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR062")
+					(reference "#PWR039")
 					(unit 1)
 				)
 			)
@@ -26224,7 +26447,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d1bf2f8f-b71d-4ec7-af70-75ebf8a49042")
-		(property "Reference" "R6"
+		(property "Reference" "R30"
 			(at 287.02 101.6 90)
 			(effects
 				(font
@@ -26276,7 +26499,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R6")
+					(reference "R30")
 					(unit 1)
 				)
 			)
@@ -26292,7 +26515,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d419532c-8b1f-47c1-9d41-342d81e4ca9f")
-		(property "Reference" "Q3"
+		(property "Reference" "Q2"
 			(at 44.45 210.8201 0)
 			(effects
 				(font
@@ -26376,7 +26599,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "Q3")
+					(reference "Q2")
 					(unit 1)
 				)
 			)
@@ -26393,7 +26616,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d4be7fca-55f3-4df8-b68e-f9a1c113e57c")
-		(property "Reference" "D20"
+		(property "Reference" "D13"
 			(at 252.73 176.2124 90)
 			(effects
 				(font
@@ -26447,7 +26670,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D20")
+					(reference "D13")
 					(unit 1)
 				)
 			)
@@ -26532,7 +26755,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d59767df-c078-42dc-9a87-7cf74e6a1c55")
-		(property "Reference" "U7"
+		(property "Reference" "U2"
 			(at 107.95 58.42 0)
 			(effects
 				(font
@@ -26606,7 +26829,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "U7")
+					(reference "U2")
 					(unit 1)
 				)
 			)
@@ -26621,7 +26844,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d7003479-08c9-4281-b73d-e60d1321e727")
-		(property "Reference" "#PWR06"
+		(property "Reference" "#PWR023"
 			(at 139.7 167.64 0)
 			(effects
 				(font
@@ -26670,7 +26893,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR06")
+					(reference "#PWR023")
 					(unit 1)
 				)
 			)
@@ -26686,7 +26909,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d77f4a79-42ca-409d-a18d-626338e6aa4a")
-		(property "Reference" "D2"
+		(property "Reference" "D16"
 			(at 287.528 81.3816 90)
 			(effects
 				(font
@@ -26739,7 +26962,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D2")
+					(reference "D16")
 					(unit 1)
 				)
 			)
@@ -26754,7 +26977,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d79827b4-74da-4a96-bc46-414312f6e5e3")
-		(property "Reference" "#PWR054"
+		(property "Reference" "#PWR032"
 			(at 209.55 226.06 0)
 			(effects
 				(font
@@ -26803,7 +27026,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR054")
+					(reference "#PWR032")
 					(unit 1)
 				)
 			)
@@ -26818,7 +27041,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "d7c0ab98-355d-4b76-88a2-c3470e0d2866")
-		(property "Reference" "#PWR048"
+		(property "Reference" "#PWR045"
 			(at 257.81 224.79 0)
 			(effects
 				(font
@@ -26867,7 +27090,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR048")
+					(reference "#PWR045")
 					(unit 1)
 				)
 			)
@@ -26883,7 +27106,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "d8e9ca7e-b283-4d6a-8e85-d8283c1c93c2")
-		(property "Reference" "C9"
+		(property "Reference" "C12"
 			(at 139.7 27.9462 0)
 			(effects
 				(font
@@ -26937,7 +27160,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "C9")
+					(reference "C12")
 					(unit 1)
 				)
 			)
@@ -26952,7 +27175,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "da9a0577-1e85-4250-bfc1-5da240ca5eff")
-		(property "Reference" "#PWR047"
+		(property "Reference" "#PWR041"
 			(at 233.68 262.89 0)
 			(effects
 				(font
@@ -27001,7 +27224,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR047")
+					(reference "#PWR041")
 					(unit 1)
 				)
 			)
@@ -27017,7 +27240,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "db6d223a-bcdb-4951-9cba-fe1d1af46f0e")
-		(property "Reference" "R19"
+		(property "Reference" "R9"
 			(at 77.47 238.76 90)
 			(effects
 				(font
@@ -27069,7 +27292,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R19")
+					(reference "R9")
 					(unit 1)
 				)
 			)
@@ -27085,7 +27308,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e45d13af-39d5-4e19-822f-74403b3233e8")
-		(property "Reference" "R26"
+		(property "Reference" "R28"
 			(at 262.89 212.09 90)
 			(effects
 				(font
@@ -27137,7 +27360,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R26")
+					(reference "R28")
 					(unit 1)
 				)
 			)
@@ -27153,7 +27376,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e4dccd6e-739f-4425-9f02-2009c17e0a49")
-		(property "Reference" "R24"
+		(property "Reference" "R26"
 			(at 250.19 198.12 90)
 			(effects
 				(font
@@ -27205,7 +27428,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R24")
+					(reference "R26")
 					(unit 1)
 				)
 			)
@@ -27221,7 +27444,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e5ce471b-1311-4bf1-beaa-115051f7a189")
-		(property "Reference" "R22"
+		(property "Reference" "R8"
 			(at 63.246 26.416 0)
 			(effects
 				(font
@@ -27275,7 +27498,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R22")
+					(reference "R8")
 					(unit 1)
 				)
 			)
@@ -27292,7 +27515,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "e6610e7f-4a60-4030-b695-90a7a2947f2a")
-		(property "Reference" "D15"
+		(property "Reference" "D12"
 			(at 173.99 76.1364 90)
 			(effects
 				(font
@@ -27355,7 +27578,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "D15")
+					(reference "D12")
 					(unit 1)
 				)
 			)
@@ -27370,7 +27593,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e67a7b4b-4113-48f5-95a2-d95f3cf31107")
-		(property "Reference" "#PWR07"
+		(property "Reference" "#PWR014"
 			(at 93.98 109.22 0)
 			(effects
 				(font
@@ -27419,7 +27642,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR07")
+					(reference "#PWR014")
 					(unit 1)
 				)
 			)
@@ -27435,7 +27658,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "e7eafbc5-ed65-45c5-9fe9-4d41f2f38933")
-		(property "Reference" "R4"
+		(property "Reference" "R3"
 			(at 31.75 214.63 90)
 			(effects
 				(font
@@ -27487,7 +27710,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R4")
+					(reference "R3")
 					(unit 1)
 				)
 			)
@@ -27503,7 +27726,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "eb51a4b9-a024-4a48-954b-1091eaf294f5")
-		(property "Reference" "U2"
+		(property "Reference" "U4"
 			(at 230.7433 66.04 0)
 			(effects
 				(font
@@ -27593,7 +27816,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "U2")
+					(reference "U4")
 					(unit 1)
 				)
 			)
@@ -27676,7 +27899,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ec772259-4f17-42ee-89d8-9d40c8a311eb")
-		(property "Reference" "#PWR050"
+		(property "Reference" "#PWR035"
 			(at 217.17 184.15 0)
 			(effects
 				(font
@@ -27725,7 +27948,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR050")
+					(reference "#PWR035")
 					(unit 1)
 				)
 			)
@@ -27740,7 +27963,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "edd47c17-3491-4817-a69a-a7b8814fde9b")
-		(property "Reference" "#PWR020"
+		(property "Reference" "#PWR037"
 			(at 228.6 72.39 0)
 			(effects
 				(font
@@ -27789,7 +28012,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR020")
+					(reference "#PWR037")
 					(unit 1)
 				)
 			)
@@ -27805,7 +28028,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f0347af1-4f13-4fb3-8379-275d40390c53")
-		(property "Reference" "R23"
+		(property "Reference" "R11"
 			(at 113.03 114.3 90)
 			(effects
 				(font
@@ -27857,7 +28080,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R23")
+					(reference "R11")
 					(unit 1)
 				)
 			)
@@ -27872,7 +28095,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f2756370-3d6f-453a-9abb-6eda31441cc5")
-		(property "Reference" "R28"
+		(property "Reference" "R15"
 			(at 162.56 76.1999 0)
 			(effects
 				(font
@@ -27926,7 +28149,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R28")
+					(reference "R15")
 					(unit 1)
 				)
 			)
@@ -27942,7 +28165,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f377e958-2013-4c4a-be6a-fc03a593df00")
-		(property "Reference" "#PWR022"
+		(property "Reference" "#PWR055"
 			(at 372.11 168.91 0)
 			(effects
 				(font
@@ -27992,7 +28215,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR022")
+					(reference "#PWR055")
 					(unit 1)
 				)
 			)
@@ -28008,7 +28231,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f4161791-a126-449c-a803-e84338664876")
-		(property "Reference" "#PWR051"
+		(property "Reference" "#PWR046"
 			(at 280.67 185.42 0)
 			(effects
 				(font
@@ -28057,7 +28280,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR051")
+					(reference "#PWR046")
 					(unit 1)
 				)
 			)
@@ -28073,7 +28296,7 @@
 		(dnp no)
 		(fields_autoplaced yes)
 		(uuid "f47fbf4c-f0cb-4f8c-a339-b285203020e4")
-		(property "Reference" "J5"
+		(property "Reference" "J7"
 			(at 406.4 86.3599 0)
 			(effects
 				(font
@@ -28139,7 +28362,7 @@
 		(instances
 			(project ""
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "J5")
+					(reference "J7")
 					(unit 1)
 				)
 			)
@@ -28155,7 +28378,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f62da27d-ec74-4aa0-9514-bee72b8e4371")
-		(property "Reference" "#PWR014"
+		(property "Reference" "#PWR01"
 			(at 19.05 246.38 0)
 			(effects
 				(font
@@ -28204,7 +28427,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR014")
+					(reference "#PWR01")
 					(unit 1)
 				)
 			)
@@ -28220,7 +28443,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "f6b53119-481d-4d3f-a27a-cf517218f686")
-		(property "Reference" "#PWR018"
+		(property "Reference" "#PWR05"
 			(at 45.72 246.38 0)
 			(effects
 				(font
@@ -28269,7 +28492,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR018")
+					(reference "#PWR05")
 					(unit 1)
 				)
 			)
@@ -28284,7 +28507,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "fa2023eb-3da2-46c7-9124-cc8e3b6fcf06")
-		(property "Reference" "R29"
+		(property "Reference" "R18"
 			(at 173.736 68.834 0)
 			(effects
 				(font
@@ -28338,7 +28561,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R29")
+					(reference "R18")
 					(unit 1)
 				)
 			)
@@ -28486,7 +28709,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "fd8dd66f-dbde-4415-9e8c-cb7f0ad37f46")
-		(property "Reference" "R7"
+		(property "Reference" "R5"
 			(at 45.72 220.98 90)
 			(effects
 				(font
@@ -28538,7 +28761,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "R7")
+					(reference "R5")
 					(unit 1)
 				)
 			)
@@ -28553,7 +28776,7 @@
 		(on_board yes)
 		(dnp no)
 		(uuid "ff9ef9a4-0832-4a8c-bb63-65af7bcda137")
-		(property "Reference" "#PWR033"
+		(property "Reference" "#PWR07"
 			(at 71.12 212.09 0)
 			(effects
 				(font
@@ -28602,7 +28825,7 @@
 		(instances
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
-					(reference "#PWR033")
+					(reference "#PWR07")
 					(unit 1)
 				)
 			)
