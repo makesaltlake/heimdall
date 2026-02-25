@@ -9818,6 +9818,10 @@
 		(uuid "c9d204c0-5847-4a16-8897-792028a84f67")
 	)
 	(no_connect
+		(at 152.4 134.62)
+		(uuid "c9d3200a-a09b-41e9-8975-43f50c253234")
+	)
+	(no_connect
 		(at 127 139.7)
 		(uuid "d07326eb-0e8a-4544-a285-e224f2430bc4")
 	)
@@ -14401,6 +14405,28 @@
 			)
 		)
 	)
+	(global_label "Reader Beeper 3.3v"
+		(shape input)
+		(at 152.4 137.16 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "0dca74aa-a87e-4802-b265-bd6a77a2c166")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 173.66 137.16 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+				(hide yes)
+			)
+		)
+	)
 	(global_label "Beeper 5v"
 		(shape input)
 		(at 238.76 50.8 0)
@@ -14771,6 +14797,28 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "Reader LED 3.3v"
+		(shape input)
+		(at 152.4 139.7 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "57e2ab6d-251b-4cab-b62a-c3ef4f13cac4")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 170.6361 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -15457,28 +15505,6 @@
 			)
 		)
 	)
-	(global_label "Reader LED 3.3v"
-		(shape input)
-		(at 152.4 137.16 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "baa63f7a-4f99-498a-8720-94b96e396459")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 170.6361 137.16 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "Beeper 3.3v"
 		(shape input)
 		(at 218.44 50.8 180)
@@ -15563,28 +15589,6 @@
 					(size 1.27 1.27)
 				)
 				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "Reader Beeper 3.3v"
-		(shape input)
-		(at 152.4 134.62 0)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left)
-		)
-		(uuid "c8bd8ca8-ca5b-4283-b6bd-ed1ddd860a85")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 173.66 134.62 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
 				(hide yes)
 			)
 		)
