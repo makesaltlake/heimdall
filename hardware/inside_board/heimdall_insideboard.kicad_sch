@@ -16464,7 +16464,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_1.00mm:PinHeader_1x03_P1.00mm_Vertical"
 			(at 342.9 27.94 0)
 			(effects
 				(font
@@ -16473,7 +16473,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/3P2KFAP"
+		(property "Datasheet" ""
 			(at 342.9 27.94 0)
 			(effects
 				(font
@@ -16864,7 +16864,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Connector_PinHeader_1.00mm:PinHeader_1x03_P1.00mm_Vertical"
 			(at 342.9 77.47 0)
 			(effects
 				(font
@@ -16873,7 +16873,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/3P2KFAP"
+		(property "Datasheet" ""
 			(at 342.9 77.47 0)
 			(effects
 				(font
@@ -17935,7 +17935,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 257.81 200.66 0)
 			(effects
 				(font
@@ -17944,7 +17944,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4cKLpV5"
 			(at 257.81 200.66 0)
 			(effects
 				(font
@@ -19719,7 +19719,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://mou.sr/46XiBVG"
 			(at 160.02 69.85 0)
 			(effects
 				(font
@@ -19930,7 +19930,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 31.75 191.77 0)
 			(effects
 				(font
@@ -19939,7 +19939,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kYqUGE"
 			(at 31.75 191.77 0)
 			(effects
 				(font
@@ -20001,7 +20001,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Heimdall COTS:CRJ0241TH"
 			(at 400.05 121.285 90)
 			(effects
 				(font
@@ -20010,7 +20010,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/48ArrZx"
 			(at 400.05 121.285 90)
 			(effects
 				(font
@@ -22151,7 +22151,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://ngspice.sourceforge.io/docs/ngspice-html-manual/manual.xhtml#cha_BJTs"
+		(property "Datasheet" ""
 			(at 102.87 191.77 0)
 			(effects
 				(font
@@ -22504,7 +22504,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://mou.sr/4blekhK"
 			(at 160.02 29.21 0)
 			(effects
 				(font
@@ -24206,7 +24206,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://mou.sr/4kYqUGE"
 			(at 160.02 36.83 0)
 			(effects
 				(font
@@ -24815,7 +24815,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 213.36 218.44 0)
 			(effects
 				(font
@@ -24824,7 +24824,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kYqUGE"
 			(at 213.36 218.44 0)
 			(effects
 				(font
@@ -26542,7 +26542,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://ngspice.sourceforge.io/docs/ngspice-html-manual/manual.xhtml#cha_BJTs"
+		(property "Datasheet" ""
 			(at 102.87 209.55 0)
 			(effects
 				(font
@@ -27324,7 +27324,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 257.81 212.09 0)
 			(effects
 				(font
@@ -27333,7 +27333,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4qV0czS"
 			(at 257.81 212.09 0)
 			(effects
 				(font
@@ -27392,7 +27392,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 250.19 193.04 0)
 			(effects
 				(font
@@ -27401,7 +27401,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4tWr31q"
 			(at 250.19 193.04 0)
 			(effects
 				(font
@@ -27674,7 +27674,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 31.75 209.55 0)
 			(effects
 				(font
@@ -27683,7 +27683,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kYqUGE"
 			(at 31.75 209.55 0)
 			(effects
 				(font
@@ -28044,7 +28044,7 @@
 				)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric"
 			(at 113.03 109.22 0)
 			(effects
 				(font
@@ -28053,7 +28053,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4kYqUGE"
 			(at 113.03 109.22 0)
 			(effects
 				(font
@@ -28122,7 +28122,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://mou.sr/4kYqUGE"
 			(at 160.02 77.47 0)
 			(effects
 				(font
