@@ -16464,7 +16464,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" ""
 			(at 342.9 27.94 0)
 			(effects
 				(font
@@ -16473,7 +16473,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/3P2KFAP"
 			(at 342.9 27.94 0)
 			(effects
 				(font
@@ -16864,7 +16864,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x02_P2.54mm_Vertical"
+		(property "Footprint" ""
 			(at 342.9 77.47 0)
 			(effects
 				(font
@@ -16873,7 +16873,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/3P2KFAP"
 			(at 342.9 77.47 0)
 			(effects
 				(font
@@ -16997,7 +16997,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Fuse:Fuseholder_Cylinder-5x20mm_Stelvio-Kontek_PTF78_Horizontal_Open"
+		(property "Footprint" "Fuse:Fuseholder_Clip-5x20mm_Littelfuse_521_Lateral_P17.00x5.00mm_D1.30mm_Horizontal"
 			(at 35.052 30.48 90)
 			(effects
 				(font
@@ -17006,7 +17006,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/40AHNh3"
 			(at 36.83 30.48 0)
 			(effects
 				(font
@@ -17108,7 +17108,7 @@
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
-		(on_board no)
+		(on_board yes)
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-00006058485b")
 		(property "Reference" "D6"
@@ -17139,7 +17139,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.adafruit.com/product/1938"
+		(property "Datasheet" "https://mou.sr/4gRPrdX"
 			(at 120.65 253.365 0)
 			(effects
 				(font
@@ -17799,7 +17799,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 223.52 88.9 0)
 			(effects
 				(font
@@ -17808,7 +17808,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 223.52 88.9 0)
 			(effects
 				(font
@@ -19248,7 +19248,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~https://mou.sr/4qDKLMq"
+		(property "Datasheet" "https://mou.sr/4qDKLMq"
 			(at 137.16 69.85 0)
 			(effects
 				(font
@@ -20309,7 +20309,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~https://mou.sr/4qDKLMq"
+		(property "Datasheet" "https://mou.sr/4qDKLMq"
 			(at 147.32 69.85 0)
 			(effects
 				(font
@@ -21494,7 +21494,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 115.57 209.55 0)
 			(effects
 				(font
@@ -21503,7 +21503,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4ayARnE"
 			(at 115.57 209.55 0)
 			(effects
 				(font
@@ -21571,7 +21571,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/3XhUifQ"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 238.76 26.67 0)
 			(effects
 				(font
@@ -21705,7 +21705,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~https://mou.sr/4qDKLMq"
+		(property "Datasheet" "https://mou.sr/4qDKLMq"
 			(at 146.05 29.21 0)
 			(effects
 				(font
@@ -22009,7 +22009,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 273.05 171.45 0)
 			(effects
 				(font
@@ -22018,7 +22018,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 273.05 171.45 0)
 			(effects
 				(font
@@ -22831,7 +22831,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 137.16 212.09 0)
 			(effects
 				(font
@@ -22840,7 +22840,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4ayARnE"
 			(at 137.16 212.09 0)
 			(effects
 				(font
@@ -23995,7 +23995,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 224.79 181.61 0)
 			(effects
 				(font
@@ -24004,7 +24004,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/3X0jZ2h"
 			(at 224.79 181.61 0)
 			(effects
 				(font
@@ -24128,7 +24128,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 224.79 170.18 0)
 			(effects
 				(font
@@ -24137,7 +24137,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 224.79 170.18 0)
 			(effects
 				(font
@@ -24342,7 +24342,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 113.03 118.11 0)
 			(effects
 				(font
@@ -24351,7 +24351,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4ayARnE"
 			(at 113.03 118.11 0)
 			(effects
 				(font
@@ -24411,7 +24411,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 105.41 110.49 0)
 			(effects
 				(font
@@ -24420,7 +24420,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 105.41 110.49 0)
 			(effects
 				(font
@@ -25166,7 +25166,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 93.98 110.49 0)
 			(effects
 				(font
@@ -25175,7 +25175,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4qDKLMq"
 			(at 93.98 110.49 0)
 			(effects
 				(font
@@ -25376,7 +25376,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 77.47 204.47 0)
 			(effects
 				(font
@@ -25385,7 +25385,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 77.47 204.47 0)
 			(effects
 				(font
@@ -25716,7 +25716,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" ""
+		(property "Footprint" "Capacitor_SMD:C_0805_2012Metric"
 			(at 273.05 182.88 0)
 			(effects
 				(font
@@ -25725,7 +25725,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~"
+		(property "Datasheet" "https://mou.sr/3X0jZ2h"
 			(at 273.05 182.88 0)
 			(effects
 				(font
@@ -25991,7 +25991,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/3XhUifQ"
+		(property "Datasheet" "https://mou.sr/4mFuiXz"
 			(at 219.71 26.67 0)
 			(effects
 				(font
@@ -27133,7 +27133,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "~https://mou.sr/4qDKLMq"
+		(property "Datasheet" "https://mou.sr/4qDKLMq"
 			(at 137.16 29.21 0)
 			(effects
 				(font
