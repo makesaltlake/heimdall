@@ -172,13 +172,13 @@
 	(embedded_fonts no)
 	(model "C:/git/heimdall/hardware/shared/cots/75869-y01c.stp"
 		(offset
-			(xyz 0 0 0)
+			(xyz -12.5 4.45 0)
 		)
 		(scale
 			(xyz 1 1 1)
 		)
 		(rotate
-			(xyz 0 0 0)
+			(xyz -90 -0 -0)
 		)
 	)
 )

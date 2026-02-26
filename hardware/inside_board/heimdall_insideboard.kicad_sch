@@ -16863,7 +16863,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Connector_BarrelJack:BarrelJack_Wuerth_6941xx301002"
+		(property "Footprint" "Heimdall COTS:BarrelJack_Wuerth_6941xx301002"
 			(at 29.21 39.116 0)
 			(effects
 				(font
