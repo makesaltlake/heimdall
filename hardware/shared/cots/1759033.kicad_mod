@@ -6,7 +6,7 @@
 	(descr "Pluggable Terminal Blocks 4 Pos 5.08mm pitch Through Hole Header ")
 	(tags "Connector")
 	(property "Reference" "J**"
-		(at -7.62 -2.54 0)
+		(at 0 -2.54 0)
 		(layer "F.SilkS")
 		(uuid "e8e22f40-e098-46b5-a87d-012a15aafc27")
 		(effects
@@ -54,8 +54,8 @@
 	)
 	(attr through_hole)
 	(fp_line
-		(start -17.88 -10.3)
-		(end -17.88 1.85)
+		(start -10.26 -10.3)
+		(end -10.26 1.85)
 		(stroke
 			(width 0.2)
 			(type solid)
@@ -64,8 +64,8 @@
 		(uuid "593195b7-d85d-4601-812b-84acad34279d")
 	)
 	(fp_line
-		(start 2.64 -10.3)
-		(end -17.88 -10.3)
+		(start 10.26 -10.3)
+		(end -10.26 -10.3)
 		(stroke
 			(width 0.2)
 			(type solid)
@@ -74,8 +74,8 @@
 		(uuid "191b618e-307b-4f36-9ca0-d081c33731e6")
 	)
 	(fp_line
-		(start 2.64 0)
-		(end 2.64 -10.3)
+		(start 10.26 0)
+		(end 10.26 -10.3)
 		(stroke
 			(width 0.2)
 			(type solid)
@@ -83,9 +83,20 @@
 		(layer "F.SilkS")
 		(uuid "b82aeac2-d5c6-4c41-aa2b-22f61ea67166")
 	)
+	(fp_circle
+		(center 11.43 0)
+		(end 11.43 0.05)
+		(stroke
+			(width 0.2)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "b8c20b02-10c5-4316-b133-d2fb65e53923")
+	)
 	(fp_line
-		(start -18.13 -10.55)
-		(end 2.89 -10.55)
+		(start -12 -10.55)
+		(end 12 -10.55)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -94,8 +105,8 @@
 		(uuid "e41c71bc-c685-48d3-9fd7-3c7419da8a74")
 	)
 	(fp_line
-		(start -18.13 2.1)
-		(end -18.13 -10.55)
+		(start -12 2.1)
+		(end -12 -10.55)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -104,18 +115,8 @@
 		(uuid "63461abd-1c6e-4471-98d1-a318ff33e357")
 	)
 	(fp_line
-		(start 2.89 -10.55)
-		(end 2.89 2.1)
-		(stroke
-			(width 0.05)
-			(type solid)
-		)
-		(layer "F.CrtYd")
-		(uuid "e5251f3d-8208-468e-9704-19d71842b97e")
-	)
-	(fp_line
-		(start 2.89 2.1)
-		(end -18.13 2.1)
+		(start -12 2.1)
+		(end 12 2.1)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -124,8 +125,18 @@
 		(uuid "ad2f994d-09fa-4885-9449-d7bd8516e228")
 	)
 	(fp_line
-		(start -17.88 -10.3)
-		(end 2.64 -10.3)
+		(start 12 -10.55)
+		(end 12 2.1)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "e5251f3d-8208-468e-9704-19d71842b97e")
+	)
+	(fp_line
+		(start -10.26 -10.3)
+		(end 10.26 -10.3)
 		(stroke
 			(width 0.1)
 			(type solid)
@@ -134,8 +145,8 @@
 		(uuid "ad1f593f-40fa-4cb1-9ab5-d4f7a0b3512e")
 	)
 	(fp_line
-		(start -17.88 1.85)
-		(end -17.88 -10.3)
+		(start -10.26 1.85)
+		(end -10.26 -10.3)
 		(stroke
 			(width 0.1)
 			(type solid)
@@ -144,8 +155,8 @@
 		(uuid "5ced0cf2-61d7-4bb1-a8b3-b3de168da715")
 	)
 	(fp_line
-		(start 2.64 -10.3)
-		(end 2.64 1.85)
+		(start 10.26 -10.3)
+		(end 10.26 1.85)
 		(stroke
 			(width 0.1)
 			(type solid)
@@ -154,8 +165,8 @@
 		(uuid "791ee58d-fadf-4cf4-811d-e33ae417e332")
 	)
 	(fp_line
-		(start 2.64 1.85)
-		(end -17.88 1.85)
+		(start 10.26 1.85)
+		(end -10.26 1.85)
 		(stroke
 			(width 0.1)
 			(type solid)
@@ -164,7 +175,7 @@
 		(uuid "0025dec0-76dd-4f73-af88-95447a4c5ecb")
 	)
 	(fp_text user "${REFERENCE}"
-		(at -7.62 -5.08 0)
+		(at 0 -5.08 0)
 		(layer "F.Fab")
 		(uuid "938bce3f-1f6f-456f-a496-355fbbfae560")
 		(effects
@@ -175,7 +186,7 @@
 		)
 	)
 	(pad "1" thru_hole rect
-		(at 0 0)
+		(at 7.62 0)
 		(size 2.475 2.475)
 		(drill 1.65)
 		(layers "*.Cu" "*.Mask")
@@ -183,7 +194,7 @@
 		(uuid "370faa1e-73df-423c-b50b-370e31fd7871")
 	)
 	(pad "2" thru_hole circle
-		(at -5.08 0)
+		(at 2.54 0)
 		(size 2.475 2.475)
 		(drill 1.65)
 		(layers "*.Cu" "*.Mask")
@@ -191,7 +202,7 @@
 		(uuid "050d67fa-4a2f-48e1-9266-f2f1448ffc2a")
 	)
 	(pad "3" thru_hole circle
-		(at -10.16 0)
+		(at -2.54 0)
 		(size 2.475 2.475)
 		(drill 1.65)
 		(layers "*.Cu" "*.Mask")
@@ -199,7 +210,7 @@
 		(uuid "09f76528-b5b7-4888-8743-a0c9ef6bab6d")
 	)
 	(pad "4" thru_hole circle
-		(at -15.24 0)
+		(at -7.62 0)
 		(size 2.475 2.475)
 		(drill 1.65)
 		(layers "*.Cu" "*.Mask")
@@ -216,6 +227,17 @@
 		)
 		(rotate
 			(xyz -90 0 -90)
+		)
+	)
+	(model "pxc_1110583_08_00_LPC-2-5-4-ST-5-08_3D.stp"
+		(offset
+			(xyz 3 29 0.5)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 -180)
 		)
 	)
 )

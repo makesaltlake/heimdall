@@ -6,7 +6,7 @@
 	(descr "Pluggable Terminal Blocks 6 Pos 5.08mm pitch Through Hole Header ")
 	(tags "Connector")
 	(property "Reference" "J**"
-		(at 12.7 5.08 0)
+		(at 0 5.08 0)
 		(layer "F.SilkS")
 		(uuid "6965204e-9c06-4431-85f3-0ff70df34952")
 		(effects
@@ -54,18 +54,8 @@
 	)
 	(attr through_hole)
 	(fp_line
-		(start -2.54 -2)
-		(end 27.94 -2)
-		(stroke
-			(width 0.1)
-			(type solid)
-		)
-		(layer "F.SilkS")
-		(uuid "044e5a2b-e5b6-454b-b342-65109baa4aa7")
-	)
-	(fp_line
-		(start -2.54 10)
-		(end -2.54 -2)
+		(start -15.24 10)
+		(end -15.24 0)
 		(stroke
 			(width 0.1)
 			(type solid)
@@ -74,8 +64,8 @@
 		(uuid "d421ec1d-424f-4bb7-82c7-508210b69750")
 	)
 	(fp_line
-		(start 27.94 -2)
-		(end 27.94 10)
+		(start 15.24 -2)
+		(end 15.24 10)
 		(stroke
 			(width 0.1)
 			(type solid)
@@ -84,8 +74,8 @@
 		(uuid "b8ad34b3-cfd0-45cd-971b-79c0f5deba73")
 	)
 	(fp_line
-		(start 27.94 10)
-		(end -2.54 10)
+		(start 15.24 10)
+		(end -15.24 10)
 		(stroke
 			(width 0.1)
 			(type solid)
@@ -94,8 +84,8 @@
 		(uuid "a0672204-64a8-4ac4-8b52-270183f46f40")
 	)
 	(fp_circle
-		(center -3.35 0)
-		(end -3.35 0.05)
+		(center -16.05 0)
+		(end -16.05 0.05)
 		(stroke
 			(width 0.2)
 			(type solid)
@@ -105,8 +95,8 @@
 		(uuid "9caeab50-7381-445a-9c01-77e61dc5b836")
 	)
 	(fp_line
-		(start -4.25 -3)
-		(end 28.94 -3)
+		(start -16.95 -3)
+		(end 16.24 -3)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -115,8 +105,8 @@
 		(uuid "9723b4ae-873b-4636-91e9-d35d5dcaab26")
 	)
 	(fp_line
-		(start -4.25 11)
-		(end -4.25 -3)
+		(start -16.95 11)
+		(end -16.95 -3)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -125,8 +115,8 @@
 		(uuid "d1c9bb4a-4dcc-48ad-90fb-fc82bae8e9b4")
 	)
 	(fp_line
-		(start 28.94 -3)
-		(end 28.94 11)
+		(start 16.24 -3)
+		(end 16.24 11)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -135,8 +125,8 @@
 		(uuid "2eb18ac7-5d48-490b-b13f-f5030394852b")
 	)
 	(fp_line
-		(start 28.94 11)
-		(end -4.25 11)
+		(start 16.24 11)
+		(end -16.95 11)
 		(stroke
 			(width 0.05)
 			(type solid)
@@ -145,8 +135,8 @@
 		(uuid "5bc2ea61-4b73-4405-8452-a1eb884d9c3e")
 	)
 	(fp_line
-		(start -2.54 -2)
-		(end 27.94 -2)
+		(start -15.24 -2)
+		(end 15.24 -2)
 		(stroke
 			(width 0.2)
 			(type solid)
@@ -155,8 +145,8 @@
 		(uuid "b2477b4e-5d1d-4024-be2e-75226087884f")
 	)
 	(fp_line
-		(start -2.54 10)
-		(end -2.54 -2)
+		(start -15.24 10)
+		(end -15.24 -2)
 		(stroke
 			(width 0.2)
 			(type solid)
@@ -165,8 +155,8 @@
 		(uuid "6e06615e-4057-4ae1-aead-4f6018fd80e9")
 	)
 	(fp_line
-		(start 27.94 -2)
-		(end 27.94 10)
+		(start 15.24 -2)
+		(end 15.24 10)
 		(stroke
 			(width 0.2)
 			(type solid)
@@ -175,8 +165,8 @@
 		(uuid "4a7b82fb-6a69-445e-8ecd-21035bc85a40")
 	)
 	(fp_line
-		(start 27.94 10)
-		(end -2.54 10)
+		(start 15.24 10)
+		(end -15.24 10)
 		(stroke
 			(width 0.2)
 			(type solid)
@@ -185,7 +175,7 @@
 		(uuid "50877565-88d8-41c2-aee6-e45f6207252d")
 	)
 	(fp_text user "${REFERENCE}"
-		(at 12.7 7.62 0)
+		(at 0 7.62 0)
 		(layer "F.Fab")
 		(uuid "6209cb53-fc97-4b23-b731-fbe4343f72de")
 		(effects
@@ -196,7 +186,7 @@
 		)
 	)
 	(pad "1" thru_hole rect
-		(at 0 0)
+		(at -12.7 0)
 		(size 2.1 2.1)
 		(drill 1.4)
 		(layers "*.Cu" "*.Mask")
@@ -204,7 +194,7 @@
 		(uuid "d7494aeb-519f-4dc5-8752-e89ae1211f70")
 	)
 	(pad "2" thru_hole circle
-		(at 5.08 0)
+		(at -7.62 0)
 		(size 2.1 2.1)
 		(drill 1.4)
 		(layers "*.Cu" "*.Mask")
@@ -212,7 +202,7 @@
 		(uuid "ccf8f5da-c2b3-47be-8894-927525925300")
 	)
 	(pad "3" thru_hole circle
-		(at 10.16 0)
+		(at -2.54 0)
 		(size 2.1 2.1)
 		(drill 1.4)
 		(layers "*.Cu" "*.Mask")
@@ -220,7 +210,7 @@
 		(uuid "53ab6785-c8bd-4f55-bb14-429c1f1bf339")
 	)
 	(pad "4" thru_hole circle
-		(at 15.24 0)
+		(at 2.54 0)
 		(size 2.1 2.1)
 		(drill 1.4)
 		(layers "*.Cu" "*.Mask")
@@ -228,7 +218,7 @@
 		(uuid "cdb4a1ca-19aa-4beb-ab70-45902f7e341a")
 	)
 	(pad "5" thru_hole circle
-		(at 20.32 0)
+		(at 7.62 0)
 		(size 2.1 2.1)
 		(drill 1.4)
 		(layers "*.Cu" "*.Mask")
@@ -236,7 +226,7 @@
 		(uuid "215b3095-3b37-4ea5-8365-a2b026fb45d4")
 	)
 	(pad "6" thru_hole circle
-		(at 25.4 0)
+		(at 12.7 0)
 		(size 2.1 2.1)
 		(drill 1.4)
 		(layers "*.Cu" "*.Mask")
@@ -253,6 +243,17 @@
 		)
 		(rotate
 			(xyz -90 0 90)
+		)
+	)
+	(model "C:/git/heimdall/hardware/shared/cots/pxc_1110585_10_00_LPC-2-5-6-ST-5-08_3D.stp"
+		(offset
+			(xyz -3 -29 1.5)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz -0 -0 -0)
 		)
 	)
 )
