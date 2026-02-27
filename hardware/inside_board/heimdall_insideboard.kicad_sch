@@ -9790,6 +9790,18 @@
 		)
 		(uuid "8be87efb-5ca4-411d-a281-1f12b0a23e4b")
 	)
+	(text "Bump to 5.2V for diode"
+		(exclude_from_sim no)
+		(at 124.714 48.006 0)
+		(effects
+			(font
+				(size 3.81 3.81)
+				(thickness 0.762)
+				(bold yes)
+			)
+		)
+		(uuid "8f0b2c35-9a60-429a-8f91-1854598579b9")
+	)
 	(text "5V Regulator"
 		(exclude_from_sim no)
 		(at 73.66 16.256 0)
@@ -9820,6 +9832,18 @@
 			)
 		)
 		(uuid "a1277b7d-c765-47f0-b09e-2578c4050fb0")
+	)
+	(text "Bump to 3.5V for diode"
+		(exclude_from_sim no)
+		(at 125.476 86.36 0)
+		(effects
+			(font
+				(size 3.81 3.81)
+				(thickness 0.762)
+				(bold yes)
+			)
+		)
+		(uuid "a558184f-22e6-4a4c-ab39-382bb56dd144")
 	)
 	(text "Level Shifting"
 		(exclude_from_sim no)
@@ -11251,6 +11275,16 @@
 	)
 	(wire
 		(pts
+			(xy 382.27 86.36) (xy 400.05 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1a71cdbb-db9a-4fe2-9259-2a048afddbe1")
+	)
+	(wire
+		(pts
 			(xy 76.2 66.04) (xy 86.36 66.04)
 		)
 		(stroke
@@ -12061,6 +12095,16 @@
 	)
 	(wire
 		(pts
+			(xy 383.54 80.01) (xy 383.54 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "468af419-9ddd-4f67-ac05-5877c09d36a7")
+	)
+	(wire
+		(pts
 			(xy 271.78 214.63) (xy 271.78 224.79)
 		)
 		(stroke
@@ -12471,6 +12515,16 @@
 	)
 	(wire
 		(pts
+			(xy 372.11 80.01) (xy 372.11 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "5a14f74e-bda2-4d65-b339-621ec60d4ba1")
+	)
+	(wire
+		(pts
 			(xy 226.06 88.9) (xy 228.6 88.9)
 		)
 		(stroke
@@ -12608,16 +12662,6 @@
 			(type default)
 		)
 		(uuid "60446436-3643-4b67-a21d-05ba137d24a4")
-	)
-	(wire
-		(pts
-			(xy 387.35 86.36) (xy 387.35 80.01)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "6077667c-17cc-4ce9-a53a-0d428d7f8a04")
 	)
 	(wire
 		(pts
@@ -13178,16 +13222,6 @@
 			(type default)
 		)
 		(uuid "7a65c7d1-e383-4aeb-8f49-6c9c0ec1a92c")
-	)
-	(wire
-		(pts
-			(xy 393.7 80.01) (xy 393.7 83.82)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7a7ba379-881f-4198-8d48-80e6e72b9c88")
 	)
 	(wire
 		(pts
@@ -13931,6 +13965,16 @@
 	)
 	(wire
 		(pts
+			(xy 372.11 86.36) (xy 374.65 86.36)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "a0bd4e5f-a2e4-4827-877e-b77629678579")
+	)
+	(wire
+		(pts
 			(xy 44.45 255.27) (xy 44.45 256.54)
 		)
 		(stroke
@@ -14358,6 +14402,16 @@
 			(type default)
 		)
 		(uuid "b97fe991-da2e-4dc0-964f-33892cb0e699")
+	)
+	(wire
+		(pts
+			(xy 383.54 83.82) (xy 386.08 83.82)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "b98b0f00-dfb6-4e1b-89a3-5283ea8d450b")
 	)
 	(wire
 		(pts
@@ -14958,16 +15012,6 @@
 			(type default)
 		)
 		(uuid "d9f219b6-1b13-4211-974a-59731cb6746a")
-	)
-	(wire
-		(pts
-			(xy 400.05 86.36) (xy 387.35 86.36)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "da109663-ba32-403d-ae6d-faddc1513b58")
 	)
 	(wire
 		(pts
@@ -23225,7 +23269,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 393.7 80.01 0)
+		(at 383.54 80.01 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -23233,7 +23277,7 @@
 		(dnp no)
 		(uuid "5975a3d9-1948-4c8e-80b1-eeb8d8c149f9")
 		(property "Reference" "#PWR062"
-			(at 393.7 83.82 0)
+			(at 383.54 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23242,7 +23286,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 394.081 75.6158 0)
+			(at 383.921 75.6158 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23250,7 +23294,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 393.7 80.01 0)
+			(at 383.54 80.01 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23259,7 +23303,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 393.7 80.01 0)
+			(at 383.54 80.01 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23268,7 +23312,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 393.7 80.01 0)
+			(at 383.54 80.01 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -23348,6 +23392,75 @@
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
 					(reference "#PWR052")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Schottky")
+		(at 378.46 86.36 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "5ae7489d-032d-4613-993d-72bc5ec4f856")
+		(property "Reference" "D23"
+			(at 378.7775 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2A"
+			(at 378.7775 82.55 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMB"
+			(at 378.46 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://mou.sr/4rvKkVD"
+			(at 378.46 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Schottky diode"
+			(at 378.46 86.36 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "1898002d-35b4-4259-ad3f-dc50b165258f")
+		)
+		(pin "1"
+			(uuid "f3910f77-211f-4f04-bea0-acad528be80d")
+		)
+		(instances
+			(project "heimdall_insideboard"
+				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
+					(reference "D23")
 					(unit 1)
 				)
 			)
@@ -28226,7 +28339,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 387.35 80.01 0)
+		(at 372.11 80.01 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -28234,7 +28347,7 @@
 		(dnp no)
 		(uuid "c0a6af57-20b0-4b75-9af6-d3822248dca5")
 		(property "Reference" "#PWR059"
-			(at 387.35 83.82 0)
+			(at 372.11 83.82 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28243,7 +28356,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 387.731 75.6158 0)
+			(at 372.491 75.6158 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28251,7 +28364,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 387.35 80.01 0)
+			(at 372.11 80.01 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28260,7 +28373,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 387.35 80.01 0)
+			(at 372.11 80.01 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -28269,7 +28382,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 387.35 80.01 0)
+			(at 372.11 80.01 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -29563,6 +29676,75 @@
 			(project "heimdall_insideboard"
 				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
 					(reference "C12")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Device:D_Schottky")
+		(at 389.89 83.82 0)
+		(mirror y)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d9090ab3-838a-4e25-bfc1-f8c27504871d")
+		(property "Reference" "D24"
+			(at 390.2075 77.47 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "2A"
+			(at 390.2075 80.01 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" "Diode_SMD:D_SMB"
+			(at 389.89 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "https://mou.sr/4rvKkVD"
+			(at 389.89 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Schottky diode"
+			(at 389.89 83.82 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "f7c72e67-6317-42ef-b8b8-55a6495fb0de")
+		)
+		(pin "1"
+			(uuid "ff848511-ca4f-424e-868d-bd484b722c30")
+		)
+		(instances
+			(project "heimdall_insideboard"
+				(path "/b71a4c50-f01b-4584-9790-07fd993db6c1"
+					(reference "D24")
 					(unit 1)
 				)
 			)
