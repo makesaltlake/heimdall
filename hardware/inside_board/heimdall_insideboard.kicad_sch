@@ -9790,18 +9790,6 @@
 		)
 		(uuid "8be87efb-5ca4-411d-a281-1f12b0a23e4b")
 	)
-	(text "Bump to 5.2V for diode"
-		(exclude_from_sim no)
-		(at 124.714 48.006 0)
-		(effects
-			(font
-				(size 3.81 3.81)
-				(thickness 0.762)
-				(bold yes)
-			)
-		)
-		(uuid "8f0b2c35-9a60-429a-8f91-1854598579b9")
-	)
 	(text "5V Regulator"
 		(exclude_from_sim no)
 		(at 73.66 16.256 0)
@@ -9832,18 +9820,6 @@
 			)
 		)
 		(uuid "a1277b7d-c765-47f0-b09e-2578c4050fb0")
-	)
-	(text "Bump to 3.5V for diode"
-		(exclude_from_sim no)
-		(at 125.476 86.36 0)
-		(effects
-			(font
-				(size 3.81 3.81)
-				(thickness 0.762)
-				(bold yes)
-			)
-		)
-		(uuid "a558184f-22e6-4a4c-ab39-382bb56dd144")
 	)
 	(text "Level Shifting"
 		(exclude_from_sim no)
@@ -21498,7 +21474,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "33.2K"
+		(property "Value" "36.5K"
 			(at 162.56 71.1199 0)
 			(effects
 				(font
@@ -21516,7 +21492,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/46XiBVG"
+		(property "Datasheet" "https://mou.sr/3MVFoKT"
 			(at 160.02 69.85 0)
 			(effects
 				(font
@@ -24487,7 +24463,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "56.2K"
+		(property "Value" "59K"
 			(at 162.56 30.4799 0)
 			(effects
 				(font
@@ -24505,7 +24481,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/4blekhK"
+		(property "Datasheet" "https://mou.sr/40x4BhQ"
 			(at 160.02 29.21 0)
 			(effects
 				(font
@@ -28774,7 +28750,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://www.silabs.com/documents/public/data-sheets/cp2102n-datasheet.pdf"
+		(property "Datasheet" "https://mou.sr/46wFeAj"
 			(at 232.41 240.03 0)
 			(effects
 				(font
@@ -30467,7 +30443,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "http://www.ti.com/lit/ds/symlink/txb0104.pdf"
+		(property "Datasheet" "https://mou.sr/480tS8x"
 			(at 231.394 45.847 0)
 			(effects
 				(font
