@@ -9968,6 +9968,12 @@
 		(uuid "25e613d2-3ab6-45d4-a0c8-6cdd64ad74a1")
 	)
 	(junction
+		(at 171.45 63.5)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "26f1cd97-71b4-41c7-8246-20975c770716")
+	)
+	(junction
 		(at 26.67 60.96)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -10128,6 +10134,12 @@
 		(diameter 0)
 		(color 0 0 0 0)
 		(uuid "5ae0c126-bbce-4cc5-a7ba-f9061cee4e20")
+	)
+	(junction
+		(at 171.45 22.86)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "64c46368-8889-4510-9217-b08dcedc1fad")
 	)
 	(junction
 		(at 342.9 200.66)
@@ -10771,7 +10783,7 @@
 	)
 	(wire
 		(pts
-			(xy 168.91 22.86) (xy 170.18 22.86)
+			(xy 168.91 22.86) (xy 171.45 22.86)
 		)
 		(stroke
 			(width 0)
@@ -10828,16 +10840,6 @@
 			(type default)
 		)
 		(uuid "08a9bd65-6668-4ac6-881c-3e2e7b6a9707")
-	)
-	(wire
-		(pts
-			(xy 171.45 67.31) (xy 171.45 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "08c327fd-a9e9-443a-8d50-a026a30da4b5")
 	)
 	(wire
 		(pts
@@ -11448,6 +11450,16 @@
 			(type default)
 		)
 		(uuid "234d1c05-58f1-4ef6-a8b4-519a1458451f")
+	)
+	(wire
+		(pts
+			(xy 171.45 63.5) (xy 171.45 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "238e67a4-3c32-4b85-948a-553abf9f93f2")
 	)
 	(wire
 		(pts
@@ -12088,16 +12100,6 @@
 			(type default)
 		)
 		(uuid "45654384-9077-465c-8421-c032ed72474f")
-	)
-	(wire
-		(pts
-			(xy 171.45 26.67) (xy 171.45 25.4)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "458fa3da-f451-42b4-ac82-5cd57cf968af")
 	)
 	(wire
 		(pts
@@ -13481,16 +13483,6 @@
 	)
 	(wire
 		(pts
-			(xy 160.02 66.04) (xy 171.45 66.04)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "85b630ef-1ace-41e0-a8d3-d85d3fb17540")
-	)
-	(wire
-		(pts
 			(xy 119.38 194.31) (xy 119.38 204.47)
 		)
 		(stroke
@@ -13591,7 +13583,7 @@
 	)
 	(wire
 		(pts
-			(xy 170.18 22.86) (xy 170.18 21.59)
+			(xy 171.45 22.86) (xy 171.45 21.59)
 		)
 		(stroke
 			(width 0)
@@ -13818,16 +13810,6 @@
 			(type default)
 		)
 		(uuid "991f5818-0656-45c3-9ba2-2c9ae778e1eb")
-	)
-	(wire
-		(pts
-			(xy 160.02 25.4) (xy 171.45 25.4)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "9961ab8c-8ff5-43db-9d9f-ca011acf48dc")
 	)
 	(wire
 		(pts
@@ -14621,6 +14603,16 @@
 	)
 	(wire
 		(pts
+			(xy 171.45 22.86) (xy 171.45 26.67)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "c398ddab-550c-4834-aacb-33b56edb94b3")
+	)
+	(wire
+		(pts
 			(xy 298.45 34.29) (xy 298.45 35.56)
 		)
 		(stroke
@@ -15391,7 +15383,7 @@
 	)
 	(wire
 		(pts
-			(xy 170.18 63.5) (xy 168.91 63.5)
+			(xy 171.45 63.5) (xy 168.91 63.5)
 		)
 		(stroke
 			(width 0)
@@ -15641,7 +15633,7 @@
 	)
 	(wire
 		(pts
-			(xy 170.18 62.23) (xy 170.18 63.5)
+			(xy 171.45 62.23) (xy 171.45 63.5)
 		)
 		(stroke
 			(width 0)
@@ -18081,7 +18073,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_1.00mm:PinHeader_1x03_P1.00mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
 			(at 342.9 27.94 0)
 			(effects
 				(font
@@ -18481,7 +18473,7 @@
 				(justify right)
 			)
 		)
-		(property "Footprint" "Connector_PinHeader_1.00mm:PinHeader_1x03_P1.00mm_Vertical"
+		(property "Footprint" "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical"
 			(at 342.9 76.2 0)
 			(effects
 				(font
@@ -18614,7 +18606,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Fuse:Fuseholder_Clip-5x20mm_Littelfuse_521_Lateral_P17.00x5.00mm_D1.30mm_Horizontal"
+		(property "Footprint" "Heimdall COTS:Fuseholder_Clip-5x20mm_Littelfuse_521_Lateral_P17.00x5.00mm_D1.30mm_Horizontal"
 			(at 35.052 30.48 90)
 			(effects
 				(font
@@ -18925,7 +18917,7 @@
 	)
 	(symbol
 		(lib_id "power:+3.3V")
-		(at 170.18 62.23 0)
+		(at 171.45 62.23 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -18933,7 +18925,7 @@
 		(dnp no)
 		(uuid "00000000-0000-0000-0000-000061bdb374")
 		(property "Reference" "#PWR031"
-			(at 170.18 66.04 0)
+			(at 171.45 66.04 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18942,7 +18934,7 @@
 			)
 		)
 		(property "Value" "+3.3V"
-			(at 170.561 57.8358 0)
+			(at 171.831 57.8358 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18950,7 +18942,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 170.18 62.23 0)
+			(at 171.45 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18959,7 +18951,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 170.18 62.23 0)
+			(at 171.45 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -18968,7 +18960,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 170.18 62.23 0)
+			(at 171.45 62.23 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22159,7 +22151,7 @@
 	)
 	(symbol
 		(lib_id "power:+5V")
-		(at 170.18 21.59 0)
+		(at 171.45 21.59 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -22167,7 +22159,7 @@
 		(dnp no)
 		(uuid "3f3e2e80-3af3-4c30-8683-cfe97c34bd29")
 		(property "Reference" "#PWR030"
-			(at 170.18 25.4 0)
+			(at 171.45 25.4 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22176,7 +22168,7 @@
 			)
 		)
 		(property "Value" "+5V"
-			(at 170.561 17.1958 0)
+			(at 171.831 17.1958 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22184,7 +22176,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 170.18 21.59 0)
+			(at 171.45 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22193,7 +22185,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 170.18 21.59 0)
+			(at 171.45 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -22202,7 +22194,7 @@
 			)
 		)
 		(property "Description" ""
-			(at 170.18 21.59 0)
+			(at 171.45 21.59 0)
 			(effects
 				(font
 					(size 1.27 1.27)

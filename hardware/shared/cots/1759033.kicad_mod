@@ -220,18 +220,18 @@
 	(embedded_fonts no)
 	(model "1759033.stp"
 		(offset
-			(xyz 2.539999924 -1.940000028 0)
+			(xyz 10.04 -1.94 0)
 		)
 		(scale
 			(xyz 1 1 1)
 		)
 		(rotate
-			(xyz -90 0 -90)
+			(xyz -90 -0 -90)
 		)
 	)
 	(model "pxc_1110583_08_00_LPC-2-5-4-ST-5-08_3D.stp"
 		(offset
-			(xyz 3 29 0.5)
+			(xyz 10.5 29 0.5)
 		)
 		(scale
 			(xyz 1 1 1)

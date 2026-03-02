@@ -5,7 +5,7 @@
 	(layer "F.Cu")
 	(descr "Headers & Wire Housings 10P DR VERT SHRD HDR ")
 	(property "Reference" "J"
-		(at -0.4 -15.9 0)
+		(at 0 -5.3 0)
 		(unlocked yes)
 		(layer "F.SilkS")
 		(uuid "3ac2e4a0-bf61-40a1-98b3-fb9788d515ab")
@@ -17,7 +17,7 @@
 		)
 	)
 	(property "Value" "75869-101LF"
-		(at -0.4 -14.4 0)
+		(at -0.025 -3.25 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "860cf953-0afd-4c1a-a15d-2e223445a2fe")
@@ -78,7 +78,7 @@
 		(uuid "2f4765db-9b23-4391-96b7-0f9d4ec65518")
 	)
 	(fp_text user "${REFERENCE}"
-		(at -0.4 -12.9 0)
+		(at -0.025 3.45 0)
 		(unlocked yes)
 		(layer "F.Fab")
 		(uuid "8ef2f3f8-9d23-4008-9b96-695cf747d3ff")
@@ -170,7 +170,7 @@
 		(uuid "2991035e-6dc7-48be-9967-d1a943b495da")
 	)
 	(embedded_fonts no)
-	(model "C:/git/heimdall/hardware/shared/cots/75869-y01c.stp"
+	(model "75869-y01c.stp"
 		(offset
 			(xyz -12.5 4.45 0)
 		)
