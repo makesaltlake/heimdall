@@ -28831,7 +28831,7 @@
 				(justify right)
 			)
 		)
-		(property "Value" "CP2102N-Axx-xQFN28"
+		(property "Value" "CP2102N"
 			(at 236.7981 256.54 0)
 			(effects
 				(font
