@@ -17729,7 +17729,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1N5817G"
+		(property "Value" "SS14"
 			(at 287.528 45.593 90)
 			(effects
 				(font
@@ -17738,7 +17738,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal"
+		(property "Footprint" "Diode_SMD:D_SMA"
 			(at 294.005 44.45 0)
 			(effects
 				(font
@@ -17747,7 +17747,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/4hBG16y"
+		(property "Datasheet" "https://mou.sr/47b7mcl"
 			(at 289.56 44.45 0)
 			(effects
 				(font
@@ -22591,7 +22591,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1N5819G"
+		(property "Value" "SS14"
 			(at 327.66 47.9426 90)
 			(effects
 				(font
@@ -22600,7 +22600,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal"
+		(property "Footprint" "Diode_SMD:D_SMA"
 			(at 330.2 49.53 0)
 			(effects
 				(font
@@ -22609,7 +22609,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/4nJBxNZ"
+		(property "Datasheet" "https://mou.sr/47b7mcl"
 			(at 330.2 49.53 0)
 			(effects
 				(font
@@ -25303,7 +25303,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1N5819G"
+		(property "Value" "SS14"
 			(at 334.01 89.8526 90)
 			(effects
 				(font
@@ -25312,7 +25312,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal"
+		(property "Footprint" "Diode_SMD:D_SMA"
 			(at 336.55 91.44 0)
 			(effects
 				(font
@@ -25321,7 +25321,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/4nJBxNZ"
+		(property "Datasheet" "https://mou.sr/47b7mcl"
 			(at 336.55 91.44 0)
 			(effects
 				(font
@@ -28097,7 +28097,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1N5819G"
+		(property "Value" "SS14"
 			(at 327.66 96.2026 90)
 			(effects
 				(font
@@ -28106,7 +28106,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal"
+		(property "Footprint" "Diode_SMD:D_SMA"
 			(at 330.2 97.79 0)
 			(effects
 				(font
@@ -28115,7 +28115,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/4nJBxNZ"
+		(property "Datasheet" "https://mou.sr/47b7mcl"
 			(at 330.2 97.79 0)
 			(effects
 				(font
@@ -29509,7 +29509,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "1N5817G"
+		(property "Value" "SS14"
 			(at 287.528 93.853 90)
 			(effects
 				(font
@@ -29518,7 +29518,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Diode_THT:D_DO-41_SOD81_P10.16mm_Horizontal"
+		(property "Footprint" "Diode_SMD:D_SMA"
 			(at 294.005 92.71 0)
 			(effects
 				(font
@@ -29527,7 +29527,7 @@
 				(hide yes)
 			)
 		)
-		(property "Datasheet" "https://mou.sr/4hBG16y"
+		(property "Datasheet" "https://mou.sr/47b7mcl"
 			(at 289.56 92.71 0)
 			(effects
 				(font
