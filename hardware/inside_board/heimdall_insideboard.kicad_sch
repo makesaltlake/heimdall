@@ -18624,12 +18624,13 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
+		(property "Description" "2A"
 			(at 36.83 30.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(pin "1"

@@ -854,7 +854,7 @@
       "plot": "",
       "pos_files": "",
       "specctra_dsn": "",
-      "step": "",
+      "step": "heimdall_insideboard.step",
       "svg": "",
       "vrml": ""
     },
