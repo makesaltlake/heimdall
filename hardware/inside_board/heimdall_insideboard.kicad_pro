@@ -1004,7 +1004,7 @@
           "show": false
         }
       ],
-      "filter_string": "D",
+      "filter_string": "",
       "group_symbols": true,
       "include_excluded_from_bom": true,
       "name": "",
