@@ -6595,7 +6595,7 @@
 			)
 		)
 	)
-	(global_label "BEEPER"
+	(global_label "Beeper"
 		(shape input)
 		(at 110.49 27.94 0)
 		(fields_autoplaced yes)
@@ -6607,7 +6607,7 @@
 		)
 		(uuid "b6164f61-4de9-4fa3-b421-04954eb94a07")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 120.7322 27.94 0)
+			(at 119.9462 27.94 0)
 			(effects
 				(font
 					(size 1.27 1.27)
