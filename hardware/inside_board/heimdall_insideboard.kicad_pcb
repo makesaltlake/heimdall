@@ -2666,7 +2666,7 @@
 		(descr "5.0mm x 5.0mm Addressable RGB LED NeoPixel, https://cdn-shop.adafruit.com/datasheets/WS2812B.pdf")
 		(tags "LED RGB NeoPixel PLCC-4 5050")
 		(property "Reference" "D25"
-			(at 0.117 -4.298 180)
+			(at -4.383 -0.048 180)
 			(layer "F.SilkS")
 			(uuid "d1398c47-71d6-45e9-bca8-91c9335e4f2f")
 			(effects
@@ -2890,7 +2890,7 @@
 			(uuid "d1769a93-8b83-4080-b171-ff52739f5eff")
 		)
 		(fp_text user "1"
-			(at -4 -1.6 270)
+			(at -2.633 -3.298 0)
 			(unlocked yes)
 			(layer "F.SilkS")
 			(uuid "d76305e4-7f7d-4315-975b-bc875c06e183")
@@ -6048,7 +6048,7 @@
 		(descr "Resistor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 72, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf), generated with kicad-footprint-generator")
 		(tags "resistor")
 		(property "Reference" "R10"
-			(at 2.5875 0 0)
+			(at -2.25 -0.5 0)
 			(layer "F.SilkS")
 			(uuid "a7efcdea-4c56-4ff8-86a9-fb3c1fabe0dc")
 			(effects
@@ -11452,7 +11452,7 @@
 		(descr "Surface Mount Tactile Switch for High-Density Mounting, 3.1mm height, https://omronfs.omron.com/en_US/ecb/products/pdf/en-b3fs.pdf")
 		(tags "Tactile Switch")
 		(property "Reference" "SW1"
-			(at 0 5 180)
+			(at -5.5 0 180)
 			(layer "F.SilkS")
 			(uuid "49ba123c-7df8-4044-b397-ad608041e288")
 			(effects
@@ -26556,13 +26556,13 @@
 		(descr "CMT-1075-SMT-TR-1")
 		(tags "Loudspeaker or Buzzer")
 		(property "Reference" "LS1"
-			(at 0 0 0)
+			(at 0 -7.25 0)
 			(layer "F.SilkS")
 			(uuid "ebad1649-eed8-43e2-b49e-123e4b683da1")
 			(effects
 				(font
-					(size 1.27 1.27)
-					(thickness 0.254)
+					(size 1 1)
+					(thickness 0.15)
 				)
 			)
 		)
@@ -30871,6 +30871,18 @@
 			)
 		)
 	)
+	(gr_text "Buzzer"
+		(at 82 88 0)
+		(layer "F.SilkS")
+		(uuid "5e7d9e35-386a-4c4b-a1e2-d21314f72a31")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+			(justify bottom)
+		)
+	)
 	(gr_text "Gnd"
 		(at 174.75 44.5 0)
 		(layer "F.SilkS")
@@ -31056,6 +31068,18 @@
 				(bold yes)
 			)
 			(justify left)
+		)
+	)
+	(gr_text "USB"
+		(at 135.5 120.5 0)
+		(layer "F.SilkS")
+		(uuid "aa51790e-8aa4-4774-add0-34a41cdf28e2")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+			(justify bottom)
 		)
 	)
 	(gr_text "Rtn"
@@ -46376,7 +46400,7 @@
 				(xy 59.463796 95.364993) (xy 59.338106 95.53799) (xy 59.241027 95.728516) (xy 59.241026 95.728519)
 				(xy 59.174951 95.931882) (xy 59.151628 96.079138) (xy 59.1415 96.143084) (xy 44.458618 96.143084)
 				(xy 44.49804 96.101593) (xy 43.879408 95.482962) (xy 43.942993 95.465925) (xy 44.057007 95.400099)
-				(xy 44.150099 95.307007) (xy 44.215925 95.192993) (xy 44.232962 95.129408) (xy 44.86527 95.761717)
+				(xy 44.150099 95.307007) (xy 44.215925 95.192993) (xy 44.232962 95.129409) (xy 44.86527 95.761717)
 				(xy 44.86527 95.761716) (xy 44.904622 95.707554) (xy 45.001095 95.518217) (xy 45.066757 95.31613)
 				(xy 45.066757 95.316127) (xy 45.1 95.106246) (xy 45.1 94.893753) (xy 45.066757 94.683872) (xy 45.066757 94.683869)
 				(xy 45.001095 94.481782) (xy 44.904624 94.292449) (xy 44.86527 94.238282) (xy 44.865269 94.238282)
