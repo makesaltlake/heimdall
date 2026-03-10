@@ -11450,7 +11450,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "ff2c363c-3ce5-4ef5-9f65-cd39b8697b92")
 		)
 		(pad "1" smd rect
 			(at -2.9 2.46 180)
@@ -11459,7 +11459,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "3c9a15fd-e15d-49fc-9ba3-044c8a512f82")
 		)
 		(pad "1" smd rect
 			(at -2.9 3.86 180)
@@ -11468,7 +11468,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "68e1cb8f-ab03-42d6-a615-286d6780d5b2")
 		)
 		(pad "1" smd rect
 			(at -1.5 1.06 180)
@@ -11477,7 +11477,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "eaab9bb4-8a8e-4e73-87d7-fff4ee905c7f")
 		)
 		(pad "1" smd rect
 			(at -1.5 2.46 180)
@@ -11486,7 +11486,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "9cada98f-31fa-4158-b814-7337108da815")
 		)
 		(pad "1" smd rect
 			(at -1.5 3.86 180)
@@ -11495,7 +11495,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "2ec94529-7da3-4565-8ca3-d3f1c2287844")
 		)
 		(pad "1" smd rect
 			(at -0.1 1.06 180)
@@ -11504,7 +11504,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "065dbd79-4eb5-486d-8adb-95c08dc5ca24")
 		)
 		(pad "1" smd rect
 			(at -0.1 2.46 180)
@@ -11513,7 +11513,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "0e576f1b-03c6-47c4-a8e3-a65bc5b30877")
 		)
 		(pad "1" smd rect
 			(at -0.1 3.86 180)
@@ -11522,7 +11522,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "ba6a3fb1-81ce-493b-a5e2-904a97b63cdc")
 		)
 		(pad "1" smd rect
 			(at 8.75 -5.26 270)
@@ -11531,7 +11531,7 @@
 			(net 3 "GND")
 			(pinfunction "GND")
 			(pintype "passive")
-			(uuid "89e8aef5-3459-4d52-b8a5-0c4e07e18159")
+			(uuid "391e8ea4-6fe7-4fd8-b7ae-0297934d3903")
 		)
 		(pad "2" smd rect
 			(at -8.75 -3.99 270)
@@ -23966,7 +23966,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "C24"
-			(at -2.4 0 0)
+			(at -2.25 0.25 0)
 			(layer "F.SilkS")
 			(uuid "c5563790-6db5-4b12-b0e9-27ca3747d247")
 			(effects
@@ -30050,7 +30050,7 @@
 		(descr "Capacitor SMD 0805 (2012 Metric), square (rectangular) end terminal, IPC-7351 nominal, (Body size source: IPC-SM-782 page 76, https://www.pcb-3d.com/wordpress/wp-content/uploads/ipc-sm-782a_amendment_1_and_2.pdf, https://docs.google.com/spreadsheets/d/1BsfQQcO9C6DZCsRaXUlFlo91Tg2WpOkGARC1WS5S8t0/edit?usp=sharing), generated with kicad-footprint-generator")
 		(tags "capacitor")
 		(property "Reference" "C14"
-			(at 0.05 2.5 180)
+			(at -2.5 0.25 180)
 			(layer "F.SilkS")
 			(uuid "c053ba69-c86e-4c1f-9877-68d62e335a46")
 			(effects
@@ -41404,14 +41404,6 @@
 		(net 144)
 		(uuid "9a391e6f-b31d-447b-97b2-feae192e8a48")
 	)
-	(via
-		(at 156.6 111.75)
-		(size 0.8)
-		(drill 0.4)
-		(layers "F.Cu" "B.Cu")
-		(net 144)
-		(uuid "b9288c9f-c21e-4f21-ac6d-264e75dc2dd6")
-	)
 	(segment
 		(start 159.615 116.01)
 		(end 159.615 113.385)
@@ -48870,7 +48862,7 @@
 				(xy 59.463796 95.364993) (xy 59.338106 95.53799) (xy 59.241027 95.728516) (xy 59.241026 95.728519)
 				(xy 59.174951 95.931882) (xy 59.151628 96.079138) (xy 59.1415 96.143084) (xy 44.458618 96.143084)
 				(xy 44.49804 96.101593) (xy 43.879408 95.482962) (xy 43.942993 95.465925) (xy 44.057007 95.400099)
-				(xy 44.150099 95.307007) (xy 44.215925 95.192993) (xy 44.232962 95.129408) (xy 44.86527 95.761717)
+				(xy 44.150099 95.307007) (xy 44.215925 95.192993) (xy 44.232962 95.129409) (xy 44.86527 95.761717)
 				(xy 44.86527 95.761716) (xy 44.904622 95.707554) (xy 45.001095 95.518217) (xy 45.066757 95.31613)
 				(xy 45.066757 95.316127) (xy 45.1 95.106246) (xy 45.1 94.893753) (xy 45.066757 94.683872) (xy 45.066757 94.683869)
 				(xy 45.001095 94.481782) (xy 44.904624 94.292449) (xy 44.86527 94.238282) (xy 44.865269 94.238282)
