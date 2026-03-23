@@ -1,5 +1,5 @@
 (sym_lib_table
   (version 7)
-  (lib (name "heimdall_insideboard-rescue")(type "KiCad")(uri "${KIPRJMOD}/heimdall_insideboard-rescue.kicad_sym")(options "")(descr ""))
   (lib (name "Heimdall")(type "KiCad")(uri "${KIPRJMOD}/../shared/heimdall_symbols.kicad_sym")(options "")(descr ""))
+  (lib (name "PhoenixContact")(type "KiCad")(uri "/Users/paul/git/heimdall/hardware/shared/cots/PhoenixContact.kicad_sym")(options "")(descr ""))
 )
